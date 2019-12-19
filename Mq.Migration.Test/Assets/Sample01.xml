@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title xml:id="LVCR-rena">
+          <title>de rerum natura</title>
+          <abbr>rer. nat.</abbr>
+          <bibl>C. Bailey, 1922</bibl>
+        </title>
+      </titleStmt>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div1 xml:id="d001" type="section" decls="#md" met="H">
+        <head>
+          <title>1</title>
+          <abbreviation>1</abbreviation>
+        </head>
+        <l xml:id="_001l1" n="1">Aeneadum genetrix, hominum diuumque uoluptas,</l>
+        <l xml:id="_001l2" n="2">Alma Venus, caeli subter labentia signa</l>
+        <l xml:id="_001l3" n="3">Quae mare nauigerum, quae terras frugiferentis</l>
+        <l xml:id="_001l4" n="4">Concelebras, per te quoniam genus omne animantum</l>
+        <l xml:id="_001l5" n="5">Concipitur uisitque exortum lumina solis:</l>
+        <l xml:id="_001l6" n="6">Te, dea, te fugiunt uenti, te nubila caeli</l>
+        <l xml:id="_001l7" n="7">Aduentumque tuum, tibi suauis daedala tellus</l>
+        <l xml:id="_001l8" n="8">Summittit flores, tibi rident aequora ponti</l>
+        <l xml:id="_001l9" n="9">Placatumque nitet diffuso lumine caelum.</l>
+        <l xml:id="_001l10" n="10">Nam simul ac species patefactast uerna diei</l>
+        <l xml:id="_001l11" n="11">Et reserata uiget genitabilis aura fauoni,</l>
+        <l xml:id="_001l12" n="12">Aeriae primum uolucres te, diua, tuumque</l>
+        <l xml:id="_001l13" n="13">Significant initum perculsae corda tua ui.</l>
+        <l xml:id="_001l14" n="14">Inde ferae pecudes persultant pabula laeta</l>
+        <l xml:id="_001l15" n="15">Et rapidos tranant amnis: ita capta lepore</l>
+        <l xml:id="_001l16" n="16">Te sequitur cupide quo quamque inducere pergis.</l>
+        <l xml:id="_001l17" n="17">Denique per maria ac montis fluuiosque rapaces</l>
+        <l xml:id="_001l18" n="18">Frondiferasque domos auium camposque uirentis</l>
+        <l xml:id="_001l19" n="19">Omnibus incutiens blandum per pectora amorem</l>
+        <l xml:id="_001l20" n="20">Efficis ut cupide generatim saecla propagent.</l>
+        <l xml:id="_001l21" n="21">Quae quoniam rerum naturam sola gubernas</l>
+        <l xml:id="_001l22" n="22">Nec sine te quicquam dias in luminis oras</l>
+        <l xml:id="_001l23" n="23">Exoritur neque fit laetum neque amabile quicquam,</l>
+        <l xml:id="_001l24" n="24">Te sociam studeo scribendis uersibus esse</l>
+        <l xml:id="_001l25" n="25">Quos ego de rerum natura pangere conor</l>
+        <l xml:id="_001l26" n="26">Memmiadae nostro, quem tu, dea, tempore in omni</l>
+        <l xml:id="_001l27" n="27">Omnibus ornatum uoluisti(==VOLUISTI) excellere rebus.</l>
+        <l xml:id="_001l28" n="28">Quo magis aeternum da dictis, diua, leporem.</l>
+        <l xml:id="_001l29" n="29">Effice ut interea fera moenera militiai</l>
+        <l xml:id="_001l30" n="30">Per maria ac terras omnis sopita quiescant.</l>
+        <l xml:id="_001l31" n="31">Nam tu sola potes tranquilla pace iuuare</l>
+        <l xml:id="_001l32" n="32">Mortalis, quoniam belli fera moenera Mauors</l>
+        <l xml:id="_001l33" n="33">Armipotens regit, in gremium qui saepe tuum se</l>
+        <l xml:id="_001l34" n="34">Reicit aeterno deuictus uulnere amoris,</l>
+        <l xml:id="_001l35" n="35">Atque ita suspiciens tereti ceruice reposta</l>
+        <l xml:id="_001l36" n="36">Pascit amore auidos inhians in te, dea, uisus,</l>
+        <l xml:id="_001l37" n="37">Eque tuo pendet resupini spiritus ore.</l>
+        <l xml:id="_001l38" n="38">Hunc tu, diua, tuo recubantem corpore sancto</l>
+        <l xml:id="_001l39" n="39">Circumfusa super, suauis ex ore loquelas</l>
+        <l xml:id="_001l40" n="40">Funde petens placidam Romanis, incluta, pacem.</l>
+        <l xml:id="_001l41" n="41">Nam neque nos agere hoc patriai tempore iniquo</l>
+        <l xml:id="_001l42" n="42">Possumus aequo animo nec Memmi clara propago</l>
+        <l xml:id="_001l43" n="43">Talibus in rebus communi desse saluti.</l>
+      </div1>
+    </body>
+  </text>
+</TEI>
