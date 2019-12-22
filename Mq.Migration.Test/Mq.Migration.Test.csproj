@@ -11,11 +11,13 @@
     <None Remove="Assets\IsApplicable02.xml" />
     <None Remove="Assets\IsApplicable03.xml" />
     <None Remove="Assets\IsApplicable04.xml" />
+    <None Remove="Assets\IsApplicable05.xml" />
     <None Remove="Assets\Sample01.xml" />
     <None Remove="Assets\Sample02.xml" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\IsApplicable05.xml" />
     <EmbeddedResource Include="Assets\IsApplicable04.xml" />
     <EmbeddedResource Include="Assets\IsApplicable03.xml" />
     <EmbeddedResource Include="Assets\IsApplicable02.xml" />

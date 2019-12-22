@@ -78,20 +78,22 @@ namespace Mqutil.Xml
         /// </returns>
         /// <remarks>To be applicable, a document must contain at least one
         /// <c>div1</c> of <c>type</c> <c>section</c> or <c>work</c>, whose
-        /// <c>l</c> children count is greater than <see cref="MaxTreshold"/>.
+        /// <c>l</c> children count is greater than <see cref="MaxTreshold"/>;
+        /// also, it should contain no <c>div2</c> at all.
         /// </remarks>
         /// <exception cref="ArgumentNullException">doc</exception>
         public bool IsApplicable(XDocument doc)
         {
             if (doc == null) throw new ArgumentNullException(nameof(doc));
 
-            // /TEI/text/body/div1@type=section|work with l's exceeding max
-            return doc.Root
+            XElement body = doc.Root
                 .Element(TEI + "text")
-                .Element(TEI + "body")
-                .Elements(TEI + "div1")
-                .Any(e => _applicableTypes.Contains(e.Attribute("type")?.Value)
-                          && e.Elements(TEI + "l").Count() > MaxTreshold);
+                .Element(TEI + "body");
+
+            return !body.Descendants(TEI + "div2").Any()
+                && body.Elements(TEI + "div1")
+                    .Any(e => _applicableTypes.Contains(e.Attribute("type")?.Value)
+                         && e.Elements(TEI + "l").Count() > MaxTreshold);
         }
 
         private bool IsBreakPoint(XElement l, int ordinal)
