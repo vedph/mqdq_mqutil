@@ -14,6 +14,7 @@
     <None Remove="Assets\IsApplicable05.xml" />
     <None Remove="Assets\Sample01.xml" />
     <None Remove="Assets\Sample02.xml" />
+    <None Remove="Assets\Sample03.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +23,7 @@
     <EmbeddedResource Include="Assets\IsApplicable03.xml" />
     <EmbeddedResource Include="Assets\IsApplicable02.xml" />
     <EmbeddedResource Include="Assets\IsApplicable01.xml" />
+    <EmbeddedResource Include="Assets\Sample03.xml" />
     <EmbeddedResource Include="Assets\Sample02.xml" />
     <EmbeddedResource Include="Assets\Sample01.xml" />
   </ItemGroup>

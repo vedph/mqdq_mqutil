@@ -143,5 +143,25 @@ namespace Mq.Migration.Test
 
             AssertExpectedBreaks(breaks, new[] { "9", "27", "43" });
         }
+
+        [Fact]
+        public void Partition_ApplicableN5M10LastOutside_1()
+        {
+            XDocument doc = TestHelper.LoadResourceDocument("Sample03.xml");
+            XmlPartitioner partitioner = new XmlPartitioner
+            {
+                MinTreshold = 5,
+                MaxTreshold = 9
+            };
+
+            bool touched = partitioner.Partition(doc, "sample");
+
+            Assert.True(touched);
+
+            List<XElement> breaks =
+                doc.Descendants(XmlPartitioner.TEI + "pb").ToList();
+
+            AssertExpectedBreaks(breaks, new[] { "10" });
+        }
     }
 }
