@@ -24,6 +24,58 @@ namespace Mq.Migration.Test
         }
 
         [Fact]
+        public void IsApplicable_NoDiv1_False()
+        {
+            XDocument doc = TestHelper.LoadResourceDocument("IsApplicable01.xml");
+            XmlPartitioner partitioner = new XmlPartitioner
+            {
+                MinTreshold = 10,
+                MaxTreshold = 25
+            };
+
+            Assert.False(partitioner.IsApplicable(doc));
+        }
+
+        [Fact]
+        public void IsApplicable_NoDiv1OfReqType_False()
+        {
+            XDocument doc = TestHelper.LoadResourceDocument("IsApplicable02.xml");
+            XmlPartitioner partitioner = new XmlPartitioner
+            {
+                MinTreshold = 10,
+                MaxTreshold = 25
+            };
+
+            Assert.False(partitioner.IsApplicable(doc));
+        }
+
+        [Fact]
+        public void IsApplicable_Div1OfReqTypeNoOverflow_False()
+        {
+            XDocument doc = TestHelper.LoadResourceDocument("IsApplicable03.xml");
+            XmlPartitioner partitioner = new XmlPartitioner
+            {
+                MinTreshold = 10,
+                MaxTreshold = 25
+            };
+
+            Assert.False(partitioner.IsApplicable(doc));
+        }
+
+        [Fact]
+        public void IsApplicable_Div1OfReqTypeOverflow_True()
+        {
+            XDocument doc = TestHelper.LoadResourceDocument("IsApplicable04.xml");
+            XmlPartitioner partitioner = new XmlPartitioner
+            {
+                MinTreshold = 10,
+                MaxTreshold = 25
+            };
+
+            Assert.True(partitioner.IsApplicable(doc));
+        }
+
+        [Fact]
         public void NotApplicable_TypeFragments_Unchanged()
         {
             XDocument doc = TestHelper.LoadResourceDocument("Sample02.xml");

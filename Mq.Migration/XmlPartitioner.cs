@@ -67,8 +67,24 @@ namespace Mqutil.Xml
             _applicableTypes = new HashSet<string> { "section", "work" };
         }
 
-        private bool IsApplicable(XDocument doc)
+        /// <summary>
+        /// Determines whether the partitioner is applicable to the specified
+        /// document.
+        /// </summary>
+        /// <param name="doc">The document to test.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified document is applicable; otherwise,
+        ///   <c>false</c>.
+        /// </returns>
+        /// <remarks>To be applicable, a document must contain at least one
+        /// <c>div1</c> of <c>type</c> <c>section</c> or <c>work</c>, whose
+        /// <c>l</c> children count is greater than <see cref="MaxTreshold"/>.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">doc</exception>
+        public bool IsApplicable(XDocument doc)
         {
+            if (doc == null) throw new ArgumentNullException(nameof(doc));
+
             // /TEI/text/body/div1@type=section|work with l's exceeding max
             return doc.Root
                 .Element(TEI + "text")
