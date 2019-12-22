@@ -159,10 +159,15 @@ namespace Mqutil.Xml
         /// <param name="id">The document ID (=its filename, no extension).</param>
         /// <returns>True if document was touched, else false.</returns>
         /// <exception cref="ArgumentNullException">doc</exception>
+        /// <exception cref="InvalidOperationException">min treshold greater
+        /// than max</exception>
         public bool Partition(XDocument doc, string id)
         {
             if (doc == null) throw new ArgumentNullException(nameof(doc));
             if (id == null) throw new ArgumentNullException(nameof(id));
+
+            if (_minTreshold > _maxTreshold)
+                throw new InvalidOperationException("Min treshold > max");
 
             // do nothing if partitioning is not required
             if (!IsApplicable(doc)) return false;

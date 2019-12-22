@@ -145,7 +145,7 @@ namespace Mq.Migration.Test
         }
 
         [Fact]
-        public void Partition_ApplicableN5M10LastOutside_1()
+        public void Partition_ApplicableN5M10FirstEqLast_1()
         {
             XDocument doc = TestHelper.LoadResourceDocument("Sample03.xml");
             XmlPartitioner partitioner = new XmlPartitioner
