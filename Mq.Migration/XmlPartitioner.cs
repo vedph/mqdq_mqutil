@@ -195,10 +195,9 @@ namespace Mqutil.Xml
                     _exceeded = false;
 
                     // reach the last l in the partition
-                    int baseIndex = firstL.ElementsBeforeSelf(TEI + "l").Count();
                     XElement lastL = firstL
                         .ElementsAfterSelf(TEI + "l")
-                        .TakeWhile((e, i) => !IsBreakPoint(e, i + 2 - baseIndex))
+                        .TakeWhile((e, i) => !IsBreakPoint(e, i + 2))
                         .LastOrDefault();
 
                     // corner case: no last l, i.e. the first l considered is

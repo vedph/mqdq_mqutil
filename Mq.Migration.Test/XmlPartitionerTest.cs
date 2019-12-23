@@ -105,7 +105,7 @@ namespace Mq.Migration.Test
         }
 
         [Fact]
-        public void Partition_ApplicableN10M25_3()
+        public void Partition_ApplicableN10M25_4()
         {
             XDocument doc = TestHelper.LoadResourceDocument("Sample01.xml");
             XmlPartitioner partitioner = new XmlPartitioner
@@ -121,11 +121,11 @@ namespace Mq.Migration.Test
             List<XElement> breaks =
                 doc.Descendants(XmlPartitioner.TEI + "pb").ToList();
 
-            AssertExpectedBreaks(breaks, new[] { "13", "37", "43" });
+            AssertExpectedBreaks(breaks, new[] { "13", "27", "37", "43" });
         }
 
         [Fact]
-        public void Partition_ApplicableN5M20_3()
+        public void Partition_ApplicableN5M20_5()
         {
             XDocument doc = TestHelper.LoadResourceDocument("Sample01.xml");
             XmlPartitioner partitioner = new XmlPartitioner
@@ -141,7 +141,7 @@ namespace Mq.Migration.Test
             List<XElement> breaks =
                 doc.Descendants(XmlPartitioner.TEI + "pb").ToList();
 
-            AssertExpectedBreaks(breaks, new[] { "9", "27", "43" });
+            AssertExpectedBreaks(breaks, new[] { "9", "16", "27", "37", "43" });
         }
 
         [Fact]
