@@ -16,7 +16,7 @@ namespace Mqutil.Commands
         public static void Configure(CommandLineApplication app, AppOptions options)
         {
             // configure all the app commands here
-            app.Command("sample", c => PartitionCommand.Configure(c, options));
+            app.Command("partition", c => PartitionCommand.Configure(c, options));
 
             app.OnExecute(() =>
             {

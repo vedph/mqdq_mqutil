@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Mqutil": {
+      "commandName": "Project",
+      "commandLineArgs": "partition c:\\users\\dfusi\\desktop\\lvcr*.xml c:\\users\\dfusi\\desktop\\p\\"
+    }
+  }
+}

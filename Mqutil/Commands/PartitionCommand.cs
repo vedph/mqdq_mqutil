@@ -100,6 +100,7 @@ namespace Mqutil.Commands
                 MaxTreshold = _maxTreshold
             };
 
+            int count = 0;
             foreach (string filePath in Directory.GetFiles(
                 Path.GetDirectoryName(_inputFileMask),
                 Path.GetFileName(_inputFileMask))
@@ -115,6 +116,7 @@ namespace Mqutil.Commands
 
                 if (touched)
                 {
+                    count++;
                     string outputPath =
                         Path.Combine(_outputDir, Path.GetFileName(filePath));
                     Console.WriteLine($" => {outputPath}");
@@ -127,6 +129,8 @@ namespace Mqutil.Commands
                     Console.WriteLine();
                 }
             }
+
+            Console.WriteLine($"Files partitioned: {count}");
 
             return Task.CompletedTask;
         }
