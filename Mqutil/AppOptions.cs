@@ -15,9 +15,8 @@ namespace Mqutil
             AppOptions options = new AppOptions();
             CommandLineApplication app = new CommandLineApplication
             {
-                // TODO: customize the app template names
                 Name = "Mqutil",
-                FullName = "App CLI"
+                FullName = "MQDQ CLI Tools"
             };
             app.HelpOption("-?|-h|--help");
 
