@@ -9,6 +9,10 @@ using System.Xml.Linq;
 
 namespace Mqutil.Commands
 {
+    /// <summary>
+    /// Partition MQDQ text documents where required.
+    /// </summary>
+    /// <seealso cref="ICommand" />
     public sealed class PartitionCommand : ICommand
     {
         private readonly string _inputFileMask;
@@ -16,6 +20,15 @@ namespace Mqutil.Commands
         private readonly int _minTreshold;
         private readonly int _maxTreshold;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PartitionCommand"/> class.
+        /// </summary>
+        /// <param name="inputFileMask">The input file(s) mask.</param>
+        /// <param name="outputDir">The output directory.</param>
+        /// <param name="minTreshold">The minimum l treshold.</param>
+        /// <param name="maxTreshold">The maximum l treshold.</param>
+        /// <exception cref="ArgumentNullException">inputFileMask or
+        /// outputDir</exception>
         public PartitionCommand(string inputFileMask, string outputDir,
             int minTreshold, int maxTreshold)
         {
@@ -27,9 +40,18 @@ namespace Mqutil.Commands
             _maxTreshold = maxTreshold;
         }
 
+        /// <summary>
+        /// Configures the specified command.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        /// <param name="options">The options.</param>
+        /// <exception cref="ArgumentNullException">command</exception>
         public static void Configure(CommandLineApplication command,
             AppOptions options)
         {
+            if (command == null)
+                throw new ArgumentNullException(nameof(command));
+
             command.Description = "Partition the MQDQ text documents " +
                 "saving the results into the specified folder";
             command.HelpOption("-?|-h|--help");
@@ -58,6 +80,9 @@ namespace Mqutil.Commands
             });
         }
 
+        /// <summary>
+        /// Runs this command.
+        /// </summary>
         public Task Run()
         {
             Console.ForegroundColor = ConsoleColor.Green;

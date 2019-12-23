@@ -24,16 +24,16 @@ An importer will then just have to look at these pb elements, and store an item 
 
 Note that further processing will be required for l’s text, as it may contain non-textual data in the form of text, like e.g. the annotations used to aid metrics (see below).
 
-- if there is div2, partition = div2.
-- else: look at div1@type:
-  - section, fragment, fragments: e.g. a book in the Aeneid, or a poem in Catullus, or a fragment: partition = div1. For value section, the div1 might be too long (e.g. a book in the Aeneid). In this case, refer to the algorithm below (“too long” here means >M).
-  - work: a full work without further divisions: partition = div1. If >M, apply partitioning.
+- if there is `div2`, partition = `div2`.
+- else: look at `div1@type`:
+  - section, fragment, fragments: e.g. a book in the Aeneid, or a poem in Catullus, or a fragment: partition = div1. For value section, the `div1` might be too long (e.g. a book in the Aeneid). In this case, refer to the algorithm below (“too long” here means >M).
+  - work: a full work without further divisions: partition = `div1`. If >M, apply partitioning.
 
-For partitioning case div1@type=section when this is too long (e.g. >50 lines), we must use an algorithmic approach, following these principles:
+For partitioning case `div1@type=section` when this is too long (e.g. >50 lines), we must use an algorithmic approach, following these principles:
 
 - min lines count treshold = N
 - max lines count treshold = M
-- break after the first l whose content matches the regex `[!?.][^\p{L}]*$` (=stop/exclamation/question mark at line end)
+- break after the first l whose content matches the regex `[\u037e.?!][^\p{L}]*$` (=stop/exclamation/question mark at line end)
 - if no match, prefer the largest partition below N, or just break at M.
 
 Also, the partitioning process requires us to calculate a citation for each partition. In general, the citation tells us exactly the portion of the source document which was cut, e.g. 3,12-36 for lines 12-36 in book 3 of Vergilius’ Aeneid. In our case, we need to be able to rebuild the XML from the database, so we must keep all the metadata linked to the text division the partition belongs to. This won’t be a nice citation, but it will serve its legacy-compliant purpose.

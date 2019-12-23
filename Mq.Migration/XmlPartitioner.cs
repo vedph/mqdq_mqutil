@@ -225,7 +225,7 @@ namespace Mqutil.Xml
                     if (_exceeded && _lastBreakPoint != null)
                     {
                         InsertBreakPast(_lastBreakPoint);
-                        firstL = _lastBreakPoint.ElementsAfterSelf()
+                        firstL = _lastBreakPoint.ElementsAfterSelf(TEI + "l")
                             .FirstOrDefault();
                         touched = true;
                     }
