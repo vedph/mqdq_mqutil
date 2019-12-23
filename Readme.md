@@ -82,3 +82,29 @@ where:
 - `OutputDir` is the output directory (will be created if not exists).
 - `-n` is the optional minimum treshold (default 20).
 - `-m` is the optional maxmimum treshold (default 50).
+
+## Modeling
+
+At a minimum, these should be the MQDQ parts:
+
+- **text part**: the base text. Each text part structures its text into a set of lines, and has a citation, a free string representing the location of the text in the work.
+- **witnesses part**: witnesses quoting the text in the context of their specific work. This should be a list, where each witness has a `citation` identifying it in some citational conventions system (e.g. `Fest. p.376`), and a free Markdown `text` with the context of the citation.
+
+Layer parts:
+
+- **apparatus** layer part: critical apparatus. See below.
+- **comment** layer part: comments linked to a specific portion of the base text. Each comment fragment has a tag which can be used for classification, and a free Markdown text.
+- **orthography-patch** part: orthographic normalization to aid metrical analysis e.g. `uoluisti` for `voluisti` Lucr. 1,32. In the original text, this appears as text appended to the word between `(==` and `)`; in the model, it is represented by a `patch` property. This is not the same as the orthography layer proper, which is a specialized layer targeted to editorial and linguistic purposes (e.g. `bixit`=`vixit`). The patch layer is just a layer containing some practical patches to the original orthography, as far as they are required by the metrical analysis system.
+- **word-anchors** part: for documents with apparatus, where each word is wrapped inside a `w` element. We just use this to map between the Cadmus coordinates system for that part, and the ID assigned to each word in the original document, as these are the anchors to which apparatus entries get attached. I assume that "word" here is just what is separated by whitespace: this seems to be the case also for MQDQ. Thus, each fragment just has an `id` property.
+
+The last 2 parts are specific to legacy compatibility requirements for MQDQ, and will not be edited at all (assuming of course that we're not changing the text itself); they just retain data to be used for export. All the others parts instead are generic.
+
+### Apparatus
+
+Each apparatus layer fragment has these properties (besides `location`, which is common to all the fragments):
+
+- `lemmaVariantType` (enum): one of `replacement`, `additionBefore`, `additionAfter`, `note`. In fact, each fragment in the apparatus is either a replacement, an addition, or just a generic note related to the constitution of the text (e.g. "dubitat Crusius an interpungendum sit").
+- `value` (string): the entry value is either a text variant (zero for a deletion), or the value of the text note, according to the fragment's `lemmaVariantType`.
+- `isAccepted` (boolean): true if the variant has been accepted, so tat it should replace the lemma in the text.
+- `authors` (string array): list of authors (usually these are short IDs to be resolved somewhere outside the fragment).
+- `note`: optional Markdown annotation.
