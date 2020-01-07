@@ -8,6 +8,8 @@ This tool has a CLI interface. Currently the following commands are planned:
 - **import**: import partitioned text documents, plus apparatus where available, into a Cadmus database.
 - **export**: regenerate text files and apparatus files from the Cadmus database. The TEI headers, which are not imported in Cadmus, will be merged with the output text documents.
 
+Note for users: if not using a development machine (which has the SDK installed), you must install the [.NET Core runtime](https://dotnet.microsoft.com/download/dotnet-core) to run this program.
+
 ## Partitioning
 
 ### Rationale
@@ -72,7 +74,7 @@ The output files will be equal to the input files, except for the addition of `p
 
 Syntax:
 
-```bash
+```ps1
 Mqutil partition <InputFilesMask> <OutputDir> [-n MIN] [-m MAX]
 ```
 
@@ -82,6 +84,14 @@ where:
 - `OutputDir` is the output directory (will be created if not exists).
 - `-n` is the optional minimum treshold (default 20).
 - `-m` is the optional maxmimum treshold (default 50).
+
+Just launch the programi without arguments to get help directions.
+
+Note: for Linux users, you should run the program like this:
+
+```bash
+dotnet ./Mqutil.dll ...arguments...
+```
 
 ## Modeling
 
