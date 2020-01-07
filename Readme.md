@@ -20,7 +20,7 @@ Of course, in the context of such editing system, we could not think of storing 
 
 This partitioning must be driven by the intrinsic structure of the text, so that each resulting text part represents a meaningful, self-contained unit. For instance, in a corpus of inscriptions the item would be an inscription; in a corpus of epigrams, it would be an epigram; in a prose corpus of Platonic dialogs, it would be a paragraph. As for their typographical nature, paragraphs are modern units determined by the traditional text layout; but of course they obey the text meaning, by grouping one or more complete sentences into a relatively self-contained unit.
 
-Of course this is an arbitrary choice, but in a sense, this type of text partitioning is no different from the divisions applied to the structure of a TEI document. For instance, imagine a Plato's dialog where each part is a paragraph, and a corresponding TEI text where each paragraph is marked by p: as for archiving, the substantial difference would be that each paragraph gets separately stored in the database, while it is usually contained in a single file in XML. Joining text parts to rebuild the unique flow of base text would of course be trivial, whether we are exporting data to generate TEI, or just displaying a continuous text.
+Of course this is an arbitrary choice; but, in a sense, this type of text partitioning is no different from the divisions applied to the structure of a TEI document. For instance, imagine a Plato's dialog where each part is a paragraph, and a corresponding TEI text where each paragraph is marked by p: as for archiving, the substantial difference would be that each paragraph gets separately stored in the database, while it is usually contained in a single file in XML. Joining text parts to rebuild the unique flow of base text would of course be trivial, whether we are exporting data to generate TEI, or just displaying a continuous text.
 
 Naturally, such decomposition, functional to the software requirements and to the high density of metatextual data with their multiple connections, would be an overkill if applied outside the scenarios which practically defined the birth of the system itself.
 
@@ -64,7 +64,7 @@ In theory, this should ensure that we can rebuild the whole XML text body from t
 - we can algorithmically decide whether we must emit `div1`/`div2` according to the `div1` attributes.
 - `div1` and `div2` models are never mixed content (i.e. there is no meaningful text between their tags).
 - `l` elements do not have children elements, but only contain text, except the case of documents with apparatus. In this case, each single word is wrapped in a `w` element.
-- portions from the same file (red portion in the sample above) are sorted according to their line IDs (blue portion after `#` in the sample above). Note that I'm taking the ID as reference, in the assumption that (a) IDs were assigned sequentially; and (b) numbers might be out-of-order (e.g. a line 12 moved between line 16 and 17).
+- portions from the same file are sorted according to their line IDs (portion after `#` in the sample above). Note that I'm taking the ID as reference, in the assumption that (a) IDs were assigned sequentially; and (b) numbers might be out-of-order (e.g. a line 12 moved between line 16 and 17).
 
 ### Partition Command
 
@@ -83,9 +83,9 @@ where:
 - `InputFilesMask` is the input file(s) mask.
 - `OutputDir` is the output directory (will be created if not exists).
 - `-n` is the optional minimum treshold (default 20).
-- `-m` is the optional maxmimum treshold (default 50).
+- `-m` is the optional maximum treshold (default 50).
 
-Just launch the programi without arguments to get help directions.
+Just launch the program without arguments to get help directions. This gets a generic help, which also tells you how to get help about any specific command.
 
 Note: for Linux users, you should run the program like this:
 
@@ -118,3 +118,36 @@ Each apparatus layer fragment has these properties (besides `location`, which is
 - `isAccepted` (boolean): true if the variant has been accepted, so tat it should replace the lemma in the text.
 - `authors` (string array): list of authors (usually these are short IDs to be resolved somewhere outside the fragment).
 - `note`: optional Markdown annotation.
+
+## Importing
+
+**NOTE**: this is just a plan, development will follow.
+
+Importing requires that all the documents requiring partitioning have been partitioned. The others instead can be manually copied in the import directory as they are.
+
+The general procedure for importing could be as follows:
+
+1. open the XML text document. If it contains any `pb` element, it's a partitioned document; else, it's an unpartitioned document (=a document which did not require partitioning).
+
+2. determine the partitions boundaries:
+
+- for unpartitioned documents, each partition is either `div2` (when any `div2` is present), or `div1` (when no `div2` is present), as a whole.
+- for partitioned documents, each partition is the all the children elements of each `div1` (with all of their descendants), up to the first `pb` child, or up to the `div1` end.
+
+3. determine the partitions citations:
+
+- for partitions closed by `pb`, each `pb@n` attribute contains the citation.
+- else, each partition must build its citation from the `div2`/`div1` parent element, just like the citation built by the partitioner (see above).
+
+4. determine the presence of metatextual characters in the text, i.e. the occurrence of text appended to the word between `(==` and `)`. In this case:
+
+- the metadata characters must be removed from the text.
+- the content of `(==...)` become the `patch` property of an orthographic patches layer. Its coordinates are the line ordinal number (y) and the token ordinal number (x).
+
+The outcome of these operations is:
+
+- 1 item per partition; its title will be equal to the concatenation of these portions of the partition citation: file name, space, and `l`'s `id`. For instance, `LVCR-rena 00122` from `LVCR-rena xml:id=d001|type=section|decls=#md|met=H 12#00122`. This should allow sorting the items in their natural order, by just sorting them by title (which is what is done by the standard item sort key generator in Cadmus, apart from normalizations);
+- 1 text part per item;
+- 0-1 orthographic patches layer part per item.
+
+TODO: apparatus. This must be retrieved from files having it, and mapped to parts.
