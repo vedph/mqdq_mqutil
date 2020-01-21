@@ -121,9 +121,9 @@ Each apparatus layer fragment has these properties (besides `location`, which is
 
 ## Importing
 
-**NOTE**: this is just a plan, development will follow.
+**NOTE**: this is just a plan; development will follow once it is fully defined.
 
-Importing requires that all the documents requiring partitioning have been partitioned. The others instead can be manually copied in the import directory as they are.
+Before importing, ensure that all the documents requiring partitioning have been partitioned. The other documents instead can be manually copied in the import directory as they are.
 
 The general procedure for importing could be as follows:
 
@@ -132,7 +132,7 @@ The general procedure for importing could be as follows:
 2. determine the partitions boundaries:
 
 - for unpartitioned documents, each partition is either `div2` (when any `div2` is present), or `div1` (when no `div2` is present), as a whole.
-- for partitioned documents, each partition is the all the children elements of each `div1` (with all of their descendants), up to the first `pb` child, or up to the `div1` end.
+- for partitioned documents, each partition is all the children elements of each `div1` (with all of their descendants), up to the first `pb` child, or up to the `div1` end.
 
 3. determine the partitions citations:
 
@@ -146,8 +146,10 @@ The general procedure for importing could be as follows:
 
 The outcome of these operations is:
 
-- 1 item per partition; its title will be equal to the concatenation of these portions of the partition citation: file name, space, and `l`'s `id`. For instance, `LVCR-rena 00122` from `LVCR-rena xml:id=d001|type=section|decls=#md|met=H 12#00122`. This should allow sorting the items in their natural order, by just sorting them by title (which is what is done by the standard item sort key generator in Cadmus, apart from normalizations);
-- 1 text part per item;
-- 0-1 orthographic patches layer part per item.
+- 1 **item** per partition; its title will be equal to the concatenation of the following portions of the partition citation: file name, space, and `l`'s `id`. For instance, `LVCR-rena 00122` from `LVCR-rena xml:id=d001|type=section|decls=#md|met=H 12#00122`. This should allow sorting the items in their natural order, by just sorting them by title (which is what is done by the standard item sort key generator in Cadmus, apart from normalizations).
+
+- 1 **text part** per item. This contains the partition's text, where each line is a verse.
+
+- 0-1 orthographic **patches layer part** per item. When the text included orthographic patches (the escape `(==...)`), this layer contains all of them.
 
 TODO: apparatus. This must be retrieved from files having it, and mapped to parts.
