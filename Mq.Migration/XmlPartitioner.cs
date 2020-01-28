@@ -115,7 +115,7 @@ namespace Mqutil.Xml
             (a.Name.Namespace == XML ? "xml:" : "") + a.Name.LocalName;
 
         private string ConcatDivAttributes(XElement div) =>
-            string.Join("|",
+            string.Join("\u2016",
                 div.Attributes().Select(a => $"{GetAttributeName(a)}={a.Value}"));
 
         private string GetBreakPointCitation(XElement l)
