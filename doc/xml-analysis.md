@@ -22,7 +22,7 @@ These are the relevant traits of TEI text documents (ignoring their headers):
 
 - all poetical texts, ultimately structured into lines.
 - fully rooted under `text/body/div1`.
-- `div` may contain as direct children:
+- `div1` may contain as direct children:
   - `div2`: see below.
   - `head`: header, can include `abbr`, `bibl` (always with a `source` attribute), `title`, all "leaf" elements.
   - `l`: a line of text. This can include the text, or `w` children elements, one for each graphical word.
@@ -35,3 +35,30 @@ In turn, `div2` may include:
 - `l`: as above.
 - `lb`: as above.
 - `p`: as above.
+
+**Attributes** are (`*` marks required attributes):
+
+- `div1`:
+  - `xml:id`*
+  - `decls`
+  - `met`: metre.
+  - `type`*
+- `div2`:
+  - `xml:id`*
+  - `met`: metre.
+  - `type`*
+- `l`:
+  - `xml:id`*
+  - `met`
+  - `n`*: line number in the source text. This is not necessarily progressive.
+  - `part`
+  - `rend`
+- `p`:
+  - `xml:id`*
+  - `met`
+  - `n`*
+- `w`:
+  - `xml:id`*
+  - `real`
+- `bibl`:
+  - `source`*
