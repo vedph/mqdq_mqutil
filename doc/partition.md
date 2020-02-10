@@ -1,4 +1,4 @@
-# Partitioning
+﻿# Partitioning
 
 ## Rationale
 
@@ -40,12 +40,12 @@ Also, the partitioning process requires us to calculate a **citation** for each 
 The citation is built by concatenating these components, separated by space:
 
 1. the file name without extension (e.g. `LVCR-rena`).
-2. `div1` attributes, each with the form name=value separated by U+2016 (e.g. `xml:id=d001|type=section|decls=#md|met=H`). This is a character which never occurs in the current MQDQ files.
+2. `div1` attributes, each with the form name=value separated by U+2016 (double vertical pipe, e.g. `xml:id=d001‖type=section‖decls=#md‖met=H`). This is a character which never occurs in the current MQDQ files.
 3. `div2` attributes, when there is a `div2`.
 4. the line number is always found at `l@n`.
 5. `l@xml:id` must be preserved, too; we append it to the line number after a `#` character.
 
-Thus, a citation would be like this: `LVCR-rena xml:id=d001|type=section|decls=#md|met=H 12#00122`.
+Thus, a citation would be like this: `LVCR-rena xml:id=d001‖type=section‖decls=#md‖met=H 12#00122`.
 
 In theory, this should ensure that we can rebuild the whole XML text body from the partitioned texts, provided that:
 
