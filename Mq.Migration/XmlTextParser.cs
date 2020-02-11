@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace Mq.Migration
@@ -18,6 +19,7 @@ namespace Mq.Migration
     {
         private readonly TextCutterOptions _headOptions;
         private readonly TextCutterOptions _tailOptions;
+        private readonly Regex _digitsRegex;
         private string _docId;
         private string _facetId;
         private string _userId;
@@ -80,13 +82,17 @@ namespace Mq.Migration
             };
             _facetId = "default";
             _userId = "zeus";
+            _digitsRegex = new Regex(@"\d+");
         }
 
         private static bool IsLOrP(XElement e) =>
             e.Name == XmlHelper.TEI + "l" || e.Name == XmlHelper.TEI + "p";
 
-        private string GetBoundingText(string text)
+        private string GetDescriptionText(string text)
         {
+            text = _digitsRegex.Replace(text, "");
+            text = text.Trim();
+
             if (text.Length <= 80) return text;
             return TextCutter.Cut(text, _headOptions)
                    + TextCutter.Cut(text, _tailOptions);
@@ -164,7 +170,7 @@ namespace Mq.Migration
             Item item = new Item
             {
                 Title = cit,
-                Description = GetBoundingText(div.Value.Trim()),
+                Description = GetDescriptionText(div.Value.Trim()),
                 FacetId = _facetId,
                 CreatorId = _userId,
                 UserId = UserId
