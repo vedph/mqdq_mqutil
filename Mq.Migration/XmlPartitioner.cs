@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace Mqutil.Xml
+namespace Mq.Migration
 {
     /// <summary>
     /// MQDQ text document partitioner.
     /// </summary>
     public sealed class XmlPartitioner
     {
-        public static readonly XNamespace TEI = "http://www.tei-c.org/ns/1.0";
-        public static readonly XNamespace XML = "http://www.w3.org/XML/1998/namespace";
-
         private readonly HashSet<string> _applicableTypes;
 
         private readonly Regex _breakRegex;
@@ -54,6 +50,8 @@ namespace Mqutil.Xml
                 _maxTreshold = value;
             }
         }
+
+        public static string TEI { get; set; }
         #endregion
 
         /// <summary>
@@ -86,14 +84,12 @@ namespace Mqutil.Xml
         {
             if (doc == null) throw new ArgumentNullException(nameof(doc));
 
-            XElement body = doc.Root
-                .Element(TEI + "text")
-                .Element(TEI + "body");
+            XElement body = XmlHelper.GetTeiBody(doc);
 
-            return !body.Descendants(TEI + "div2").Any()
-                && body.Elements(TEI + "div1")
+            return !body.Descendants(XmlHelper.TEI + "div2").Any()
+                && body.Elements(XmlHelper.TEI + "div1")
                     .Any(e => _applicableTypes.Contains(e.Attribute("type")?.Value)
-                         && e.Elements(TEI + "l").Count() > MaxTreshold);
+                         && e.Elements(XmlHelper.TEI + "l").Count() > MaxTreshold);
         }
 
         private bool IsBreakPoint(XElement l, int ordinal)
@@ -111,44 +107,10 @@ namespace Mqutil.Xml
             return false;
         }
 
-        private string GetAttributeName(XAttribute a) =>
-            (a.Name.Namespace == XML ? "xml:" : "") + a.Name.LocalName;
-
-        private string ConcatDivAttributes(XElement div) =>
-            string.Join("\u2016",
-                div.Attributes().Select(a => $"{GetAttributeName(a)}={a.Value}"));
-
-        private string GetBreakPointCitation(XElement l)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            // filename
-            sb.Append(_docId);
-
-            // div1 attrs
-            XElement div1 = l.Ancestors(TEI + "div1").First();
-            sb.Append(' ').Append(ConcatDivAttributes(div1));
-
-            // div2 attrs if any
-            XElement div2 = div1.Descendants(TEI + "div2").LastOrDefault();
-            if (div2 != null)
-            {
-                sb.Append(' ').Append(ConcatDivAttributes(div2));
-            }
-
-            // line number # line ID
-            sb.Append(' ')
-              .Append(l.Attribute("n").Value)
-              .Append('#')
-              .Append(l.Attribute(XML + "id").Value);
-
-            return sb.ToString();
-        }
-
         private void InsertBreakPast(XElement l)
         {
-            string n = GetBreakPointCitation(l);
-            l.AddAfterSelf(new XElement(TEI + "pb",
+            string n = XmlHelper.GetBreakPointCitation(l, _docId);
+            l.AddAfterSelf(new XElement(XmlHelper.TEI + "pb",
                 new XAttribute("n", n)));
         }
 
@@ -158,7 +120,7 @@ namespace Mqutil.Xml
         /// <param name="doc">The XML document.</param>
         /// <param name="id">The document ID (=its filename, no extension).</param>
         /// <returns>True if document was touched, else false.</returns>
-        /// <exception cref="ArgumentNullException">doc</exception>
+        /// <exception cref="ArgumentNullException">doc or id</exception>
         /// <exception cref="InvalidOperationException">min treshold greater
         /// than max</exception>
         public bool Partition(XDocument doc, string id)
@@ -176,16 +138,14 @@ namespace Mqutil.Xml
             bool touched = false;
 
             // examine each div1 requiring partitioning
-            foreach (XElement div1 in doc.Root
-                .Element(TEI + "text")
-                .Element(TEI + "body")
-                .Descendants(TEI + "div1")
+            foreach (XElement div1 in XmlHelper.GetTeiBody(doc)
+                .Descendants(XmlHelper.TEI + "div1")
                 .Where(e => _applicableTypes.Contains(e.Attribute("type")?.Value)
-                            && e.Elements(TEI + "l").Count() > MaxTreshold)
+                            && e.Elements(XmlHelper.TEI + "l").Count() > MaxTreshold)
                 .ToList())
             {
                 // the l to start the partition from
-                XElement firstL = div1.Element(TEI + "l");
+                XElement firstL = div1.Element(XmlHelper.TEI + "l");
 
                 // keep partitioning until we get to the div1's end
                 while (firstL != null)
@@ -196,7 +156,7 @@ namespace Mqutil.Xml
 
                     // reach the last l in the partition
                     XElement lastL = firstL
-                        .ElementsAfterSelf(TEI + "l")
+                        .ElementsAfterSelf(XmlHelper.TEI + "l")
                         .TakeWhile((e, i) => !IsBreakPoint(e, i + 2))
                         .LastOrDefault();
 
@@ -205,7 +165,7 @@ namespace Mqutil.Xml
                     // In this case, move it under the previous partition if any.
                     if (lastL == null)
                     {
-                        XElement pb = firstL.ElementsBeforeSelf(TEI + "pb")
+                        XElement pb = firstL.ElementsBeforeSelf(XmlHelper.TEI + "pb")
                             .FirstOrDefault();
                         if (pb != null)
                         {
@@ -215,7 +175,7 @@ namespace Mqutil.Xml
                         }
                         break;
                     }
-                    XElement pastLastL = lastL.ElementsAfterSelf(TEI + "l")?
+                    XElement pastLastL = lastL.ElementsAfterSelf(XmlHelper.TEI + "l")?
                         .FirstOrDefault();
                     lastL = pastLastL ?? lastL;
 
@@ -224,7 +184,7 @@ namespace Mqutil.Xml
                     if (_exceeded && _lastBreakPoint != null)
                     {
                         InsertBreakPast(_lastBreakPoint);
-                        firstL = _lastBreakPoint.ElementsAfterSelf(TEI + "l")
+                        firstL = _lastBreakPoint.ElementsAfterSelf(XmlHelper.TEI + "l")
                             .FirstOrDefault();
                         touched = true;
                     }
@@ -232,7 +192,7 @@ namespace Mqutil.Xml
                     {
                         // else just break past last l and continue from the next one
                         InsertBreakPast(lastL);
-                        firstL = lastL.ElementsAfterSelf(TEI + "l").FirstOrDefault();
+                        firstL = lastL.ElementsAfterSelf(XmlHelper.TEI + "l").FirstOrDefault();
                         touched = true;
                     }
                 }

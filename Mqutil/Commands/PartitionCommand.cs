@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.CommandLineUtils;
-using Mqutil.Xml;
+using Mq.Migration;
 using System;
 using System.Globalization;
 using System.IO;

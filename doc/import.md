@@ -39,9 +39,9 @@ The general procedure for importing could be implemented as follows:
 4. model as follows:
 
 - **item**: the partition corresponds to a new item, whose title is the citation.
-- **tiled text part**: the partition's text are all the `div`'s `l` or `p` children. Each of these elements becomes a tiles row. All its attributes become row's metadata. The `xml:id` attribute gets translated into `id` (semicolons cannot be used as metadata keys). Inside each `l` or `p` element, we do as follows:
+- **tiled text part**: the partition's text are all the `div`'s `l` or `p` children. Each of these elements becomes a tiles row. All its attributes and the element's name itself (under key `_name`, which is either `l` or `p`) become row's metadata. The `xml:id` attribute gets translated into `id` (semicolons cannot be used as metadata keys). Inside each `l` or `p` element, we do as follows:
   - if there are `w` children elements, import each into a tile. The attributes of each `w` elements become the tile's metadata (transforming `xml:id` as above). The text content of the `w` element becomes the tile's `text` metadatum. If this text includes a legacy escape (type `(==...)`), the escape is removed and its value added as a `patch` metadatum.
-  - if there is just a child text node, split it into graphical words, treating them as above for "true" `w` elements. The only difference is that their IDs get generated, and their row gets an additional `split` metadatum which preserves the information about this splitting happened at the import level.
+  - if there is just a child text node, split it into graphical words, treating them as above for "true" `w` elements. The only difference is that their IDs get generated, and their row gets an additional `_split` metadatum which preserves the information about this splitting happened at the import level.
 
 Full lines or paragraphs are split into words because users might want to add an apparatus or other metadata entry to that text. We thus split every text when importing it; then, users will be able to edit metadata at will. Once exporting, we will just reassemble the full, unsplit text when we find that no such editing occurred. We can easily spot when this happened, by looking at those rows with `split` attribute having no tile connected to any of the item's layers.
 
