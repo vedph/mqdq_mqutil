@@ -4,25 +4,9 @@
 
 Before importing, ensure that all the documents requiring [partitioning](partition.md) have been partitioned. The other documents instead can be manually copied in the import directory as they are.
 
-## Workflow Plan
+The import process implies two essential operations: parsing XML to extract data from it, and remodel extracted data by following the Cadmus architecture.
 
-The general procedure for importing could be implemented as follows:
-
-1. open the XML text document. If it contains any `pb` element, it's a partitioned document; else, it's an unpartitioned document (=a document which did not require partitioning).
-
-2. determine the partitions boundaries:
-
-- for unpartitioned documents, each partition is either `div2` (when any `div2` is present), or `div1` (when no `div2` is present), as a whole.
-- for partitioned documents, each partition is all the children elements of each `div1` (with all of their descendants), up to the first `pb` child, or up to the `div1` end.
-
-3. determine the partitions citations:
-
-- for partitions closed by `pb`, each `pb@n` attribute contains the citation.
-- else, each partition must build its citation from the `div2`/`div1` parent element, just like the citation built by the [partitioner](partition.md).
-
-## Modeling
-
-Modeling here is heavily conditioned by two capital factors:
+This remodeling is heavily conditioned by two capital factors:
 
 - the requirement to carry on a lot of metadata which, though redundant for the editor, are necessary to inject edited data back into their legacy source XML documents.
 
@@ -32,12 +16,41 @@ Now, as far as we can tell from the legacy XML, it provides a lot of metadata up
 
 Also, a text partition (essentially a `div`) has no granted content: usually its content is just lines (`l` elements), but there are a number of other children, e.g. `p` for an unmetrical text or speaker (I suppose here `speaker` was not used because it required a `sp`eech parent), `head` for headings, etc. Further, virtually each element has an explicit ID, which cannot be algorithmically generated.
 
-TODO: from here
+We thus must provide a model which preserves all these legacy data, yet allowing users to edit them.
 
-The outcome of these operations is:
+## Workflow Plan
 
-- 1 **item** per partition; its title will be equal to the concatenation of the following portions of the partition citation: file name, space, and `l`'s `id`. For instance, `LVCR-rena 00122` from `LVCR-rena xml:id=d001|type=section|decls=#md|met=H 12#00122`. This should allow sorting the items in their natural order, by just sorting them by title (which is what is done by the standard item sort key generator in Cadmus, apart from normalizations).
+### Text
 
-- 1 **tiled text part** per item. This contains the partition's text, where each line is a verse. When importing this text (=the content of a partition in the sense defined above) we take into account only `l` and `p` children; they can just bear a single text node, or a number of `w` elements, one for each word. The escape `(==...)` (orthographic patches) may appear in any text content, and is processed so that it becomes metadata of the imported tile.
+The general procedure for importing could be implemented as follows:
 
-TODO: apparatus. This must be retrieved from files having it, and mapped to parts.
+1. open the XML text document. If it contains any `pb` element, it's a partitioned document; else, it's an unpartitioned document (=a document which did not require partitioning).
+
+2. determine the partitions *boundaries*:
+
+- for *unpartitioned* documents, each partition is either `div2` (when any `div2` is present), or `div1` (when no `div2` is present), as a whole.
+- for *partitioned* documents, each partition is all the `l`/`p` children elements of each `div1` (with all of their descendants), up to the first `pb` child, or up to the `div1` end. We speak of `div1` only here, as [partitioning](partition.md) never applies to `div2`.
+
+3. determine the partitions *citations*:
+
+- for partitions closed by `pb`, each `pb@n` attribute contains the citation of the partition ending with it.
+- else, each partition must build its citation from the `div2`/`div1` parent element, just like the citation built by the [partitioner](partition.md).
+
+4. model as follows:
+
+- **item**: the partition corresponds to a new item, whose title is the citation.
+- **tiled text part**: the partition's text are all the `div`'s `l` or `p` children. Each of these elements becomes a tiles row. All its attributes become row's metadata. The `xml:id` attribute gets translated into `id` (semicolons cannot be used as metadata keys). Inside each `l` or `p` element, we do as follows:
+  - if there are `w` children elements, import each into a tile. The attributes of each `w` elements become the tile's metadata (transforming `xml:id` as above). The text content of the `w` element becomes the tile's `text` metadatum. If this text includes a legacy escape (type `(==...)`), the escape is removed and its value added as a `patch` metadatum.
+  - if there is just a child text node, split it into graphical words, treating them as above for "true" `w` elements. The only difference is that their IDs get generated, and their row gets an additional `split` metadatum which preserves the information about this splitting happened at the import level.
+
+Full lines or paragraphs are split into words because users might want to add an apparatus or other metadata entry to that text. We thus split every text when importing it; then, users will be able to edit metadata at will. Once exporting, we will just reassemble the full, unsplit text when we find that no such editing occurred. We can easily spot when this happened, by looking at those rows with `split` attribute having no tile connected to any of the item's layers.
+
+5. store the item and its text part in the target database.
+
+Once this phase is completed, we have remodeled and imported all the works text into a Cadmus database. We now have to turn to apparatus.
+
+### Apparatus
+
+1. check if an apparatus exists for the text file opened. By convention, apparatus documents have the same file location and name of the text document, with the addition of an `-app` suffix in their name.
+
+TODO: process apparatus...
