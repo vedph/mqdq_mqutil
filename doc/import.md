@@ -73,4 +73,10 @@ where:
 - `OutputDir` is the output directory (will be created if not exists).
 - `-m` is the maximum count of desired items per output file. The default value is 100. Set to 0 to output a single file (not recommended unless your input files are small).
 
+Sample:
+
+```ps1
+.\Mqutil.exe parse-text c:\users\dfusi\desktop\p\lvcr*.xml c:\users\dfusi\desktop\d\
+```
+
 Output files will be created in the output directory, and named after the corresponding input files, plus a numeric suffix.

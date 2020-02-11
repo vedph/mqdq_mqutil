@@ -40,19 +40,12 @@ Also, the partitioning process requires us to calculate a **citation** for each 
 The citation is built by concatenating these components, separated by space:
 
 1. the file name without extension (e.g. `LVCR-rena`).
-2. `div1` attributes, each with the form name=value separated by U+2016 (double vertical pipe, e.g. `xml:id=d001‖type=section‖decls=#md‖met=H`). This is a character which never occurs in the current MQDQ files.
-3. `div2` attributes, when there is a `div2`.
-4. the line number is always found at `l@n`.
-5. `l@xml:id` must be preserved, too; we append it to the line number after a `#` character.
+2. the line number, always found at `l@n`.
+3. `l@xml:id` must be preserved, too; we append it to the line number after a `#` character.
+4. `div1` attributes, each with the form name=value separated by U+2016 (double vertical pipe, e.g. `xml:id=d001‖type=section‖decls=#md‖met=H`). This is a character which never occurs in the current MQDQ files.
+5. `div2` attributes, when there is a `div2`.
 
-Thus, a citation would be like this: `LVCR-rena xml:id=d001‖type=section‖decls=#md‖met=H 12#00122`.
-
-In theory, this should ensure that we can rebuild the whole XML text body from the partitioned texts, provided that:
-
-- we can algorithmically decide whether we must emit `div1`/`div2` according to the `div1` attributes.
-- `div1` and `div2` models are never mixed content (i.e. there is no meaningful text between their tags).
-- `l` elements do not have children elements, but only contain text, except the case of documents with apparatus. In this case, each single word is wrapped in a `w` element.
-- portions from the same file are sorted according to their line IDs (portion after `#` in the sample above). Note that I'm taking the ID as reference, in the assumption that (a) IDs were assigned sequentially; and (b) numbers might be out-of-order (e.g. a line 12 moved between line 16 and 17).
+Thus, a citation (no `div2`) would be like this: `LVCR-rena 20#d001l20 xml:id=d001‖type=section‖decls=#md‖met=H`.
 
 ## Commands
 
@@ -76,6 +69,12 @@ where:
 - `-m` is the optional maximum treshold (default 50).
 
 Just launch the program without arguments to get help directions. This gets a generic help, which also tells you how to get help about any specific command.
+
+Sample:
+
+```ps1
+.\Mqutil.exe partition c:\users\dfusi\desktop\lvcr*.xml c:\users\dfusi\desktop\p\
+```
 
 Note: for Linux users, you should run the program like this:
 

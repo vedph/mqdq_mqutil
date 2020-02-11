@@ -34,6 +34,12 @@ namespace Mq.Migration
             // filename
             sb.Append(docId);
 
+            // line number # line ID
+            sb.Append(' ')
+              .Append(firstChild.Attribute("n").Value)
+              .Append('#')
+              .Append(firstChild.Attribute(XML + "id").Value);
+
             // div1 attrs
             XElement div1 = firstChild.Ancestors(TEI + "div1").First();
             sb.Append(' ').Append(ConcatDivAttributes(div1));
@@ -44,12 +50,6 @@ namespace Mq.Migration
             {
                 sb.Append(' ').Append(ConcatDivAttributes(div2));
             }
-
-            // line number # line ID
-            sb.Append(' ')
-              .Append(firstChild.Attribute("n").Value)
-              .Append('#')
-              .Append(firstChild.Attribute(XML + "id").Value);
 
             return sb.ToString();
         }
