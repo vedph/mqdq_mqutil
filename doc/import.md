@@ -54,3 +54,23 @@ Once this phase is completed, we have remodeled and imported all the works text 
 1. check if an apparatus exists for the text file opened. By convention, apparatus documents have the same file location and name of the text document, with the addition of an `-app` suffix in their name.
 
 TODO: process apparatus...
+
+## Commands
+
+### Parse Text
+
+The parse text command is used to parse text documents, dumping the output into a set of JSON files including the Cadmus items and text parts.
+
+Syntax:
+
+```ps1
+.\Mqutil.exe partition <InputFilesMask> <OutputDir> [-m MaxItemsPerFile]
+```
+
+where:
+
+- `InputFilesMask` is the input file(s) mask.
+- `OutputDir` is the output directory (will be created if not exists).
+- `-m` is the maximum count of desired items per output file. The default value is 100. Set to 0 to output a single file (not recommended unless your input files are small).
+
+Output files will be created in the output directory, and named after the corresponding input files, plus a numeric suffix.

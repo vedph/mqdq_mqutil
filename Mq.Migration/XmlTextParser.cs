@@ -11,10 +11,10 @@ using System.Xml.Linq;
 namespace Mq.Migration
 {
     /// <summary>
-    /// XML documents importer. This parses XML documents, extracts data
+    /// XML documents parser. This parses XML documents, extracts data
     /// from them, and remodels them into Cadmus entities.
     /// </summary>
-    public sealed class XmlTextImporter : IHasLogger
+    public sealed class XmlTextParser : IHasLogger
     {
         private readonly TextCutterOptions _headOptions;
         private readonly TextCutterOptions _tailOptions;
@@ -56,9 +56,9 @@ namespace Mq.Migration
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="XmlTextImporter"/> class.
+        /// Initializes a new instance of the <see cref="XmlTextParser"/> class.
         /// </summary>
-        public XmlTextImporter()
+        public XmlTextParser()
         {
             _headOptions = new TextCutterOptions
             {
@@ -261,16 +261,13 @@ namespace Mq.Migration
         }
 
         /// <summary>
-        /// Imports text from the specified document.
+        /// Parse text from the specified document.
         /// </summary>
         /// <param name="doc">The document.</param>
         /// <param name="id">The document ID (=its filename, no extension).</param>
-        /// <returns>True if document was touched, else false.</returns>
-        /// <returns>
-        /// Items with parts.
-        /// </returns>
+        /// <returns>Items with parts.</returns>
         /// <exception cref="ArgumentNullException">doc or id</exception>
-        public IEnumerable<IItem> Import(XDocument doc, string id)
+        public IEnumerable<IItem> Parse(XDocument doc, string id)
         {
             if (doc == null) throw new ArgumentNullException(nameof(doc));
             _docId = id ?? throw new ArgumentNullException(nameof(id));

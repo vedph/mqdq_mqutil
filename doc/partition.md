@@ -54,7 +54,9 @@ In theory, this should ensure that we can rebuild the whole XML text body from t
 - `l` elements do not have children elements, but only contain text, except the case of documents with apparatus. In this case, each single word is wrapped in a `w` element.
 - portions from the same file are sorted according to their line IDs (portion after `#` in the sample above). Note that I'm taking the ID as reference, in the assumption that (a) IDs were assigned sequentially; and (b) numbers might be out-of-order (e.g. a line 12 moved between line 16 and 17).
 
-## Command Syntax
+## Commands
+
+### Partition
 
 The `partition` command partitions all the files matching the specified mask and requiring partitioning, saving a copy of each partitioned file in the specified output directory.
 
@@ -63,7 +65,7 @@ The output files will be equal to the input files, except for the addition of `p
 Syntax:
 
 ```ps1
-.\Mqutil.exe partition <InputFilesMask> <OutputDir> [-n MIN] [-m MAX]
+.\Mqutil.exe partition <InputFilesMask> <OutputDir> [-n Min] [-m Max]
 ```
 
 where:
