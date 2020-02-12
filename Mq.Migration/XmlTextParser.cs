@@ -4,7 +4,6 @@ using Fusi.Tools.Text;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -20,6 +19,7 @@ namespace Mq.Migration
         private readonly TextCutterOptions _headOptions;
         private readonly TextCutterOptions _tailOptions;
         private readonly Regex _digitsRegex;
+        private readonly IItemSortKeyBuilder _sortKeyBuilder;
         private string _docId;
         private string _facetId;
         private string _userId;
@@ -83,6 +83,7 @@ namespace Mq.Migration
             _facetId = "default";
             _userId = "zeus";
             _digitsRegex = new Regex(@"\d+");
+            _sortKeyBuilder = new StandardItemSortKeyBuilder();
         }
 
         private static bool IsLOrP(XElement e) =>
@@ -109,7 +110,6 @@ namespace Mq.Migration
                 return "xml_" + name;
             }
 
-            Debug.Assert(name.Namespace == XmlHelper.TEI);
             return name.LocalName;
         }
 
@@ -222,6 +222,10 @@ namespace Mq.Migration
 
                 part.Rows.Add(row);
             }
+
+            item.SortKey = _sortKeyBuilder.BuildKey(item, null);
+            int i = item.SortKey.IndexOf(' ', item.SortKey.IndexOf(' ') + 1);
+            item.SortKey = item.SortKey.Substring(0, i);
 
             return item;
         }

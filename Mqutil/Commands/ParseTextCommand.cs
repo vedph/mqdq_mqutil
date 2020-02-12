@@ -121,7 +121,8 @@ namespace Mqutil.Commands
                         || (_maxItemPerFile > 0 && itemCount > _maxItemPerFile))
                     {
                         if (writer != null) CloseOutputFile(writer);
-
+                        else if (!Directory.Exists(_outputDir))
+                            Directory.CreateDirectory(_outputDir);
                         string path = Path.Combine(_outputDir,
                             $"{inputFileName}_{++outputFileCount:00000}.json");
 
