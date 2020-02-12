@@ -176,6 +176,20 @@ namespace Mq.Migration
             }
         }
 
+        private Tuple<string, string> GetPartitionNBoundaries(IList<XElement> rows)
+        {
+            XElement first = rows.FirstOrDefault(e => IsLOrP(e)
+                             && e.Attribute("n") != null);
+            XElement last = rows.LastOrDefault(e => IsLOrP(e)
+                            && e.Attribute("n") != null);
+
+            // this should not happen
+            if (first == null || last == null) return null;
+
+            return Tuple.Create(first.Attribute("n").Value,
+                                last.Attribute("n").Value);
+        }
+
         /// <summary>
         /// Imports the partition into a Cadmus item.
         /// </summary>
@@ -186,7 +200,7 @@ namespace Mq.Migration
         /// <c>p</c> elements).</param>
         /// <returns>The item.</returns>
         private IItem ImportPartition(XElement div,
-            IEnumerable<XElement> rowElements)
+            IList<XElement> rowElements)
         {
             // build citation
             string cit = XmlHelper.GetBreakPointCitation(
@@ -194,10 +208,13 @@ namespace Mq.Migration
                 _docId);
 
             // item
+            var nBounds = GetPartitionNBoundaries(rowElements);
             Item item = new Item
             {
                 Title = cit,
-                Description = GetDescriptionText(div.Value.Trim()),
+                Description = (nBounds != null ?
+                    $"{nBounds.Item1}-{nBounds.Item2} " : "") +
+                    GetDescriptionText(div.Value.Trim()),
                 FacetId = _facetId,
                 CreatorId = _userId,
                 UserId = UserId
@@ -269,7 +286,7 @@ namespace Mq.Migration
             {
                 yield return ImportPartition(
                     div,
-                    div.Elements().Where(IsLOrP));
+                    div.Elements().Where(IsLOrP).ToList());
             }
         }
 
@@ -300,7 +317,7 @@ namespace Mq.Migration
                             .Where(IsLOrP);
                     }
 
-                    yield return ImportPartition(div, rows);
+                    yield return ImportPartition(div, rows.ToList());
 
                     // next sibling l/p after pb is now the first element
                     first = pb?.ElementsAfterSelf().FirstOrDefault(IsLOrP);
