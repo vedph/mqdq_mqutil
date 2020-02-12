@@ -19,6 +19,7 @@ namespace Mq.Migration
         private readonly TextCutterOptions _headOptions;
         private readonly TextCutterOptions _tailOptions;
         private readonly Regex _digitsRegex;
+        private readonly Regex _escRegex;
         private readonly IItemSortKeyBuilder _sortKeyBuilder;
         private string _docId;
         private string _facetId;
@@ -83,6 +84,7 @@ namespace Mq.Migration
             _facetId = "default";
             _userId = "zeus";
             _digitsRegex = new Regex(@"\d+");
+            _escRegex = new Regex(@"\(==([^)]+)\)");
             _sortKeyBuilder = new StandardItemSortKeyBuilder();
         }
 
@@ -113,6 +115,18 @@ namespace Mq.Migration
             return name.LocalName;
         }
 
+        private Tuple<string, string> GetTextAndPatch(string text)
+        {
+            Match m = _escRegex.Match(text);
+            if (m.Success)
+            {
+                return Tuple.Create(
+                    text.Substring(0, m.Index),
+                    m.Groups[1].Value);
+            }
+            return null;
+        }
+
         private void AddTiles(IEnumerable<XElement> wElements, TextTileRow row)
         {
             int x = 1;
@@ -128,7 +142,13 @@ namespace Mq.Migration
                     string key = GetKeyFromAttrName(attr.Name);
                     tile.Data[key] = attr.Value;
                 }
-                tile.Data["text"] = w.Value;
+                var textAndPatch = GetTextAndPatch(w.Value);
+                if (textAndPatch != null)
+                {
+                    tile.Data["text"] = textAndPatch.Item1;
+                    tile.Data["patch"] = textAndPatch.Item2;
+                }
+                else tile.Data["text"] = w.Value;
                 row.Tiles.Add(tile);
             }
         }
@@ -143,7 +163,14 @@ namespace Mq.Migration
                 {
                     X = x++
                 };
-                tile.Data["text"] = wi.Item1;
+                var textAndPatch = GetTextAndPatch(wi.Item1);
+                if (textAndPatch != null)
+                {
+                    tile.Data["text"] = textAndPatch.Item1;
+                    tile.Data["patch"] = textAndPatch.Item2;
+                }
+                else tile.Data["text"] = wi.Item1;
+
                 tile.Data["id"] = wi.Item2;
                 row.Tiles.Add(tile);
             }
