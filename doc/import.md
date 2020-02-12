@@ -1,28 +1,30 @@
 # Import
 
-**NOTE**: this is just a plan; development will follow once it is fully defined.
+**NOTE**: this is just a plan; development will follow once it is fully defined. Currently, only text import is implemented.
 
 Before importing, ensure that all the documents requiring [partitioning](partition.md) have been partitioned. The other documents instead can be manually copied in the import directory as they are.
 
-The import process implies two essential operations: parsing XML to extract data from it, and remodel extracted data by following the Cadmus architecture.
+The import process implies two essential operations: parsing XML to extract data from it, and remodeling extracted data by following the Cadmus architecture.
 
 This remodeling is heavily conditioned by two capital factors:
 
-- the requirement to carry on a lot of metadata which, though redundant for the editor, are necessary to inject edited data back into their legacy source XML documents.
+- the requirement to preserve a lot of metadata which, though redundant for the editor, are necessary to inject edited data back into their legacy source XML documents.
 
-- the requirement to provide a simple yet strongly checked editing experience, allowing non technical users to edit data without the risk of breaking any of the links to the legacy data.
+- the requirement to provide a simple, yet strongly checked editing experience, allowing non technical users to edit data without the risk of breaking any of the links to the legacy data.
 
-Now, as far as we can tell from the legacy XML, it provides a lot of metadata up to the word domain (`w` elements inside `l`), and we have been told that most of these metadata, though apparently regular, cannot be algorithmically regenerated (as there are cases of manual interventions).
+Our legacy XML provides a lot of metadata, up to the word domain (`w` elements inside `l`), and we have been told that most of these metadata, though apparently regular, cannot be algorithmically regenerated (as there are cases of manual interventions).
 
 Also, a text partition (essentially a `div`) has no granted content: usually its content is just lines (`l` elements), but there are a number of other children, e.g. `p` for an unmetrical text or speaker (I suppose here `speaker` was not used because it required a `sp`eech parent), `head` for headings, etc. Further, virtually each element has an explicit ID, which cannot be algorithmically generated.
 
 We thus must provide a model which preserves all these legacy data, yet allowing users to edit them.
 
+To this end, we are not going to fully regenerate the whole XML document; rather, we pick some parts from it, edit them, and reinject data serialized as XML branches into the original documents.
+
 ## Workflow Plan
 
 ### Text
 
-The general procedure for importing could be implemented as follows:
+The general procedure for importing is implemented as follows:
 
 1. open the XML text document. If it contains any `pb` element, it's a partitioned document; else, it's an unpartitioned document (=a document which did not require partitioning).
 
@@ -80,3 +82,9 @@ Sample:
 ```
 
 Output files will be created in the output directory, and named after the corresponding input files, plus a numeric suffix.
+
+Note: for Linux users, you should run the program like this:
+
+```bash
+dotnet ./Mqutil.dll ...arguments...
+```
