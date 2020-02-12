@@ -2,6 +2,7 @@
 using Microsoft.Extensions.CommandLineUtils;
 using Mq.Migration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.IO;
 using System.Linq;
@@ -112,6 +113,14 @@ namespace Mqutil.Commands
                 inputFileCount++;
                 XDocument doc = XDocument.Load(filePath,
                     LoadOptions.PreserveWhitespace);
+                JsonSerializerSettings jsonSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new CamelCaseNamingStrategy()
+                    },
+                    Formatting = Formatting.Indented
+                };
 
                 // parse items
                 int itemCount = 0, outputFileCount = 0;
@@ -137,9 +146,12 @@ namespace Mqutil.Commands
 
                     // dump item into it
                     string json = JsonConvert.SerializeObject(
-                        item, Formatting.Indented);
+                        item, jsonSettings);
                     // string json = JsonSerializer.Serialize(item, typeof(object), options);
-                    writer.WriteLine(json);
+                    // this will output a , also for the last JSON array item,
+                    // but we don't care about it -- that's just a dump, and
+                    // it's easy to ignore/remove it if needed.
+                    writer.WriteLine(json + ",");
                 }
                 totalItemCount += itemCount;
                 if (writer != null) CloseOutputFile(writer);
