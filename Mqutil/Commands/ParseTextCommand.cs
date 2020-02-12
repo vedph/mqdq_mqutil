@@ -1,6 +1,7 @@
 ﻿using Cadmus.Core;
 using Microsoft.Extensions.CommandLineUtils;
 using Mq.Migration;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
@@ -96,6 +97,8 @@ namespace Mqutil.Commands
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 WriteIndented = true
             };
+            if (!Directory.Exists(_outputDir))
+                Directory.CreateDirectory(_outputDir);
 
             // for each input document
             foreach (string filePath in Directory.GetFiles(
@@ -103,26 +106,26 @@ namespace Mqutil.Commands
                 Path.GetFileName(_inputFileMask))
                 .OrderBy(s => s))
             {
+                // load document
                 string inputFileName = Path.GetFileNameWithoutExtension(filePath);
+                Console.WriteLine(filePath);
                 inputFileCount++;
-                int itemCount = 0, outputFileCount = 0;
-                Console.Write(filePath);
                 XDocument doc = XDocument.Load(filePath,
                     LoadOptions.PreserveWhitespace);
 
                 // parse items
+                int itemCount = 0, outputFileCount = 0;
+
                 foreach (IItem item in parser.Parse(
                     doc, Path.GetFileName(filePath)))
                 {
-                    itemCount++;
+                    if (++itemCount % 10 == 0) Console.Write('.');
 
                     // create new output file if required
                     if (writer == null
                         || (_maxItemPerFile > 0 && itemCount > _maxItemPerFile))
                     {
                         if (writer != null) CloseOutputFile(writer);
-                        else if (!Directory.Exists(_outputDir))
-                            Directory.CreateDirectory(_outputDir);
                         string path = Path.Combine(_outputDir,
                             $"{inputFileName}_{++outputFileCount:00000}.json");
 
@@ -133,15 +136,16 @@ namespace Mqutil.Commands
                     }
 
                     // dump item into it
-                    string json = JsonSerializer.Serialize(item, options);
+                    string json = JsonConvert.SerializeObject(
+                        item, Formatting.Indented);
+                    // string json = JsonSerializer.Serialize(item, typeof(object), options);
                     writer.WriteLine(json);
                 }
                 totalItemCount += itemCount;
                 if (writer != null) CloseOutputFile(writer);
             }
-            if (writer != null) CloseOutputFile(writer);
 
-            Console.WriteLine($"Input documents: {inputFileCount}");
+            Console.WriteLine($"\nInput documents: {inputFileCount}");
             Console.WriteLine($"Output items: {totalItemCount}");
 
             return Task.CompletedTask;

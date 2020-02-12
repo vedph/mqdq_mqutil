@@ -185,6 +185,7 @@ namespace Mq.Migration
                 UserId = item.UserId,
                 RoleId = PartBase.BASE_TEXT_ROLE_ID
             };
+            item.Parts.Add(part);
 
             int y = 1;
             int wordNr = 1;
@@ -253,20 +254,33 @@ namespace Mq.Migration
             {
                 // partition extends up to first pb or up to div's end
                 IEnumerable<XElement> rows;
+                XElement first = div.Elements().FirstOrDefault(IsLOrP);
                 XElement pb = div.Elements(XmlHelper.TEI + "pb").FirstOrDefault();
 
-                if (pb != null)
+                while (first != null)
                 {
-                    rows = div.Elements()
-                        .TakeWhile(e => e != pb)
-                        .Where(IsLOrP);
-                }
-                else
-                {
-                    rows = div.Elements().Where(IsLOrP);
-                }
+                    if (pb != null)
+                    {
+                        rows = div.Elements()
+                            .SkipWhile(e => e != first)
+                            .TakeWhile(e => e != pb)
+                            .Where(IsLOrP);
+                    }
+                    else
+                    {
+                        rows = div.Elements()
+                            .SkipWhile(e => e != first)
+                            .Where(IsLOrP);
+                    }
 
-                yield return ImportPartition(div, rows);
+                    yield return ImportPartition(div, rows);
+
+                    // next sibling l/p after pb is now the first element
+                    first = pb?.ElementsAfterSelf().FirstOrDefault(IsLOrP);
+                    // next pb after new first element
+                    pb = first?.ElementsAfterSelf()
+                        .FirstOrDefault(e => e.Name == XmlHelper.TEI + "pb");
+                }
             }
         }
 
