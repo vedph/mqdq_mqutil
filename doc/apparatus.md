@@ -9,7 +9,7 @@ The apparatus fragment, i.e. an entry in the apparatus metatextual layer, is mod
 - `location`: the fragment location.
 - `tag`: an optional arbitrary string representing a categorization of some sort for that fragment, e.g. "margin", "interlinear", etc. This can be overridden by variants `tag`.
 
-- `variants`: 1 or more variants/notes, each with these properties:
+- `entries`: 1 or more variants/notes, each with these properties:
 
   - `type`: an enumerated constant to be chosen among replacement (0), addition before (1), addition after (2), note (3).
   - `value`: the variant's value. May be zero (empty or null) for deletions. Is optional (because not used) when `type` is note.
@@ -107,7 +107,7 @@ Model:
 ```json
 {
   "location": "2.1",
-  "variants": [
+  "entries": [
     {
       "type": 0,
       "isAccepted": true,
@@ -146,7 +146,7 @@ salt
     { location* | "1.2" }
     { tag | "margin-note" }
     ---
-    { variants*: | [add] }
+    { entries*: | [add] }
     }
     {#
     [edit] | [up] | [dn] | [del] | type | value | accepted | note | grpid
@@ -187,4 +187,4 @@ salt
 @enduml
 ```
 
-Here you edit all the variants properties and click `save` (or `cancel` if you don't want to save changes) to go back to the variants list in the general tab.
+Here you edit all the entries properties and click `save` (or `cancel` if you don't want to save changes) to go back to the entries list in the general tab.

@@ -216,6 +216,7 @@ namespace Mq.Migration
                     $"{nBounds.Item1}-{nBounds.Item2} " : "") +
                     GetDescriptionText(div.Value.Trim()),
                 FacetId = _facetId,
+                GroupId = _docId,
                 CreatorId = _userId,
                 UserId = UserId
             };
