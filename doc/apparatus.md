@@ -46,7 +46,7 @@ The XML documents tree is as follows:
 - `@from` and `@to` define a point A (when their value is equal) or a continuous range from A to B.
 - `@loc` contains multiple word IDs separated by space.
 - `@type`
-- `lem` optionally with `@source`, `@type`, `@wit`:
+- `lem` optionally with `@source`, `@type`, `@wit`, contains text mixed with:
   - `add`
   - `ident`
   - `note`
@@ -58,6 +58,8 @@ The XML documents tree is as follows:
   - `add`
   - `ident`
   - `note`
+
+Elements `add` and note `represent` various sections of a note; `ident` represents normalized forms.
 
 In any context:
 
@@ -222,5 +224,6 @@ As for modeling, a general point should be stressed here: from an abstract point
 
 Yet, there are at least a couple of substantial differences:
 
-- a first difference is made by their **context**: the Cadmus model is stored and edited independently, in its own *part*. Its model does not affect that of the text it refers to; nor is affected by it. In XML instead, this fragment must become part of a much larger, yet unique DOM-shaped structure, where each element must get entangled with all the others, whatever their conceptual domain or practical purpose.
-- the Cadmus model is totally **predictable**. It may well be highly nested, and include optional and/or required properties of any specific type; but its model is well defined, just as an object class in a programming language. The XML tree instead is highly variable, right because of the very lax model designed to represent any possible detail of a historical document, merging a lot of different structures all laid on the same text. In fact, unless we have constrained our document model into a highly disciplined subset of TEI, we cannot be sure about the content of each XML element: for instance, here a `note` could include just text, or a text mixed with elements like `emph` or `lb`; in turn, `emph` might include another `emph`; it even happens that a `note` includes another `note`. In theory, this opens to infinite recursion, and the only way of knowing which structures are effectively found in our documents is scanning all of them. All these documents are TEI-compliant; but this is not enough to allow us to know in advance which structures might happen to be found. We can never be sure, unless we scan all the documents; and this is fragile, as any newly added 
+- a first difference is made by their **context**: the Cadmus model is designed, stored and edited independently, in its own *part*. Its model does not affect that of the text it refers to; nor is affected by it. In XML instead, this fragment must become part of a much larger, yet unique DOM-shaped structure, where each element gets entangled with all the others, whatever their conceptual domain or practical purpose.
+
+- the Cadmus model is totally **predictable**. It may well be highly nested, and include optional and/or required properties of any specific type; but its model is well defined, just as an object class in a programming language. The XML tree instead is highly variable, right because of the very lax model designed to represent any possible detail of a historical document, merging a lot of different structures all laid on the same text. In fact, unless we have constrained our document model into a highly disciplined subset of TEI, we cannot be sure about the content of each XML element: for instance, here a `note` could include just text, or a text mixed with elements like `emph` or `lb`; in turn, `emph` might include another `emph`; it even happens that a `note` includes another `note`. In theory, this opens to infinite recursion, and the only way of knowing which structures are effectively found in our documents is scanning all of them. All these documents are TEI-compliant; but this is not enough to allow us to know in advance which structures might happen to be found. We can never be sure, unless we scan all the documents; and this is fragile, as any newly added document might change our empirically deduced model.
