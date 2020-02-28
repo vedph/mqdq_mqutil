@@ -24,6 +24,11 @@ To this end, we are not going to fully regenerate the whole XML document; rather
 
 ### Text
 
+Data from scan:
+
+- [XML tree](mqdq-txt-report.html)
+- [characters counts](mqdq-txt-chars.tsv)
+
 The general procedure for importing is implemented as follows:
 
 1. open the XML text document. If it contains any `pb` element, it's a partitioned document; else, it's an unpartitioned document (=a document which did not require partitioning).

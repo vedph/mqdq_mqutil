@@ -1,5 +1,10 @@
 # Apparatus
 
+Data from scan:
+
+- [XML tree](mqdq-app-report.html)
+- [characters counts](mqdq-app-chars.tsv)
+
 ## Model
 
 The apparatus model is designed to meet the requirements of MQDQ and at the same time be general enough to apply to other projects as well.
