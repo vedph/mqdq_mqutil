@@ -5,7 +5,7 @@ Data from scan:
 - [XML tree](mqdq-app-report.html)
 - [characters counts](mqdq-app-chars.tsv)
 
-## Model
+## Apparatus Fragment Model
 
 The apparatus model is designed to meet the requirements of MQDQ and at the same time be general enough to apply to other projects as well.
 
@@ -19,14 +19,93 @@ The apparatus fragment, i.e. an entry in the apparatus metatextual layer, is mod
   - `type`: an enumerated constant to be chosen among replacement (0), addition before (1), addition after (2), note (3).
   - `value`: the variant's value. May be zero (empty or null) for deletions. Is optional (because not used) when `type` is note.
   - `tag`: an optional arbitrary string representing a categorization of some sort for that fragment, e.g. "margin", "interlinear", etc. It overrides the fragment's `tag`.
-  - `normValue`: an optional normalized form derived from `value`.
-  - `note`: an optional annotation. When `type` is note, `value` has no meaning and this property contains the note's text. Else, this can be an additional note side to side with the variant's value.
-  - `authors`: optional array of annotated sources. Each has a `value` and an optional `note`.
-  - `witnesses`: optional array of annotated sources, as above.
+  - `normValue`: an optional normalized form derived from `value`. Normalization details are up to each single project, and the model makes no assumptions about it.
+  - `note`: an optional annotation. When `type` is _note_, `value` has no meaning, and this property contains the note's text. Otherwise, this can be an additional note, side to side with the variant's value.
+  - `authors`: optional array of annotated authors. Each has a `value` and an optional `note`.
+  - `witnesses`: optional array of annotated witnesses, as above.
   - `isAccepted`: boolean, true if the variant represents the accepted text (=lemma).
   - `groupId`: an optional arbitrary ID to be used for grouping fragments in the layer together.
 
-If required, notes can be Markdown to include some minimal formatting. We should limit ourselves to very basic formatting, e.g. italic and bold.
+If required, notes can be Markdown to include some minimal formatting. This should anyway be limited to very basic formatting, e.g. italic and bold.
+
+## XML
+
+### Overview
+
+The XML documents tree is as follows:
+
+- `TEI/text/body/div1` is the root for the apparatus content.
+- `div1` contains:
+  - `@xml:id` always
+  - `@type` always
+  - 1 `head` child with header data.
+  - 1-N `app` children.
+
+### Element app
+
+- `@from` and `@to` define a point A (when their value is equal) or a continuous range from A to B.
+- `@loc` contains multiple word IDs separated by space.
+- `@type`
+- `lem` optionally with `@source`, `@type`, `@wit`:
+  - `add`
+  - `ident`
+  - `note`
+- `note`
+  - `add`
+  - `ident`
+  - `note`
+- `rdg` optionally with `@source`, `@type` (e.g. `ancient-note`), `@wit`, contains text (the variant reading) mixed with:
+  - `add`
+  - `ident`
+  - `note`
+
+In any context:
+
+- `add` always with `@type`, contains text mixed with `emph` and `lb`. When `@type` is `abstract` it refers to note section 1; when it is `intertext` it refers to note section 4.
+- `note` always has `@target`, may have `@type`, and contains text mixed with `emph` and `lb`. When `@type` is `operation` it refers to note section 2; when it is `details`, it refers to note section 3. The `@target` attribute contains a witness/author ID when the note refers to that witness/author.
+- `emph` always has `@style`, and may contain text or other `emph` (recursively) or `lb`.
+- `ident` always with `@n`, represents a normalized form and contains only text. The `@n` attribute contains the ID of the word the normalized form is derived from, and is not predictable (see below).
+- `lb` is empty.
+- `@source` contains authors ID(s), separated by space.
+- `@wit` contains witness(es) ID(s), separated by space.
+
+## Storing Word ID with the Normalized Form
+
+As for the `ident` element, consider a case like `VERG-eclo-app.xml` line 432:
+
+```xml
+<app from="#d001w379" to="#d001w381">
+    <lem wit="#lw1-16 #lw1-21">pueri; summittite</lem>
+    <rdg wit="#lw1-29" source="#lb1-36">pueri et summittite
+        <note type="details" target="#lb1-36"> 390,7 (= IVM II.1, p. 34)</note>
+        <ident n="d001w379">PVERI</ident>
+        <ident n="d001w379">ET</ident>
+        <ident n="d001w381">SVMMITTITE</ident>
+    </rdg>
+</app>
+```
+
+The corresponding text line is:
+
+```xml
+<l xml:id="d001l53" n="45">
+    <w xml:id="d001w374">"Pascite</w>
+    <w xml:id="d001w375">ut</w>
+    <w xml:id="d001w376">ante</w>
+    <w xml:id="d001w377">boues,</w>
+    <w xml:id="d001w379">pueri;</w>
+    <w xml:id="d001w381">summittite</w>
+    <w xml:id="d001w382">tauros."</w>
+</l>
+```
+
+Here, the text reads `pueri; summittite` (as in `lem`), but other witnesses insert `et` between these words (as in `rdg`). In XML we need to wrap some text to mark it; but here there is no text before the insertion: we replace a zero-text with `et`. Thus, we must wrap the words surrouding the insertion point, and provide a multi-word variant which includes both them (`pueri` and `summittite`) and the word inserted in between (`et`).
+
+As this variant contains two words, plus a third one inserted between them, there are 3 normalized forms, each with its own ID. The inserted word has no ID to refer to, as it is replacing a zero text; so, here it refers to the word preceding it (`pueri`). This is why both `PVERI` et `SVMMITTITE` have the same word ID.
+
+Similar scenarios force us to keep the word ID, as it can be assigned in an unpredictable way. Yet, the ID is required only for legacy compatibility, so we would not want to "pollute" the general apparatus model with specific requirements.
+
+A possible hack could be storing the word ID with the normalized form; for instance, the normalized form `PVERI` and word ID `d001w379` might be stored as `PVERI#d001w379`. Given that the normalized form value is up to the specs of each project, this can be an acceptable hack, and saves the general model.
 
 ## Mapping to Model
 
@@ -58,7 +137,7 @@ In both cases, their subtree is mapped as follows (in what follows I represent `
 - `app/P/note @type=details`: `note` section 3.
 - `app/P/add @type=intertext`: `note` section 4.
 
-The target of a note is specified by its `target` attribute. TODO: notes without target are possible?
+The target of a note is specified by its `target` attribute, always present.
 
 Here `note` is a unique string where a divider character (can we use `|`??) is used to end each section. Thus, `one || two | three` means that section 1 = `one`, section 2 is not present, section 3 = `two`, section 4 = `three`.
 
@@ -86,9 +165,8 @@ The following samples are extracted from real documents, and eventually reduced 
 
 `VERG-eclo` (1,2):
 
-- apparatus with lemma and variant.
+- apparatus with lemma and 2 variants.
 - notes to authors.
-- ancient note.
 
 ```xml
 <app from="#d001w9" to="#d001w9">
@@ -122,74 +200,27 @@ Model:
     {
       "type": 0,
       "value": "agrestem",
-      "normValue": "AGRESTEM",
+      "normValue": "AGRESTEM#d001w9",
       "authors": [
-        { "value": "lb1-50", "note": "||9, 4, 85," },
-        { "value": "lb1-50", "note": "||SI 244" }
+        { "value": "lb1-50", "note": "``9, 4, 85," },
+        { "value": "lb1-50", "note": "``SI 244" }
       ]
+    },
+    {
+      "type": 0,
+      "tag": "ancient-note",
+      "note": "_silvestrem_, agrestem_._",
+      "authors": [{ "value": "lb1-56" }]
     }
   ]
 }
 ```
 
-Notes:
+Note values are trimmed and prepended by the required number of separator characters to represent their section. If there is only a single section, the first one, there is no seperator character, like in the ancient note above. Notice that `emph` is converted to Markdown, but in some cases it is redundant (e.g. when marking the final dot as italic).
 
-- note values are trimmed and prepended by the required number of pipes to represent their section.
-- ancient note is not in apparatus. As it belongs to a different domain, it should be placed on a different layer. Usually the ancient note would have more text and eventually its context. Here instead we just have variants in no particular context.
+As for modeling, a general point should be stressed here: from an abstract point of view, one could argue that the models represented by XML and JSON are logically similar; maybe JSON is less verbose, but both represent the same data.
 
-## User Interface
+Yet, there are at least a couple of substantial differences:
 
-If you are not seeing these mockups, please use a Plantuml-enabled editor extension (VSCode has it), or just copy and paste the plantuml code [here](https://plantuml.com/index).
-
-General tab:
-
-```plantuml
-@startuml
-salt
-{
-    {
-    { location* | "1.2" }
-    { tag | "margin-note" }
-    ---
-    { entries*: | [add] }
-    }
-    {#
-    [edit] | [up] | [dn] | [del] | type | value | accepted | note | grpid
-    [edit] | [up] | [dn] | [del] | type | value | accepted | note | grpid
-    }
-}
-@enduml
-```
-
-All the variants/notes are listed at the bottom. You can add a new variant/note, or edit, move, or delete an existing one. When editing/adding a variant/note, you are taken to the variant tab:
-
-```plantuml
-@startuml
-salt
-{
-    {
-        { type* | ^replacement^ }
-        { value | "value" }
-        { norm. value | "normValue" }
-        { tag | "tag" }
-        { group ID | "groupId" }
-        { note | "note text area" }
-        ---
-        { witnesses: | ^witness^ | [add] }
-        {#
-         [up] | [dn] | [del] | value | note
-         [up] | [dn] | [del] | value | note
-        }
-        ---
-        { authors: | ^author^ | [add] }
-        {#
-         [up] | [dn] | [del] | value | note
-         [up] | [dn] | [del] | value | note
-        }
-    }
-    [cancel] | [save]
-}
-@enduml
-```
-
-Here you edit all the entries properties and click `save` (or `cancel` if you don't want to save changes) to go back to the entries list in the general tab.
+- a first difference is made by their **context**: the Cadmus model is stored and edited independently, in its own *part*. Its model does not affect that of the text it refers to; nor is affected by it. In XML instead, this fragment must become part of a much larger, yet unique DOM-shaped structure, where each element must get entangled with all the others, whatever their conceptual domain or practical purpose.
+- the Cadmus model is totally **predictable**. It may well be highly nested, and include optional and/or required properties of any specific type; but its model is well defined, just as an object class in a programming language. The XML tree instead is highly variable, right because of the very lax model designed to represent any possible detail of a historical document, merging a lot of different structures all laid on the same text. In fact, unless we have constrained our document model into a highly disciplined subset of TEI, we cannot be sure about the content of each XML element: for instance, here a `note` could include just text, or a text mixed with elements like `emph` or `lb`; in turn, `emph` might include another `emph`; it even happens that a `note` includes another `note`. In theory, this opens to infinite recursion, and the only way of knowing which structures are effectively found in our documents is scanning all of them. All these documents are TEI-compliant; but this is not enough to allow us to know in advance which structures might happen to be found. We can never be sure, unless we scan all the documents; and this is fragile, as any newly added 
