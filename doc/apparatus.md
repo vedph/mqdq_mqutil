@@ -45,9 +45,28 @@ The `app` elements are rebuilt by the export process and reinjected past `div1/h
 
 ### Header
 
-The header must be processed to import thesauri for witnesses and authors. TODO: analyze.
+The header must be processed to import thesauri for witnesses and authors: from the root `TEI/teiHeader/fileDesc/sourceDesc`, we parse these elements (TODO: check if double children are ok):
 
-### Element app
+- `listBibl/listBibl`: authors.
+- `listWit/listWit`: witnesses.
+
+The deepest of the two `listBibl` contains `bibl` children, each with its ID in `@xml:id` and *text mixed* with `emph` (eventually nesting another `emph`, like in body). We are interested only in importing the ID and a descriptive text for it, so this is all what we need.
+
+The deepest of the two `listWit` contains `witness` children, modeled just like `bibl`.
+
+As for their content, it tends to be somewhat long, which in a UI hinders usability: e.g. `Excerpta ex Grilli commento in primum Ciceronis librum de inventione (saec.IV-V) = RLM (Rhetores Latini Minores), pp. 596-606 (ed. C. Halm, Lipsiae 1863)`. In a dropdown list, we would probably just read the first half of this text, otherwise the control width would grow too large. We might want to apply some summarizing algorithm to it, but this requires a discussion: we could just cut after a certain number of characters, remove portions after `=` or inside `()`, etc.
+
+The best strategy depends on the typical patterns used in the citations, and should be targeted to focus on what is most important for the users to be recognized at a glance. For instance, we could reduce the above sample to things like:
+
+- `Excerpta ex Grilli commento in primum Ciceronis librum...` cutting at about 50 characters.
+- `Excerpta ex Grilli commento... (ed. C. Halm, Lipsiae 1863)` cutting at about 30 characters from the start and appending the parenthesized tail.
+- etc...
+
+TODO: define a reduce strategy.
+
+### Body
+
+#### Element app
 
 Attributes: any app element always has either `@from` and `@to` (always in pair) or `@loc`; `@type` instead is optional, and used in less than 10% of cases:
 
@@ -60,19 +79,19 @@ Children elements:
 - `lem` and `rdg`
 - `note`: this element as a direct child of `app` has a different schema from other, deeper `note` elements.
 
-### Elements lem/rdg
+#### Elements lem/rdg
 
 These elements are variant readings; they are formally equal, the only difference being that `lem` is the chosen reading.
 
 Optionally with `@type` (in `lem` the only value seems `ancient-note` TODO: confirm), `@source` (authors; multiple tokens separated by space), `@wit` (witnesses; multiple tokens separated by space), they contain _text mixed_ with `ident` (normalized form), `add` (note section 1 or 4), `note` (note section 2 or 3).
 
-### Element add
+#### Element add
 
 Element `add` always with `@type`, contains _text mixed_ with `emph` and `lb`.
 
 When `@type` is `abstract` it refers to note section 1; when it is `intertext` it refers to note section 4.
 
-### Element note - 1 (Child of app)
+#### Element note - 1 (Child of app)
 
 Element `note` has 2 different schemas according to its location, i.e. whether it is a direct child of `app` or not.
 
@@ -91,7 +110,7 @@ When direct child of `app`, the element does *not* contain text nodes; it may ha
 </app>
 ```
 
-### Element note - 2 (Not Child of app)
+#### Element note - 2 (Not Child of app)
 
 Element `note` always has `@target`, may have `@type`, and contains _text mixed_ with `emph` and `lb`.
 
@@ -99,7 +118,7 @@ When `@type` is `operation` it refers to note section 2; when it is `details`, i
 
 The `@target` attribute contains a witness/author ID when the note refers to that witness/author.
 
-### Element emph
+#### Element emph
 
 Element `emph` always has `@style`, and may contain _text_, eventually _mixed_ with other `emph` (recursively; less than 400 cases) and `lb`. The styles are:
 
@@ -110,13 +129,13 @@ Element `emph` always has `@style`, and may contain _text_, eventually _mixed_ w
 
 The super/sub `emph` can nest italic/bold inside them.
 
-### Element ident
+#### Element ident
 
 Element `ident` always with `@n`, represents a normalized form and contains _only text_.
 
 The `@n` attribute contains the ID of the word the normalized form is derived from, and is not predictable (see below).
 
-### Element lb
+#### Element lb
 
 Element `lb` is empty.
 
@@ -159,6 +178,16 @@ Similar scenarios force us to keep the word ID, as it can be assigned in an unpr
 A possible hack could be storing the word ID with the normalized form; for instance, the normalized form `PVERI` and word ID `d001w379` might be stored as `PVERI#d001w379`. Given that the normalized form value is up to the specs of each project, this can be an acceptable hack, and saves the general model.
 
 ## Mapping to Model
+
+### Header Mapping
+
+Each XML app document provides its own list of authors and witnesses, which must be appended to a single JSON file containing all of them as thesauri. This will then be copied into the Cadmus profile file for the MQDQ database.
+
+Thus, for each `bibl` we output a thesaurus with `id`=`authors` + `.` + filename (without `-app` and extension). It contains any number of object properties with `id` and `value`.
+
+For `witness`es it is the same, except that the ID prefix is `witnesses`.
+
+### Body Mapping
 
 TODO: refactor once analysis is complete
 
