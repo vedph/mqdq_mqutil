@@ -41,35 +41,41 @@ The XML documents tree is as follows:
   - 1 `head` child with header data.
   - 1-N `app` children.
 
+The `app` elements are rebuilt by the export process and reinjected past `div1/head`, in place of all the old `app` elements.
+
+### Header
+
+The header must be processed to import thesauri for witnesses and authors. TODO: analyze.
+
 ### Element app
+
+Attributes: any app element always has either `@from` and `@to` (always in pair) or `@loc`; `@type` instead is optional, and used in less than 10% of cases:
 
 - `@from` and `@to` define a point A (when their value is equal) or a continuous range from A to B.
 - `@loc` contains multiple word IDs separated by space.
-- `@type`
-- `lem` optionally with `@source`, `@type`, `@wit`, contains text mixed with:
-  - `add`
-  - `ident`
-  - `note`
+- `@type`: TODO: meaning
+
+Children elements:
+
+- `lem` and `rdg` are variant readings; they are formally equal, the only difference being that `lem` is the chosen reading. Optionally with `@type` (TODO: meaning), `@source` (authors; multiple tokens separated by space), `@wit` (witnesses; multiple tokens separated by space), they contain *text mixed* with `ident` (normalized form), `add` (note section 1 or 4), `note` (note section 2 or 3).
 - `note`
   - `add`
   - `ident`
-  - `note`
-- `rdg` optionally with `@source`, `@type` (e.g. `ancient-note`), `@wit`, contains text (the variant reading) mixed with:
-  - `add`
-  - `ident`
-  - `note`
+  - `note`: TODO: why recursive nesting?
 
-Elements `add` and note `represent` various sections of a note; `ident` represents normalized forms.
+Elements `add` and `note` represent various sections of a note; `ident` represents normalized forms.
 
 In any context:
 
-- `add` always with `@type`, contains text mixed with `emph` and `lb`. When `@type` is `abstract` it refers to note section 1; when it is `intertext` it refers to note section 4.
-- `note` always has `@target`, may have `@type`, and contains text mixed with `emph` and `lb`. When `@type` is `operation` it refers to note section 2; when it is `details`, it refers to note section 3. The `@target` attribute contains a witness/author ID when the note refers to that witness/author.
-- `emph` always has `@style`, and may contain text or other `emph` (recursively) or `lb`.
-- `ident` always with `@n`, represents a normalized form and contains only text. The `@n` attribute contains the ID of the word the normalized form is derived from, and is not predictable (see below).
+- `add` always with `@type`, contains *text mixed* with `emph` and `lb`. When `@type` is `abstract` it refers to note section 1; when it is `intertext` it refers to note section 4.
+
+- `note` always has `@target`, may have `@type`, and contains *text mixed* with `emph` and `lb`. When `@type` is `operation` it refers to note section 2; when it is `details`, it refers to note section 3. The `@target` attribute contains a witness/author ID when the note refers to that witness/author.
+
+- `emph` always has `@style`, and may contain *text*, eventually *mixed* with other `emph` (recursively) and `lb`.
+
+- `ident` always with `@n`, represents a normalized form and contains *only text*. The `@n` attribute contains the ID of the word the normalized form is derived from, and is not predictable (see below).
+
 - `lb` is empty.
-- `@source` contains authors ID(s), separated by space.
-- `@wit` contains witness(es) ID(s), separated by space.
 
 ## Storing Word ID with the Normalized Form
 
@@ -110,6 +116,8 @@ Similar scenarios force us to keep the word ID, as it can be assigned in an unpr
 A possible hack could be storing the word ID with the normalized form; for instance, the normalized form `PVERI` and word ID `d001w379` might be stored as `PVERI#d001w379`. Given that the normalized form value is up to the specs of each project, this can be an acceptable hack, and saves the general model.
 
 ## Mapping to Model
+
+TODO: refactor once analysis is complete
 
 This section discusses the mapping between the above apparatus model and its MQDQ representation in terms of the XML DOM.
 
@@ -220,10 +228,16 @@ Model:
 
 Note values are trimmed and prepended by the required number of separator characters to represent their section. If there is only a single section, the first one, there is no seperator character, like in the ancient note above. Notice that `emph` is converted to Markdown, but in some cases it is redundant (e.g. when marking the final dot as italic).
 
+### A Remark on Sample Models
+
 As for modeling, a general point should be stressed here: from an abstract point of view, one could argue that the models represented by XML and JSON are logically similar; maybe JSON is less verbose, but both represent the same data.
 
-Yet, there are at least a couple of substantial differences:
+Yet, there are a number of substantial differences:
 
-- a first difference is made by their **context**: the Cadmus model is designed, stored and edited independently, in its own *part*. Its model does not affect that of the text it refers to; nor is affected by it. In XML instead, this fragment must become part of a much larger, yet unique DOM-shaped structure, where each element gets entangled with all the others, whatever their conceptual domain or practical purpose.
+- **context**: the Cadmus model is designed, stored and edited independently, in its own *part*. Its model does not affect that of the text it refers to; nor is affected by it. In XML instead, this fragment must become part of a much larger, yet unique DOM-shaped structure, where each element gets entangled with all the others, whatever their conceptual domain or practical purpose.
 
-- the Cadmus model is totally **predictable**. It may well be highly nested, and include optional and/or required properties of any specific type; but its model is well defined, just as an object class in a programming language. The XML tree instead is highly variable, right because of the very lax model designed to represent any possible detail of a historical document, merging a lot of different structures all laid on the same text. In fact, unless we have constrained our document model into a highly disciplined subset of TEI, we cannot be sure about the content of each XML element: for instance, here a `note` could include just text, or a text mixed with elements like `emph` or `lb`; in turn, `emph` might include another `emph`; it even happens that a `note` includes another `note`. In theory, this opens to infinite recursion, and the only way of knowing which structures are effectively found in our documents is scanning all of them. All these documents are TEI-compliant; but this is not enough to allow us to know in advance which structures might happen to be found. We can never be sure, unless we scan all the documents; and this is fragile, as any newly added document might change our empirically deduced model.
+- **content creation**: as a practical consequence, Cadmus models can be stored in a database, remotely and concurrently edited in a distributed architecture, validated and indexed in real-time, etc. XML documents instead are usually stored in a file system, and individually and locally edited.
+
+- **lax semantics**: in the XML documents, a number of elements and attributes are used with a specialized meaning, which is specific to that project. Think for instance of the different types of notes (`add` and `note`) and their attributes, which compose a multiple-section annotation with a very specific meaning. The TEI model allows such lax semantics, as it must fit any document type: TEI users do interpret the standard and adapt it to their own purposes. Yet, in this way a full understanding of the markup semantics falls outside the capabilities of the model itself, which is no more self-documented. Effectively, we need to ask the documents creators about how they used certain markup, and which meaning it conveys. In Cadmus parts, the model is much more formalized and constrained, as far as each part is targeted to one and only one conceptual domain, and is designed in a totally independent way.
+
+- **highly undetermined XML structures**: the Cadmus model is totally *predictable*. It may well be highly nested, and include optional and/or required properties of any specific type; but its model is well defined, just as an object class in a programming language. The XML tree instead is highly variable, right because of the very lax model designed to represent any possible detail of a historical document, merging a lot of different structures, all overlaid on the same text. The above XML sample turned into a Cadmus model is only one of the potentially innumerable shapes the XML tree might take. In fact, unless we have constrained our document model into a highly disciplined subset of TEI, we cannot be sure about the content of each XML element, i.e. which attributes and elements can exactly be found in each element; and whether this is true in any context where they might occur. For instance, in MQDQ apparatuses a `note` could include just text, or a text mixed with elements like `emph` or `lb`; in turn, `emph` might include another `emph`; it even happens that a `note` includes another `note`. Even in MQDQ, the schema allows for cases of potentially infinite recursion; and the only way of knowing which structures are effectively found in our documents is scanning all of them. Yet, all these documents are TEI-compliant, and conform to that model; but this is not enough to allow us to know in advance which structures might happen to be found. We can never be sure, unless we scan all the documents; and this is fragile, as any newly added document might change our empirically deduced model. This seriously hinders the development of software solutions, which for XML documents must often be tailored and thus reinvented for each specific project.
