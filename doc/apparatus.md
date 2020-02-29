@@ -50,19 +50,19 @@ The header must be processed to import thesauri for witnesses and authors: from 
 - `listBibl/listBibl`: authors.
 - `listWit/listWit`: witnesses.
 
-The deepest of the two `listBibl` contains `bibl` children, each with its ID in `@xml:id` and *text mixed* with `emph` (eventually nesting another `emph`, like in body). We are interested only in importing the ID and a descriptive text for it, so this is all what we need.
+The deepest of the two `listBibl` contains `bibl` children, each with its ID in `@xml:id` and _text mixed_ with `emph` (eventually nesting another `emph`, like in body). We are interested only in importing the ID and a descriptive text for it, so this is all what we need.
 
 The deepest of the two `listWit` contains `witness` children, modeled just like `bibl`.
 
-As for their content, it tends to be somewhat long, which in a UI hinders usability: e.g. `Excerpta ex Grilli commento in primum Ciceronis librum de inventione (saec.IV-V) = RLM (Rhetores Latini Minores), pp. 596-606 (ed. C. Halm, Lipsiae 1863)`. In a dropdown list, we would probably just read the first half of this text, otherwise the control width would grow too large. We might want to apply some summarizing algorithm to it, but this requires a discussion: we could just cut after a certain number of characters, remove portions after `=` or inside `()`, etc.
+As for their content, it tends to be somewhat long, which in a UI might hinder usability: e.g. `Excerpta ex Grilli commento in primum Ciceronis librum de inventione (saec.IV-V) = RLM (Rhetores Latini Minores), pp. 596-606 (ed. C. Halm, Lipsiae 1863)`. In a dropdown list, we could probably just read the first half of this text, otherwise the control width would grow too large. We might want to apply some summarizing algorithm to it, but this requires a discussion: we could just cut after a certain number of characters, remove portions after `=` or inside `()`, etc.
 
-The best strategy depends on the typical patterns used in the citations, and should be targeted to focus on what is most important for the users to be recognized at a glance. For instance, we could reduce the above sample to things like:
+The best reduction strategy depends on the typical patterns used in the citations, and should be targeted to focus on what is most important for the users to be recognized at a glance. For instance, we could reduce the above sample to things like:
 
 - `Excerpta ex Grilli commento in primum Ciceronis librum...` cutting at about 50 characters.
 - `Excerpta ex Grilli commento... (ed. C. Halm, Lipsiae 1863)` cutting at about 30 characters from the start and appending the parenthesized tail.
 - etc...
 
-TODO: define a reduce strategy.
+Otherwise, we could just be happy with these long labels and have them cut as needed by the UI itself. TODO: eventually define a reduce strategy.
 
 ### Body
 
@@ -95,7 +95,7 @@ When `@type` is `abstract` it refers to note section 1; when it is `intertext` i
 
 Element `note` has 2 different schemas according to its location, i.e. whether it is a direct child of `app` or not.
 
-When direct child of `app`, the element does *not* contain text nodes; it may have `@type` (14 cases, always with value `ancient-note`); and it can contain these children:
+When direct child of `app`, the element does _not_ contain text nodes; it may have `@type` (14 cases, always with value `ancient-note`); and it can contain these children:
 
 - `add`
 - `ident`: only 1 case, representing a range two words which are absent from most witnesses:
@@ -183,9 +183,28 @@ A possible hack could be storing the word ID with the normalized form; for insta
 
 Each XML app document provides its own list of authors and witnesses, which must be appended to a single JSON file containing all of them as thesauri. This will then be copied into the Cadmus profile file for the MQDQ database.
 
-Thus, for each `bibl` we output a thesaurus with `id`=`authors` + `.` + filename (without `-app` and extension). It contains any number of object properties with `id` and `value`.
+Thus, for each `bibl` we output a thesaurus with `id`=`apparatus-authors` + `.` + filename (without `-app` and extension) + `@en`, all lowercased.
 
-For `witness`es it is the same, except that the ID prefix is `witnesses`.
+The thesaurus contains any number of object properties with `id`=element's `@xml:id`, and `value`=text value of the element, eventually reduced.
+
+For `witness`es it is the same, except that the ID prefix is `apparatus-witnesses`.
+
+For instance, this entry from `VERG-eclo-app.xml`:
+
+```xml
+<witness xml:id="lw1-3" n="b">
+    Bernensis 165, olim Turonensis [<emph style="font-style:italic">MO</emph> B. 10, saec. IX 1/4]
+</witness>
+```
+
+becomes this entry in its thesaurus with ID `apparatus-witnesses.verg-eclo@en`:
+
+```json
+{
+  "id": "lw1-3",
+  "value": "Bernensis 165, olim Turonensis [MO B. 10, saec. IX 1/4]"
+}
+```
 
 ### Body Mapping
 
