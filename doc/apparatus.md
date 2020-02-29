@@ -53,7 +53,7 @@ Attributes: any app element always has either `@from` and `@to` (always in pair)
 
 - `@from` and `@to` define a point A (when their value is equal) or a continuous range from A to B.
 - `@loc` contains multiple word IDs separated by space.
-- `@type`: TODO: meaning
+- `@type`: when present, its only value is `margin-note`.
 
 Children elements:
 
