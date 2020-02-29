@@ -57,25 +57,68 @@ Attributes: any app element always has either `@from` and `@to` (always in pair)
 
 Children elements:
 
-- `lem` and `rdg` are variant readings; they are formally equal, the only difference being that `lem` is the chosen reading. Optionally with `@type` (TODO: meaning), `@source` (authors; multiple tokens separated by space), `@wit` (witnesses; multiple tokens separated by space), they contain *text mixed* with `ident` (normalized form), `add` (note section 1 or 4), `note` (note section 2 or 3).
-- `note`
-  - `add`
-  - `ident`
-  - `note`: TODO: why recursive nesting?
+- `lem` and `rdg`
+- `note`: this element as a direct child of `app` has a different schema from other, deeper `note` elements.
 
-Elements `add` and `note` represent various sections of a note; `ident` represents normalized forms.
+### Elements lem/rdg
 
-In any context:
+These elements are variant readings; they are formally equal, the only difference being that `lem` is the chosen reading.
 
-- `add` always with `@type`, contains *text mixed* with `emph` and `lb`. When `@type` is `abstract` it refers to note section 1; when it is `intertext` it refers to note section 4.
+Optionally with `@type` (in `lem` the only value seems `ancient-note` TODO: confirm), `@source` (authors; multiple tokens separated by space), `@wit` (witnesses; multiple tokens separated by space), they contain _text mixed_ with `ident` (normalized form), `add` (note section 1 or 4), `note` (note section 2 or 3).
 
-- `note` always has `@target`, may have `@type`, and contains *text mixed* with `emph` and `lb`. When `@type` is `operation` it refers to note section 2; when it is `details`, it refers to note section 3. The `@target` attribute contains a witness/author ID when the note refers to that witness/author.
+### Element add
 
-- `emph` always has `@style`, and may contain *text*, eventually *mixed* with other `emph` (recursively) and `lb`.
+Element `add` always with `@type`, contains _text mixed_ with `emph` and `lb`.
 
-- `ident` always with `@n`, represents a normalized form and contains *only text*. The `@n` attribute contains the ID of the word the normalized form is derived from, and is not predictable (see below).
+When `@type` is `abstract` it refers to note section 1; when it is `intertext` it refers to note section 4.
 
-- `lb` is empty.
+### Element note - 1 (Child of app)
+
+Element `note` has 2 different schemas according to its location, i.e. whether it is a direct child of `app` or not.
+
+When direct child of `app`, the element does *not* contain text nodes; it may have `@type` (14 cases, always with value `ancient-note`); and it can contain these children:
+
+- `add`
+- `ident`: only 1 case, representing a range two words which are absent from most witnesses:
+
+```xml
+<app from="#d049w62" to="#d049w63" xmlns="http://www.tei-c.org/ns/1.0">
+  <lem wit="#lw2-8" source="#lb2-11">immobilis haeret</lem>
+  <note>
+      <add type="intertext"><emph style="font-style:italic">haec verba non habent plurimi codices</emph></add>
+      <ident n="d049w62 d049w63"></ident>
+  </note>
+</app>
+```
+
+### Element note - 2 (Not Child of app)
+
+Element `note` always has `@target`, may have `@type`, and contains _text mixed_ with `emph` and `lb`.
+
+When `@type` is `operation` it refers to note section 2; when it is `details`, it refers to note section 3.
+
+The `@target` attribute contains a witness/author ID when the note refers to that witness/author.
+
+### Element emph
+
+Element `emph` always has `@style`, and may contain _text_, eventually _mixed_ with other `emph` (recursively; less than 400 cases) and `lb`. The styles are:
+
+- `font-style:italic`
+- `font-weight:bold`
+- `vertical-align:super;font-size:smaller`: this is used for various superscript characters: digits, space, lowercase letters, dashes, etc.
+- `vertical-align:sub;font-size:smaller`: this is used for various subscript characters.
+
+The super/sub `emph` can nest italic/bold inside them.
+
+### Element ident
+
+Element `ident` always with `@n`, represents a normalized form and contains _only text_.
+
+The `@n` attribute contains the ID of the word the normalized form is derived from, and is not predictable (see below).
+
+### Element lb
+
+Element `lb` is empty.
 
 ## Storing Word ID with the Normalized Form
 
@@ -234,10 +277,10 @@ As for modeling, a general point should be stressed here: from an abstract point
 
 Yet, there are a number of substantial differences:
 
-- **context**: the Cadmus model is designed, stored and edited independently, in its own *part*. Its model does not affect that of the text it refers to; nor is affected by it. In XML instead, this fragment must become part of a much larger, yet unique DOM-shaped structure, where each element gets entangled with all the others, whatever their conceptual domain or practical purpose.
+- **context**: the Cadmus model is designed, stored and edited independently, in its own _part_. Its model does not affect that of the text it refers to; nor is affected by it. In XML instead, this fragment must become part of a much larger, yet unique DOM-shaped structure, where each element gets entangled with all the others, whatever their conceptual domain or practical purpose.
 
 - **content creation**: as a practical consequence, Cadmus models can be stored in a database, remotely and concurrently edited in a distributed architecture, validated and indexed in real-time, etc. XML documents instead are usually stored in a file system, and individually and locally edited.
 
 - **lax semantics**: in the XML documents, a number of elements and attributes are used with a specialized meaning, which is specific to that project. Think for instance of the different types of notes (`add` and `note`) and their attributes, which compose a multiple-section annotation with a very specific meaning. The TEI model allows such lax semantics, as it must fit any document type: TEI users do interpret the standard and adapt it to their own purposes. Yet, in this way a full understanding of the markup semantics falls outside the capabilities of the model itself, which is no more self-documented. Effectively, we need to ask the documents creators about how they used certain markup, and which meaning it conveys. In Cadmus parts, the model is much more formalized and constrained, as far as each part is targeted to one and only one conceptual domain, and is designed in a totally independent way.
 
-- **highly undetermined XML structures**: the Cadmus model is totally *predictable*. It may well be highly nested, and include optional and/or required properties of any specific type; but its model is well defined, just as an object class in a programming language. The XML tree instead is highly variable, right because of the very lax model designed to represent any possible detail of a historical document, merging a lot of different structures, all overlaid on the same text. The above XML sample turned into a Cadmus model is only one of the potentially innumerable shapes the XML tree might take. In fact, unless we have constrained our document model into a highly disciplined subset of TEI, we cannot be sure about the content of each XML element, i.e. which attributes and elements can exactly be found in each element; and whether this is true in any context where they might occur. For instance, in MQDQ apparatuses a `note` could include just text, or a text mixed with elements like `emph` or `lb`; in turn, `emph` might include another `emph`; it even happens that a `note` includes another `note`. Even in MQDQ, the schema allows for cases of potentially infinite recursion; and the only way of knowing which structures are effectively found in our documents is scanning all of them. Yet, all these documents are TEI-compliant, and conform to that model; but this is not enough to allow us to know in advance which structures might happen to be found. We can never be sure, unless we scan all the documents; and this is fragile, as any newly added document might change our empirically deduced model. This seriously hinders the development of software solutions, which for XML documents must often be tailored and thus reinvented for each specific project.
+- **highly undetermined XML structures**: the Cadmus model is totally _predictable_. It may well be highly nested, and include optional and/or required properties of any specific type; but its model is well defined, just as an object class in a programming language. The XML tree instead is highly variable, right because of the very lax model designed to represent any possible detail of a historical document, merging a lot of different structures, all overlaid on the same text. The above XML sample turned into a Cadmus model is only one of the potentially innumerable shapes the XML tree might take. In fact, unless we have constrained our document model into a highly disciplined subset of TEI, we cannot be sure about the content of each XML element, i.e. which attributes and elements can exactly be found in each element; and whether this is true in any context where they might occur. For instance, in MQDQ apparatuses a `note` could include just text, or a text mixed with elements like `emph` or `lb`; in turn, `emph` might include another `emph`. Even in MQDQ, the schema allows for cases of potentially infinite recursion; and the only way of knowing which structures are effectively found in our documents is scanning all of them. Yet, all these documents are TEI-compliant, and conform to that model; but this is not enough to allow us to know in advance which structures might happen to be found. We can never be sure, unless we scan all the documents; and this is fragile, as any newly added document might change our empirically deduced model. This seriously hinders the development of software solutions, which for XML documents must often be tailored and thus reinvented for each specific project.
