@@ -93,3 +93,24 @@ Note: for Linux users, you should run the program like this:
 ```bash
 dotnet ./Mqutil.dll ...arguments...
 ```
+
+### Import Thesauri
+
+The import thesauri command is used to parse apparatus documents to extract witnesses and authors into a set of JSON thesauri.
+
+Syntax:
+
+```ps1
+.\Mqutil.exe import-thes <InputFilesMask> <OutputFilePath>
+```
+
+where:
+
+- `InputFilesMask` is the input file(s) mask.
+- `OutputFilePath` is the output file path.
+
+Sample:
+
+```ps1
+.\Mqutil.exe import-thes c:\users\dfusi\desktop\VERG-eclo-app.xml c:\users\dfusi\desktop\th.json
+```
