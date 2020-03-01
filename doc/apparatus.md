@@ -45,7 +45,7 @@ The `app` elements are rebuilt by the export process and reinjected past `div1/h
 
 ### Header
 
-The header must be processed to import thesauri for witnesses and authors. This is an import-only process, as no changes will be made to the header data; thus, nothing will be exported. It is just a way of providing human-readable lookup data (e.g. witnesses and authors names) to end users while editing text and apparatus.
+The header must be processed to import thesauri for witnesses and authors. This is an import-only process, as no changes will be made to the header data; thus, nothing will be exported. It is just a way of providing end users with human-readable lookup data (e.g. witnesses and authors names) while editing text and apparatus.
 
 From the root `TEI/teiHeader/fileDesc/sourceDesc`, we parse these elements (TODO: check if double children are ok):
 
@@ -73,10 +73,16 @@ Children elements:
 
 Ideally, the note text including the variant is split in MQDQ into these parts:
 
-1. `add @type=abstract`: section 1.
-2. `note @type=operation`: section 2.
-3. `note @type=details`: section 3.
-4. `add @type=intertext`: section 4.
+1. `add @type=abstract`: section 1 (before variant).
+2. `note @type=operation`: section 2 (before variant).
+3. `note @type=details`: section 3 (after variant).
+4. `add @type=intertext`: section 4 (after variant).
+
+The target model `note` is a unique string where a divider character (backtick) is used to end each section. For the sake of readability, here I use `|` to represent this divider character.
+
+Thus, `one || two | three` means that section 1 = `one`, section 2 is not present, section 3 = `two`, section 4 = `three`.
+
+Note values are trimmed, assuming that (TODO: confirm) we must add a whitespace before any after-value, or after any before-value.
 
 #### Elements lem or rdg
 
@@ -254,7 +260,7 @@ Attributes:
 
 Content:
 
-- the first *child text node* is the entry's `value`. If no such node, it's a note entry. There should be no more than 0 or 1 such node text children, excluding whitespace-only or empty nodes. TODO: confirm.
+- the first _child text node_ is the entry's `value`. If no such node, it's a note entry. There should be no more than 0 or 1 such node text children, excluding whitespace-only or empty nodes. TODO: confirm.
 - `ident`, `add`, `note`.
 
 #### Mapping ident
@@ -285,18 +291,32 @@ Content:
 #### Mapping Text Mixed with emph/lb
 
 1. recursively replace each `emph` with the corresponding Markdown text.
-2. replace each `lb` with some unique string like `$$`.
+2. replace each `lb` with some unique string like e.g. `$$`. This is required rather than directly replacing it with a LF, because there might be text nodes with LF inside the element (because of indentation). Thus, we replace it with a temporary placeholder, process these nodes, and finally replace the placeholder with LF.
 3. append all the sibling text nodes in their order.
 4. normalize whitespaces flattening them into a single space and trimming.
 5. replace `$$` with LF.
 
-#### Handling Notes
+## Import Specs Summary
 
-The target model `note` is a unique string where a divider character (backtick) is used to end each section. For the sake of readability, here I use `|` to represent this divider character.
+This summarizes the above discussion.
 
-Thus, `one || two | three` means that section 1 = `one`, section 2 is not present, section 3 = `two`, section 4 = `three`.
+- `app` -> *fragment*:
+  - attributes: `@from`+`@to` or `@loc`; in the latter case, clone the fragment for each location and log it.
+  - content: `lem`, `rdg`, `note`.
 
-Note values are trimmed, assuming that (TODO: confirm) we must add a whitespace before any after-value, or after any before-value.
+- `lem` or `rdg` -> apparatus *entry*:
+  - `@type` -> *tag*.
+  - `@source` -> *authors* (multiple).
+  - `@wit` -> *witnesses* (multiple).
+  - text -> *value*.
+- `note` -> apparatus *entry* (note):
+  - `@type` -> *tag*.
+
+Descendant elements of `lem`, `rdg`, or `note`; I mark with ET the elements whose content is text mixed with `emph` and/or `lb`:
+
+- `ident` -> *normValue* (multiple, each with `@n`).
+- `add` (ET) -> *note* section 1 (`@type`=`abstract`) or 4 (`@type`=`intertext`).
+- `note` (ET) -> *note* section 2 (`@type`=`operation`) or 3 (`@type`=`details`); if `@target` is present, it refers the note to the corresponding author/witness.
 
 ## Samples
 
