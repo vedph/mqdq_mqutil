@@ -71,7 +71,14 @@ Children elements:
 - `lem` and `rdg`
 - `note`: this element as a direct child of `app` has a different schema from other, deeper `note` elements.
 
-#### Elements lem/rdg
+Ideally, the note text including the variant is split in MQDQ into these parts:
+
+1. `add @type=abstract`: section 1.
+2. `note @type=operation`: section 2.
+3. `note @type=details`: section 3.
+4. `add @type=intertext`: section 4.
+
+#### Elements lem or rdg
 
 These elements are variant readings; they are formally equal, the only difference being that `lem` is the chosen reading.
 
@@ -220,26 +227,55 @@ TODO: refactor once analysis is complete
 
 This section discusses the mapping between the above apparatus model and its MQDQ representation in terms of the XML DOM.
 
-Each `app` element corresponds to a **fragment**. Its mapping is as follows:
+#### Mapping app
+
+Each `app` element corresponds to a **fragment**; `app` with `@loc` will be duplicated for each additional location.
+
+Attributes:
 
 - `app/@from @to`: `location`. The location is recalculated according to the Cadmus coordinates system and the corresponding base text. The original location for export will be retrieved from the metadata of the base text tiles.
 - `app/@loc`: `location`. In this case the value of the `loc` attribute contains 2 or more IDs representing a non-continuous range. This is modeled into Cadmus as distinct entries, all belonging to the same group. Thus, in this case we will map a fragment for each single location in loc.
 - `app/@type`: copied in `tag` as it is. This way we will be able to export it back.
 
-As for **variants**:
+#### Mapping app/lem or app/rdg
 
-- `app/lem` is the accepted variant, i.e. it is modeled like any other variants, with the only difference that its accepted property is true.
-- `app/rdg*`: 0 or more readings, each mapped to a variant.
+Elements `app/lem` or `app/rdg` are each mapped to an **apparatus entry**, accepted for `lem`.
 
-In both cases, their subtree is mapped as follows (in what follows I represent `lem` or `rdg` with the generic `P`=parent name):
+TODO: determine entry type: hypothesis: it's a note if has no (non-ws) text child node; else replacement?
 
-- `app/P/@type`: copy into `tag` as it is. TODO: type=ancient-note
-- `app/P/rdg/` text value: the unique child text node of `rdg` is its `value`. I assume there is only 1 such child text node.
+Attributes:
+
+- `@type`: copy into `tag` as it is.
+- `@source`: split value at space and store in `authors`, removing the `#` prefix.
+- `@wit`: split at space and store in `witnesses`, removing the `#` prefix.
+
+Content:
+
+- the first *child text node* is the entry's `value`. If no such node, it's a note entry. There should be no more than 0 or 1 such node text children, excluding whitespace-only or empty nodes. TODO: confirm.
+
+- `ident`: append to `normValue` (using space as values delimiter) with its `@n` prefixed with `#`.
+- `add`: note section 1 if `@type`=`abstract`, section 4 if `@type`=`intertext`.
+- `note`: note section 2 (`@type`=`operation`) or 3 (`@type`=`intertext`).
+
+#### Mapping app/note
+
+A note as the direct child of `app` is an **apparatus note entry**.
+
+Attributes:
+
+- optional `@type` in `tag`.
+
+Content:
+
+- `add`: as above for `app/lem/add` or `app/rdg/add`.
+- `ident`: as above for `app/lem/ident` or `app/rdg/ident`.
+
+---
+TODO:
 
 - `app/P/rdg/ident/`: its text value is the `normValue`. Usually there is just a 1:1 relationship with the lemma. Yet, in some cases it may happen that a different number of words are involved; for instance, when 2 words correspond to a single word. In this case, these 2 words will have the same ID in their `n` attribute. TODO: details and example
 
-- `app/P/@wit`: witnesses. Split at space and store in `witnesses`, removing the `#` prefix.
-- `app/P/@source`: sources. Split at space and store in `authors`, removing the `#` prefix.
+- `app/P/@wit`: witnesses.
 
 - `app/P/add @type=abstract`: `note` section 1.
 - `app/P/note @type=operation`: `note` section 2.
