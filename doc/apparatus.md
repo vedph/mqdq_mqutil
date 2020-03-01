@@ -177,7 +177,14 @@ Each XML app document provides its own list of authors and witnesses, which must
 
 Thus, for each `bibl` we output a thesaurus with `id`=`apparatus-authors` + `.` + filename (without `-app` and extension) + `@en`, all lowercased.
 
-The thesaurus contains any number of object properties with `id`=element's `@xml:id`, and `value`=text value of the element, eventually reduced.
+The thesaurus contains any number of object properties with `id`=element's `@xml:id`, and `value`=text value of the element, eventually reduced. If the element has `@ref`, prepend `@n` to its value, which might even be empty, like:
+
+```xml
+<bibl xml:id="lb1-38" ref="bibl:b1043" n="Petron."></bibl>
+<bibl xml:id="lb1-43" ref="bibl:b1092" n="Prob. cath. gramm.">
+    , pp. 3-43.
+</bibl>
+```
 
 For `witness`es it is the same, except that the ID prefix is `apparatus-witnesses`.
 

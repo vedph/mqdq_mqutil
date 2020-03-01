@@ -35,8 +35,6 @@ namespace Mq.Migration
 
         private string ReduceLabel(string label)
         {
-            // flatten and normalize whitespaces
-            label = _wsRegex.Replace(label, " ").Trim();
             if (label.Length <= _options.MaxLength) return label;
 
             // extract tail
@@ -67,14 +65,16 @@ namespace Mq.Migration
             foreach (XElement child in sourceElem
                 .Elements(XmlHelper.TEI + (authors? "bibl" : "witness")))
             {
+                string value = _wsRegex.Replace(child.Value, " ").Trim();
+
+                // prepend @n if @ref
+                if (child.Attribute("ref") != null)
+                    value = child.Attribute("n").Value + value;
+
                 var entry = new ThesaurusEntry(
                     child.Attribute(XmlHelper.XML + "id").Value,
-                    ReduceLabel(child.Value));
-                if (entry.Value.Length == 0)
-                {
-                    Logger?.LogWarning(
-                        $"Empty entry for ID {entry.Id} in document {id}");
-                }
+                    ReduceLabel(value));
+
                 thesaurus.AddEntry(entry);
             }
 
