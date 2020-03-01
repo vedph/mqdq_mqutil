@@ -11,6 +11,7 @@ namespace Mq.Migration
     public sealed class XmlThesaurusParser : IHasLogger
     {
         private readonly TextCutterOptions _options;
+        private readonly Regex _tailRegex;
         private readonly Regex _wsRegex;
 
         public XmlThesaurusParser()
@@ -23,6 +24,7 @@ namespace Mq.Migration
                 MinusLimit = 5,
                 PlusLimit = 5
             };
+            _tailRegex = new Regex(@"\s*(?<p>\([^)]+\))|(?<p>\[[^]]+\])\s*$");
             _wsRegex = new Regex(@"\s+");
         }
 
@@ -33,10 +35,27 @@ namespace Mq.Migration
 
         private string ReduceLabel(string label)
         {
+            // flatten and normalize whitespaces
             label = _wsRegex.Replace(label, " ").Trim();
-            int i = label.LastIndexOf('[');
+            if (label.Length <= _options.MaxLength) return label;
+
+            // extract tail
+            string tail = "";
+            Match m = _tailRegex.Match(label);
+            if (m.Success)
+            {
+                tail = m.Groups[1].Value;
+                int tailLen = tail.Length;
+                tail = TextCutter.Cut(tail, _options);
+                if (tail.Length < tailLen)
+                    tail += tail[1] == '[' ? ']' : ')';
+
+                label = label.Substring(0, m.Index);
+            }
+
             string head = TextCutter.Cut(label, _options);
-            return i > -1 ? head + (label.Substring(i)) : head;
+
+            return head + (tail.Length > 0? (" " + tail) : "");
         }
 
         private Thesaurus ParseSource(XElement sourceElem, string id,

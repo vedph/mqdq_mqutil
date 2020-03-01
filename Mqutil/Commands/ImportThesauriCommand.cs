@@ -81,10 +81,13 @@ namespace Mqutil.Commands
                 writer.WriteLine("[");
 
                 // for each input document
-                foreach (string filePath in Directory.GetFiles(
+                string[] files = Directory.GetFiles(
                     Path.GetDirectoryName(_inputFileMask),
                     Path.GetFileName(_inputFileMask))
-                    .OrderBy(s => s))
+                    .OrderBy(s => s)
+                    .ToArray();
+
+                foreach (string filePath in files)
                 {
                     // load document
                     string inputFileName = Path.GetFileNameWithoutExtension(
@@ -111,7 +114,9 @@ namespace Mqutil.Commands
                             th.Entries.Add(entry);
 
                         string json = JsonSerializer.Serialize(th, options);
-                        writer.WriteLine(json);
+                        writer.Write(json);
+                        writer.WriteLine(i == 0 || inputFileCount + 1 < files.Length ?
+                            "," : "");
                     }
                 }
                 writer.WriteLine("]");

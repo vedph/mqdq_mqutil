@@ -56,16 +56,6 @@ The deepest of the two `listBibl` contains `bibl` children, each with its ID in 
 
 The deepest of the two `listWit` contains `witness` children, modeled just like `bibl`.
 
-As for their content, it tends to be somewhat long, which in a UI might hinder usability: e.g. `Excerpta ex Grilli commento in primum Ciceronis librum de inventione (saec.IV-V) = RLM (Rhetores Latini Minores), pp. 596-606 (ed. C. Halm, Lipsiae 1863)`. In a dropdown list, we could probably just read the first half of this text, otherwise the control width would grow too large. We might want to apply some summarizing algorithm to it, but this requires a discussion: we could just cut after a certain number of characters, remove portions after `=` or inside `()`, etc.
-
-The best reduction strategy depends on the typical patterns used in the citations, and should be targeted to focus on what is most important for the users to be recognized at a glance. For instance, we could reduce the above sample to things like:
-
-- `Excerpta ex Grilli commento in primum Ciceronis librum...` cutting at about 50 characters.
-- `Excerpta ex Grilli commento... (ed. C. Halm, Lipsiae 1863)` cutting at about 30 characters from the start and appending the parenthesized tail.
-- etc...
-
-Otherwise, we could just be happy with these long labels and have them cut as needed by the UI itself. TODO: eventually define a reduce strategy.
-
 ### Body
 
 #### Element app
@@ -207,6 +197,15 @@ becomes this entry in its thesaurus with ID `apparatus-witnesses.verg-eclo@en`:
   "value": "Bernensis 165, olim Turonensis [MO B. 10, saec. IX 1/4]"
 }
 ```
+
+The thesaurus values tend to be somewhat long, which in a UI might hinder usability: e.g. `Excerpta ex Grilli commento in primum Ciceronis librum de inventione (saec.IV-V) = RLM (Rhetores Latini Minores), pp. 596-606 (ed. C. Halm, Lipsiae 1863)`. In a dropdown list, we could probably just read the first half of this text, otherwise the control width would grow too large. We might want to apply some summarizing algorithm to it.
+
+The best reduction strategy depends on the typical patterns used in the citations, and should be targeted to focus on what is most important for the users to be recognized at a glance. For instance, currently we apply this strategy:
+
+- cut at the best location at about 30 characters from the start;
+- if the value ends with `)` or `]`, append the parenthesized text, cutting it too if it exceeds 30 characters.
+
+For instance, this results in `Excerpta ex Grilli commento... (ed. C. Halm, Lipsiae 1863)` from the above sample text.
 
 ### Body Mapping
 
