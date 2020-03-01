@@ -223,8 +223,6 @@ For instance, this results in `Excerpta ex Grilli commento... (ed. C. Halm, Lips
 
 ### Body Mapping
 
-TODO: refactor once analysis is complete
-
 This section discusses the mapping between the above apparatus model and its MQDQ representation in terms of the XML DOM.
 
 #### Mapping app
@@ -237,9 +235,14 @@ Attributes:
 - `app/@loc`: `location`. In this case the value of the `loc` attribute contains 2 or more IDs representing a non-continuous range. This is modeled into Cadmus as distinct entries, all belonging to the same group. Thus, in this case we will map a fragment for each single location in loc.
 - `app/@type`: copied in `tag` as it is. This way we will be able to export it back.
 
-#### Mapping app/lem or app/rdg
+Content:
 
-Elements `app/lem` or `app/rdg` are each mapped to an **apparatus entry**, accepted for `lem`.
+- `lem`, `rdg`
+- `note`
+
+#### Mapping lem or rdg
+
+Elements `lem` or `rdg` are each mapped to an **apparatus entry**, accepted for `lem`.
 
 TODO: determine entry type: hypothesis: it's a note if has no (non-ws) text child node; else replacement?
 
@@ -252,10 +255,19 @@ Attributes:
 Content:
 
 - the first *child text node* is the entry's `value`. If no such node, it's a note entry. There should be no more than 0 or 1 such node text children, excluding whitespace-only or empty nodes. TODO: confirm.
+- `ident`, `add`, `note`.
 
-- `ident`: append to `normValue` (using space as values delimiter) with its `@n` prefixed with `#`.
-- `add`: note section 1 if `@type`=`abstract`, section 4 if `@type`=`intertext`.
-- `note`: note section 2 (`@type`=`operation`) or 3 (`@type`=`intertext`).
+#### Mapping ident
+
+Append to `normValue` (using space as values delimiter) with its `@n` prefixed with `#`. This accounts for several `ident` elements under the same parent element.
+
+#### Mapping add
+
+Map to note section 1 (`@type`=`abstract`) or 4 (`@type`=`intertext`). Log error if the target section already exists.
+
+#### Mapping note
+
+Map to note section 2 (`@type`=`operation`) or 3 (`@type`=`intertext`). Log error if the target section already exists.
 
 #### Mapping app/note
 
@@ -270,37 +282,21 @@ Content:
 - `add`: as above for `app/lem/add` or `app/rdg/add`.
 - `ident`: as above for `app/lem/ident` or `app/rdg/ident`.
 
----
-TODO:
+#### Mapping Text Mixed with emph/lb
 
-- `app/P/rdg/ident/`: its text value is the `normValue`. Usually there is just a 1:1 relationship with the lemma. Yet, in some cases it may happen that a different number of words are involved; for instance, when 2 words correspond to a single word. In this case, these 2 words will have the same ID in their `n` attribute. TODO: details and example
+1. recursively replace each `emph` with the corresponding Markdown text.
+2. replace each `lb` with some unique string like `$$`.
+3. append all the sibling text nodes in their order.
+4. normalize whitespaces flattening them into a single space and trimming.
+5. replace `$$` with LF.
 
-- `app/P/@wit`: witnesses.
+#### Handling Notes
 
-- `app/P/add @type=abstract`: `note` section 1.
-- `app/P/note @type=operation`: `note` section 2.
-- `app/P/note @type=details`: `note` section 3.
-- `app/P/add @type=intertext`: `note` section 4.
+The target model `note` is a unique string where a divider character (backtick) is used to end each section. For the sake of readability, here I use `|` to represent this divider character.
 
-The target of a note is specified by its `target` attribute, always present.
+Thus, `one || two | three` means that section 1 = `one`, section 2 is not present, section 3 = `two`, section 4 = `three`.
 
-Here `note` is a unique string where a divider character (can we use `|`??) is used to end each section. Thus, `one || two | three` means that section 1 = `one`, section 2 is not present, section 3 = `two`, section 4 = `three`.
-
-Note values are trimmed, assuming that (??) we must add a whitespace before any after-value, or after any before-value.
-
-Any of the note elements (`add`/`note`) can have mixed content where the only allowed child element is `emph` representing formatting. Its formatting is mapped from `@style` as follows:
-
-- `font-style:italic`: italic. This text is wrapped in `_` (Markdown; I suggest `_` rather than `*` as I suppose the asterisk might happen to occur in its proper value).
-- `font-weight:bold`: bold. This text is wrapped in `__` (Markdown, as above).
-
-I assume that (??):
-
-- no other styles are present.
-- no other child element is present in `note`.
-
-As for these properties, they are not directly mapped but calculated:
-
-- `type`: TODO: type
+Note values are trimmed, assuming that (TODO: confirm) we must add a whitespace before any after-value, or after any before-value.
 
 ## Samples
 
