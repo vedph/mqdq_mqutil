@@ -47,7 +47,7 @@ The `app` elements are rebuilt by the export process and reinjected past `div1/h
 
 The header must be processed to import thesauri for witnesses and authors. This is an import-only process, as no changes will be made to the header data; thus, nothing will be exported. It is just a way of providing end users with human-readable lookup data (e.g. witnesses and authors names) while editing text and apparatus.
 
-From the root `TEI/teiHeader/fileDesc/sourceDesc`, we parse these elements (TODO: check if double children are ok):
+From the root `TEI/teiHeader/fileDesc/sourceDesc`, we parse these elements:
 
 - `listBibl/listBibl`: authors.
 - `listWit/listWit`: witnesses.
