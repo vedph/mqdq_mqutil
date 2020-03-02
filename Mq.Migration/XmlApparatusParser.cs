@@ -27,7 +27,6 @@ namespace Mq.Migration
         /// <returns>Apparatus layer parts.</returns>
         /// <exception cref="ArgumentNullException">doc or id or textIndex
         /// </exception>
-        /// <exception cref="NotImplementedException"></exception>
         public IEnumerable<TiledTextLayerPart<ApparatusLayerFragment>> Parse(
             XDocument doc, string id, JsonTextIndex textIndex)
         {
@@ -40,8 +39,26 @@ namespace Mq.Migration
                 .Element(XmlHelper.TEI + "body")
                 .Element(XmlHelper.TEI + "div1");
 
+            // app
             foreach (XElement appElem in divElem.Elements(XmlHelper.TEI + "app"))
             {
+                // lem/rdg/note
+                foreach (XElement child in appElem.Elements())
+                {
+                    switch (child.Name.LocalName)
+                    {
+                        case "lem":
+                            break;
+                        case "rdg":
+                            break;
+                        case "note":
+                            break;
+                        default:
+                            Logger?.LogError("Unexpected element {ElementName} in app",
+                                child.Name.LocalName);
+                            break;
+                    }
+                }
                 // TODO
             }
             throw new NotImplementedException();
