@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,12 @@ namespace Mqutil
         {
             try
             {
+                Log.Logger = new LoggerConfiguration()
+                    .MinimumLevel.Debug()
+                    .Enrich.FromLogContext()
+                    .WriteTo.File("mqutil-log.txt", rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
+
                 Console.OutputEncoding = Encoding.Unicode;
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();

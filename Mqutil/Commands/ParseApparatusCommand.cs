@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Logging;
 using Mq.Migration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Serilog;
 using System;
 using System.IO;
 using System.Linq;
@@ -111,8 +113,13 @@ namespace Mqutil.Commands
                 $"Output: {_outputDir}\n" +
                 $"Max items per file: {_maxItemPerFile}\n");
 
-            XmlApparatusParser parser = new XmlApparatusParser();
-            // TODO: logger
+            ILoggerFactory loggerFactory = new LoggerFactory();
+            loggerFactory.AddSerilog(Log.Logger);
+            XmlApparatusParser parser = new XmlApparatusParser
+            {
+                Logger = loggerFactory.CreateLogger("parse-app")
+            };
+
             int inputFileCount = 0;
             int totalItemCount = 0;
             StreamWriter writer = null;
@@ -122,6 +129,7 @@ namespace Mqutil.Commands
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 WriteIndented = true
             };
+
             if (!Directory.Exists(_outputDir))
                 Directory.CreateDirectory(_outputDir);
 
