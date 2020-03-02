@@ -16,6 +16,8 @@ namespace Mq.Migration
     /// </summary>
     public sealed class XmlApparatusParser : IHasLogger
     {
+        private const char NOTE_SECT_SEP = '`';
+
         private JsonTextIndex _textIndex;
         private string _userId;
 
@@ -164,10 +166,77 @@ namespace Mq.Migration
             return content;
         }
 
+        private void AddNoteToWitOrSource(string note, ApparatusAnnotatedValue target)
+        {
+            if (!string.IsNullOrEmpty(target.Note))
+            {
+                Logger?.LogError(
+                    $"Note \"{target.Note}\" of {target.Value} overwritten by \"{note}\"");
+            }
+            target.Note = note;
+        }
+
         private void AddContentToEntry(XmlApparatusVarContent content,
             ApparatusEntry entry)
         {
-            // TODO
+            // ident's
+            if (content.Idents.Count > 0)
+                entry.NormValue = string.Join(" ", content.Idents);
+
+            // notes
+            if (content.Notes.Count > 0)
+            {
+                // corner case: only note section 1
+                if (content.Notes.Count == 1
+                    && content.Notes[0].SectionId == 1
+                    && content.Notes[0].Target == null)
+                {
+                    entry.Note = content.Notes[0].Value;
+                    return;
+                }
+
+                // first process wit/source notes
+                foreach (XmlApparatusNote note in content.Notes
+                    .Where(n => n.Target != null))
+                {
+                    ApparatusAnnotatedValue target =
+                        entry.Witnesses.Find(w => w.Value == note.Target);
+                    if (target != null)
+                    {
+                        AddNoteToWitOrSource(note.Value, target);
+                        continue;
+                    }
+                    target = entry.Authors.Find(a => a.Value == note.Target);
+                    if (target != null)
+                        AddNoteToWitOrSource(note.Value, target);
+                    else Logger?.LogError(
+                        $"Target {note.Target} for note \"{note.Value}\" not found");
+                }
+
+                // then process untargeted notes
+                StringBuilder sb = new StringBuilder();
+                int curSect = 1;
+                HashSet<int> sections = new HashSet<int>();
+
+                foreach (XmlApparatusNote note in content.Notes
+                    .Where(n => n.Target == null)
+                    .OrderBy(n => n.SectionId))
+                {
+                    if (sections.Contains(note.SectionId))
+                    {
+                        Logger?.LogError(
+                            $"Note section {note.SectionId} overwritten by \"{note.Value}\"");
+                    }
+                    while (curSect < note.SectionId)
+                    {
+                        sb.Append(NOTE_SECT_SEP);
+                        curSect++;
+                    }
+                    sb.Append(note.Value);
+                    sections.Add(note.SectionId);
+                }
+                if (sb.Length > 0) entry.Note = sb.ToString();
+            }
         }
 
         private TiledTextLayerPart<ApparatusLayerFragment> CreatePart(string docId)
@@ -204,12 +273,12 @@ namespace Mq.Migration
 
             var part = CreatePart(id);
 
-            // app
             foreach (XElement appElem in divElem.Elements(XmlHelper.TEI + "app"))
             {
-                // @type -> tag
+                // app -> fragment
                 ApparatusLayerFragment fr = new ApparatusLayerFragment
                 {
+                    // @type -> tag
                     Tag = appElem.Attribute("type")?.Value
                 };
                 string itemId = null;
@@ -243,17 +312,21 @@ namespace Mq.Migration
                     part.ItemId = itemId;
                 }
 
-                // lem, rdg, note
+                part.AddFragment(fr);
+
+                // app content: lem, rdg, note
                 foreach (XElement child in appElem.Elements())
                 {
-                    // @type -> tag
+                    // each child element (lem or rdg or note) is an entry
                     ApparatusEntry entry = new ApparatusEntry
                     {
+                        // @type -> tag
                         Tag = child.Attribute("type")?.Value
                     };
                     fr.Entries.Add(entry);
-                    XmlApparatusVarContent content = null;
 
+                    // parse its content
+                    XmlApparatusVarContent content;
                     switch (child.Name.LocalName)
                     {
                         case "lem":
@@ -277,7 +350,6 @@ namespace Mq.Migration
                             break;
                     }
                 }
-                // TODO
             } // app
 
             if (part.Fragments.Count > 0) yield return part;
