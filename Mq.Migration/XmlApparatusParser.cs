@@ -99,6 +99,77 @@ namespace Mq.Migration
             return Tuple.Create(itemId, locs.ToArray());
         }
 
+        private void ParseWit(string wit, ApparatusEntry entry)
+        {
+            if (string.IsNullOrEmpty(wit)) return;
+
+            foreach (string token in wit.Split(new[] { ' ' },
+                StringSplitOptions.RemoveEmptyEntries))
+            {
+                entry.Witnesses.Add(new ApparatusAnnotatedValue
+                {
+                    Value = token.Substring(1)
+                });
+            }
+        }
+
+        private void ParseSource(string source, ApparatusEntry entry)
+        {
+            if (string.IsNullOrEmpty(source)) return;
+
+            foreach (string token in source.Split(new[] { ' ' },
+                StringSplitOptions.RemoveEmptyEntries))
+            {
+                entry.Authors.Add(new ApparatusAnnotatedValue
+                {
+                    Value = token.Substring(1)
+                });
+            }
+        }
+
+        private XmlApparatusVarContent ParseVariantContent(XElement variant)
+        {
+            XmlApparatusVarContent content = new XmlApparatusVarContent
+            {
+                Logger = Logger
+            };
+
+            // scan children elements
+            foreach (XElement child in variant.Elements())
+            {
+                switch (child.Name.LocalName)
+                {
+                    case "ident":
+                        content.AddIdent(child);
+                        break;
+                    case "add":
+                    case "note":
+                        content.AddAnnotation(child);
+                        break;
+                    default:
+                        Logger?.LogError("Unexpected element in variant content:" +
+                            " {ElementName}", child.Name);
+                        break;
+                }
+            }
+
+            // get direct text
+            StringBuilder sb = new StringBuilder();
+            foreach (XText txt in variant.Nodes().OfType<XText>())
+            {
+                sb.Append(txt.Value);
+            }
+            if (sb.Length > 0) content.Value = sb.ToString();
+
+            return content;
+        }
+
+        private void AddContentToEntry(XmlApparatusVarContent content,
+            ApparatusEntry entry)
+        {
+            // TODO
+        }
+
         private TiledTextLayerPart<ApparatusLayerFragment> CreatePart(string docId)
         {
             return new TiledTextLayerPart<ApparatusLayerFragment>
@@ -123,9 +194,9 @@ namespace Mq.Migration
         {
             if (doc == null) throw new ArgumentNullException(nameof(doc));
             if (id == null) throw new ArgumentNullException(nameof(id));
-            if (textIndex == null) throw new ArgumentNullException(nameof(textIndex));
+            _textIndex = textIndex ??
+                throw new ArgumentNullException(nameof(textIndex));
 
-            _textIndex = textIndex;
             XElement divElem = doc.Root
                 .Element(XmlHelper.TEI + "text")
                 .Element(XmlHelper.TEI + "body")
@@ -172,7 +243,7 @@ namespace Mq.Migration
                     part.ItemId = itemId;
                 }
 
-                // lem/rdg/note
+                // lem, rdg, note
                 foreach (XElement child in appElem.Elements())
                 {
                     // @type -> tag
@@ -180,6 +251,8 @@ namespace Mq.Migration
                     {
                         Tag = child.Attribute("type")?.Value
                     };
+                    fr.Entries.Add(entry);
+                    XmlApparatusVarContent content = null;
 
                     switch (child.Name.LocalName)
                     {
@@ -187,11 +260,16 @@ namespace Mq.Migration
                             entry.IsAccepted = true;
                             goto case "rdg";
                         case "rdg":
-                            // TODO
+                            // @wit @source
+                            ParseWit(child.Attribute("wit")?.Value, entry);
+                            ParseSource(child.Attribute("source")?.Value, entry);
+                            content = ParseVariantContent(child);
+                            AddContentToEntry(content, entry);
                             break;
                         case "note":
                             entry.Type = ApparatusEntryType.Note;
-                            // TODO
+                            content = ParseVariantContent(child);
+                            AddContentToEntry(content, entry);
                             break;
                         default:
                             Logger?.LogError("Unexpected element {ElementName} in app",
