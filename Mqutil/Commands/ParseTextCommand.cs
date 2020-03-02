@@ -126,7 +126,7 @@ namespace Mqutil.Commands
                 int itemCount = 0, outputFileCount = 0;
 
                 foreach (IItem item in parser.Parse(
-                    doc, Path.GetFileName(filePath)))
+                    doc, Path.GetFileNameWithoutExtension(filePath)))
                 {
                     if (++itemCount % 10 == 0) Console.Write('.');
 

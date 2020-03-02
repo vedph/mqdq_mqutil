@@ -2,7 +2,7 @@
   "profiles": {
     "Mqutil": {
       "commandName": "Project",
-      "commandLineArgs": "import-thes c:\\users\\dfusi\\desktop\\verg*.xml c:\\users\\dfusi\\desktop\\th.json"
+      "commandLineArgs": "parse-text c:\\users\\dfusi\\desktop\\verg-eclo.xml c:\\users\\dfusi\\desktop\\d\\"
     }
   }
 }
