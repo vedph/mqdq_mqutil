@@ -121,7 +121,7 @@ namespace Mqutil.Commands
             };
 
             int inputFileCount = 0;
-            int totalItemCount = 0;
+            int totalPartCount = 0;
             StreamWriter writer = null;
             JsonSerializerOptions options = new JsonSerializerOptions
             {
@@ -160,8 +160,7 @@ namespace Mqutil.Commands
                 // parse
                 int partCount = 0, outputFileCount = 0;
 
-                foreach (var part in parser.Parse(
-                    doc, Path.GetFileNameWithoutExtension(filePath), _textIndex))
+                foreach (var part in parser.Parse(doc, inputFileName, _textIndex))
                 {
                     if (++partCount % 10 == 0) Console.Write('.');
 
@@ -180,16 +179,15 @@ namespace Mqutil.Commands
                     }
 
                     // dump part into it
-                    string json = JsonConvert.SerializeObject(
-                        part, jsonSettings);
+                    string json = JsonConvert.SerializeObject(part, jsonSettings);
                     writer.WriteLine(json + ",");
                 }
-                totalItemCount += partCount;
+                totalPartCount += partCount;
                 if (writer != null) CloseOutputFile(writer);
             }
 
             Console.WriteLine($"\nInput documents: {inputFileCount}");
-            Console.WriteLine($"Output parts: {totalItemCount}");
+            Console.WriteLine($"Output parts: {totalPartCount}");
 
             return Task.CompletedTask;
         }
