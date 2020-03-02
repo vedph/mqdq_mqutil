@@ -24,16 +24,23 @@ namespace Mq.Migration
         }
 
         /// <summary>
-        /// Builds the index from the specified stream.
+        /// Clears this instance.
+        /// </summary>
+        public void Clear() => _index.Clear();
+
+        /// <summary>
+        /// Index data from the specified stream, adding them to this index.
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <exception cref="ArgumentNullException">stream</exception>
-        public void Build(Stream stream)
+        public void Index(Stream stream)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
-            _index.Clear();
-            using (JsonDocument doc = JsonDocument.Parse(stream))
+            using (JsonDocument doc = JsonDocument.Parse(stream, new JsonDocumentOptions
+            {
+                AllowTrailingCommas = true
+            }))
             {
                 // item
                 foreach (JsonElement itemElem in doc.RootElement.EnumerateArray())
@@ -100,6 +107,17 @@ namespace Mq.Migration
             ItemId = itemId;
             Y = y;
             X = x;
+        }
+
+        /// <summary>
+        /// Converts to string.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="string" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return $"{ItemId} {Y}.{X}";
         }
     }
 }

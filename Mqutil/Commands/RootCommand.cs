@@ -18,6 +18,7 @@ namespace Mqutil.Commands
             // configure all the app commands here
             app.Command("partition", c => PartitionCommand.Configure(c, options));
             app.Command("parse-text", c => ParseTextCommand.Configure(c, options));
+            app.Command("parse-app", c => ParseApparatusCommand.Configure(c, options));
             app.Command("import-thes", c => ImportThesauriCommand.Configure(c, options));
 
             app.OnExecute(() =>
