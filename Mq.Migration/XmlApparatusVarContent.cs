@@ -130,7 +130,7 @@ namespace Mq.Migration
                 Notes.Add(new XmlApparatusNote
                 {
                     SectionId = sectionId,
-                    Target = e.Attribute("target")?.Value,
+                    Target = e.Attribute("target")?.Value?.Substring(1),
                     Value = e.Value
                 });
             }
