@@ -180,14 +180,28 @@ namespace Mq.Migration
             return content;
         }
 
-        private void AddNoteToWitOrSource(string note, ApparatusAnnotatedValue target)
+        private void AddNoteToWitOrSource(IList<XmlApparatusNote> notes,
+            ApparatusAnnotatedValue target)
         {
-            if (!string.IsNullOrEmpty(target.Note))
+            int distCount = notes.Select(n => n.SectionId).Distinct().Count();
+            if (distCount != notes.Count)
             {
                 Logger?.LogError(
-                    $"Note \"{target.Note}\" of {target.Value} overwritten by \"{note}\"");
+                    $"Duplicate section(s) in notes targeting {target.Value}");
             }
-            target.Note = note;
+
+            StringBuilder sb = new StringBuilder();
+            int sectionId = 1;
+            foreach (XmlApparatusNote note in notes.OrderBy(n => n.SectionId))
+            {
+                while (sectionId < note.SectionId)
+                {
+                    sb.Append(NOTE_SECT_SEP);
+                    sectionId++;
+                }
+                sb.Append(note.Value);
+            }
+            target.Note = ApplyMarkdown(sb.ToString());
         }
 
         private string ApplyMarkdown(string text)
@@ -241,26 +255,27 @@ namespace Mq.Migration
                     return;
                 }
 
-                // first process wit/source notes
-                foreach (XmlApparatusNote note in content.Notes
-                    .Where(n => n.Target != null))
+                // first process wit/source notes, grouped by target
+                foreach (var group in from n in content.Notes
+                         where n.Target != null
+                         group n by n.Target into g
+                         select g)
                 {
                     ApparatusAnnotatedValue target =
-                        entry.Witnesses.Find(w => w.Value == note.Target);
+                        entry.Witnesses.Find(w => w.Value == group.Key);
                     if (target != null)
                     {
-                        AddNoteToWitOrSource(ApplyMarkdown(note.Value), target);
+                        AddNoteToWitOrSource(group.ToList(), target);
                         continue;
                     }
-                    target = entry.Authors.Find(a => a.Value == note.Target);
+                    target = entry.Authors.Find(a => a.Value == group.Key);
                     if (target != null)
                     {
-                        AddNoteToWitOrSource(ApplyMarkdown(note.Value), target);
+                        AddNoteToWitOrSource(group.ToList(), target);
                     }
                     else
                     {
-                        Logger?.LogError(
-                            $"Target {note.Target} for note \"{note.Value}\" not found");
+                        Logger?.LogError($"Target {group.Key} not found");
                     }
                 }
 
