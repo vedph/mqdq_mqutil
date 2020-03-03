@@ -1,6 +1,7 @@
 ﻿using Cadmus.Parts.Layers;
 using Cadmus.Philology.Parts.Layers;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,7 +94,10 @@ namespace Mq.Migration
                 StringSplitOptions.RemoveEmptyEntries))
             {
                 JsonTextIndexPayload a = _textIndex.Find(token.Substring(1));
-                if (itemId == null) itemId = a.ItemId;
+                if (itemId == null)
+                {
+                    itemId = a.ItemId;
+                }
                 else if (a.ItemId != itemId)
                 {
                     Logger?.LogError("Fragment spans two items: {Loc}", loc);
@@ -189,7 +193,6 @@ namespace Mq.Migration
                 {
                     case "/f":
                         return stack.Pop();
-                        break;
                     case "f=i":
                         stack.Push("_");
                         return "_";
@@ -227,7 +230,7 @@ namespace Mq.Migration
                     && content.Notes[0].SectionId == 1
                     && content.Notes[0].Target == null)
                 {
-                    entry.Note = content.Notes[0].Value;
+                    entry.Note = ApplyMarkdown(content.Notes[0].Value);
                     return;
                 }
 
@@ -239,14 +242,19 @@ namespace Mq.Migration
                         entry.Witnesses.Find(w => w.Value == note.Target);
                     if (target != null)
                     {
-                        AddNoteToWitOrSource(note.Value, target);
+                        AddNoteToWitOrSource(ApplyMarkdown(note.Value), target);
                         continue;
                     }
                     target = entry.Authors.Find(a => a.Value == note.Target);
                     if (target != null)
-                        AddNoteToWitOrSource(note.Value, target);
-                    else Logger?.LogError(
-                        $"Target {note.Target} for note \"{note.Value}\" not found");
+                    {
+                        AddNoteToWitOrSource(ApplyMarkdown(note.Value), target);
+                    }
+                    else
+                    {
+                        Logger?.LogError(
+                            $"Target {note.Target} for note \"{note.Value}\" not found");
+                    }
                 }
 
                 // then process untargeted notes
@@ -341,15 +349,16 @@ namespace Mq.Migration
                 }
 
                 // if the location refers to another item, change part
-                if (part.ItemId == null) part.ItemId = itemId;
+                if (part.ItemId == null)
+                {
+                    part.ItemId = itemId;
+                }
                 else if (part.ItemId != itemId)
                 {
                     if (part.Fragments.Count > 0) yield return part;
                     part = CreatePart(id);
                     part.ItemId = itemId;
                 }
-
-                part.AddFragment(fr);
 
                 // app content: lem, rdg, note
                 foreach (XElement child in appElem.Elements())
@@ -387,6 +396,20 @@ namespace Mq.Migration
                             break;
                     }
                 }
+
+                // duplicate fragment for @loc
+                if (locs != null)
+                {
+                    foreach (string loc in locs)
+                    {
+                        string json = JsonConvert.SerializeObject(fr);
+                        ApparatusLayerFragment clone =
+                            JsonConvert.DeserializeObject<ApparatusLayerFragment>(json);
+                        clone.Location = loc;
+                        part.AddFragment(clone);
+                    }
+                }
+                else part.AddFragment(fr);
             } // app
 
             if (part.Fragments.Count > 0) yield return part;
