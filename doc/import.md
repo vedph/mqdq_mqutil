@@ -75,7 +75,7 @@ The parse text command is used to parse text documents, dumping the output into 
 Syntax:
 
 ```ps1
-.\Mqutil.exe partition <InputFilesMask> <OutputDir> [-m MaxItemsPerFile]
+.\Mqutil.exe parse-text <InputFilesMask> <OutputDir> [-m MaxItemsPerFile]
 ```
 
 where:
@@ -87,7 +87,7 @@ where:
 Sample:
 
 ```ps1
-.\Mqutil.exe parse-text c:\users\dfusi\desktop\p\lvcr*.xml c:\users\dfusi\desktop\d\
+.\Mqutil.exe parse-text c:\users\dfusi\desktop\mqdq\part\VERG-eclo.xml c:\users\dfusi\desktop\mqdq\part\txt
 ```
 
 Output files will be created in the output directory, and named after the corresponding input files, plus a numeric suffix.
@@ -101,6 +101,9 @@ dotnet ./Mqutil.dll ...arguments...
 ### Parse Apparatus
 
 TODO:
+```ps1
+.\Mqutil.exe parse-app c:\users\dfusi\desktop\mqdq\part\VERG-eclo.xml c:\users\dfusi\desktop\mqdq\part\app
+```
 
 ### Import Thesauri
 
@@ -120,5 +123,5 @@ where:
 Sample:
 
 ```ps1
-.\Mqutil.exe import-thes c:\users\dfusi\desktop\VERG-eclo-app.xml c:\users\dfusi\desktop\th.json
+.\Mqutil.exe import-thes c:\users\dfusi\desktop\mqdq\VERG-eclo-app.xml c:\users\dfusi\desktop\mqdq\thesauri.json
 ```

@@ -73,7 +73,7 @@ Just launch the program without arguments to get help directions. This gets a ge
 Sample:
 
 ```ps1
-.\Mqutil.exe partition c:\users\dfusi\desktop\lvcr*.xml c:\users\dfusi\desktop\p\
+.\Mqutil.exe partition c:\users\dfusi\desktop\mqdq\VERG-eclo.xml c:\users\dfusi\desktop\mqdq\part\
 ```
 
 Note: for Linux users, you should run the program like this:
