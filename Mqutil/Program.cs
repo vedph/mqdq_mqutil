@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,10 +33,13 @@ namespace Mqutil
         {
             try
             {
+                string logFilePath = Path.Combine(
+                    Directory.GetCurrentDirectory(), "mqutil-log.txt");
+
                 Log.Logger = new LoggerConfiguration()
                     .MinimumLevel.Debug()
                     .Enrich.FromLogContext()
-                    .WriteTo.File("mqutil-log.txt", rollingInterval: RollingInterval.Day)
+                    .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day)
                     .CreateLogger();
 
                 Console.OutputEncoding = Encoding.Unicode;

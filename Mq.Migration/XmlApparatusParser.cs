@@ -23,6 +23,7 @@ namespace Mq.Migration
         private readonly Regex _bracesRegex;
         private JsonTextIndex _textIndex;
         private string _userId;
+        private int _groupNr;
 
         /// <summary>
         /// Gets or sets the user identifier to be assigned to data being
@@ -70,7 +71,7 @@ namespace Mq.Migration
                 JsonTextIndexPayload b = _textIndex.Find(to);
                 if (b == null)
                 {
-                    Logger?.LogError("Word ID {WordId} not found", from);
+                    Logger?.LogError("Word ID {WordId} not found", to);
                     return null;
                 }
                 if (b.ItemId != a.ItemId)
@@ -93,7 +94,12 @@ namespace Mq.Migration
             foreach (string token in loc.Split(new[] { ' ' },
                 StringSplitOptions.RemoveEmptyEntries))
             {
-                JsonTextIndexPayload a = _textIndex.Find(token.Substring(1));
+                JsonTextIndexPayload a = _textIndex.Find(token);
+                if (a == null)
+                {
+                    Logger?.LogError("Word ID {WordId} not found", token);
+                    return null;
+                }
                 if (itemId == null)
                 {
                     itemId = a.ItemId;
@@ -284,6 +290,18 @@ namespace Mq.Migration
             }
         }
 
+        private string BuildGroupId(List<ApparatusEntry> entries)
+        {
+            string groupId = null;
+            _groupNr++;
+
+            ApparatusEntry lemEntry = entries.Find(e => e.IsAccepted);
+            if (lemEntry?.Value != null) groupId = lemEntry.Value;
+            else groupId = entries.Find(e => e.Value != null)?.Value ?? "g";
+
+            return groupId + _groupNr;
+        }
+
         private TiledTextLayerPart<ApparatusLayerFragment> CreatePart(string docId)
         {
             return new TiledTextLayerPart<ApparatusLayerFragment>
@@ -311,6 +329,8 @@ namespace Mq.Migration
             _textIndex = textIndex ??
                 throw new ArgumentNullException(nameof(textIndex));
 
+            Logger?.LogInformation("Parsing {DocumentId}", id);
+
             XElement divElem = doc.Root
                 .Element(XmlHelper.TEI + "text")
                 .Element(XmlHelper.TEI + "body")
@@ -326,6 +346,7 @@ namespace Mq.Migration
                     // @type -> tag
                     Tag = appElem.Attribute("type")?.Value
                 };
+                _groupNr = 0;
                 string itemId = null;
                 string[] locs = null;
 
@@ -335,17 +356,39 @@ namespace Mq.Migration
                     var t = ParseFromTo(appElem);
                     itemId = t.Item1;
                     fr.Location = t.Item2;
-                    if (fr.Location == null) continue;
+                    if (fr.Location == null)
+                    {
+                        Logger?.LogError("Word IDs {WordId} not found",
+                            appElem.Attribute("from").Value + "-" +
+                            appElem.Attribute("to").Value);
+                        continue;
+                    }
+                    Logger?.LogInformation("Fragment location: {Location}",
+                        fr.Location);
                 }
                 // @loc provides multiple locations, each to be assigned
                 // to a clone of this fragment; thus, we keep the locations
                 // in locs for later use
                 else
                 {
-                    var itemIdAndlocs = ParseLoc(appElem.Attribute("loc").Value);
-                    if (itemIdAndlocs == null) continue;
+                    string loc = appElem.Attribute("loc")?.Value;
+                    if (loc == null)
+                    {
+                        Logger?.LogError("No location for app element");
+                        continue;
+                    }
+                    var itemIdAndlocs = ParseLoc(loc);
+                    if (itemIdAndlocs == null)
+                    {
+                        Logger?.LogError("Word IDs not found: " +
+                            appElem.Attribute("loc").Value);
+                        continue;
+                    }
                     itemId = itemIdAndlocs.Item1;
                     locs = itemIdAndlocs.Item2;
+
+                    Logger?.LogInformation("Fragment locations: {Location}",
+                        string.Join(" ", locs));
                 }
 
                 // if the location refers to another item, change part
@@ -400,6 +443,11 @@ namespace Mq.Migration
                 // duplicate fragment for @loc
                 if (locs != null)
                 {
+                    // assign the same group ID to all the entries with a variant
+                    string groupId = BuildGroupId(fr.Entries);
+                    foreach (var entry in fr.Entries.Where(e => e.Value != null))
+                        entry.GroupId = groupId;
+
                     foreach (string loc in locs)
                     {
                         string json = JsonConvert.SerializeObject(fr);
