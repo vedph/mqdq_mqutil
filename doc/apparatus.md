@@ -250,7 +250,7 @@ Content:
 
 Elements `lem` or `rdg` are each mapped to an **apparatus entry**, accepted for `lem`.
 
-TODO: determine entry type: hypothesis: it's a note if has no (non-ws) text child node; else replacement?
+TODO: determine entry type: hypothesis: it's a note if has no (non-ws) text child node; else replacement.
 
 Attributes:
 
@@ -288,14 +288,6 @@ Content:
 - `add`: as above for `app/lem/add` or `app/rdg/add`.
 - `ident`: as above for `app/lem/ident` or `app/rdg/ident`.
 
-#### Mapping Text Mixed with emph/lb
-
-1. recursively replace each `emph` with the corresponding Markdown text.
-2. replace each `lb` with some unique string like e.g. `$$`. This is required rather than directly replacing it with a LF, because there might be text nodes with LF inside the element (because of indentation). Thus, we replace it with a temporary placeholder, process these nodes, and finally replace the placeholder with LF.
-3. append all the sibling text nodes in their order.
-4. normalize whitespaces flattening them into a single space and trimming.
-5. replace `$$` with LF.
-
 ## Import Specs Summary
 
 This summarizes the above discussion.
@@ -317,6 +309,8 @@ Descendant elements of `lem`, `rdg`, or `note`; I mark with ET the elements whos
 - `ident` -> *normValue* (multiple, each with `@n`).
 - `add` (ET) -> *note* section 1 (`@type`=`abstract`) or 4 (`@type`=`intertext`).
 - `note` (ET) -> *note* section 2 (`@type`=`operation`) or 3 (`@type`=`details`); if `@target` is present, it refers the note to the corresponding author/witness.
+
+ET-content is processed so that all the children elements `emph` or `lb` become Markdown escapes. This way, after this processing the parent element should contain only text.
 
 ## Samples
 
@@ -377,7 +371,7 @@ Model:
 }
 ```
 
-Note values are trimmed and prepended by the required number of separator characters to represent their section. If there is only a single section, the first one, there is no seperator character, like in the ancient note above. Notice that `emph` is converted to Markdown, but in some cases it is redundant (e.g. when marking the final dot as italic).
+Note values are trimmed and prepended by the required number of separator characters to represent their section. If there is only a single section, the first one, there is no seperator character, like in the ancient note above.
 
 ### A Remark on Sample Models
 
