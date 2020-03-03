@@ -1,10 +1,10 @@
 # Import
 
-**NOTE**: this is just a plan; development will follow once it is fully defined. Currently, only text import is implemented.
+## Overview
 
 Before importing, ensure that all the documents requiring [partitioning](partition.md) have been partitioned. The other documents instead can be manually copied in the import directory as they are.
 
-The import process implies two essential operations: parsing XML to extract data from it, and remodeling extracted data by following the Cadmus architecture.
+The import process implies two essential operations: *parsing* XML to extract data from it, and *remodeling* extracted data by following the Cadmus architecture.
 
 This remodeling is heavily conditioned by two capital factors:
 
@@ -22,7 +22,7 @@ To this end, we are not going to fully regenerate the whole XML document; rather
 
 ## Workflow Plan
 
-### Text
+### 1. Text
 
 Data from scan:
 
@@ -52,15 +52,19 @@ The general procedure for importing is implemented as follows:
 
 Full lines or paragraphs are split into words because users might want to add an apparatus or other metadata entry to that text. We thus split every text when importing it; then, users will be able to edit metadata at will. Once exporting, we will just reassemble the full, unsplit text when we find that no such editing occurred. We can easily spot when this happened, by looking at those rows with `split` attribute having no tile connected to any of the item's layers.
 
-5. store the item and its text part in the target database.
+Once this phase is completed, we have remodeled and imported all the works text into a set of JSON files, representing the dumps of the objects which will be stored in the Cadmus database. This is more useful than directly storing them in the database, as it allows for checking by simply looking at text files.
 
-Once this phase is completed, we have remodeled and imported all the works text into a Cadmus database. We now have to turn to apparatus.
+### 2. Apparatus
 
-### Apparatus
+Importing apparatus requires that text have been parsed first, so that we have their JSON dumps available.
 
-1. check if an apparatus exists for the text file opened. By convention, apparatus documents have the same file location and name of the text document, with the addition of an `-app` suffix in their name.
+TODO:
 
-TODO: process apparatus...
+### 3. Thesauri
+
+Finally, we import thesauri by scanning all the apparatus documents. This produces a single JSON dump with all the thesauri, 2 for each document (for witnesses and authors).
+
+This document will be then pasted into the Cadmus profile configuration file.
 
 ## Commands
 
@@ -93,6 +97,10 @@ Note: for Linux users, you should run the program like this:
 ```bash
 dotnet ./Mqutil.dll ...arguments...
 ```
+
+### Parse Apparatus
+
+TODO:
 
 ### Import Thesauri
 
