@@ -336,144 +336,155 @@ namespace Mq.Migration
             _textIndex = textIndex ??
                 throw new ArgumentNullException(nameof(textIndex));
 
-            XElement divElem = doc.Root
+            XElement bodyElem = doc.Root
                 .Element(XmlHelper.TEI + "text")
-                .Element(XmlHelper.TEI + "body")
-                .Element(XmlHelper.TEI + "div1");
-
+                .Element(XmlHelper.TEI + "body");
             var part = CreatePart(id);
-            int appNr = 0;
 
-            foreach (XElement appElem in divElem.Elements(XmlHelper.TEI + "app"))
+            foreach (XElement divElem in bodyElem.Elements(XmlHelper.TEI + "div1"))
             {
-                Logger?.LogInformation($"Parsing app #{++appNr} at line " +
-                    ((IXmlLineInfo)appElem).LineNumber);
+                Logger?.LogInformation("Parsing div1 #" +
+                    divElem.Attribute(XmlHelper.XML + "id").Value +
+                    " at line " + ((IXmlLineInfo)divElem).LineNumber);
+                int appNr = 0;
 
-                // app -> fragment
-                ApparatusLayerFragment fr = new ApparatusLayerFragment
+                foreach (XElement appElem in divElem.Elements(XmlHelper.TEI + "app"))
                 {
-                    // @type -> tag
-                    Tag = appElem.Attribute("type")?.Value
-                };
-                _groupNr = 0;
-                string itemId = null;
-                string[] locs = null;
+                    Logger?.LogInformation($"Parsing app #{++appNr} at line " +
+                        ((IXmlLineInfo)appElem).LineNumber);
 
-                // @from/@to pair provides a single location
-                if (appElem.Attribute("from") != null)
-                {
-                    var t = ParseFromTo(appElem);
-                    itemId = t.Item1;
-                    fr.Location = t.Item2;
-                    if (fr.Location == null)
-                    {
-                        Logger?.LogError("Word IDs {WordId} not found",
-                            appElem.Attribute("from").Value + "-" +
-                            appElem.Attribute("to").Value);
-                        continue;
-                    }
-                    Logger?.LogInformation("Fragment location: {Location}",
-                        fr.Location);
-                }
-                // @loc provides multiple locations, each to be assigned
-                // to a clone of this fragment; thus, we keep the locations
-                // in locs for later use
-                else
-                {
-                    string loc = appElem.Attribute("loc")?.Value;
-                    if (loc == null)
-                    {
-                        Logger?.LogError("No location for app element");
-                        continue;
-                    }
-                    var itemIdAndlocs = ParseLoc(loc);
-                    if (itemIdAndlocs == null)
-                    {
-                        Logger?.LogError("Word IDs not found: " +
-                            appElem.Attribute("loc").Value);
-                        continue;
-                    }
-                    itemId = itemIdAndlocs.Item1;
-                    locs = itemIdAndlocs.Item2;
-
-                    Logger?.LogInformation("Fragment locations: {Location}",
-                        string.Join(" ", locs));
-                }
-
-                // if the location refers to another item, change part
-                if (part.ItemId == null)
-                {
-                    part.ItemId = itemId;
-                    Logger?.LogInformation($"Item ID set to {itemId}");
-                }
-                else if (part.ItemId != itemId)
-                {
-                    Logger?.LogInformation(
-                        $"Item ID changed from {part.ItemId} to {itemId}");
-                    if (part.Fragments.Count > 0) yield return part;
-                    part = CreatePart(id);
-                    part.ItemId = itemId;
-                }
-
-                // app content: lem, rdg, note
-                foreach (XElement child in appElem.Elements())
-                {
-                    // each child element (lem or rdg or note) is an entry
-                    ApparatusEntry entry = new ApparatusEntry
+                    // app -> fragment
+                    ApparatusLayerFragment fr = new ApparatusLayerFragment
                     {
                         // @type -> tag
-                        Tag = child.Attribute("type")?.Value
+                        Tag = appElem.Attribute("type")?.Value
                     };
-                    fr.Entries.Add(entry);
+                    _groupNr = 0;
+                    string itemId = null;
+                    string[] locs = null;
 
-                    // parse its content
-                    XmlApparatusVarContent content;
-                    switch (child.Name.LocalName)
+                    // @from/@to pair provides a single location
+                    if (appElem.Attribute("from") != null)
                     {
-                        case "lem":
-                            entry.IsAccepted = true;
-                            goto case "rdg";
-                        case "rdg":
-                            // @wit @source
-                            ParseWit(child.Attribute("wit")?.Value, entry);
-                            ParseSource(child.Attribute("source")?.Value, entry);
-                            content = ParseVariantContent(child);
-                            AddContentToEntry(content, entry);
-                            break;
-                        case "note":
-                            entry.Type = ApparatusEntryType.Note;
-                            content = ParseVariantContent(child);
-                            AddContentToEntry(content, entry);
-                            break;
-                        default:
-                            Logger?.LogError("Unexpected element {ElementName} in app",
-                                child.Name.LocalName);
-                            break;
+                        var t = ParseFromTo(appElem);
+                        itemId = t.Item1;
+                        fr.Location = t.Item2;
+                        if (fr.Location == null)
+                        {
+                            Logger?.LogError("Word IDs {WordId} not found",
+                                appElem.Attribute("from").Value + "-" +
+                                appElem.Attribute("to").Value);
+                            continue;
+                        }
+                        Logger?.LogInformation("Fragment location: {Location}",
+                            fr.Location);
                     }
-                }
-
-                // duplicate fragment for @loc
-                if (locs != null)
-                {
-                    // assign the same group ID to all the entries with a variant
-                    string groupId = BuildGroupId(fr.Entries);
-                    foreach (var entry in fr.Entries.Where(e => e.Value != null))
-                        entry.GroupId = groupId;
-
-                    foreach (string loc in locs)
+                    // @loc provides multiple locations, each to be assigned
+                    // to a clone of this fragment; thus, we keep the locations
+                    // in locs for later use
+                    else
                     {
-                        string json = JsonConvert.SerializeObject(fr);
-                        ApparatusLayerFragment clone =
-                            JsonConvert.DeserializeObject<ApparatusLayerFragment>(json);
-                        clone.Location = loc;
-                        part.AddFragment(clone);
+                        string loc = appElem.Attribute("loc")?.Value;
+                        if (loc == null)
+                        {
+                            Logger?.LogError("No location for app element");
+                            continue;
+                        }
+                        var itemIdAndlocs = ParseLoc(loc);
+                        if (itemIdAndlocs == null)
+                        {
+                            Logger?.LogError("Word IDs not found: " +
+                                appElem.Attribute("loc").Value);
+                            continue;
+                        }
+                        itemId = itemIdAndlocs.Item1;
+                        locs = itemIdAndlocs.Item2;
+
+                        Logger?.LogInformation("Fragment locations: {Location}",
+                            string.Join(" ", locs));
                     }
-                }
-                else
-                {
-                    part.AddFragment(fr);
-                }
-            } // app
+
+                    // if the location refers to another item, change part
+                    if (part.ItemId == null)
+                    {
+                        part.ItemId = itemId;
+                        Logger?.LogInformation($"Item ID set to {itemId}");
+                    }
+                    else if (part.ItemId != itemId)
+                    {
+                        Logger?.LogInformation(
+                            $"Item ID changed from {part.ItemId} to {itemId}");
+                        if (part.Fragments.Count > 0) yield return part;
+                        part = CreatePart(id);
+                        part.ItemId = itemId;
+                    }
+
+                    // app content: lem, rdg, note
+                    foreach (XElement child in appElem.Elements())
+                    {
+                        // each child element (lem or rdg or note) is an entry
+                        ApparatusEntry entry = new ApparatusEntry
+                        {
+                            // @type -> tag
+                            Tag = child.Attribute("type")?.Value
+                        };
+                        fr.Entries.Add(entry);
+
+                        // parse its content
+                        XmlApparatusVarContent content;
+                        switch (child.Name.LocalName)
+                        {
+                            case "lem":
+                                entry.IsAccepted = true;
+                                goto case "rdg";
+                            case "rdg":
+                                // @wit @source
+                                ParseWit(child.Attribute("wit")?.Value, entry);
+                                ParseSource(child.Attribute("source")?.Value, entry);
+                                content = ParseVariantContent(child);
+                                AddContentToEntry(content, entry);
+                                break;
+                            case "note":
+                                entry.Type = ApparatusEntryType.Note;
+                                content = ParseVariantContent(child);
+                                AddContentToEntry(content, entry);
+                                break;
+                            default:
+                                Logger?.LogError("Unexpected element {ElementName} in app",
+                                    child.Name.LocalName);
+                                break;
+                        }
+                    }
+
+                    // duplicate fragment for @loc
+                    if (locs != null)
+                    {
+                        // assign the same group ID to all the entries with a variant
+                        string groupId = BuildGroupId(fr.Entries);
+                        foreach (var entry in fr.Entries.Where(e => e.Value != null))
+                            entry.GroupId = groupId;
+
+                        foreach (string loc in locs)
+                        {
+                            string json = JsonConvert.SerializeObject(fr);
+                            ApparatusLayerFragment clone =
+                                JsonConvert.DeserializeObject<ApparatusLayerFragment>(json);
+                            clone.Location = loc;
+                            part.AddFragment(clone);
+                            Logger?.LogInformation(
+                                "Completed fragment at {Location} (entries: {EntryCount})",
+                                clone.Location, clone.Entries.Count);
+                        }
+                    }
+                    else
+                    {
+                        part.AddFragment(fr);
+                        Logger?.LogInformation(
+                            "Completed fragment at {Location} (entries: {EntryCount})",
+                            fr.Location, fr.Entries.Count);
+                    }
+                } // app
+            } //div
 
             if (part.Fragments.Count > 0) yield return part;
             _textIndex = null;
