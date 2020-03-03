@@ -139,12 +139,14 @@ namespace Mqutil.Commands
                 Path.GetFileName(_inputFileMask))
                 .OrderBy(s => s))
             {
+                Log.Logger.Information("Parsing {FilePath}", filePath);
+
                 // load document
                 string inputFileName = Path.GetFileNameWithoutExtension(filePath);
                 Console.WriteLine(filePath);
                 inputFileCount++;
                 XDocument doc = XDocument.Load(filePath,
-                    LoadOptions.PreserveWhitespace);
+                    LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
                 JsonSerializerSettings jsonSettings = new JsonSerializerSettings
                 {
                     ContractResolver = new DefaultContractResolver

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Mq.Migration
@@ -292,14 +293,20 @@ namespace Mq.Migration
 
         private string BuildGroupId(List<ApparatusEntry> entries)
         {
-            string groupId = null;
-            _groupNr++;
+            string groupId = entries.Find(e => e.IsAccepted)?.Value
+                ?? entries.Find(e => e.Value != null)?.Value ?? "g";
 
-            ApparatusEntry lemEntry = entries.Find(e => e.IsAccepted);
-            if (lemEntry?.Value != null) groupId = lemEntry.Value;
-            else groupId = entries.Find(e => e.Value != null)?.Value ?? "g";
+            // filter and append ordinal number to ensure each group is unique
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in groupId)
+            {
+                if (char.IsLetterOrDigit(c)) sb.Append(char.ToLowerInvariant(c));
+                else if (char.IsWhiteSpace(c) && sb.Length > 0 && sb[sb.Length - 1] != '-')
+                    sb.Append('-');
+            }
+            sb.Append('-').Append(++_groupNr);
 
-            return groupId + _groupNr;
+            return sb.ToString();
         }
 
         private TiledTextLayerPart<ApparatusLayerFragment> CreatePart(string docId)
@@ -329,17 +336,19 @@ namespace Mq.Migration
             _textIndex = textIndex ??
                 throw new ArgumentNullException(nameof(textIndex));
 
-            Logger?.LogInformation("Parsing {DocumentId}", id);
-
             XElement divElem = doc.Root
                 .Element(XmlHelper.TEI + "text")
                 .Element(XmlHelper.TEI + "body")
                 .Element(XmlHelper.TEI + "div1");
 
             var part = CreatePart(id);
+            int appNr = 0;
 
             foreach (XElement appElem in divElem.Elements(XmlHelper.TEI + "app"))
             {
+                Logger?.LogInformation($"Parsing app #{++appNr} at line " +
+                    ((IXmlLineInfo)appElem).LineNumber);
+
                 // app -> fragment
                 ApparatusLayerFragment fr = new ApparatusLayerFragment
                 {
@@ -395,9 +404,12 @@ namespace Mq.Migration
                 if (part.ItemId == null)
                 {
                     part.ItemId = itemId;
+                    Logger?.LogInformation($"Item ID set to {itemId}");
                 }
                 else if (part.ItemId != itemId)
                 {
+                    Logger?.LogInformation(
+                        $"Item ID changed from {part.ItemId} to {itemId}");
                     if (part.Fragments.Count > 0) yield return part;
                     part = CreatePart(id);
                     part.ItemId = itemId;
@@ -457,7 +469,10 @@ namespace Mq.Migration
                         part.AddFragment(clone);
                     }
                 }
-                else part.AddFragment(fr);
+                else
+                {
+                    part.AddFragment(fr);
+                }
             } // app
 
             if (part.Fragments.Count > 0) yield return part;

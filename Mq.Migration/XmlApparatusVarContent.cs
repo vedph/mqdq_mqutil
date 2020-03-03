@@ -130,7 +130,7 @@ namespace Mq.Migration
                 {
                     SectionId = sectionId,
                     Target = e.Attribute("target")?.Value?.Substring(1),
-                    Value = e.Value
+                    Value = e.Value.Trim()
                 });
             }
         }
