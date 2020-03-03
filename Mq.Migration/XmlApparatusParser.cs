@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace Mq.Migration
@@ -18,6 +19,7 @@ namespace Mq.Migration
     {
         private const char NOTE_SECT_SEP = '`';
 
+        private readonly Regex _bracesRegex;
         private JsonTextIndex _textIndex;
         private string _userId;
 
@@ -47,6 +49,7 @@ namespace Mq.Migration
         public XmlApparatusParser()
         {
             _userId = "zeus";
+            _bracesRegex = new Regex(@"\{([^}]+)\}");
         }
 
         private Tuple<string, string> ParseFromTo(XElement appElem)
@@ -176,9 +179,42 @@ namespace Mq.Migration
             target.Note = note;
         }
 
+        private string ApplyMarkdown(string text)
+        {
+            Stack<string> stack = new Stack<string>();
+
+            return _bracesRegex.Replace(text, (Match m) =>
+            {
+                switch (m.Groups[1].Value)
+                {
+                    case "/f":
+                        return stack.Pop();
+                        break;
+                    case "f=i":
+                        stack.Push("_");
+                        return "_";
+                    case "f=b":
+                        stack.Push("__");
+                        return "__";
+                    case "f=u":
+                        stack.Push("</sup>");
+                        return "<sup>";
+                    case "f=d":
+                        stack.Push("</sub>");
+                        return "<sub>";
+                    default:
+                        return m.Value;
+                }
+            });
+        }
+
         private void AddContentToEntry(XmlApparatusVarContent content,
             ApparatusEntry entry)
         {
+            // value
+            if (!string.IsNullOrWhiteSpace(content.Value))
+                entry.Value = content.Value.Trim();
+
             // ident's
             if (content.Idents.Count > 0)
                 entry.NormValue = string.Join(" ", content.Idents);
@@ -235,7 +271,8 @@ namespace Mq.Migration
                     sb.Append(note.Value);
                     sections.Add(note.SectionId);
                 }
-                if (sb.Length > 0) entry.Note = sb.ToString();
+
+                if (sb.Length > 0) entry.Note = ApplyMarkdown(sb.ToString());
             }
         }
 

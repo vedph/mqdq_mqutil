@@ -42,7 +42,7 @@ namespace Mq.Migration
         /// </summary>
         public XmlApparatusVarContent()
         {
-            _emphRegex = new Regex(@"<(?<c>/?)emph\s+(?<a>[^>]*)>");
+            _emphRegex = new Regex(@"<(?<c>/?)emph(?:\s+(?<a>[^>]*))?>");
             _lbRegex = new Regex(@"<lb\s*/>");
             _wsRegex = new Regex(@"\s+");
 
@@ -61,6 +61,8 @@ namespace Mq.Migration
         public XElement RemoveFormatting(XElement element)
         {
             if (element == null) throw new ArgumentNullException(nameof(element));
+
+            if (!element.HasElements) return element;
 
             string xml = element.ToString(SaveOptions.DisableFormatting);
 
@@ -84,7 +86,7 @@ namespace Mq.Migration
                         return m.Value;
                 }
             });
-            xml = _wsRegex.Replace(xml, " ").Trim();
+            xml = _wsRegex.Replace(xml, " ");
 
             return XElement.Parse(xml, LoadOptions.PreserveWhitespace);
         }
@@ -105,7 +107,10 @@ namespace Mq.Migration
             if (annElem == null) throw new ArgumentNullException(nameof(annElem));
 
             XElement e = RemoveFormatting(annElem);
-            Debug.Assert(!e.HasElements);
+            if (e.HasElements)
+            {
+                Logger?.LogError($"Unexpected variant children element: \"{e}\"");
+            }
             int sectionId = 0;
             string type = annElem.Attribute("type")?.Value;
 
