@@ -340,11 +340,12 @@ namespace Mq.Migration
                 .Element(XmlHelper.TEI + "text")
                 .Element(XmlHelper.TEI + "body");
             var part = CreatePart(id);
+            string divId;
 
             foreach (XElement divElem in bodyElem.Elements(XmlHelper.TEI + "div1"))
             {
-                Logger?.LogInformation("Parsing div1 #" +
-                    divElem.Attribute(XmlHelper.XML + "id").Value +
+                divId = divElem.Attribute(XmlHelper.XML + "id").Value;
+                Logger?.LogInformation($"Parsing div1 #{divId}" +
                     " at line " + ((IXmlLineInfo)divElem).LineNumber);
                 int appNr = 0;
 
@@ -354,10 +355,11 @@ namespace Mq.Migration
                         ((IXmlLineInfo)appElem).LineNumber);
 
                     // app -> fragment
+                    string type = appElem.Attribute("type")?.Value;
                     ApparatusLayerFragment fr = new ApparatusLayerFragment
                     {
-                        // @type -> tag
-                        Tag = appElem.Attribute("type")?.Value
+                        // @type -> divID + spc + tag
+                        Tag = divId + (type != null? $" {type}" : "")
                     };
                     _groupNr = 0;
                     string itemId = null;
