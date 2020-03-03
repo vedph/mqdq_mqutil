@@ -34,14 +34,14 @@ If required, notes can be Markdown to include some minimal formatting. This shou
 
 The XML documents tree is as follows:
 
-- `TEI/text/body/div1` is the root for the apparatus content.
-- `div1` contains:
+- `TEI/text/body/div1` is the multiple root for the apparatus content. The ID of each `div1` is stored as the tag of each fragment. If the fragment has a `@type`, it is appended to this tag separated by a space.
+- each `div1` contains:
   - `@xml:id` always
   - `@type` always
   - 1 `head` child with header data.
   - 1-N `app` children.
 
-The `app` elements are rebuilt by the export process and reinjected past `div1/head`, in place of all the old `app` elements.
+The `app` elements are rebuilt by the export process and reinjected under each `div1`, past their initial `head` child (which is kept unchanged), in place of all the old `app` elements.
 
 ### Header
 

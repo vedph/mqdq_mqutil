@@ -8,6 +8,8 @@ namespace Mq.Migration
 {
     /// <summary>
     /// The content of a variant being parsed from an apparatus XML document.
+    /// This is used to collect content data while parsing; once done, it
+    /// will be used to fill an apparatus entry with further data.
     /// </summary>
     public sealed class XmlApparatusVarContent : IHasLogger
     {
@@ -101,6 +103,18 @@ namespace Mq.Migration
             Idents.Add($"{identElem.Value.Trim()}#{identElem.Attribute("n").Value}");
         }
 
+        /// <summary>
+        /// Adds to this content the annotation represented by the specified
+        /// element (<c>note</c> or <c>add</c>). The content of any <c>emph</c>
+        /// or <c>lb</c> child element is unwrapped from its container element,
+        /// so that the note remains with text content only with some escapes
+        /// (all inside braces). Then, the note is assigned to the section
+        /// defined by the combination of the element name and its <c>type</c>
+        /// attribute, and to the target eventually specified by its <c>target</c>
+        /// attribute.
+        /// </summary>
+        /// <param name="annElem">The annotation element.</param>
+        /// <exception cref="ArgumentNullException">annElem</exception>
         public void AddAnnotation(XElement annElem)
         {
             if (annElem == null) throw new ArgumentNullException(nameof(annElem));
