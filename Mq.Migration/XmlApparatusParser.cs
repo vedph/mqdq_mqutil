@@ -324,6 +324,20 @@ namespace Mq.Migration
             return sb.ToString();
         }
 
+        private void AddFragmentToPart(ApparatusLayerFragment fr,
+            TiledTextLayerPart<ApparatusLayerFragment> part,
+            string originalLoc)
+        {
+            int count = part.Fragments.Count;
+            part.AddFragment(fr);
+            if (count >= part.Fragments.Count)
+            {
+                Logger?.LogError("Overlap for new fragment at {Location}"
+                    + $" (original {originalLoc}): "
+                    + string.Join("; ", fr.Entries), fr.Location);
+            }
+        }
+
         private TiledTextLayerPart<ApparatusLayerFragment> CreatePart(string docId)
         {
             return new TiledTextLayerPart<ApparatusLayerFragment>
@@ -360,13 +374,13 @@ namespace Mq.Migration
             foreach (XElement divElem in bodyElem.Elements(XmlHelper.TEI + "div1"))
             {
                 divId = divElem.Attribute(XmlHelper.XML + "id").Value;
-                Logger?.LogInformation($"Parsing div1 #{divId}" +
+                Logger?.LogInformation($"==Parsing div1 #{divId}" +
                     " at line " + ((IXmlLineInfo)divElem).LineNumber);
                 int appNr = 0;
 
                 foreach (XElement appElem in divElem.Elements(XmlHelper.TEI + "app"))
                 {
-                    Logger?.LogInformation($"Parsing app #{++appNr} at line " +
+                    Logger?.LogInformation($"--Parsing app #{++appNr} at line " +
                         ((IXmlLineInfo)appElem).LineNumber);
 
                     // app -> fragment
@@ -487,7 +501,8 @@ namespace Mq.Migration
                             ApparatusLayerFragment clone =
                                 JsonConvert.DeserializeObject<ApparatusLayerFragment>(json);
                             clone.Location = loc;
-                            part.AddFragment(clone);
+                            AddFragmentToPart(clone, part,
+                                appElem.Attribute("loc").Value);
                             Logger?.LogInformation(
                                 "Completed fragment at {Location} (entries: {EntryCount})",
                                 clone.Location, clone.Entries.Count);
@@ -495,7 +510,9 @@ namespace Mq.Migration
                     }
                     else
                     {
-                        part.AddFragment(fr);
+                        AddFragmentToPart(fr, part,
+                            appElem.Attribute("from").Value + "-" +
+                            appElem.Attribute("to").Value);
                         Logger?.LogInformation(
                             "Completed fragment at {Location} (entries: {EntryCount})",
                             fr.Location, fr.Entries.Count);

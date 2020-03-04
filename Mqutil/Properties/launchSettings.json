@@ -2,7 +2,7 @@
   "profiles": {
     "Mqutil": {
       "commandName": "Project",
-      "commandLineArgs": "parse-app c:\\users\\dfusi\\desktop\\verg-eclo-app.xml c:\\users\\dfusi\\desktop\\txt\\ c:\\users\\dfusi\\desktop\\app\\"
+      "commandLineArgs": "parse-app C:\\Users\\dfusi\\Desktop\\mqdq\\VERG-eclo-app.xml c:\\users\\dfusi\\desktop\\mqdq\\part\\txt\\ c:\\users\\dfusi\\desktop\\mqdq\\part\\app"
     }
   }
 }
