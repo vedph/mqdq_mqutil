@@ -132,9 +132,11 @@ Apart from these cases, there remains a few number of overlapping `app` elements
 </app>
 ```
 
-Here we have two app elements referred to the same word "umbras" `d005w258`; in the first element, "fontibus umbras" has the variant "frondibus aras"; in the second element, "umbras" has the variant "aras". These could easily be merged into a single app element with the proper entries, thus removing the overlap.
+Here we have two `app` elements referred to the same word "umbras" `d005w258`; in the first element, "fontibus umbras" has the variant "frondibus aras"; in the second element, "umbras" has the variant "aras". These could easily be merged into a single `app` element with the proper entries, thus removing the overlap.
 
-In these cases the fix must be manual; the parser just logs the issue as an error; it is up to the users check the log and apply the fixes, and then repeat the parsing. For instance, here is a reduced excerpt from the log:
+In these cases the fix must be manual. The parser can just log the issue as an error; it is up to the users check the log, apply the fixes to the source XML document, and then repeat the parsing.
+
+For instance, here is a reduced excerpt from the log:
 
 ```txt
 [INF] --Parsing app #21@1699
@@ -145,7 +147,7 @@ In these cases the fix must be manual; the parser just logs the issue as an erro
 [INF] Completed PART [fr.net.fusisoft.apparatus:margin] 1582-1698: 5.1-5.5, 6.1-6.6
 ```
 
-As you can see, here the overlap is logged as an error (`[ERR]`): the overlap effectively happens between coordinates `17.5-17.6` and `17.6`.
+Here the overlap is logged as an error (`[ERR]`): the overlap effectively happens between coordinates `17.5-17.6` and `17.6`.
 
 ### Header
 
