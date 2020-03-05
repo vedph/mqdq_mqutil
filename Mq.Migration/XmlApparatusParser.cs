@@ -22,6 +22,7 @@ namespace Mq.Migration
     {
         private const char NOTE_SECT_SEP = '`';
         private const string TYPE_ANCIENT_NOTE = "ancient-note";
+        private const string TYPE_MARGIN_NOTE = "margin-note";
 
         private readonly Regex _bracesRegex;
         private JsonTextIndex _textIndex;
@@ -356,16 +357,17 @@ namespace Mq.Migration
         }
 
         /// <summary>
-        /// Splits the received apparatus layer part into two parts, where
-        /// all the entries marked as ancient notes are moved from the original
-        /// part into the new one.
+        /// Splits the received apparatus layer part into 1 to 3 parts,
+        /// distributing them as follows: 1) all the original entries except
+        /// those under 2 and 3; 2) all the entries marked as ancient notes;
+        /// 3) all the fragments marked as margin notes.
         /// </summary>
         /// <param name="part">The part.</param>
-        /// <returns>The new part, or null if no splitting required.</returns>
-        private TiledTextLayerPart<ApparatusLayerFragment> SplitPart(
+        /// <returns>The parts: just 1 if no splitting required.</returns>
+        private IList<TiledTextLayerPart<ApparatusLayerFragment>> SplitPart(
             TiledTextLayerPart<ApparatusLayerFragment> part)
         {
-            TiledTextLayerPart<ApparatusLayerFragment> targetPart =
+            TiledTextLayerPart<ApparatusLayerFragment> ancPart =
                 new TiledTextLayerPart<ApparatusLayerFragment>
                 {
                     ThesaurusScope = part.ThesaurusScope,
@@ -373,24 +375,43 @@ namespace Mq.Migration
                     UserId = part.UserId,
                     RoleId = "ancient"
                 };
+            TiledTextLayerPart<ApparatusLayerFragment> margPart =
+                new TiledTextLayerPart<ApparatusLayerFragment>
+                {
+                    ThesaurusScope = part.ThesaurusScope,
+                    CreatorId = part.CreatorId,
+                    UserId = part.UserId,
+                    RoleId = "margin"
+                };
 
-            int ancEntryCount = 0;
+            int ancEntryCount = 0, margEntryCount = 0;
 
             foreach (var fr in part.Fragments
-                .Where(f => f.Entries.Any(e => e.Tag == TYPE_ANCIENT_NOTE))
+                .Where(f => f.Tag.Contains(TYPE_MARGIN_NOTE)
+                       || f.Entries.Any(e => e.Tag == TYPE_ANCIENT_NOTE))
                 .ToList())
             {
                 ApparatusLayerFragment targetFr = null;
 
+                // app@type=margin -> tag with margin: move whole fragment
+                if (fr.Tag.Contains(TYPE_MARGIN_NOTE))
+                {
+                    margPart.AddFragment(fr);
+                    margEntryCount += fr.Entries.Count;
+                    part.Fragments.Remove(fr);
+                    continue;
+                }
+
+                // else examine parts, some might belong to ancient
                 var ancEntries = fr.Entries
                     .Where(e => e.Tag == TYPE_ANCIENT_NOTE)
                     .ToList();
                 ancEntryCount += ancEntries.Count;
 
-                // if all the entries are ancient notes, move the whole fragment
+                // if all the entries are to be moved, move the whole fragment
                 if (ancEntries.Count == fr.Entries.Count)
                 {
-                    targetPart.AddFragment(fr);
+                    ancPart.AddFragment(fr);
                     part.Fragments.Remove(fr);
                     continue;
                 }
@@ -411,20 +432,27 @@ namespace Mq.Migration
                 }
             }
 
-            // check for overlaps after splitting
-            if (PartHasOverlaps(part))
-                Logger?.LogError($"Part {part.Id} has overlaps");
-            if (PartHasOverlaps(targetPart))
-                Logger?.LogError($"Part {targetPart.Id} has overlaps");
-
-            if (targetPart.Fragments.Count > 0)
+            var parts = new List<TiledTextLayerPart<ApparatusLayerFragment>>
             {
-                Logger?.LogInformation(
-                    $"Part split, ancient has {ancEntryCount} entries");
-                return targetPart;
+                part
+            };
+            // check for overlaps after splitting
+            if (PartHasOverlaps(part)) Logger?.LogError("Part has overlaps");
+
+            if (ancPart.Fragments.Count > 0)
+            {
+                parts.Add(ancPart);
+                Logger?.LogInformation($"Ancient part with {ancEntryCount} entries");
+                if (PartHasOverlaps(ancPart)) Logger?.LogError("Ancient part has overlaps");
+            }
+            if (margPart.Fragments.Count > 0)
+            {
+                parts.Add(margPart);
+                Logger?.LogInformation($"Margin part with {margEntryCount} entries");
+                if (PartHasOverlaps(margPart)) Logger?.LogError("Margin part has overlaps");
             }
 
-            return null;
+            return parts;
         }
 
         private static bool PartHasOverlaps(
@@ -483,7 +511,7 @@ namespace Mq.Migration
                     string type = appElem.Attribute("type")?.Value;
                     ApparatusLayerFragment fr = new ApparatusLayerFragment
                     {
-                        // @type -> divID + spc + tag
+                        // @type -> tag composed by divID + spc + type
                         Tag = divId + (type != null? $" {type}" : "")
                     };
                     _groupNr = 0;
@@ -543,9 +571,7 @@ namespace Mq.Migration
                             $"Item ID changed from {part.ItemId} to {itemId}");
                         if (part.Fragments.Count > 0)
                         {
-                            var ancPart = SplitPart(part);
-                            yield return part;
-                            if (ancPart != null) yield return ancPart;
+                            foreach (var p in SplitPart(part)) yield return p;
                         }
                         part = CreatePart(id);
                         part.ItemId = itemId;
@@ -622,11 +648,8 @@ namespace Mq.Migration
             } //div
 
             if (part.Fragments.Count > 0)
-            {
-                var ancPart = SplitPart(part);
-                yield return part;
-                if (ancPart != null) yield return ancPart;
-            }
+                foreach (var p in SplitPart(part)) yield return p;
+
             _textIndex = null;
         }
     }
