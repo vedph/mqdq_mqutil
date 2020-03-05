@@ -278,7 +278,7 @@ namespace Mq.Migration
                     }
                     else
                     {
-                        Logger?.LogError($"Target {group.Key} not found");
+                        Logger?.LogError($"Target \"{group.Key}\" not found");
                     }
                 }
 
@@ -373,16 +373,16 @@ namespace Mq.Migration
                     ThesaurusScope = part.ThesaurusScope,
                     CreatorId = part.CreatorId,
                     UserId = part.UserId,
-                    RoleId = "ancient"
                 };
+            ancPart.RoleId += ":ancient";
             TiledTextLayerPart<ApparatusLayerFragment> margPart =
                 new TiledTextLayerPart<ApparatusLayerFragment>
                 {
                     ThesaurusScope = part.ThesaurusScope,
                     CreatorId = part.CreatorId,
                     UserId = part.UserId,
-                    RoleId = "margin"
                 };
+            margPart.RoleId += ":margin";
 
             int ancEntryCount = 0, margEntryCount = 0;
 
@@ -437,19 +437,31 @@ namespace Mq.Migration
                 part
             };
             // check for overlaps after splitting
-            if (PartHasOverlaps(part)) Logger?.LogError("Part has overlaps");
+            if (PartHasOverlaps(part))
+            {
+                Logger?.LogError("Part has overlaps: "
+                    + GetFragmentLocsDump(part.Fragments));
+            }
 
             if (ancPart.Fragments.Count > 0)
             {
                 parts.Add(ancPart);
                 Logger?.LogInformation($"Ancient part with {ancEntryCount} entries");
-                if (PartHasOverlaps(ancPart)) Logger?.LogError("Ancient part has overlaps");
+                if (PartHasOverlaps(ancPart))
+                {
+                    Logger?.LogError("Ancient part has overlaps: "
+                        + GetFragmentLocsDump(ancPart.Fragments));
+                }
             }
             if (margPart.Fragments.Count > 0)
             {
                 parts.Add(margPart);
                 Logger?.LogInformation($"Margin part with {margEntryCount} entries");
-                if (PartHasOverlaps(margPart)) Logger?.LogError("Margin part has overlaps");
+                if (PartHasOverlaps(margPart))
+                {
+                    Logger?.LogError("Margin part has overlaps: "
+                        + GetFragmentLocsDump(margPart.Fragments));
+                }
             }
 
             return parts;
@@ -471,6 +483,10 @@ namespace Mq.Migration
             }
             return false;
         }
+
+        private static string GetFragmentLocsDump(
+            IList<ApparatusLayerFragment> frr) =>
+            string.Join(", ", from fr in frr select fr.Location);
 
         /// <summary>
         /// Parses the specified document.
@@ -571,7 +587,13 @@ namespace Mq.Migration
                             $"Item ID changed from {part.ItemId} to {itemId}");
                         if (part.Fragments.Count > 0)
                         {
-                            foreach (var p in SplitPart(part)) yield return p;
+                            foreach (var p in SplitPart(part))
+                            {
+                                Logger?.LogInformation(
+                                    $"Completed part [{p.RoleId}]: "
+                                    + GetFragmentLocsDump(p.Fragments));
+                                yield return p;
+                            }
                         }
                         part = CreatePart(id);
                         part.ItemId = itemId;
@@ -648,7 +670,15 @@ namespace Mq.Migration
             } //div
 
             if (part.Fragments.Count > 0)
-                foreach (var p in SplitPart(part)) yield return p;
+            {
+                foreach (var p in SplitPart(part))
+                {
+                    Logger?.LogInformation(
+                        $"Completed part [{p.RoleId}]: "
+                        + GetFragmentLocsDump(p.Fragments));
+                    yield return p;
+                }
+            }
 
             _textIndex = null;
         }
