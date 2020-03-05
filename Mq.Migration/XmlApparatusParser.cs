@@ -356,6 +356,19 @@ namespace Mq.Migration
             };
         }
 
+        private static void AdjustNoteFragments(IList<ApparatusLayerFragment> frr)
+        {
+            foreach (ApparatusLayerFragment fr in frr)
+            {
+                foreach (ApparatusEntry entry in fr.Entries
+                    .Where(e => e.Value == null))
+                {
+                    entry.IsAccepted = false;
+                    entry.Type = ApparatusEntryType.Note;
+                }
+            }
+        }
+
         /// <summary>
         /// Splits the received apparatus layer part into 1 to 3 parts,
         /// distributing them as follows: 1) all the original entries except
@@ -445,6 +458,7 @@ namespace Mq.Migration
 
             if (ancPart.Fragments.Count > 0)
             {
+                AdjustNoteFragments(ancPart.Fragments);
                 parts.Add(ancPart);
                 if (PartHasOverlaps(ancPart))
                 {
@@ -454,6 +468,7 @@ namespace Mq.Migration
             }
             if (margPart.Fragments.Count > 0)
             {
+                AdjustNoteFragments(margPart.Fragments);
                 parts.Add(margPart);
                 if (PartHasOverlaps(margPart))
                 {

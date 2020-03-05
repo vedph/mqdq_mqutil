@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{C4A30C7F-74A9-480B-8517-3FAB97168D2B}"
 	ProjectSection(SolutionItems) = preProject
+		doc\apparatus-sample.md = doc\apparatus-sample.md
 		doc\apparatus.md = doc\apparatus.md
 		doc\import.md = doc\import.md
 		doc\index.md = doc\index.md
