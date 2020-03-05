@@ -446,7 +446,6 @@ namespace Mq.Migration
             if (ancPart.Fragments.Count > 0)
             {
                 parts.Add(ancPart);
-                Logger?.LogInformation($"Ancient part with {ancEntryCount} entries");
                 if (PartHasOverlaps(ancPart))
                 {
                     Logger?.LogError("Ancient part has overlaps: "
@@ -456,7 +455,6 @@ namespace Mq.Migration
             if (margPart.Fragments.Count > 0)
             {
                 parts.Add(margPart);
-                Logger?.LogInformation($"Margin part with {margEntryCount} entries");
                 if (PartHasOverlaps(margPart))
                 {
                     Logger?.LogError("Margin part has overlaps: "
@@ -488,6 +486,19 @@ namespace Mq.Migration
             IList<ApparatusLayerFragment> frr) =>
             string.Join(", ", from fr in frr select fr.Location);
 
+        private static int GetElementLineNumber(XElement element) =>
+            ((IXmlLineInfo)element)?.LineNumber ?? 0;
+
+        private static string GetFragmentDump(ApparatusLayerFragment fr)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Completed fragment ")
+              .Append(fr.Location)
+              .Append(" [").Append(fr.Entries.Count).Append("]: ")
+              .Append(string.Join("; ", fr.Entries));
+            return sb.ToString();
+        }
+
         /// <summary>
         /// Parses the specified document.
         /// </summary>
@@ -509,19 +520,20 @@ namespace Mq.Migration
                 .Element(XmlHelper.TEI + "text")
                 .Element(XmlHelper.TEI + "body");
             var part = CreatePart(id);
+            int partFirstLineNr = 1;
             string divId;
 
             foreach (XElement divElem in bodyElem.Elements(XmlHelper.TEI + "div1"))
             {
                 divId = divElem.Attribute(XmlHelper.XML + "id").Value;
                 Logger?.LogInformation($"==Parsing div1 #{divId}" +
-                    " at line " + ((IXmlLineInfo)divElem).LineNumber);
+                    " at line " + GetElementLineNumber(divElem));
                 int appNr = 0;
 
                 foreach (XElement appElem in divElem.Elements(XmlHelper.TEI + "app"))
                 {
-                    Logger?.LogInformation($"--Parsing app #{++appNr} at line " +
-                        ((IXmlLineInfo)appElem).LineNumber);
+                    Logger?.LogInformation($"--Parsing app #{++appNr}@" +
+                        GetElementLineNumber(appElem));
 
                     // app -> fragment
                     string type = appElem.Attribute("type")?.Value;
@@ -590,13 +602,15 @@ namespace Mq.Migration
                             foreach (var p in SplitPart(part))
                             {
                                 Logger?.LogInformation(
-                                    $"Completed part [{p.RoleId}]: "
+                                    $"Completed PART [{p.RoleId}] " +
+                                    $"{partFirstLineNr}-{GetElementLineNumber(appElem) - 1}: "
                                     + GetFragmentLocsDump(p.Fragments));
                                 yield return p;
                             }
                         }
                         part = CreatePart(id);
                         part.ItemId = itemId;
+                        partFirstLineNr = GetElementLineNumber(appElem);
                     }
 
                     // app content: lem, rdg, note
@@ -612,6 +626,9 @@ namespace Mq.Migration
 
                         // parse its content
                         XmlApparatusVarContent content;
+                        Logger?.LogInformation($"-Parsing {child.Name.LocalName}@"
+                            + GetElementLineNumber(child));
+
                         switch (child.Name.LocalName)
                         {
                             case "lem":
@@ -652,9 +669,7 @@ namespace Mq.Migration
                             clone.Location = loc;
                             AddFragmentToPart(clone, part,
                                 appElem.Attribute("loc").Value);
-                            Logger?.LogInformation(
-                                "Completed fragment at {Location} (entries: {EntryCount})",
-                                clone.Location, clone.Entries.Count);
+                            Logger?.LogInformation(GetFragmentDump(clone));
                         }
                     }
                     else
@@ -662,9 +677,7 @@ namespace Mq.Migration
                         AddFragmentToPart(fr, part,
                             appElem.Attribute("from").Value + "-" +
                             appElem.Attribute("to").Value);
-                        Logger?.LogInformation(
-                            "Completed fragment at {Location} (entries: {EntryCount})",
-                            fr.Location, fr.Entries.Count);
+                        Logger?.LogInformation(GetFragmentDump(fr));
                     }
                 } // app
             } //div
@@ -674,7 +687,8 @@ namespace Mq.Migration
                 foreach (var p in SplitPart(part))
                 {
                     Logger?.LogInformation(
-                        $"Completed part [{p.RoleId}]: "
+                        $"Completed PART [{p.RoleId}] " +
+                        $"{partFirstLineNr}-end: "
                         + GetFragmentLocsDump(p.Fragments));
                     yield return p;
                 }
