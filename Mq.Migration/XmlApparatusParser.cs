@@ -1,4 +1,5 @@
-﻿using Cadmus.Parts.Layers;
+﻿using Cadmus.Core.Layers;
+using Cadmus.Parts.Layers;
 using Cadmus.Philology.Parts.Layers;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -20,6 +21,7 @@ namespace Mq.Migration
     public sealed class XmlApparatusParser : IHasLogger
     {
         private const char NOTE_SECT_SEP = '`';
+        private const string TYPE_ANCIENT_NOTE = "ancient-note";
 
         private readonly Regex _bracesRegex;
         private JsonTextIndex _textIndex;
@@ -329,13 +331,18 @@ namespace Mq.Migration
             string originalLoc)
         {
             int count = part.Fragments.Count;
-            part.AddFragment(fr);
-            if (count >= part.Fragments.Count)
+
+            // bypass part's add so that even overlapping fragments are added;
+            // we will then move them all at once later, when splitting part
+            TokenTextLocation loc = TokenTextLocation.Parse(fr.Location);
+            if (part.Fragments.Any(f => TokenTextLocation.Parse(f.Location)
+                .Overlaps(loc)))
             {
                 Logger?.LogError("Overlap for new fragment at {Location}"
                     + $" (original {originalLoc}): "
                     + string.Join("; ", fr.Entries), fr.Location);
             }
+            part.Fragments.Add(fr);
         }
 
         private TiledTextLayerPart<ApparatusLayerFragment> CreatePart(string docId)
@@ -346,6 +353,95 @@ namespace Mq.Migration
                 CreatorId = _userId,
                 UserId = _userId
             };
+        }
+
+        /// <summary>
+        /// Splits the received apparatus layer part into two parts, where
+        /// all the entries marked as ancient notes are moved from the original
+        /// part into the new one.
+        /// </summary>
+        /// <param name="part">The part.</param>
+        /// <returns>The new part, or null if no splitting required.</returns>
+        private TiledTextLayerPart<ApparatusLayerFragment> SplitPart(
+            TiledTextLayerPart<ApparatusLayerFragment> part)
+        {
+            TiledTextLayerPart<ApparatusLayerFragment> targetPart =
+                new TiledTextLayerPart<ApparatusLayerFragment>
+                {
+                    ThesaurusScope = part.ThesaurusScope,
+                    CreatorId = part.CreatorId,
+                    UserId = part.UserId,
+                    RoleId = "ancient"
+                };
+
+            int ancEntryCount = 0;
+
+            foreach (var fr in part.Fragments
+                .Where(f => f.Entries.Any(e => e.Tag == TYPE_ANCIENT_NOTE))
+                .ToList())
+            {
+                ApparatusLayerFragment targetFr = null;
+
+                var ancEntries = fr.Entries
+                    .Where(e => e.Tag == TYPE_ANCIENT_NOTE)
+                    .ToList();
+                ancEntryCount += ancEntries.Count;
+
+                // if all the entries are ancient notes, move the whole fragment
+                if (ancEntries.Count == fr.Entries.Count)
+                {
+                    targetPart.AddFragment(fr);
+                    part.Fragments.Remove(fr);
+                    continue;
+                }
+
+                // else move only the ancient entries to a cloned fragment
+                if (targetFr == null)
+                {
+                    targetFr = new ApparatusLayerFragment
+                    {
+                        Location = fr.Location,
+                        Tag = fr.Tag
+                    };
+                }
+                foreach (var entry in ancEntries)
+                {
+                    targetFr.Entries.Add(entry);
+                    fr.Entries.Remove(entry);
+                }
+            }
+
+            // check for overlaps after splitting
+            if (PartHasOverlaps(part))
+                Logger?.LogError($"Part {part.Id} has overlaps");
+            if (PartHasOverlaps(targetPart))
+                Logger?.LogError($"Part {targetPart.Id} has overlaps");
+
+            if (targetPart.Fragments.Count > 0)
+            {
+                Logger?.LogInformation(
+                    $"Part split, ancient has {ancEntryCount} entries");
+                return targetPart;
+            }
+
+            return null;
+        }
+
+        private static bool PartHasOverlaps(
+            TiledTextLayerPart<ApparatusLayerFragment> part)
+        {
+            List<TokenTextLocation> locs = (from fr in part.Fragments
+                select TokenTextLocation.Parse(fr.Location))
+                .ToList();
+
+            for (int i = 0; i < locs.Count; i++)
+            {
+                for (int j = i + 1; j < locs.Count; j++)
+                {
+                    if (locs[i].Overlaps(locs[j])) return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -445,7 +541,12 @@ namespace Mq.Migration
                     {
                         Logger?.LogInformation(
                             $"Item ID changed from {part.ItemId} to {itemId}");
-                        if (part.Fragments.Count > 0) yield return part;
+                        if (part.Fragments.Count > 0)
+                        {
+                            var ancPart = SplitPart(part);
+                            yield return part;
+                            if (ancPart != null) yield return ancPart;
+                        }
                         part = CreatePart(id);
                         part.ItemId = itemId;
                     }
@@ -520,7 +621,12 @@ namespace Mq.Migration
                 } // app
             } //div
 
-            if (part.Fragments.Count > 0) yield return part;
+            if (part.Fragments.Count > 0)
+            {
+                var ancPart = SplitPart(part);
+                yield return part;
+                if (ancPart != null) yield return ancPart;
+            }
             _textIndex = null;
         }
     }
