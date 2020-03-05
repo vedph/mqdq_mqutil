@@ -339,7 +339,7 @@ namespace Mq.Migration
             if (part.Fragments.Any(f => TokenTextLocation.Parse(f.Location)
                 .Overlaps(loc)))
             {
-                Logger?.LogError("Overlap for new fragment at {Location}"
+                Logger?.LogInformation("Overlap for new fragment at {Location}"
                     + $" (original {originalLoc}): "
                     + string.Join("; ", fr.Entries), fr.Location);
             }
