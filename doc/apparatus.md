@@ -115,7 +115,37 @@ Anyway, here the first `app` element belongs to margin notes; thus it will be mo
 
 Apart from these cases, there remains a few number of overlapping `app` elements with different reasons, like:
 
-TODO:
+```xml
+<app from="#d005w257" to="#d005w258">
+    <lem wit="#lw1-16">fontibus umbras</lem>
+    <rdg wit="#lw1-20">frondibus aras
+        <note type="details" target="#lw1-20"> <emph style="font-style:italic">ap</emph>. <emph style="font-style:italic">Pierium</emph></note>
+        <ident n="d005w257">FRONDIBVS</ident>
+        <ident n="d005w258">ARAS</ident>
+    </rdg>
+</app>
+<app from="#d005w258" to="#d005w258">
+    <lem wit="#lw1-16">umbras</lem>
+    <rdg wit="#lw1-21 #lw1-1">aras
+        <ident n="d005w258">ARAS</ident>
+    </rdg>
+</app>
+```
+
+Here we have two app elements referred to the same word "umbras" `d005w258`; in the first element, "fontibus umbras" has the variant "frondibus aras"; in the second element, "umbras" has the variant "aras". These could easily be merged into a single app element with the proper entries, thus removing the overlap.
+
+In these cases the fix must be manual; the parser just logs the issue as an error; it is up to the users check the log and apply the fixes, and then repeat the parsing. For instance, here is a reduced excerpt from the log:
+
+```txt
+[INF] --Parsing app #21@1699
+[INF] Fragment location: 2.3-2.4
+[INF] Item ID changed from 93759564-48cf-4efd-af93-4e6e9685050a to c634eece-6e31-445f-b7f4-a616a7cdc80e
+[ERR] Part has overlaps: 3.6, 4.5, 5.3, 6.3, 14.5, 15.3, 15.5, 16.2, 16.4, 16.6, 17.5-17.6, 17.6, 19.3, 21.2
+[INF] Completed PART [fr.net.fusisoft.apparatus] 1582-1698: 3.6, 4.5, 5.3, 6.3, 14.5, 15.3, 15.5, 16.2, 16.4, 16.6, 17.5-17.6, 17.6, 19.3, 21.2
+[INF] Completed PART [fr.net.fusisoft.apparatus:margin] 1582-1698: 5.1-5.5, 6.1-6.6
+```
+
+As you can see, here the overlap is logged as an error (`[ERR]`): the overlap effectively happens between coordinates `17.5-17.6` and `17.6`.
 
 ### Header
 
