@@ -43,6 +43,80 @@ The XML documents tree is as follows:
 
 The `app` elements are rebuilt by the export process and reinjected under each `div1`, past their initial `head` child (which is kept unchanged), in place of all the old `app` elements.
 
+### Note on Overlapping app Elements
+
+A general point should be made about some cases of overlapping `app` elements. This requires me to spend some words about the Cadmus architecture, before facing MQDQ-specific issues and their resolution.
+
+#### No Overlapping Fragments
+
+In the Cadmus architecture, *items* are empty boxes including an open set of models (*parts*). In MQDQ we want to represent literary texts; so each item corresponds to a text piece (partitioned in a way which takes into adequate account semantic boundaries), as of course we could never think of editing a full, lengthy document at once in a web-based, concurrent editing environment.
+
+The parts are the models assigned to each item. The text itself is just a part inside an item. We could have as many part types as we can imagine, to represent e.g. datation, categories, keywords, comments, paleographic descriptions, prosopographic data, etc. There is no limit, and each part is designed and implemented independently from all the others.
+
+Textual metadata like apparatus entries are just parts, too. They belong to a family of parts named *layer parts*, which represent layers overlaid on a base text. Each layer contains one and one only model type: thus, we have the apparatus layer, the comments layer, the standard orthography layer, the abbreviations layer, etc.
+
+Every layer part is a collection of specialized models (*fragments*), each linked to a specific portion of the base text through a coordinates system. The link is thus external to the text, which means that we can add as many layers and fragments inside them, without ever having to touch the base text.
+
+Each part (and each fragment inside layer parts) has its own model; whatever type of data we want to add, we just add new parts to items. Thus, we have a dynamic data model, where the "type" of an item is just the sum of all its parts.
+
+Ultimately, the database is a set of independent, linked models; in the editor UI, each of these models has its own UI. *As the database aggregates different models, so the UI aggregates different interfaces*. Thus, the composable UI goes hand in hand with the composable data model (and their implementation as composable software components). This is why the architecture has been carefully designed to balance the requirements of both backend and frontend layers.
+
+Now, both usability reasons connected to the UI and theorical principles underlying the Cadmus architecture concur to define a specific and intentional limitation for fragments: *in the same layer, there can be no fragments linked to overlapping text portions*.
+
+For instance, in the *same* comment layer I could not add a comment fragment for the words "Sicelides Musae", and another, distinct yet overlapping fragment for the "Sicelides" word only, because:
+
+- the *user experience* in editing layers is as much friendly as possible: the user freely selects the portion of text he wants to connect to a layer fragment, and then edits it. All the portions of text already connected to a fragment are highlighted with some color. Thus, we have all the layer's metadata displayed at a glance; and editing them is as easy as selecting and clicking a button. Of course, this implies that there is no overlap between fragments in the same layer; otherwise, no such visualization and editing experience could be possible.
+
+- *conceptually*, we might want to comment "Sicelides Musae" as a whole, e.g. to explain the literary tradition (Theocritus etc.) the poet is referring to with this phrase; or we might just want to comment "Sicelides" because of its Greek-like form. Now, this would create an overlap, between a fragment spanning from "Sicelides" to "Musae", and another one referred to "Sicelides" only. Granted, we could just add a single comment fragment, annotating both these data in it. But the very fact that we find ourselves in an overlap scenario is a strong clue that we are really *confusing two conceptually distinct domains*. In fact, here we are dealing with two different types of comments: one is a *literary* annotation, another is a *linguistic* one. We could thus better represent these different domains using *two different layers*, with the same model (the comment model): a literary comments layer and a linguistic comments layer. Or we could go even further, and provide additional, more specialized data in the linguistic annotation, thus requiring a different model at all. In this case, we would still have two different layers, but also belonging to two different models (a comments layer and a linguistic layer). Whatever our solution, this is a better representation of the different conceptual domains involved, and also removes the potential fragments overlap.
+
+This is one of the reasons for Cadmus having the possibility of stacking as many layers as we want on a text, even with the same type (model). In this case, each layer of the same type differs from the others for its specific *role*: we might have a literary comment and a linguistic comment; an original-text datation and a text-copy datation in an inscription; etc. There is no limit to the layers, even of the same type. As we can see from these examples, this is a purely conceptual requirement; but it also nicely fits with the user-experience requirements of keeping UI simple by avoiding fragments overlaps.
+
+#### Overlapping app's
+
+Now, in XML documents we have a number of cases where `app` elements, which in theory should convey all the data connected to their text portion, are really overlapping with other `app` elements. Thus, we have several `app` elements referring to the same portion of text, or a subset of it.
+
+Fortunately, most of these cases are the natural effect of the above mentioned confusion of conceptual domains, which cannot be avoided in XML (where all data are laid on the unique, DOM-related structure). In fact, they belong to two cases:
+
+- whole apparatus entries marked as `margin-note`.
+- lemma/variants of an apparatus entry marked as `ancient-note`. Note that there can be cases of `ancient-note` entries inside `margin-note` `app`'s; in this case, the `app` notation prevails, as it resides on a higher node in the structure.
+
+The comment-like nature of such cases often let their `app` element overlap with other `app` elements, representing only apparatus variants in a stricter sense.
+
+The solution here, both for separating their different conceptual domains and avoiding overlaps, is *moving ancient notes and margin notes into separate layers*, with the same model of the apparatus layer. Thus, we will have up to 3 layers for the text (all with the same model):
+
+- apparatus layer with variants.
+- apparatus layer for ancient notes.
+- apparatus layer for margin notes.
+
+This removes most of the overlap cases.
+
+For instance, these two `app` elements overlap by the word at `d001w9`:
+
+```xml
+<app from="#d001w9" to="#d001w13" type="margin-note">
+    <lem source="#lb1-56" type="ancient-note">
+        <add type="abstract"><emph style="font-style:italic">Meditaris</emph> cantas, uel <emph style="font-style:italic">melitaris</emph>, -<emph style="font-style:italic">l</emph>- pro -<emph style="font-style:italic">d</emph>-, ut idem sit tropus.</add>
+    </lem>
+</app>
+<app from="#d001w9" to="#d001w9">
+    <lem wit="#lw1-16 #lw1-21">siluestrem</lem>
+    <rdg source="#lb1-50 #lb1-25">agrestem
+        <note type="details" target="#lb1-50"> 9, 4, 85,</note>
+        <note type="details" target="#lb1-25"> SI 244</note>
+        <ident n="d001w9">AGRESTEM</ident>
+    </rdg>
+    <rdg source="#lb1-56" type="ancient-note">
+        <add type="abstract"><emph style="font-style:italic">silvestrem</emph>, agrestem<emph style="font-style:italic">.</emph></add>
+    </rdg>
+</app>
+```
+
+Anyway, here the first `app` element belongs to margin notes; thus it will be moved to a different layer, removing the overlap.
+
+Apart from these cases, there remains a few number of overlapping `app` elements with different reasons, like:
+
+TODO:
+
 ### Header
 
 The header must be processed to import thesauri for witnesses and authors. This is an import-only process, as no changes will be made to the header data; thus, nothing will be exported. It is just a way of providing end users with human-readable lookup data (e.g. witnesses and authors names) while editing text and apparatus.
