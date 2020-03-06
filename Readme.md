@@ -27,7 +27,7 @@ The output files will be equal to the input files, except for the addition of `p
 Syntax:
 
 ```ps1
-.\Mqutil.exe partition <InputFilesMask> <OutputDir> [-n Min] [-m Max]
+.\Mqutil.exe partition <InputFilesMask> <OutputDir> [-n Min] [-m Max] [-r]
 ```
 
 where:
@@ -36,6 +36,7 @@ where:
 - `OutputDir` is the output directory (will be created if not exists).
 - `-n` is the optional minimum treshold (default 20).
 - `-m` is the optional maximum treshold (default 50).
+- `-r` means that the files mask is a regular expression.
 
 Just launch the program without arguments to get help directions. This gets a generic help, which also tells you how to get help about any specific command.
 
@@ -52,7 +53,7 @@ The `parse-text` command is used to parse text documents, dumping the output int
 Syntax:
 
 ```ps1
-.\Mqutil.exe parse-text <InputFilesMask> <OutputDir> [-m MaxItemsPerFile]
+.\Mqutil.exe parse-text <InputFilesMask> <OutputDir> [-m MaxItemsPerFile] [-r]
 ```
 
 where:
@@ -60,6 +61,7 @@ where:
 - `InputFilesMask` is the input file(s) mask.
 - `OutputDir` is the output directory (will be created if not exists).
 - `-m` is the maximum count of desired items per output file. The default value is 100. Set to 0 to output a single file (not recommended unless your input files are small).
+- `-r` means that the files mask is a regular expression.
 
 Sample:
 
@@ -76,7 +78,7 @@ The `parse-app` command parses the apparatus XML documents, dumping the results 
 Syntax:
 
 ```ps1
-.\Mqutil.exe parse-app <InputFilesMask> <TextDumpDir> <OutputDir> [-m MaxItemsPerFile]
+.\Mqutil.exe parse-app <InputFilesMask> <TextDumpDir> <OutputDir> [-m MaxItemsPerFile] [-r]
 ```
 
 where:
@@ -85,6 +87,7 @@ where:
 - `TextDumpDir` is the directory containing the JSON text dumps. These are the output of the `parse-text` command.
 - `OutputDir` is the output directory, where JSON apparatus dumps will be saved.
 - `-m` is the maximum count of desired items per output file. The default value is 100. Set to 0 to output a single file (not recommended unless your input files are small).
+- `-r` means that the files mask is a regular expression.
 
 Sample:
 
@@ -99,13 +102,14 @@ The `import-thes` thesauri command is used to parse apparatus documents to extra
 Syntax:
 
 ```ps1
-.\Mqutil.exe import-thes <InputFilesMask> <OutputFilePath>
+.\Mqutil.exe import-thes <InputFilesMask> <OutputFilePath> [-r]
 ```
 
 where:
 
 - `InputFilesMask` is the input file(s) mask.
 - `OutputFilePath` is the output file path.
+- `-r` means that the files mask is a regular expression.
 
 Sample:
 
@@ -120,7 +124,7 @@ The `import-json` command imports a set of JSON dumps representing parsed text a
 Syntax:
 
 ```ps1
-.\Mqutil.exe import-json <JsonTextFilesMask> <JsonApparatusFilesDir> <JsonProfileFile> <DatabaseName> [-d]
+.\Mqutil.exe import-json <JsonTextFilesMask> <JsonApparatusFilesDir> <JsonProfileFile> <DatabaseName> [-d] [-r]
 ```
 
 where:
@@ -130,3 +134,4 @@ where:
 - `JsonProfileFile`: the JSON profile file path.
 - `DatabaseName`: the target database name.
 - `-d`: dry run.
+- `-r` means that the files mask is a regular expression.

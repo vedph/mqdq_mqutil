@@ -29,6 +29,7 @@ namespace Mqutil.Commands
         private readonly string _profilePath;
         private readonly string _database;
         private readonly bool _dry;
+        private readonly bool _regexMask;
         private readonly RepositoryService _repositoryService;
 
         public ImportJsonCommand(AppOptions options,
@@ -36,7 +37,8 @@ namespace Mqutil.Commands
             string appFileDir,
             string profilePath,
             string database,
-            bool dry)
+            bool dry,
+            bool regexMask)
         {
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
@@ -49,6 +51,7 @@ namespace Mqutil.Commands
             _database = database
                 ?? throw new ArgumentNullException(nameof(database));
             _dry = dry;
+            _regexMask = regexMask;
 
             _config = options.Configuration;
             _repositoryService = new RepositoryService(_config);
@@ -80,6 +83,9 @@ namespace Mqutil.Commands
 
             CommandOption dryOption = command.Option("-d|--dry", "Dry run",
                 CommandOptionType.NoValue);
+            CommandOption regexMaskOption = command.Option("-r|--regex",
+                "Use regular expressions in files masks",
+                CommandOptionType.NoValue);
 
             command.OnExecute(() =>
             {
@@ -89,7 +95,8 @@ namespace Mqutil.Commands
                     appArgument.Value,
                     profileArgument.Value,
                     databaseArgument.Value,
-                    dryOption.HasValue());
+                    dryOption.HasValue(),
+                    regexMaskOption.HasValue());
                 return 0;
             });
         }
@@ -158,10 +165,10 @@ namespace Mqutil.Commands
             int inputFileCount = 0;
 
             // 1) import text
-            string[] files = Directory.GetFiles(
+            string[] files = FileEnumerator.Enumerate(
                 Path.GetDirectoryName(_txtFileMask),
-                Path.GetFileName(_txtFileMask))
-                .OrderBy(s => s)
+                Path.GetFileName(_txtFileMask),
+                _regexMask)
                 .ToArray();
             List<string> fileNames = new List<string>();
 

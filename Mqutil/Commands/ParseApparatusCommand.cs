@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 using Mq.Migration;
+using Mqutil.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
@@ -20,12 +21,12 @@ namespace Mqutil.Commands
         private readonly string _textDumpDir;
         private readonly string _outputDir;
         private readonly int _maxItemPerFile;
+        private readonly bool _regexMask;
 
         private readonly JsonTextIndex _textIndex;
 
         public ParseApparatusCommand(string inputFileMask, string textDumpDir,
-            string outputDir,
-            int maxItemPerFile)
+            string outputDir, int maxItemPerFile, bool regexMask)
         {
             _inputFileMask = inputFileMask ??
                 throw new ArgumentNullException(nameof(inputFileMask));
@@ -34,6 +35,7 @@ namespace Mqutil.Commands
             _outputDir = outputDir ??
                 throw new ArgumentNullException(nameof(outputDir));
             _maxItemPerFile = maxItemPerFile;
+            _regexMask = regexMask;
 
             _textIndex = new JsonTextIndex();
         }
@@ -64,6 +66,8 @@ namespace Mqutil.Commands
             CommandOption maxItemPerFileOption = command.Option("-m|--max",
                 "Max number of items per output file",
                 CommandOptionType.SingleValue);
+            CommandOption regexMaskOption = command.Option("-r|--regex",
+                "Use regular expressions in files masks", CommandOptionType.NoValue);
 
             command.OnExecute(() =>
             {
@@ -77,7 +81,8 @@ namespace Mqutil.Commands
                     inputArgument.Value,
                     textDumpArgument.Value,
                     outputArgument.Value,
-                    max);
+                    max,
+                    regexMaskOption.HasValue());
                 return 0;
             });
         }
@@ -134,10 +139,10 @@ namespace Mqutil.Commands
                 Directory.CreateDirectory(_outputDir);
 
             // for each input document
-            foreach (string filePath in Directory.GetFiles(
+            foreach (string filePath in FileEnumerator.Enumerate(
                 Path.GetDirectoryName(_inputFileMask),
-                Path.GetFileName(_inputFileMask))
-                .OrderBy(s => s))
+                Path.GetFileName(_inputFileMask),
+                _regexMask))
             {
                 Log.Logger.Information("Parsing {FilePath}", filePath);
 

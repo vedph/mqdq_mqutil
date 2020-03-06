@@ -1,6 +1,8 @@
 ﻿using Cadmus.Core.Config;
 using Microsoft.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Logging;
 using Mq.Migration;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -64,8 +66,13 @@ namespace Mqutil.Commands
                 $"Input:  {_inputFileMask}\n" +
                 $"Output: {_outputFilePath}\n");
 
-            XmlThesaurusParser parser = new XmlThesaurusParser();
-            // TODO: logger
+            ILoggerFactory loggerFactory = new LoggerFactory();
+            loggerFactory.AddSerilog(Log.Logger);
+
+            XmlThesaurusParser parser = new XmlThesaurusParser
+            {
+                Logger = loggerFactory.CreateLogger("parse-thes")
+            };
             int inputFileCount = 0;
             int witCount = 0, authCount = 0;
             JsonSerializerOptions options = new JsonSerializerOptions

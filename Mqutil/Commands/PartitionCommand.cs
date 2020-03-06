@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.CommandLineUtils;
 using Mq.Migration;
+using Mqutil.Services;
 using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -19,6 +19,7 @@ namespace Mqutil.Commands
         private readonly string _outputDir;
         private readonly int _minTreshold;
         private readonly int _maxTreshold;
+        private readonly bool _regexMask;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PartitionCommand"/> class.
@@ -27,10 +28,12 @@ namespace Mqutil.Commands
         /// <param name="outputDir">The output directory.</param>
         /// <param name="minTreshold">The minimum l treshold.</param>
         /// <param name="maxTreshold">The maximum l treshold.</param>
+        /// <param name="regexMask">True if file mask is a regular expression.
+        /// </param>
         /// <exception cref="ArgumentNullException">inputFileMask or
         /// outputDir</exception>
         public PartitionCommand(string inputFileMask, string outputDir,
-            int minTreshold, int maxTreshold)
+            int minTreshold, int maxTreshold, bool regexMask)
         {
             _inputFileMask = inputFileMask ??
                 throw new ArgumentNullException(nameof(inputFileMask));
@@ -38,6 +41,7 @@ namespace Mqutil.Commands
                 throw new ArgumentNullException(nameof(outputDir));
             _minTreshold = minTreshold;
             _maxTreshold = maxTreshold;
+            _regexMask = regexMask;
         }
 
         /// <summary>
@@ -65,6 +69,8 @@ namespace Mqutil.Commands
                 "The minimum l-count treshold", CommandOptionType.SingleValue);
             CommandOption maxTresholdOption = command.Option("-m|--max",
                 "The maximum l-count treshold", CommandOptionType.SingleValue);
+            CommandOption regexMaskOption = command.Option("-r|--regex",
+                "Use regular expressions in files masks", CommandOptionType.NoValue);
 
             command.OnExecute(() =>
             {
@@ -76,7 +82,8 @@ namespace Mqutil.Commands
                     : 20,
                     maxTresholdOption.HasValue()
                     ? int.Parse(minTresholdOption.Value(), CultureInfo.InvariantCulture)
-                    : 50);
+                    : 50,
+                    regexMaskOption.HasValue());
                 return 0;
             });
         }
@@ -102,10 +109,10 @@ namespace Mqutil.Commands
             };
 
             int count = 0;
-            foreach (string filePath in Directory.GetFiles(
+            foreach (string filePath in FileEnumerator.Enumerate(
                 Path.GetDirectoryName(_inputFileMask),
-                Path.GetFileName(_inputFileMask))
-                .OrderBy(s => s))
+                Path.GetFileName(_inputFileMask),
+                _regexMask))
             {
                 Console.Write(filePath);
 

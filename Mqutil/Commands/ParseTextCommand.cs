@@ -2,6 +2,7 @@
 using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 using Mq.Migration;
+using Mqutil.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
@@ -20,15 +21,27 @@ namespace Mqutil.Commands
         private readonly string _inputFileMask;
         private readonly string _outputDir;
         private readonly int _maxItemPerFile;
+        private readonly bool _regexMask;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParseTextCommand"/> class.
+        /// </summary>
+        /// <param name="inputFileMask">The input file mask.</param>
+        /// <param name="outputDir">The output dir.</param>
+        /// <param name="maxItemPerFile">The maximum item per file.</param>
+        /// <param name="regexMask">True if file mask is a regular expression.
+        /// </param>
+        /// <exception cref="ArgumentNullException">inputFileMask or outputDir
+        /// </exception>
         public ParseTextCommand(string inputFileMask, string outputDir,
-            int maxItemPerFile)
+            int maxItemPerFile, bool regexMask)
         {
             _inputFileMask = inputFileMask ??
                 throw new ArgumentNullException(nameof(inputFileMask));
             _outputDir = outputDir ??
                 throw new ArgumentNullException(nameof(outputDir));
             _maxItemPerFile = maxItemPerFile;
+            _regexMask = regexMask;
         }
 
         /// <summary>
@@ -55,6 +68,8 @@ namespace Mqutil.Commands
             CommandOption maxItemPerFileOption = command.Option("-m|--max",
                 "Max number of items per output file",
                 CommandOptionType.SingleValue);
+            CommandOption regexMaskOption = command.Option("-r|--regex",
+                "Use regular expressions in files masks", CommandOptionType.NoValue);
 
             command.OnExecute(() =>
             {
@@ -67,7 +82,8 @@ namespace Mqutil.Commands
                 options.Command = new ParseTextCommand(
                     inputArgument.Value,
                     outputArgument.Value,
-                    max);
+                    max,
+                    regexMaskOption.HasValue());
                 return 0;
             });
         }
@@ -110,10 +126,10 @@ namespace Mqutil.Commands
                 Directory.CreateDirectory(_outputDir);
 
             // for each input document
-            foreach (string filePath in Directory.GetFiles(
+            foreach (string filePath in FileEnumerator.Enumerate(
                 Path.GetDirectoryName(_inputFileMask),
-                Path.GetFileName(_inputFileMask))
-                .OrderBy(s => s))
+                Path.GetFileName(_inputFileMask),
+                _regexMask))
             {
                 // load document
                 string inputFileName = Path.GetFileNameWithoutExtension(filePath);
