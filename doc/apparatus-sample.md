@@ -77,7 +77,7 @@ The above apparatus refers to the whole verse, from `siluestrem` to `auena`. The
 }
 ```
 
-Thus, we expect that the fragment location to be `3.1-3.5`, i.e. line 3, words from 1 to 5. In fact, the first fragment in the output part is:
+Thus, we expect the fragment location to be `3.1-3.5`, i.e. line 3, words from 1 to 5. In fact, the first fragment in the output part is:
 
 ```json
 {
