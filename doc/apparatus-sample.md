@@ -192,3 +192,21 @@ Here is the fragment corresponding to the variants: the first entry corresponds 
 ```
 
 The second entry also has a normalized value with its ID appended after `#` (both derived from `ident`), and 2 authors derived from `rdg`'s `source` attribute. Both these have a note, derived from elements `note` with attribute `type`=`details`. This combination corresponds to note section 3, so their text is preceded by 2 section separators (backticks). Note that all the whitespaces are preserved.
+
+## Part Completion
+
+As you can see, the fragments are being accumulated in the same layer part(s) (from 1 to 3, according to the layer involved). The part is complete only when all the fragments related to the item's base text have been imported.
+
+This happens when the importer encounters the first `app` element whose text reference points to text whose item ID is different from the current one. This means that from that element onwards all the fragments will refer to that item, and thus require a new set of layers assigned to it.
+
+In the log, this change is signaled by an "Item ID changed" message, followed by the summary of the parts collected for the preceding item:
+
+```txt
+[INF] Item ID changed from 86525717-d507-4d6f-98e6-95806b793202 to 8c69284e-88e4-4441-bba2-6e23a345f2f9
+[INF] Completed PART [fr.net.fusisoft.apparatus] 1-415: 3.1, 15.3, 16.1
+[INF] Completed PART [fr.net.fusisoft.apparatus:margin] 1-415: 3.1-3.5, 16.1-16.8
+```
+
+Here we switch to the second item, identifed by its ID (you can find it in the text JSON dump files). The previous item has 2 parts: one as the "standard" apparatus (role `fr.net.fusisoft.apparatus`); another as the margin notes apparatus (role `fr.net.fusisoft.apparatus:margin`).
+
+The first part has 3 fragments, at the specified coordinates. The second part has 3 fragments, too; note that some of the coordinates of the first part overlap with these of the second, but this is not an issue given that these are two different layers.
