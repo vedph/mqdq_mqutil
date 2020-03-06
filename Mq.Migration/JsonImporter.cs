@@ -75,6 +75,8 @@ namespace Mq.Migration
                 IItem item = ReadItem(itemElem);
 
                 // import it
+                Logger?.LogInformation("Importing item {ItemId}: {Title}",
+                    item.Id, item.Title);
                 _repository.AddItem(item);
 
                 // import its parts
@@ -85,7 +87,13 @@ namespace Mq.Migration
                 }
             }
 
-            // TODO
+            // apparatus
+            int n = 0;
+            foreach (JsonElement partElem in appDoc.RootElement.EnumerateArray())
+            {
+                Logger?.LogInformation($"Importing layer part #{++n}");
+                _repository.AddPartFromContent(partElem.ToString());
+            }
         }
     }
 }
