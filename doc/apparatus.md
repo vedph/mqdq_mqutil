@@ -188,8 +188,6 @@ The target model `note` is a unique string where a divider character (backtick) 
 
 Thus, `one || two | three` means that section 1 = `one`, section 2 is not present, section 3 = `two`, section 4 = `three`.
 
-Note values are trimmed, assuming that (TODO: confirm) we must add a whitespace before any after-value, or after any before-value.
-
 #### Elements lem or rdg
 
 These elements are variant readings; they are formally equal, the only difference being that `lem` is the chosen reading.

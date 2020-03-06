@@ -121,3 +121,74 @@ becomes:
 ```txt
 _Meditaris_ cantas, uel _melitaris_, -_l_- pro -_d_-, ut idem sit tropus.
 ```
+
+## Element app number 2
+
+The second `app` element contains 2 variants and 1 ancient note, all referred to a single word (`siluestrem`):
+
+```xml
+<app from="#d001w9" to="#d001w9">
+    <lem wit="#lw1-16 #lw1-21">siluestrem</lem>
+    <rdg source="#lb1-50 #lb1-25">agrestem
+        <note type="details" target="#lb1-50"> 9, 4, 85,</note>
+        <note type="details" target="#lb1-25"> SI 244</note>
+        <ident n="d001w9">AGRESTEM</ident>
+    </rdg>
+    <rdg source="#lb1-56" type="ancient-note">
+        <add type="abstract"><emph style="font-style:italic">silvestrem</emph>, agrestem<emph style="font-style:italic">.</emph></add>
+    </rdg>
+</app>
+```
+
+The log reports the 3 parsed elements, and a potential overlap for the fragment, as `d001w9` is already included in the previous `app`. This is only an information (`[INF]`), not an error, because the overlap is resolved by moving ancient notes to a different layer.
+
+```txt
+[INF] --Parsing app #2@375
+[INF] Fragment location: 3.1
+[INF] -Parsing lem@376
+[INF] -Parsing rdg@377
+[INF] -Parsing rdg@382
+[INF] Overlap for new fragment at 3.1 (original #d001w9-#d001w9): replacement: siluestrem* lw1-16 lw1-21; replacement: agrestem lb1-50 (``9, 4, 85,) lb1-25 (``SI 244); replacement:  (_silvestrem_, agrestem_._) lb1-56
+[INF] Completed fragment 3.1 [3]: replacement: siluestrem* lw1-16 lw1-21; replacement: agrestem lb1-50 (``9, 4, 85,) lb1-25 (``SI 244); replacement:  (_silvestrem_, agrestem_._) lb1-56
+```
+
+Here is the fragment corresponding to the variants: the first entry corresponds to `lem` (`isAccepted` is true, with 2 witnesses), the second to `rdg`:
+
+```json
+{
+    "location": "3.1",
+    "tag": "d001",
+    "entries": [
+    {
+        "type": 0,
+        "tag": null,
+        "value": "siluestrem",
+        "normValue": null,
+        "isAccepted": true,
+        "groupId": null,
+        "witnesses": [
+            { "value": "lw1-16", "note": null },
+            { "value": "lw1-21", "note": null }
+        ],
+        "authors": [],
+        "note": null
+    },
+    {
+        "type": 0,
+        "tag": null,
+        "value": "agrestem",
+        "normValue": "AGRESTEM#d001w9",
+        "isAccepted": false,
+        "groupId": null,
+        "witnesses": [],
+        "authors": [
+            { "value": "lb1-50", "note": "`` 9, 4, 85," },
+            { "value": "lb1-25", "note": "`` SI 244" }
+        ],
+        "note": null
+    }
+    ]
+}
+```
+
+The second entry also has a normalized value with its ID appended after `#` (both derived from `ident`), and 2 authors derived from `rdg`'s `source` attribute. Both these have a note, derived from elements `note` with attribute `type`=`details`. This combination corresponds to note section 3, so their text is preceded by 2 section separators (backticks). Note that all the whitespaces are preserved.
