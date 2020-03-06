@@ -20,7 +20,7 @@ dotnet ./Mqutil.dll ...arguments...
 
 ### Partition Command
 
-The `partition` command partitions all the files matching the specified mask and requiring partitioning, saving a copy of each partitioned file in the specified output directory.
+The `partition` command partitions all the files matching the specified mask and requiring partitioning, saving a copy of each file (either partitioned or not) in the specified output directory.
 
 The output files will be equal to the input files, except for the addition of `pb` elements at the end of each partition.
 
@@ -37,8 +37,7 @@ where:
 - `-n` is the optional minimum treshold (default 20).
 - `-m` is the optional maximum treshold (default 50).
 - `-r` means that the files mask is a regular expression.
-
-Just launch the program without arguments to get help directions. This gets a generic help, which also tells you how to get help about any specific command.
+- `-s` recurses subdirectories when matching input files.
 
 Sample:
 

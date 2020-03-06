@@ -20,6 +20,7 @@ namespace Mqutil.Commands
         private readonly int _minTreshold;
         private readonly int _maxTreshold;
         private readonly bool _regexMask;
+        private readonly bool _recursive;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PartitionCommand"/> class.
@@ -30,10 +31,12 @@ namespace Mqutil.Commands
         /// <param name="maxTreshold">The maximum l treshold.</param>
         /// <param name="regexMask">True if file mask is a regular expression.
         /// </param>
+        /// <param name="recursive">True to recurse subdirectories when
+        /// matching input files.</param>
         /// <exception cref="ArgumentNullException">inputFileMask or
         /// outputDir</exception>
         public PartitionCommand(string inputFileMask, string outputDir,
-            int minTreshold, int maxTreshold, bool regexMask)
+            int minTreshold, int maxTreshold, bool regexMask, bool recursive)
         {
             _inputFileMask = inputFileMask ??
                 throw new ArgumentNullException(nameof(inputFileMask));
@@ -42,6 +45,7 @@ namespace Mqutil.Commands
             _minTreshold = minTreshold;
             _maxTreshold = maxTreshold;
             _regexMask = regexMask;
+            _recursive = recursive;
         }
 
         /// <summary>
@@ -71,6 +75,9 @@ namespace Mqutil.Commands
                 "The maximum l-count treshold", CommandOptionType.SingleValue);
             CommandOption regexMaskOption = command.Option("-r|--regex",
                 "Use regular expressions in files masks", CommandOptionType.NoValue);
+            CommandOption recursiveOption = command.Option("-s|--sub",
+                "Recurse subdirectories in matching files masks",
+                CommandOptionType.NoValue);
 
             command.OnExecute(() =>
             {
@@ -83,7 +90,8 @@ namespace Mqutil.Commands
                     maxTresholdOption.HasValue()
                     ? int.Parse(minTresholdOption.Value(), CultureInfo.InvariantCulture)
                     : 50,
-                    regexMaskOption.HasValue());
+                    regexMaskOption.HasValue(),
+                    recursiveOption.HasValue());
                 return 0;
             });
         }
@@ -100,7 +108,8 @@ namespace Mqutil.Commands
                 $"Input:  {_inputFileMask}\n" +
                 $"Output: {_outputDir}\n" +
                 $"Min: {_minTreshold}\n" +
-                $"Max: {_maxTreshold}\n");
+                $"Max: {_maxTreshold}\n" +
+                $"Recursive: {_recursive}\n");
 
             XmlPartitioner partitioner = new XmlPartitioner
             {
@@ -108,12 +117,14 @@ namespace Mqutil.Commands
                 MaxTreshold = _maxTreshold
             };
 
-            int count = 0;
+            int partitioned = 0, total = 0;
+
             foreach (string filePath in FileEnumerator.Enumerate(
                 Path.GetDirectoryName(_inputFileMask),
                 Path.GetFileName(_inputFileMask),
-                _regexMask))
+                _regexMask, _recursive))
             {
+                total++;
                 Console.Write(filePath);
 
                 XDocument doc = XDocument.Load(filePath,
@@ -122,11 +133,12 @@ namespace Mqutil.Commands
                 bool touched = partitioner.Partition(doc,
                     Path.GetFileNameWithoutExtension(filePath));
 
+                string outputPath =
+                    Path.Combine(_outputDir, Path.GetFileName(filePath));
+
                 if (touched)
                 {
-                    count++;
-                    string outputPath =
-                        Path.Combine(_outputDir, Path.GetFileName(filePath));
+                    partitioned++;
                     Console.WriteLine($" => {outputPath}");
                     if (!Directory.Exists(_outputDir))
                         Directory.CreateDirectory(_outputDir);
@@ -134,11 +146,13 @@ namespace Mqutil.Commands
                 }
                 else
                 {
+                    File.Copy(filePath, outputPath);
                     Console.WriteLine();
                 }
             }
 
-            Console.WriteLine($"Files partitioned: {count}");
+            Console.WriteLine($"Total files: {total}");
+            Console.WriteLine($"Partitioned files: {partitioned}");
 
             return Task.CompletedTask;
         }
