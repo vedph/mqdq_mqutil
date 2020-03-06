@@ -60,6 +60,7 @@ namespace Mqutil.Commands
                 "The input entries files mask");
             CommandArgument outputArgument = command.Argument("[output]",
                 "The output directory");
+
             CommandOption minTresholdOption = command.Option("-n|--min",
                 "The minimum l-count treshold", CommandOptionType.SingleValue);
             CommandOption maxTresholdOption = command.Option("-m|--max",
