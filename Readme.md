@@ -2,15 +2,13 @@
 
 This is a dummy tool to be used for importing MQDQ documents into Cadmus for editing, and to export them back once finished.
 
-This tool has a CLI interface. Currently the following commands are planned:
-
-- **partition**: partition text documents.
-- **import**: import partitioned text documents, plus apparatus where available, into a Cadmus database.
-- **export**: export data from the Cadmus database into the source XML documents.
+This tool has a CLI interface. Its available commands are listed below. You can get more information about the syntax of each command by typing it followed by `--help`.
 
 See the `doc` folder in this repository for the [documentation](doc/index.md).
 
-Note for users: if not using a development machine (which has the SDK installed), you must install the [.NET Core runtime](https://dotnet.microsoft.com/download/dotnet-core) to run this program.
+## Requirements
+
+If not using a development machine (which has the SDK installed), you must install the [.NET Core runtime](https://dotnet.microsoft.com/download/dotnet-core) to run this program.
 
 ## Syntax
 
@@ -20,7 +18,7 @@ Note: for Linux users, you should run the program like this:
 dotnet ./Mqutil.dll ...arguments...
 ```
 
-### Partition
+### Partition Command
 
 The `partition` command partitions all the files matching the specified mask and requiring partitioning, saving a copy of each partitioned file in the specified output directory.
 
@@ -47,7 +45,7 @@ Sample:
 .\Mqutil.exe partition C:\Users\dfusi\Desktop\mqdq\VERG-eclo.xml C:\Users\dfusi\Desktop\mqdq\part\
 ```
 
-### Parse Text
+### Parse Text Command
 
 The `parse-text` command is used to parse text documents, dumping the output into a set of JSON files including the Cadmus items and text parts.
 
@@ -71,17 +69,30 @@ Sample:
 
 Output files will be created in the output directory, and named after the corresponding input files, plus a numeric suffix.
 
-### Parse Apparatus
+### Parse Apparatus Command
 
 The `parse-app` command parses the apparatus XML documents, dumping the results into a set of JSON files.
 
-TODO: add parse-app doc
+Syntax:
 
 ```ps1
-.\Mqutil.exe parse-app C:\Users\dfusi\Desktop\mqdq\part\VERG-eclo.xml c:\users\dfusi\desktop\mqdq\part\app
+.\Mqutil.exe parse-app <InputFilesMask> <TextDumpDir> <OutputDir> [-m MaxItemsPerFile]
 ```
 
-### Import Thesauri
+where:
+
+- `InputFilesMask` is the input file(s) mask.
+- `TextDumpDir` is the directory containing the JSON text dumps. These are the output of the `parse-text` command.
+- `OutputDir` is the output directory, where JSON apparatus dumps will be saved.
+- `-m` is the maximum count of desired items per output file. The default value is 100. Set to 0 to output a single file (not recommended unless your input files are small).
+
+Sample:
+
+```ps1
+.\Mqutil.exe parse-app C:\Users\dfusi\Desktop\mqdq\VERG-eclo-app.xml c:\users\dfusi\desktop\mqdq\part\txt\ c:\users\dfusi\desktop\mqdq\part\app
+```
+
+### Import Thesauri Command
 
 The `import-thes` thesauri command is used to parse apparatus documents to extract witnesses and authors into a set of JSON thesauri.
 
@@ -102,8 +113,20 @@ Sample:
 .\Mqutil.exe import-thes C:\Users\dfusi\Desktop\mqdq\VERG-eclo-app.xml c:\users\dfusi\desktop\mqdq\thesauri.json
 ```
 
-### Import JSON
+### Import JSON Command
 
 The `import-json` command imports a set of JSON dumps representing parsed text and apparatus into a Cadmus database.
 
-TODO: add import-json doc
+Syntax:
+
+```ps1
+.\Mqutil.exe import-json <JsonTextFilesMask> <JsonApparatusFilesDir> <JsonProfileFile> <DatabaseName> [-d]
+```
+
+where:
+
+- `JsonTextFilesMask`: the input JSON text files mask.
+- `JsonApparatusFilesDir`: the JSON apparatus files directory.
+- `JsonProfileFile`: the JSON profile file path.
+- `DatabaseName`: the target database name.
+- `-d`: dry run.
