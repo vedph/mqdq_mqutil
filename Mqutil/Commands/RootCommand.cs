@@ -20,6 +20,7 @@ namespace Mqutil.Commands
             app.Command("parse-text", c => ParseTextCommand.Configure(c, options));
             app.Command("parse-app", c => ParseApparatusCommand.Configure(c, options));
             app.Command("import-thes", c => ImportThesauriCommand.Configure(c, options));
+            app.Command("import-json", c => ImportJsonCommand.Configure(c, options));
 
             app.OnExecute(() =>
             {

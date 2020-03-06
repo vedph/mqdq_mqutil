@@ -1,12 +1,29 @@
 ﻿using Mqutil.Commands;
 using Microsoft.Extensions.CommandLineUtils;
 using System;
+using Microsoft.Extensions.Configuration;
 
 namespace Mqutil
 {
     public sealed class AppOptions
     {
         public ICommand Command { get; set; }
+
+        public IConfiguration Configuration { get; private set; }
+
+        public AppOptions()
+        {
+            BuildConfiguration();
+        }
+
+        private void BuildConfiguration()
+        {
+            ConfigurationBuilder cb = new ConfigurationBuilder();
+            Configuration = cb
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+        }
 
         public static AppOptions Parse(string[] args)
         {

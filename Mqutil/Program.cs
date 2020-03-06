@@ -33,9 +33,9 @@ namespace Mqutil
         {
             try
             {
+                // logger
                 string logFilePath = Path.Combine(
                     Directory.GetCurrentDirectory(), "mqutil-log.txt");
-
                 Log.Logger = new LoggerConfiguration()
                     .MinimumLevel.Debug()
                     .Enrich.FromLogContext()

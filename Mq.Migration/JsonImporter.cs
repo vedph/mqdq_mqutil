@@ -22,6 +22,12 @@ namespace Mq.Migration
         public ILogger Logger { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether dry mode is enabled.
+        /// In dry mode, no change is made to the database.
+        /// </summary>
+        public bool IsDry { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="JsonImporter"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
@@ -57,19 +63,15 @@ namespace Mq.Migration
         /// <summary>
         /// Imports the specified text stream.
         /// </summary>
-        /// <param name="txtStream">The text stream.</param>
-        /// <param name="appStream">The application stream.</param>
+        /// <param name="stream">The text stream.</param>
         /// <exception cref="ArgumentNullException">txtStream or appStream</exception>
-        public void Import(Stream txtStream, Stream appStream)
+        public void ImportText(Stream stream)
         {
-            if (txtStream == null) throw new ArgumentNullException(nameof(txtStream));
-            if (appStream == null) throw new ArgumentNullException(nameof(appStream));
-
-            JsonDocument txtDoc = JsonDocument.Parse(txtStream, _options);
-            JsonDocument appDoc = JsonDocument.Parse(appStream, _options);
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            JsonDocument doc = JsonDocument.Parse(stream, _options);
 
             // for each item
-            foreach (JsonElement itemElem in txtDoc.RootElement.EnumerateArray())
+            foreach (JsonElement itemElem in doc.RootElement.EnumerateArray())
             {
                 // read its metadata
                 IItem item = ReadItem(itemElem);
@@ -77,22 +79,30 @@ namespace Mq.Migration
                 // import it
                 Logger?.LogInformation("Importing item {ItemId}: {Title}",
                     item.Id, item.Title);
-                _repository.AddItem(item);
+                if (!IsDry) _repository.AddItem(item);
 
                 // import its parts
                 foreach (JsonElement partElem in itemElem.GetProperty("parts")
                     .EnumerateArray())
                 {
-                    _repository.AddPartFromContent(partElem.ToString());
+                    if (!IsDry)
+                        _repository.AddPartFromContent(partElem.ToString());
                 }
             }
+        }
+
+        public void ImportApparatus(Stream stream)
+        {
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            JsonDocument doc = JsonDocument.Parse(stream, _options);
 
             // apparatus
             int n = 0;
-            foreach (JsonElement partElem in appDoc.RootElement.EnumerateArray())
+            foreach (JsonElement partElem in doc.RootElement.EnumerateArray())
             {
                 Logger?.LogInformation($"Importing layer part #{++n}");
-                _repository.AddPartFromContent(partElem.ToString());
+                if (!IsDry)
+                    _repository.AddPartFromContent(partElem.ToString());
             }
         }
     }
