@@ -46,38 +46,3 @@ The citation is built by concatenating these components, separated by space:
 5. `div2` attributes, when there is a `div2`.
 
 Thus, a citation (no `div2`) would be like this: `LVCR-rena 20#d001l20 xml:id=d001‖type=section‖decls=#md‖met=H`.
-
-## Commands
-
-### Partition
-
-The `partition` command partitions all the files matching the specified mask and requiring partitioning, saving a copy of each partitioned file in the specified output directory.
-
-The output files will be equal to the input files, except for the addition of `pb` elements at the end of each partition.
-
-Syntax:
-
-```ps1
-.\Mqutil.exe partition <InputFilesMask> <OutputDir> [-n Min] [-m Max]
-```
-
-where:
-
-- `InputFilesMask` is the input file(s) mask.
-- `OutputDir` is the output directory (will be created if not exists).
-- `-n` is the optional minimum treshold (default 20).
-- `-m` is the optional maximum treshold (default 50).
-
-Just launch the program without arguments to get help directions. This gets a generic help, which also tells you how to get help about any specific command.
-
-Sample:
-
-```ps1
-.\Mqutil.exe partition c:\users\dfusi\desktop\mqdq\VERG-eclo.xml c:\users\dfusi\desktop\mqdq\part\
-```
-
-Note: for Linux users, you should run the program like this:
-
-```bash
-dotnet ./Mqutil.dll ...arguments...
-```

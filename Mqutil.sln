@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{C4A30C7F-74A
 		doc\mqdq-txt-report.html = doc\mqdq-txt-report.html
 		doc\partition.md = doc\partition.md
 		doc\quickstart.md = doc\quickstart.md
+		doc\text.md = doc\text.md
 	EndProjectSection
 EndProject
 Global
