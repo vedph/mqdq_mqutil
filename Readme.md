@@ -79,7 +79,7 @@ The `parse-app` command parses the apparatus XML documents, dumping the results 
 Syntax:
 
 ```ps1
-.\Mqutil.exe parse-app <InputFilesDir> <InputFilesMask> <TextDumpDir> <OutputDir> [-m MaxItemsPerFile] [-r]
+.\Mqutil.exe parse-app <InputFilesDir> <InputFilesMask> <TextDumpDir> <OutputDir> [-m MaxItemsPerFile] [-r] [-s]
 ```
 
 where:
@@ -90,6 +90,7 @@ where:
 - `OutputDir` is the output directory, where JSON apparatus dumps will be saved.
 - `-m` is the maximum count of desired items per output file. The default value is 100. Set to 0 to output a single file (not recommended unless your input files are small).
 - `-r` means that the files mask is a regular expression.
+- `-s` recurses subdirectories when matching input files.
 
 Sample:
 

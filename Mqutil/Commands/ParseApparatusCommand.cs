@@ -21,12 +21,14 @@ namespace Mqutil.Commands
         private readonly string _outputDir;
         private readonly int _maxItemPerFile;
         private readonly bool _regexMask;
+        private readonly bool _recursive;
 
         private readonly JsonTextIndex _textIndex;
 
         public ParseApparatusCommand(string inputFileDir,
             string inputFileMask, string textDumpDir,
-            string outputDir, int maxItemPerFile, bool regexMask)
+            string outputDir, int maxItemPerFile, bool regexMask,
+            bool recursive)
         {
             _inputFileDir = inputFileDir ??
                 throw new ArgumentNullException(nameof(inputFileDir));
@@ -38,6 +40,7 @@ namespace Mqutil.Commands
                 throw new ArgumentNullException(nameof(outputDir));
             _maxItemPerFile = maxItemPerFile;
             _regexMask = regexMask;
+            _recursive = recursive;
 
             _textIndex = new JsonTextIndex();
         }
@@ -72,6 +75,9 @@ namespace Mqutil.Commands
                 CommandOptionType.SingleValue);
             CommandOption regexMaskOption = command.Option("-r|--regex",
                 "Use regular expressions in files masks", CommandOptionType.NoValue);
+            CommandOption recursiveOption = command.Option("-s|--sub",
+                "Recurse subdirectories in matching files masks",
+                CommandOptionType.NoValue);
 
             command.OnExecute(() =>
             {
@@ -87,7 +93,8 @@ namespace Mqutil.Commands
                     txtDumpDirArgument.Value,
                     outputDirArgument.Value,
                     max,
-                    regexMaskOption.HasValue());
+                    regexMaskOption.HasValue(),
+                    recursiveOption.HasValue());
                 return 0;
             });
         }
@@ -139,7 +146,7 @@ namespace Mqutil.Commands
 
             // for each input document
             foreach (string filePath in FileEnumerator.Enumerate(
-                _inputFileDir, _inputFileMask, _regexMask))
+                _inputFileDir, _inputFileMask, _regexMask, _recursive))
             {
                 Log.Logger.Information("Parsing {FilePath}", filePath);
 

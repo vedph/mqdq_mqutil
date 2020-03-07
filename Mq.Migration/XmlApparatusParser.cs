@@ -565,6 +565,7 @@ namespace Mq.Migration
                     if (appElem.Attribute("from") != null)
                     {
                         var t = ParseFromTo(appElem);
+                        if (t == null) continue;
                         itemId = t.Item1;
                         fr.Location = t.Item2;
                         if (fr.Location == null)
