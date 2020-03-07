@@ -2,7 +2,7 @@
   "profiles": {
     "Mqutil": {
       "commandName": "Project",
-      "commandLineArgs": "partition E:\\Work\\mqdq\\ ^[^-]+-[^-]+\\.xml E:\\Work\\mqdqc\\ -r -s"
+      "commandLineArgs": "parse-text E:\\Work\\mqdqc\\ *.xml E:\\Work\\mqdqc\\txt\\"
     }
   }
 }

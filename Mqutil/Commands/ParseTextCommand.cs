@@ -108,8 +108,9 @@ namespace Mqutil.Commands
             Console.WriteLine("PARSE TEXT\n");
             Console.ResetColor();
             Console.WriteLine(
-                $"Input:  {_inputFileMask}\n" +
-                $"Output: {_outputDir}\n" +
+                $"Input dir:  {_inputFileDir}\n" +
+                $"Input mask: {_inputFileMask}\n" +
+                $"Output dir: {_outputDir}\n" +
                 $"Max items per file: {_maxItemPerFile}\n");
 
             ILoggerFactory loggerFactory = new LoggerFactory();
@@ -132,7 +133,7 @@ namespace Mqutil.Commands
             {
                 // load document
                 string inputFileName = Path.GetFileNameWithoutExtension(filePath);
-                Console.WriteLine(filePath);
+                Console.WriteLine("\n" + filePath);
                 inputFileCount++;
                 XDocument doc = XDocument.Load(filePath,
                     LoadOptions.PreserveWhitespace);
@@ -177,7 +178,11 @@ namespace Mqutil.Commands
                     writer.WriteLine(json + ",");
                 }
                 totalItemCount += itemCount;
-                if (writer != null) CloseOutputFile(writer);
+                if (writer != null)
+                {
+                    CloseOutputFile(writer);
+                    writer = null;
+                }
             }
 
             Console.WriteLine($"\nInput documents: {inputFileCount}");
