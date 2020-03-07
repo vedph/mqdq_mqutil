@@ -7,9 +7,7 @@ using Newtonsoft.Json.Serialization;
 using Serilog;
 using System;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -17,6 +15,7 @@ namespace Mqutil.Commands
 {
     public sealed class ParseApparatusCommand : ICommand
     {
+        private readonly string _inputFileDir;
         private readonly string _inputFileMask;
         private readonly string _textDumpDir;
         private readonly string _outputDir;
@@ -25,9 +24,12 @@ namespace Mqutil.Commands
 
         private readonly JsonTextIndex _textIndex;
 
-        public ParseApparatusCommand(string inputFileMask, string textDumpDir,
+        public ParseApparatusCommand(string inputFileDir,
+            string inputFileMask, string textDumpDir,
             string outputDir, int maxItemPerFile, bool regexMask)
         {
+            _inputFileDir = inputFileDir ??
+                throw new ArgumentNullException(nameof(inputFileDir));
             _inputFileMask = inputFileMask ??
                 throw new ArgumentNullException(nameof(inputFileMask));
             _textDumpDir = textDumpDir ??
@@ -56,11 +58,13 @@ namespace Mqutil.Commands
                 "dumping the results into the specified folder";
             command.HelpOption("-?|-h|--help");
 
-            CommandArgument inputArgument = command.Argument("[input]",
+            CommandArgument inputDirArgument = command.Argument("[input-dir]",
+                "The input entries files directory");
+            CommandArgument inputMaskArgument = command.Argument("[input-mask]",
                 "The input entries files mask");
-            CommandArgument textDumpArgument = command.Argument("[text dump]",
+            CommandArgument txtDumpDirArgument = command.Argument("[text-dump-dir]",
                 "The input text dumps directory");
-            CommandArgument outputArgument = command.Argument("[output]",
+            CommandArgument outputDirArgument = command.Argument("[output-dir]",
                 "The output directory");
 
             CommandOption maxItemPerFileOption = command.Option("-m|--max",
@@ -78,9 +82,10 @@ namespace Mqutil.Commands
                     max = n;
                 }
                 options.Command = new ParseApparatusCommand(
-                    inputArgument.Value,
-                    textDumpArgument.Value,
-                    outputArgument.Value,
+                    inputDirArgument.Value,
+                    inputMaskArgument.Value,
+                    txtDumpDirArgument.Value,
+                    outputDirArgument.Value,
                     max,
                     regexMaskOption.HasValue());
                 return 0;
@@ -128,21 +133,13 @@ namespace Mqutil.Commands
             int inputFileCount = 0;
             int totalPartCount = 0;
             StreamWriter writer = null;
-            JsonSerializerOptions options = new JsonSerializerOptions
-            {
-                IgnoreNullValues = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
-            };
 
             if (!Directory.Exists(_outputDir))
                 Directory.CreateDirectory(_outputDir);
 
             // for each input document
             foreach (string filePath in FileEnumerator.Enumerate(
-                Path.GetDirectoryName(_inputFileMask),
-                Path.GetFileName(_inputFileMask),
-                _regexMask))
+                _inputFileDir, _inputFileMask, _regexMask))
             {
                 Log.Logger.Information("Parsing {FilePath}", filePath);
 

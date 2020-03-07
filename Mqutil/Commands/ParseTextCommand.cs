@@ -18,6 +18,7 @@ namespace Mqutil.Commands
 {
     public sealed class ParseTextCommand : ICommand
     {
+        private readonly string _inputFileDir;
         private readonly string _inputFileMask;
         private readonly string _outputDir;
         private readonly int _maxItemPerFile;
@@ -26,16 +27,19 @@ namespace Mqutil.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="ParseTextCommand"/> class.
         /// </summary>
-        /// <param name="inputFileMask">The input file mask.</param>
+        /// <param name="inputFileDir">The input files directory.</param>
+        /// <param name="inputFileMask">The input files mask.</param>
         /// <param name="outputDir">The output dir.</param>
         /// <param name="maxItemPerFile">The maximum item per file.</param>
         /// <param name="regexMask">True if file mask is a regular expression.
         /// </param>
         /// <exception cref="ArgumentNullException">inputFileMask or outputDir
         /// </exception>
-        public ParseTextCommand(string inputFileMask, string outputDir,
-            int maxItemPerFile, bool regexMask)
+        public ParseTextCommand(string inputFileDir, string inputFileMask,
+            string outputDir, int maxItemPerFile, bool regexMask)
         {
+            _inputFileDir = inputFileDir ??
+                throw new ArgumentNullException(nameof(inputFileDir));
             _inputFileMask = inputFileMask ??
                 throw new ArgumentNullException(nameof(inputFileMask));
             _outputDir = outputDir ??
@@ -60,7 +64,9 @@ namespace Mqutil.Commands
                 "dumping the results into the specified folder";
             command.HelpOption("-?|-h|--help");
 
-            CommandArgument inputArgument = command.Argument("[input]",
+            CommandArgument inputDirArgument = command.Argument("[input-dir]",
+                "The input entries files directory");
+            CommandArgument inputMaskArgument = command.Argument("[input-mask]",
                 "The input entries files mask");
             CommandArgument outputArgument = command.Argument("[output]",
                 "The output directory");
@@ -80,7 +86,8 @@ namespace Mqutil.Commands
                     max = n;
                 }
                 options.Command = new ParseTextCommand(
-                    inputArgument.Value,
+                    inputDirArgument.Value,
+                    inputMaskArgument.Value,
                     outputArgument.Value,
                     max,
                     regexMaskOption.HasValue());
@@ -115,21 +122,13 @@ namespace Mqutil.Commands
             int inputFileCount = 0;
             int totalItemCount = 0;
             StreamWriter writer = null;
-            JsonSerializerOptions options = new JsonSerializerOptions
-            {
-                IgnoreNullValues = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
-            };
 
             if (!Directory.Exists(_outputDir))
                 Directory.CreateDirectory(_outputDir);
 
             // for each input document
             foreach (string filePath in FileEnumerator.Enumerate(
-                Path.GetDirectoryName(_inputFileMask),
-                Path.GetFileName(_inputFileMask),
-                _regexMask))
+                _inputFileDir, _inputFileMask, _regexMask))
             {
                 // load document
                 string inputFileName = Path.GetFileNameWithoutExtension(filePath);

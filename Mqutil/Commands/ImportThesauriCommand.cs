@@ -43,9 +43,9 @@ namespace Mqutil.Commands
                 "into the specified JSON file";
             command.HelpOption("-?|-h|--help");
 
-            CommandArgument inputArgument = command.Argument("[input]",
+            CommandArgument inputArgument = command.Argument("[input-mask]",
                 "The input entries files mask");
-            CommandArgument outputArgument = command.Argument("[output]",
+            CommandArgument outputArgument = command.Argument("[output-file]",
                 "The output JSON file path");
 
             command.OnExecute(() =>

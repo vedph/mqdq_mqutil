@@ -15,7 +15,8 @@ namespace Mqutil.Commands
     /// <seealso cref="ICommand" />
     public sealed class PartitionCommand : ICommand
     {
-        private readonly string _inputFileMask;
+        private readonly string _inputDir;
+        private readonly string _fileMask;
         private readonly string _outputDir;
         private readonly int _minTreshold;
         private readonly int _maxTreshold;
@@ -25,7 +26,8 @@ namespace Mqutil.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="PartitionCommand"/> class.
         /// </summary>
-        /// <param name="inputFileMask">The input file(s) mask.</param>
+        /// <param name="inputDir">The input file(s) directory.</param>
+        /// <param name="fileMask">The input file(s) mask.</param>
         /// <param name="outputDir">The output directory.</param>
         /// <param name="minTreshold">The minimum l treshold.</param>
         /// <param name="maxTreshold">The maximum l treshold.</param>
@@ -35,11 +37,13 @@ namespace Mqutil.Commands
         /// matching input files.</param>
         /// <exception cref="ArgumentNullException">inputFileMask or
         /// outputDir</exception>
-        public PartitionCommand(string inputFileMask, string outputDir,
+        public PartitionCommand(string inputDir, string fileMask, string outputDir,
             int minTreshold, int maxTreshold, bool regexMask, bool recursive)
         {
-            _inputFileMask = inputFileMask ??
-                throw new ArgumentNullException(nameof(inputFileMask));
+            _inputDir = inputDir ??
+                throw new ArgumentNullException(nameof(inputDir));
+            _fileMask = fileMask ??
+                throw new ArgumentNullException(nameof(fileMask));
             _outputDir = outputDir ??
                 throw new ArgumentNullException(nameof(outputDir));
             _minTreshold = minTreshold;
@@ -64,9 +68,11 @@ namespace Mqutil.Commands
                 "saving the results into the specified folder";
             command.HelpOption("-?|-h|--help");
 
-            CommandArgument inputArgument = command.Argument("[input]",
-                "The input entries files mask");
-            CommandArgument outputArgument = command.Argument("[output]",
+            CommandArgument inputArgument = command.Argument("[input-dir]",
+                "The input files directory");
+            CommandArgument fileMaskArgument = command.Argument("[file-mask]",
+                "The input files mask");
+            CommandArgument outputArgument = command.Argument("[output-dir]",
                 "The output directory");
 
             CommandOption minTresholdOption = command.Option("-n|--min",
@@ -83,6 +89,7 @@ namespace Mqutil.Commands
             {
                 options.Command = new PartitionCommand(
                     inputArgument.Value,
+                    fileMaskArgument.Value,
                     outputArgument.Value,
                     minTresholdOption.HasValue()
                     ? int.Parse(minTresholdOption.Value(), CultureInfo.InvariantCulture)
@@ -105,8 +112,9 @@ namespace Mqutil.Commands
             Console.WriteLine("PARTITION\n");
             Console.ResetColor();
             Console.WriteLine(
-                $"Input:  {_inputFileMask}\n" +
-                $"Output: {_outputDir}\n" +
+                $"Input dir:  {_inputDir}\n" +
+                $"Input mask: {_fileMask}\n" +
+                $"Output dir: {_outputDir}\n" +
                 $"Min: {_minTreshold}\n" +
                 $"Max: {_maxTreshold}\n" +
                 $"Recursive: {_recursive}\n");
@@ -119,10 +127,11 @@ namespace Mqutil.Commands
 
             int partitioned = 0, total = 0;
 
+            if (!Directory.Exists(_outputDir))
+                Directory.CreateDirectory(_outputDir);
+
             foreach (string filePath in FileEnumerator.Enumerate(
-                Path.GetDirectoryName(_inputFileMask),
-                Path.GetFileName(_inputFileMask),
-                _regexMask, _recursive))
+                _inputDir, _fileMask, _regexMask, _recursive))
             {
                 total++;
                 Console.Write(filePath);

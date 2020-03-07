@@ -24,6 +24,7 @@ namespace Mqutil.Commands
     public sealed class ImportJsonCommand : ICommand
     {
         private readonly IConfiguration _config;
+        private readonly string _txtFileDir;
         private readonly string _txtFileMask;
         private readonly string _appFileDir;
         private readonly string _profilePath;
@@ -33,6 +34,7 @@ namespace Mqutil.Commands
         private readonly RepositoryService _repositoryService;
 
         public ImportJsonCommand(AppOptions options,
+            string txtFileDir,
             string txtFileMask,
             string appFileDir,
             string profilePath,
@@ -42,6 +44,8 @@ namespace Mqutil.Commands
         {
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
+            _txtFileDir = txtFileDir
+                ?? throw new ArgumentNullException(nameof(txtFileDir));
             _txtFileMask = txtFileMask
                 ?? throw new ArgumentNullException(nameof(txtFileMask));
             _appFileDir = appFileDir
@@ -72,9 +76,11 @@ namespace Mqutil.Commands
             command.Description = "Import text and layers from JSON dumps";
             command.HelpOption("-?|-h|--help");
 
-            CommandArgument txtArgument = command.Argument("[txt]",
+            CommandArgument txtDirArgument = command.Argument("[txt-dir]",
+                "The input JSON text files directory");
+            CommandArgument txtMaskArgument = command.Argument("[txt-mask]",
                 "The input JSON text files mask");
-            CommandArgument appArgument = command.Argument("[app]",
+            CommandArgument appDirArgument = command.Argument("[app-dir]",
                 "The JSON apparatus files directory");
             CommandArgument profileArgument = command.Argument("[profile]",
                 "The JSON profile file path");
@@ -91,8 +97,9 @@ namespace Mqutil.Commands
             {
                 options.Command = new ImportJsonCommand(
                     options,
-                    txtArgument.Value,
-                    appArgument.Value,
+                    txtDirArgument.Value,
+                    txtMaskArgument.Value,
+                    appDirArgument.Value,
                     profileArgument.Value,
                     databaseArgument.Value,
                     dryOption.HasValue(),
@@ -119,7 +126,8 @@ namespace Mqutil.Commands
             Console.WriteLine("IMPORT JSON TEXT AND APPARATUS\n");
             Console.ResetColor();
             Console.WriteLine(
-                $"Text:  {_txtFileMask}\n" +
+                $"Text dir:  {_txtFileDir}\n" +
+                $"Text mask: {_txtFileMask}\n" +
                 $"Apparatus dir: {_appFileDir}\n" +
                 $"Profile file: {_profilePath}\n" +
                 $"Database: {_database}\n" +
@@ -166,10 +174,7 @@ namespace Mqutil.Commands
 
             // 1) import text
             string[] files = FileEnumerator.Enumerate(
-                Path.GetDirectoryName(_txtFileMask),
-                Path.GetFileName(_txtFileMask),
-                _regexMask)
-                .ToArray();
+                _txtFileDir, _txtFileMask, _regexMask).ToArray();
             List<string> fileNames = new List<string>();
 
             Console.WriteLine($"Importing text from {files.Length} file(s)...");
