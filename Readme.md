@@ -139,3 +139,30 @@ where:
 - `DatabaseName` is the target database name.
 - `-d` triggers a dry run, where nothing is written to the database.
 - `-r` means that the files mask is a regular expression.
+
+## Processing Corpus
+
+We can process the whole corpus using a batch like this; just replace the values for `srcdir` (=the source MQDQ directory, as downloaded), `dstdir` (=the root target directory, a new folder in your target drive), and `mqu` (the path to the Mqutil program):
+
+```bat
+@echo off
+set srcdir=E:\Work\mqdq\
+set dstdir=E:\Work\mqdqc\
+set mqu=D:\Projects\Core20\Vedph\Mqutil\Mqutil\bin\Debug\netcoreapp3.1\Mqutil.exe
+
+echo PARTITION
+%mqu% partition %srcdir% ^[^-]+-[^-]+\.xml %dstdir% -r -s
+pause
+
+echo PARSE TEXT
+%mqu% parse-text %dstdir% *.xml %dstdir%txt\
+pause
+
+echo PARSE APPARATUS
+%mqu% parse-app %srcdir% *-app.xml %dstdir%txt\ %dstdir%app\ -s
+pause
+```
+
+The partition command targets only the texts; this is why we're using a regular expression to match them only, excluding apparatuses. The parse apparatus command instead does the inverse, but here a simple file mask is enough. In both cases, given that each document is in its own subfolder, we add the `-s` option to recurse subdirectories.
+
+Note that once files have been partitioned, all the following text-related processing happens on the partitioned files, rather than on the original ones.
