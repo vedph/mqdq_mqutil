@@ -148,6 +148,7 @@ namespace Mqutil.Commands
             foreach (string filePath in FileEnumerator.Enumerate(
                 _inputFileDir, _inputFileMask, _regexMask, _recursive))
             {
+                Console.WriteLine();
                 Log.Logger.Information("Parsing {FilePath}", filePath);
 
                 // load document
@@ -194,7 +195,11 @@ namespace Mqutil.Commands
                     writer.WriteLine(json + ",");
                 }
                 totalPartCount += partCount;
-                if (writer != null) CloseOutputFile(writer);
+                if (writer != null)
+                {
+                    CloseOutputFile(writer);
+                    writer = null;
+                }
             }
 
             Console.WriteLine($"\nInput documents: {inputFileCount}");
