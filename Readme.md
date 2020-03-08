@@ -151,7 +151,7 @@ set dstdir=E:\Work\mqdqc\
 set mqu=D:\Projects\Core20\Vedph\Mqutil\Mqutil\bin\Debug\netcoreapp3.1\Mqutil.exe
 
 echo PARTITION
-%mqu% partition %srcdir% ^[^-]+-[^-]+\.xml %dstdir% -r -s
+%mqu% partition %srcdir% "^[^-]+-[^-]+\.xml" %dstdir% -r -s
 pause
 
 echo PARSE TEXT
