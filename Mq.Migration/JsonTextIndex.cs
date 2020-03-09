@@ -32,8 +32,10 @@ namespace Mq.Migration
         /// Index data from the specified stream, adding them to this index.
         /// </summary>
         /// <param name="stream">The stream.</param>
+        /// <param name="text">True to include also each tile's text in the
+        /// index payload; false to exclude it (default).</param>
         /// <exception cref="ArgumentNullException">stream</exception>
-        public void Index(Stream stream)
+        public void Index(Stream stream, bool text = false)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
@@ -64,7 +66,14 @@ namespace Mq.Migration
                             string tileId = tileElem
                                 .GetProperty("data")
                                 .GetProperty("id").GetString();
-                            _index[tileId] = new JsonTextIndexPayload(itemId, y, x);
+                            JsonTextIndexPayload payload =
+                                new JsonTextIndexPayload(itemId, y, x);
+                            if (text)
+                            {
+                                payload.Text = tileElem.GetProperty("data")
+                                    .GetProperty("text").GetString();
+                            }
+                            _index[tileId] = payload;
                         }
                     }
                 }
@@ -102,6 +111,11 @@ namespace Mq.Migration
         /// </summary>
         public int X { get; }
 
+        /// <summary>
+        /// Gets or sets the text.
+        /// </summary>
+        public string Text { get; set; }
+
         public JsonTextIndexPayload(string itemId, int y, int x)
         {
             ItemId = itemId;
@@ -117,7 +131,8 @@ namespace Mq.Migration
         /// </returns>
         public override string ToString()
         {
-            return $"{ItemId} {Y}.{X}";
+            return $"{ItemId} {Y}.{X}" +
+                (string.IsNullOrEmpty(Text)? "" : ": " + Text);
         }
     }
 }
