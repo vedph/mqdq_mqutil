@@ -99,6 +99,16 @@ namespace Mq.Migration
         }
 
         /// <summary>
+        /// Gets the IDs in this set.
+        /// </summary>
+        /// <returns>List of IDs.</returns>
+        public IList<MqId> GetIds()
+        {
+            if (IsLoc) return _locs;
+            return new List<MqId>(new[] { _from, _to });
+        }
+
+        /// <summary>
         /// Converts to string.
         /// </summary>
         /// <returns>

@@ -1,14 +1,24 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
 namespace Mq.Migration
 {
-    internal static class XmlHelper
+    /// <summary>
+    /// XML helper.
+    /// </summary>
+    public static class XmlHelper
     {
         public static readonly XNamespace TEI = "http://www.tei-c.org/ns/1.0";
         public static readonly XNamespace XML = "http://www.w3.org/XML/1998/namespace";
 
+        /// <summary>
+        /// Gets the TEI body.
+        /// </summary>
+        /// <param name="doc">The document.</param>
+        /// <returns>Body element.</returns>
+        /// <exception cref="ArgumentNullException">doc</exception>
         public static XElement GetTeiBody(XDocument doc)
         {
             if (doc == null)
@@ -26,6 +36,12 @@ namespace Mq.Migration
             string.Join("\u2016",
             div.Attributes().Select(a => $"{GetAttributeName(a)}={a.Value}"));
 
+        /// <summary>
+        /// Gets the break point citation.
+        /// </summary>
+        /// <param name="firstChild">The first child.</param>
+        /// <param name="docId">The document identifier.</param>
+        /// <returns>The citation.</returns>
         public static string GetBreakPointCitation(XElement firstChild,
             string docId)
         {
