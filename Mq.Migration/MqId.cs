@@ -81,7 +81,7 @@ namespace Mq.Migration
         /// </returns>
         public override string ToString()
         {
-            return $"d{Div}w{Word}";
+            return $"d{Div:000}w{Word}";
         }
     }
 }
