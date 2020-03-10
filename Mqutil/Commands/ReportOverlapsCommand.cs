@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Mqutil.Services;
 using System.Xml.Linq;
 using System.Text;
+using System.Xml;
 
 namespace Mqutil.Commands
 {
@@ -127,11 +128,16 @@ namespace Mqutil.Commands
             {
                 MqIdAppSet set = new MqIdAppSet();
 
+                // we skip fragments having a different ID scheme (=null);
+                // it's quickier to ignore them as they are short texts
                 if (appElem.Attribute("loc") != null)
                 {
-                    set.SetLoc(from id in appElem.Attribute("loc").Value
-                        .Split(wsSeps, StringSplitOptions.RemoveEmptyEntries)
-                               select MqId.Parse(id));
+                    set.SetLoc(
+                        from id in appElem.Attribute("loc").Value
+                            .Split(wsSeps, StringSplitOptions.RemoveEmptyEntries)
+                        let m = MqId.Parse(id)
+                        where m != null
+                        select m);
                 }
                 else
                 {
@@ -139,9 +145,6 @@ namespace Mqutil.Commands
                     MqId toId = MqId.Parse(appElem.Attribute("to").Value);
                     if (fromId == null)
                     {
-                        // skip, these are fragments having a different ID
-                        // scheme, and it's quickier to ignore them as they
-                        // are short texts
                         continue;
                     }
 
@@ -168,7 +171,10 @@ namespace Mqutil.Commands
                 Encoding.UTF8))
             {
                 writer.WriteLine("# Overlaps Report");
-                writer.WriteLine($"{_inputFileMask}{Path.DirectorySeparatorChar}{_inputFileMask}");
+                writer.WriteLine();
+
+                writer.WriteLine($"Input: `{_inputFileDir}{Path.DirectorySeparatorChar}{_inputFileMask}`");
+                writer.WriteLine();
 
                 // for each input document
                 foreach (string filePath in FileEnumerator.Enumerate(
@@ -199,7 +205,10 @@ namespace Mqutil.Commands
                             if (appWithLocs[i].Item2.Overlaps(appWithLocs[j].Item2))
                             {
                                 writer.WriteLine($"## Overlap {++overlapCount}");
-                                writer.WriteLine(Path.GetFileName(filePath));
+                                writer.WriteLine();
+                                writer.WriteLine(Path.GetFileName(filePath) +
+                                    $" at {((IXmlLineInfo)appWithLocs[i].Item1).LineNumber}");
+
                                 // text
                                 MqIdAppSet set = appWithLocs[i].Item2;
                                 int idNr = 0;
@@ -207,12 +216,19 @@ namespace Mqutil.Commands
                                 {
                                     if (++idNr > 1) writer.Write(' ');
                                     string s = id.ToString();
-                                    writer.Write($"`{s}`=`{_textIndex.Find(s)}`");
+                                    writer.Write($"`{s}`=`{_textIndex.Find(s)?.Text}`");
                                 }
                                 writer.WriteLine();
+                                writer.WriteLine();
+
                                 // app
                                 writer.WriteLine("```xml");
                                 writer.WriteLine(appWithLocs[i].Item1.ToString());
+                                writer.WriteLine("```");
+                                writer.WriteLine();
+
+                                writer.WriteLine("```xml");
+                                writer.WriteLine(appWithLocs[j].Item1.ToString());
                                 writer.WriteLine("```");
                                 writer.WriteLine();
                             }
