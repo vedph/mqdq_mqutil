@@ -135,7 +135,6 @@ namespace Mqutil.Commands
                 }
                 else
                 {
-                    if (appElem.Attribute("from") == null) continue;
                     set.SetFromTo(
                         MqId.Parse(appElem.Attribute("from").Value),
                         MqId.Parse(appElem.Attribute("to").Value));
