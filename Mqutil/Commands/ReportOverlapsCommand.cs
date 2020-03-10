@@ -135,9 +135,17 @@ namespace Mqutil.Commands
                 }
                 else
                 {
-                    set.SetFromTo(
-                        MqId.Parse(appElem.Attribute("from").Value),
-                        MqId.Parse(appElem.Attribute("to").Value));
+                    MqId fromId = MqId.Parse(appElem.Attribute("from").Value);
+                    MqId toId = MqId.Parse(appElem.Attribute("to").Value);
+                    if (fromId == null)
+                    {
+                        // skip, these are fragments having a different ID
+                        // scheme, and it's quickier to ignore them as they
+                        // are short texts
+                        continue;
+                    }
+
+                    set.SetFromTo(fromId, toId);
                 }
                 appWithSets.Add(Tuple.Create(appElem, set));
             }
