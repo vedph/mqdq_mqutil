@@ -15,31 +15,24 @@ namespace Mqutil.Commands
 {
     public sealed class ReportOverlapsCommand : ICommand
     {
-        private readonly string _inputFileDir;
-        private readonly string _inputFileMask;
-        private readonly string _textDumpDir;
+        private readonly string _appFileDir;
+        private readonly string _appFileMask;
         private readonly string _outputPath;
         private readonly bool _regexMask;
         private readonly bool _recursive;
-        private readonly JsonTextIndex _textIndex;
 
-        public ReportOverlapsCommand(string inputFileDir,
-            string inputFileMask, string textDumpDir,
-            string outputPath, bool regexMask,
+        public ReportOverlapsCommand(string appFileDir,
+            string appFileMask, string outputPath, bool regexMask,
             bool recursive)
         {
-            _inputFileDir = inputFileDir ??
-                throw new ArgumentNullException(nameof(inputFileDir));
-            _inputFileMask = inputFileMask ??
-                throw new ArgumentNullException(nameof(inputFileMask));
-            _textDumpDir = textDumpDir ??
-                throw new ArgumentNullException(nameof(textDumpDir));
+            _appFileDir = appFileDir ??
+                throw new ArgumentNullException(nameof(appFileDir));
+            _appFileMask = appFileMask ??
+                throw new ArgumentNullException(nameof(appFileMask));
             _outputPath = outputPath ??
                 throw new ArgumentNullException(nameof(outputPath));
             _regexMask = regexMask;
             _recursive = recursive;
-
-            _textIndex = new JsonTextIndex();
         }
 
         /// <summary>
@@ -54,16 +47,14 @@ namespace Mqutil.Commands
             if (command == null)
                 throw new ArgumentNullException(nameof(command));
 
-            command.Description = "Parse the MQDQ apparatus documents " +
+            command.Description = "Parse the MQDQ apparatus and text documents " +
                 "creating an overlaps report into the specified file";
             command.HelpOption("-?|-h|--help");
 
-            CommandArgument inputDirArgument = command.Argument("[input-dir]",
+            CommandArgument appDirArgument = command.Argument("[app-file-dir]",
                 "The input entries files directory");
-            CommandArgument inputMaskArgument = command.Argument("[input-mask]",
+            CommandArgument appMaskArgument = command.Argument("[app-file-mask]",
                 "The input entries files mask");
-            CommandArgument txtDumpDirArgument = command.Argument("[text-dump-dir]",
-                "The input text dumps directory");
             CommandArgument outputPathArgument = command.Argument("[output-path]",
                 "The output file path");
 
@@ -76,9 +67,8 @@ namespace Mqutil.Commands
             command.OnExecute(() =>
             {
                 options.Command = new ReportOverlapsCommand(
-                    inputDirArgument.Value,
-                    inputMaskArgument.Value,
-                    txtDumpDirArgument.Value,
+                    appDirArgument.Value,
+                    appMaskArgument.Value,
                     outputPathArgument.Value,
                     regexMaskOption.HasValue(),
                     recursiveOption.HasValue());
@@ -100,59 +90,47 @@ namespace Mqutil.Commands
                 || e.Attribute("type").Value != "ancient-note");
         }
 
-        private void LoadTextIndex(string inputFileName)
+        private List<AppWithLocations> CollectAppWithLocations(
+            XDocument doc, WordIdList widList)
         {
-            _textIndex.Clear();
-            foreach (string jsonFile in
-                Directory.EnumerateFiles(_textDumpDir, inputFileName + "_*.json"))
-            {
-                using (Stream stream = new FileStream(jsonFile,
-                    FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    _textIndex.Index(stream, true);
-                }
-            }
-        }
-
-        private List<Tuple<XElement, MqIdAppSet>> CollectAppWithLocations(
-            XDocument doc)
-        {
-            // collect app locations
+            // collect overlappable app locations
             char[] wsSeps = new[] { ' ' };
-            List<Tuple<XElement, MqIdAppSet>> appWithSets =
-                new List<Tuple<XElement, MqIdAppSet>>();
+            List<AppWithLocations> appWithSets = new List<AppWithLocations>();
 
             foreach (XElement appElem in XmlHelper.GetTeiBody(doc)
                 .Descendants(XmlHelper.TEI + "app")
                 .Where(IsOverlappable))
             {
-                MqIdAppSet set = new MqIdAppSet();
-
-                // we skip fragments having a different ID scheme (=null);
-                // it's quickier to ignore them as they are short texts
+                Tuple<string,string>[] ids;
                 if (appElem.Attribute("loc") != null)
                 {
-                    set.SetLoc(
-                        from id in appElem.Attribute("loc").Value
+                    ids = (from rid in appElem.Attribute("loc").Value
                             .Split(wsSeps, StringSplitOptions.RemoveEmptyEntries)
-                        let m = MqId.Parse(id)
-                        where m != null
-                        select m);
+                           let id = rid.Substring(1)
+                           let iw = widList.IdAndWords.FirstOrDefault(t => t.Item1 == id)
+                           where iw != null
+                           select iw).ToArray();
                 }
                 else
                 {
-                    MqId fromId = MqId.Parse(appElem.Attribute("from").Value);
-                    MqId toId = MqId.Parse(appElem.Attribute("to").Value);
-                    if (fromId == null)
-                    {
-                        continue;
-                    }
-
-                    set.SetFromTo(fromId, toId);
+                    ids = widList.GetRange(
+                        appElem.Attribute("from").Value.Substring(1),
+                        appElem.Attribute("to").Value.Substring(1))?.ToArray();
                 }
-                appWithSets.Add(Tuple.Create(appElem, set));
+                if (ids == null || ids.Length == 0) continue;  // should not happen
+
+                appWithSets.Add(new AppWithLocations(appElem, ids));
             }
             return appWithSets;
+        }
+
+        private static void WriteAppXml(
+            AppWithLocations appWithLocs, TextWriter writer)
+        {
+            writer.WriteLine("```xml");
+            writer.WriteLine(appWithLocs.AppElement.ToString());
+            writer.WriteLine("```");
+            writer.WriteLine();
         }
 
         public Task Run()
@@ -161,7 +139,7 @@ namespace Mqutil.Commands
             Console.WriteLine("REPORT OVERLAPS\n");
             Console.ResetColor();
             Console.WriteLine(
-                $"Input:  {_inputFileMask}\n" +
+                $"Input:  {_appFileMask}\n" +
                 $"Output: {_outputPath}\n");
 
             int inputFileCount = 0;
@@ -173,73 +151,95 @@ namespace Mqutil.Commands
                 writer.WriteLine("# Overlaps Report");
                 writer.WriteLine();
 
-                writer.WriteLine($"Input: `{_inputFileDir}{Path.DirectorySeparatorChar}{_inputFileMask}`");
+                writer.WriteLine($"Input: `{_appFileDir}{Path.DirectorySeparatorChar}{_appFileMask}`");
                 writer.WriteLine();
 
-                // for each input document
+                // for each app document
+                WordIdList widList = new WordIdList();
                 foreach (string filePath in FileEnumerator.Enumerate(
-                    _inputFileDir, _inputFileMask, _regexMask, _recursive))
+                    _appFileDir, _appFileMask, _regexMask, _recursive))
                 {
                     Console.WriteLine();
                     Log.Logger.Information("Parsing {FilePath}", filePath);
 
-                    // load document
+                    // load app document
                     string inputFileName = Path.GetFileNameWithoutExtension(filePath);
                     Console.WriteLine(filePath);
                     inputFileCount++;
                     XDocument doc = XDocument.Load(filePath,
                         LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
 
-                    // load index
-                    LoadTextIndex(inputFileName.Replace("-app", ""));
+                    // collect word IDs from text document
+                    widList.Parse(XDocument.Load(filePath.Replace("-app.", ".")));
 
                     // collect app's locations
-                    List<Tuple<XElement, MqIdAppSet>> appWithLocs =
-                        CollectAppWithLocations(doc);
+                    List<AppWithLocations> appWithLocs =
+                        CollectAppWithLocations(doc, widList);
 
                     // detect and report overlaps
-                    for (int i = 0; i < appWithLocs.Count; i++)
+                    for (int i = 0; i < appWithLocs.Count - 1; i++)
                     {
                         for (int j = i + 1; j < appWithLocs.Count; j++)
                         {
-                            if (appWithLocs[i].Item2.Overlaps(appWithLocs[j].Item2))
+                            if (appWithLocs[i].Overlaps(appWithLocs[j]))
                             {
                                 writer.WriteLine($"## Overlap {++overlapCount}");
                                 writer.WriteLine();
                                 writer.WriteLine(Path.GetFileName(filePath) +
-                                    $" at {((IXmlLineInfo)appWithLocs[i].Item1).LineNumber}");
+                                    $" at {appWithLocs[i].LineNumber}");
 
                                 // text
-                                MqIdAppSet set = appWithLocs[i].Item2;
-                                int idNr = 0;
-                                foreach (MqId id in set.GetIds())
+                                int n = 0;
+                                foreach (var iw in appWithLocs[i].Locations)
                                 {
-                                    if (++idNr > 1) writer.Write(' ');
-                                    string s = id.ToString();
-                                    writer.Write($"`{s}`=`{_textIndex.Find(s)?.Text}`");
+                                    if (++n > 1) writer.Write(' ');
+                                    writer.Write($"`{iw.Item1}`=`{iw.Item2}`");
                                 }
                                 writer.WriteLine();
                                 writer.WriteLine();
 
                                 // app
-                                writer.WriteLine("```xml");
-                                writer.WriteLine(appWithLocs[i].Item1.ToString());
-                                writer.WriteLine("```");
-                                writer.WriteLine();
-
-                                writer.WriteLine("```xml");
-                                writer.WriteLine(appWithLocs[j].Item1.ToString());
-                                writer.WriteLine("```");
-                                writer.WriteLine();
+                                WriteAppXml(appWithLocs[i], writer);
+                                WriteAppXml(appWithLocs[j], writer);
+                                goto nextOuter;
                             }
                         }
+                        nextOuter:
+                        if (i % 10 == 0) Console.Write('.');
                     }
+                    Console.WriteLine();
                 }
                 writer.Flush();
             }
 
             Console.WriteLine($"\nInput documents: {inputFileCount}");
             return Task.CompletedTask;
+        }
+    }
+
+    internal sealed class AppWithLocations
+    {
+        public XElement AppElement { get; }
+        public Tuple<string, string>[] Locations { get; }
+        public int LineNumber => ((IXmlLineInfo)AppElement)?.LineNumber ?? 0;
+
+        public AppWithLocations(XElement appElem,
+            IEnumerable<Tuple<string,string>> locations)
+        {
+            AppElement = appElem;
+            Locations = locations.ToArray();
+        }
+
+        public bool Overlaps(AppWithLocations other)
+        {
+            if (other == null) throw new ArgumentNullException(nameof(other));
+
+            return Locations.Any(id => Array.IndexOf(other.Locations, id) > -1);
+        }
+
+        public override string ToString()
+        {
+            return string.Join(" ", Locations.Select(t => $"{t.Item1}={t.Item2}"));
         }
     }
 }
