@@ -10,6 +10,7 @@ using Mqutil.Services;
 using System.Xml.Linq;
 using System.Text;
 using System.Xml;
+using Microsoft.Extensions.Logging;
 
 namespace Mqutil.Commands
 {
@@ -145,6 +146,9 @@ namespace Mqutil.Commands
             int inputFileCount = 0;
             int overlapCount = 0;
 
+            ILoggerFactory loggerFactory = new LoggerFactory();
+            loggerFactory.AddSerilog(Log.Logger);
+
             using (StreamWriter writer = new StreamWriter(_outputPath, false,
                 Encoding.UTF8))
             {
@@ -155,7 +159,10 @@ namespace Mqutil.Commands
                 writer.WriteLine();
 
                 // for each app document
-                WordIdList widList = new WordIdList();
+                WordIdList widList = new WordIdList
+                {
+                    Logger = loggerFactory.CreateLogger("report-overlaps")
+                };
                 foreach (string filePath in FileEnumerator.Enumerate(
                     _appFileDir, _appFileMask, _regexMask, _recursive))
                 {

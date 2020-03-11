@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -9,12 +10,17 @@ namespace Mq.Migration
     /// A list of word IDs in their order, as they appear in a MQDQ text
     /// XML document.
     /// </summary>
-    public sealed class WordIdList
+    public sealed class WordIdList : IHasLogger
     {
         /// <summary>
         /// Gets the IDs.
         /// </summary>
         public IList<Tuple<string, string>> IdAndWords { get; }
+
+        /// <summary>
+        /// Gets or sets the logger.
+        /// </summary>
+        public ILogger Logger { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WordIdList"/> class.
@@ -57,20 +63,52 @@ namespace Mq.Migration
             if (from == null) throw new ArgumentNullException(nameof(from));
             if (to == null) throw new ArgumentNullException(nameof(to));
 
+            // find @from (error if not found)
             Tuple<string, string> first = IdAndWords
                 .FirstOrDefault(iw => iw.Item1 == from);
-            if (first == null) return null;
-            int i = IdAndWords.IndexOf(first);
-
-            List<Tuple<string, string>> rangeIds =
-                new List<Tuple<string, string>>();
-            while (i < IdAndWords.Count)
+            if (first == null)
             {
-                rangeIds.Add(IdAndWords[i]);
-                if (IdAndWords[i].Item1 == to) break;
-                i++;
+                Logger?.LogError($"From-ID not found: {from}");
+                return null;
             }
-            return rangeIds;
+            int firstIndex = IdAndWords.IndexOf(first);
+
+            // find @to (error if not found)
+            Tuple<string, string> last = IdAndWords
+                .Skip(firstIndex)
+                .FirstOrDefault(iw => iw.Item1 == to);
+            if (last == null)
+            {
+                last = IdAndWords.FirstOrDefault(iw => iw.Item1 == to);
+            }
+            if (last == null)
+            {
+                Logger?.LogError($"To-ID not found: {to}");
+                return null;
+            }
+            int lastIndex = IdAndWords.IndexOf(last);
+
+            if (firstIndex == lastIndex)
+            {
+                return new List<Tuple<string, string>>
+                {
+                    first
+                };
+            }
+
+            // check for inverted @from/@to
+            if (lastIndex < firstIndex)
+            {
+                Logger?.LogWarning($"Inverted range: from={from}-to={to}");
+                int i = firstIndex;
+                firstIndex = lastIndex;
+                lastIndex = i;
+            }
+
+            return IdAndWords
+                .Skip(firstIndex)
+                .Take(lastIndex + 1 - firstIndex)
+                .ToList();
         }
     }
 }
