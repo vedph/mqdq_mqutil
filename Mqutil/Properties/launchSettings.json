@@ -2,7 +2,7 @@
   "profiles": {
     "Mqutil": {
       "commandName": "Project",
-      "commandLineArgs": "report-overlaps E:\\Work\\mqdq\\ *-app.xml E:\\Work\\mqdqc\\overlaps.md -s"
+      "commandLineArgs": "remove-overlaps E:\\Work\\mqdq\\ *-app.xml E:\\Work\\mqdqc\\nov\\ -s"
     }
   }
 }

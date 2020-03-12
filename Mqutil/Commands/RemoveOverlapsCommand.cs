@@ -65,7 +65,7 @@ namespace Mqutil.Commands
 
             command.OnExecute(() =>
             {
-                options.Command = new ReportOverlapsCommand(
+                options.Command = new RemoveOverlapsCommand(
                     appDirArgument.Value,
                     appMaskArgument.Value,
                     outputDirArgument.Value,
@@ -113,6 +113,9 @@ namespace Mqutil.Commands
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddSerilog(Log.Logger);
+
+            if (!Directory.Exists(_outputDir))
+                Directory.CreateDirectory(_outputDir);
 
             // for each app document
             WordIdList widList = new WordIdList
@@ -169,8 +172,8 @@ namespace Mqutil.Commands
                             // log error if the source had @wit/@source
                             XElement sourceLem =
                                 source.Element.Element(XmlHelper.TEI + "lem");
-                            if (sourceLem.Attribute("wit") != null
-                                || sourceLem.Attribute("source") != null)
+                            if (sourceLem?.Attribute("wit") != null
+                                || sourceLem?.Attribute("source") != null)
                             {
                                 Log.Logger.Error("Removed overlapping app lost sources at div "
                                     + source.Element.Ancestors(XmlHelper.TEI + "div1")
@@ -181,7 +184,7 @@ namespace Mqutil.Commands
                             }
 
                             // append content of source into target in XML
-                            target.Element.Add(source.Element.Nodes());
+                            target.Element.Add(source.Element.Elements());
 
                             // remove source from XML and locs
                             source.Element.Remove();
