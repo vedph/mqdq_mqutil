@@ -20,6 +20,7 @@ namespace Mqutil.Commands
             app.Command("parse-text", c => ParseTextCommand.Configure(c, options));
             app.Command("parse-app", c => ParseApparatusCommand.Configure(c, options));
             app.Command("report-overlaps", c => ReportOverlapsCommand.Configure(c, options));
+            app.Command("remove-overlaps", c => RemoveOverlapsCommand.Configure(c, options));
             app.Command("import-thes", c => ImportThesauriCommand.Configure(c, options));
             app.Command("import-json", c => ImportJsonCommand.Configure(c, options));
 

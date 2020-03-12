@@ -77,10 +77,10 @@ namespace Mqutil.Commands
         }
 
         private static void WriteAppXml(
-            AppElemLocations appWithLocs, TextWriter writer)
+            AppElemLocations appElemLocs, TextWriter writer)
         {
             writer.WriteLine("```xml");
-            writer.WriteLine(appWithLocs.Element.ToString());
+            writer.WriteLine(appElemLocs.Element.ToString());
             writer.WriteLine("```");
             writer.WriteLine();
         }
@@ -131,25 +131,25 @@ namespace Mqutil.Commands
                     widList.Parse(XDocument.Load(filePath.Replace("-app.", ".")));
 
                     // collect app's locations
-                    List<AppElemLocations> appWithLocs =
+                    List<AppElemLocations> appElemLocs =
                         AppElemLocationCollector.Collect(doc, widList,
                         AppElemLocationCollector.IsOverlappable);
 
                     // detect and report overlaps
-                    for (int i = 0; i < appWithLocs.Count - 1; i++)
+                    for (int i = 0; i < appElemLocs.Count - 1; i++)
                     {
-                        for (int j = i + 1; j < appWithLocs.Count; j++)
+                        for (int j = i + 1; j < appElemLocs.Count; j++)
                         {
-                            if (appWithLocs[i].Overlaps(appWithLocs[j]))
+                            if (appElemLocs[i].Overlaps(appElemLocs[j]))
                             {
                                 writer.WriteLine($"## Overlap {++overlapCount}");
                                 writer.WriteLine();
                                 writer.WriteLine(Path.GetFileName(filePath) +
-                                    $" at {appWithLocs[i].LineNumber}");
+                                    $" at {appElemLocs[i].LineNumber}");
 
                                 // text
                                 int n = 0;
-                                foreach (var iw in appWithLocs[i].Locations)
+                                foreach (var iw in appElemLocs[i].Locations)
                                 {
                                     if (++n > 1) writer.Write(' ');
                                     writer.Write($"`{iw.Item1}`=`{iw.Item2}`");
@@ -158,8 +158,8 @@ namespace Mqutil.Commands
                                 writer.WriteLine();
 
                                 // app
-                                WriteAppXml(appWithLocs[i], writer);
-                                WriteAppXml(appWithLocs[j], writer);
+                                WriteAppXml(appElemLocs[i], writer);
+                                WriteAppXml(appElemLocs[j], writer);
                                 goto nextOuter;
                             }
                         }

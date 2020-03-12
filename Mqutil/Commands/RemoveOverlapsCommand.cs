@@ -6,7 +6,7 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -75,6 +75,30 @@ namespace Mqutil.Commands
             });
         }
 
+        private static bool IsFirstTarget(AppElemLocations a, AppElemLocations b)
+        {
+            // the widest range wins
+            if (a.Locations.Length != b.Locations.Length)
+            {
+                return a.Locations.Length > b.Locations.Length;
+            }
+
+            // or the one with highest children wins
+            int aChildCount = a.Element.Elements().Count();
+            int bChildCount = b.Element.Elements().Count();
+            if (aChildCount != bChildCount)
+            {
+                return aChildCount > bChildCount;
+            }
+
+            // or the first wins
+            return true;
+        }
+
+        private static string GetAttributesDump(XElement element) =>
+            string.Join(" ", from attr in element.Attributes()
+                             select $"{attr.Name.LocalName}=\"{attr.Value}\"");
+
         public Task Run()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -85,7 +109,7 @@ namespace Mqutil.Commands
                 $"Output: {_outputDir}\n");
 
             int inputFileCount = 0;
-            int overlapCount = 0;
+            int removedCount = 0;
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddSerilog(Log.Logger);
@@ -112,29 +136,75 @@ namespace Mqutil.Commands
                 widList.Parse(XDocument.Load(filePath.Replace("-app.", ".")));
 
                 // collect app's locations
-                List<AppElemLocations> appWithLocs =
+                List<AppElemLocations> appElemLocs =
                     AppElemLocationCollector.Collect(doc, widList,
                     AppElemLocationCollector.IsOverlappable);
 
-                // detect and report overlaps
-                for (int i = 0; i < appWithLocs.Count - 1; i++)
+                // detect and process overlaps
+                for (int i = 0; i < appElemLocs.Count - 1; i++)
                 {
-                    for (int j = i + 1; j < appWithLocs.Count; j++)
+                    for (int j = i + 1; j < appElemLocs.Count; j++)
                     {
-                        if (appWithLocs[i].Overlaps(appWithLocs[j]))
+                        if (appElemLocs[i].Overlaps(appElemLocs[j]))
                         {
-                            overlapCount++;
-                            // TODO
+                            // pick the target between the two overlapping app's
+                            AppElemLocations target, source;
+                            int targetIndex, sourceIndex;
+
+                            if (IsFirstTarget(appElemLocs[i], appElemLocs[j]))
+                            {
+                                target = appElemLocs[targetIndex = i];
+                                source = appElemLocs[sourceIndex = j];
+                            }
+                            else
+                            {
+                                source = appElemLocs[sourceIndex = i];
+                                target = appElemLocs[targetIndex = j];
+                            }
+
+                            Log.Logger.Information("Merging overlapping app " +
+                                $"{GetAttributesDump(source.Element)} into " +
+                                GetAttributesDump(target.Element));
+
+                            // log error if the source had @wit/@source
+                            XElement sourceLem =
+                                source.Element.Element(XmlHelper.TEI + "lem");
+                            if (sourceLem.Attribute("wit") != null
+                                || sourceLem.Attribute("source") != null)
+                            {
+                                Log.Logger.Error("Removed overlapping app lost sources at div "
+                                    + source.Element.Ancestors(XmlHelper.TEI + "div1")
+                                        .First()
+                                        .Attribute(XmlHelper.XML + "id").Value
+                                    + ": "
+                                    + GetAttributesDump(source.Element));
+                            }
+
+                            // append content of source into target in XML
+                            target.Element.Add(source.Element.Nodes());
+
+                            // remove source from XML and locs
+                            source.Element.Remove();
+                            appElemLocs.RemoveAt(sourceIndex);
+                            removedCount++;
+
+                            // continue looking from overlaps from the first
+                            // of the two app's involved
+                            i = Math.Min(sourceIndex, targetIndex) - 1;
                             goto nextOuter;
                         }
-                    }
+                    } // j
                 nextOuter:
                     if (i % 10 == 0) Console.Write('.');
-                }
+                } // i
+
+                // save
+                string path = Path.Combine(_outputDir, Path.GetFileName(filePath));
+                doc.Save(path, SaveOptions.OmitDuplicateNamespaces);
             }
 
-            // TODO
             Console.WriteLine($"\nInput documents: {inputFileCount}");
+            Console.WriteLine($"Removed overlaps: {removedCount}");
             return Task.CompletedTask;
         }
     }
