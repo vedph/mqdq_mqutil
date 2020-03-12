@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Mqutil.Services;
 using System.Xml.Linq;
 using System.Text;
-using System.Xml;
 using Microsoft.Extensions.Logging;
 
 namespace Mqutil.Commands
@@ -91,45 +90,11 @@ namespace Mqutil.Commands
                 || e.Attribute("type").Value != "ancient-note");
         }
 
-        private List<AppWithLocations> CollectAppWithLocations(
-            XDocument doc, WordIdList widList)
-        {
-            // collect overlappable app locations
-            char[] wsSeps = new[] { ' ' };
-            List<AppWithLocations> appWithSets = new List<AppWithLocations>();
-
-            foreach (XElement appElem in XmlHelper.GetTeiBody(doc)
-                .Descendants(XmlHelper.TEI + "app")
-                .Where(IsOverlappable))
-            {
-                Tuple<string,string>[] ids;
-                if (appElem.Attribute("loc") != null)
-                {
-                    ids = (from rid in appElem.Attribute("loc").Value
-                            .Split(wsSeps, StringSplitOptions.RemoveEmptyEntries)
-                           let id = rid.Substring(1)
-                           let iw = widList.IdAndWords.FirstOrDefault(t => t.Item1 == id)
-                           where iw != null
-                           select iw).ToArray();
-                }
-                else
-                {
-                    ids = widList.GetRange(
-                        appElem.Attribute("from").Value.Substring(1),
-                        appElem.Attribute("to").Value.Substring(1))?.ToArray();
-                }
-                if (ids == null || ids.Length == 0) continue;  // should not happen
-
-                appWithSets.Add(new AppWithLocations(appElem, ids));
-            }
-            return appWithSets;
-        }
-
         private static void WriteAppXml(
-            AppWithLocations appWithLocs, TextWriter writer)
+            AppElemLocations appWithLocs, TextWriter writer)
         {
             writer.WriteLine("```xml");
-            writer.WriteLine(appWithLocs.AppElement.ToString());
+            writer.WriteLine(appWithLocs.Element.ToString());
             writer.WriteLine("```");
             writer.WriteLine();
         }
@@ -180,8 +145,8 @@ namespace Mqutil.Commands
                     widList.Parse(XDocument.Load(filePath.Replace("-app.", ".")));
 
                     // collect app's locations
-                    List<AppWithLocations> appWithLocs =
-                        CollectAppWithLocations(doc, widList);
+                    List<AppElemLocations> appWithLocs =
+                        AppElemLocationCollector.Collect(doc, widList, IsOverlappable);
 
                     // detect and report overlaps
                     for (int i = 0; i < appWithLocs.Count - 1; i++)
@@ -221,32 +186,6 @@ namespace Mqutil.Commands
 
             Console.WriteLine($"\nInput documents: {inputFileCount}");
             return Task.CompletedTask;
-        }
-    }
-
-    internal sealed class AppWithLocations
-    {
-        public XElement AppElement { get; }
-        public Tuple<string, string>[] Locations { get; }
-        public int LineNumber => ((IXmlLineInfo)AppElement)?.LineNumber ?? 0;
-
-        public AppWithLocations(XElement appElem,
-            IEnumerable<Tuple<string,string>> locations)
-        {
-            AppElement = appElem;
-            Locations = locations.ToArray();
-        }
-
-        public bool Overlaps(AppWithLocations other)
-        {
-            if (other == null) throw new ArgumentNullException(nameof(other));
-
-            return Locations.Any(id => Array.IndexOf(other.Locations, id) > -1);
-        }
-
-        public override string ToString()
-        {
-            return string.Join(" ", Locations.Select(t => $"{t.Item1}={t.Item2}"));
         }
     }
 }
