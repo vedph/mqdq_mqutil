@@ -11,6 +11,30 @@ namespace Mq.Migration
     public static class AppElemLocationCollector
     {
         /// <summary>
+        /// Determines whether the specified app element is subject to overlap.
+        /// </summary>
+        /// <param name="app">The app element to test.</param>
+        /// <returns>
+        /// <c>true</c> if overlappable; otherwise, <c>false</c>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">app</exception>
+        public static bool IsOverlappable(XElement app)
+        {
+            if (app == null) throw new ArgumentNullException(nameof(app));
+
+            // app with type=margin-note is on another layer
+            if (app.Attribute("type")?.Value == "margin-note") return false;
+
+            // overlaps are possible when any of the lem/rdg is not ancient-note
+            var children = app.Elements()
+                .Where(e => e.Name.LocalName == "lem"
+                       || e.Name.LocalName == "rdg");
+
+            return children.Any(e => e.Attribute("type") == null
+                || e.Attribute("type").Value != "ancient-note");
+        }
+
+        /// <summary>
         /// Collects the app elements locations from the specified XML document.
         /// </summary>
         /// <param name="doc">The document.</param>

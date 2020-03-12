@@ -76,20 +76,6 @@ namespace Mqutil.Commands
             });
         }
 
-        private bool IsOverlappable(XElement app)
-        {
-            // app with type=margin-note is on another layer
-            if (app.Attribute("type")?.Value == "margin-note") return false;
-
-            // overlaps are possible when any of the lem/rdg is not ancient-note
-            var children = app.Elements()
-                .Where(e => e.Name.LocalName == "lem"
-                       || e.Name.LocalName == "rdg");
-
-            return children.Any(e => e.Attribute("type") == null
-                || e.Attribute("type").Value != "ancient-note");
-        }
-
         private static void WriteAppXml(
             AppElemLocations appWithLocs, TextWriter writer)
         {
@@ -146,7 +132,8 @@ namespace Mqutil.Commands
 
                     // collect app's locations
                     List<AppElemLocations> appWithLocs =
-                        AppElemLocationCollector.Collect(doc, widList, IsOverlappable);
+                        AppElemLocationCollector.Collect(doc, widList,
+                        AppElemLocationCollector.IsOverlappable);
 
                     // detect and report overlaps
                     for (int i = 0; i < appWithLocs.Count - 1; i++)
