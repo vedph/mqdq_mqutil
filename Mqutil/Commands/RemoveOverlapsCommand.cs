@@ -183,8 +183,10 @@ namespace Mqutil.Commands
                                     + GetAttributesDump(source.Element));
                             }
 
-                            // append content of source into target in XML
-                            target.Element.Add(source.Element.Elements());
+                            // append content of source into target in XML,
+                            // excluding the lem child
+                            target.Element.Add(source.Element.Elements()
+                                .Where(e => e.Name.LocalName != "lem"));
 
                             // remove source from XML and locs
                             source.Element.Remove();
