@@ -99,6 +99,54 @@ namespace Mqutil.Commands
             string.Join(" ", from attr in element.Attributes()
                              select $"{attr.Name.LocalName}=\"{attr.Value}\"");
 
+        private static bool IsAttrValueSubsetOf(string a, string b)
+        {
+            char[] sep = new[] { ' ' };
+            HashSet<string> aTokens = new HashSet<string>(
+                a.Split(sep, StringSplitOptions.RemoveEmptyEntries));
+            HashSet<string> bTokens = new HashSet<string>(
+                b.Split(sep, StringSplitOptions.RemoveEmptyEntries));
+            return aTokens.IsSubsetOf(bTokens);
+        }
+
+        private static bool LemHasLostAttributes(XElement sourceLem,
+            XElement targetLem)
+        {
+            // nothing lost if no source lem
+            if (sourceLem == null) return false;
+
+            // if no @wit/@source in source lem, nothing is lost
+            string sourceW = sourceLem.Attribute("wit")?.Value;
+            string sourceS = sourceLem.Attribute("source")?.Value;
+            if (sourceW == null && sourceS == null) return false;
+
+            // if no lem in target, any @wit/@source in lem is lost anyway
+            if (targetLem == null) return true;
+
+            string targetW = targetLem.Attribute("wit")?.Value;
+            string targetS = targetLem.Attribute("source")?.Value;
+
+            // lost if source lem @wit and no target lem @wit,
+            // or source lem @source and no target lem @source
+            if ((sourceW != null && targetW == null)
+                || (sourceS != null && targetS == null))
+            {
+                return true;
+            }
+
+            // lost if source lem @wit is not a subset of target lem @wit
+            if (sourceW != null && !IsAttrValueSubsetOf(sourceW, targetW))
+                return false;
+
+            // lost if source lem @source is not a subset of target lem @source
+            if (sourceS != null && !IsAttrValueSubsetOf(sourceS, targetS))
+                return false;
+
+            // else not lost, because all the source attributes if any
+            // are subsets of the target attributes
+            return true;
+        }
+
         public Task Run()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -170,10 +218,9 @@ namespace Mqutil.Commands
                                 GetAttributesDump(target.Element));
 
                             // log error if the source had @wit/@source
-                            XElement sourceLem =
-                                source.Element.Element(XmlHelper.TEI + "lem");
-                            if (sourceLem?.Attribute("wit") != null
-                                || sourceLem?.Attribute("source") != null)
+                            if (LemHasLostAttributes(
+                                source.Element.Element(XmlHelper.TEI + "lem"),
+                                target.Element.Element(XmlHelper.TEI + "lem")))
                             {
                                 Log.Logger.Error("Removed overlapping app lost sources at div "
                                     + source.Element.Ancestors(XmlHelper.TEI + "div1")
