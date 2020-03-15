@@ -113,7 +113,7 @@ For instance, these two `app` elements overlap by the word at `d001w9`:
 
 Anyway, here the first `app` element belongs to margin notes; thus it will be moved to a different layer, removing the overlap.
 
-Apart from these cases, there remains a few number of overlapping `app` elements with different reasons, like:
+Apart from these cases, there remains a number of overlapping `app` elements with different reasons, like:
 
 ```xml
 <app from="#d005w257" to="#d005w258">
@@ -134,20 +134,54 @@ Apart from these cases, there remains a few number of overlapping `app` elements
 
 Here we have two `app` elements referred to the same word "umbras" `d005w258`; in the first element, "fontibus umbras" has the variant "frondibus aras"; in the second element, "umbras" has the variant "aras". These could easily be merged into a single `app` element with the proper entries, thus removing the overlap.
 
-In these cases the fix must be manual. The parser can just log the issue as an error; it is up to the users check the log, apply the fixes to the source XML document, and then repeat the parsing.
+In these cases the fix is applied by a specially designed procedure, which is executed at the beginning of the whole flow to adjust the XML apparatus documents. There are 2 commands in the CLI tool for this purpose:
 
-For instance, here is a reduced excerpt from the log:
+- `report-overlaps` builds a full Markdown report of all the overlap cases.
+- `remove-overlaps` removes the overlaps from the apparatus XML documents, saving the results into another folder. This removal happens by "cutting" all the children elements of the overlapped entry (except its `lem`), adding to each of them an `@n` attribute with their parent `app` original `@from`/`@to` values, and pasting them at the end of the content of the target `app` element. If the cut `lem` element had any `@wit` or `@source` attribute whose content is not a subset of the target `app`'s `lem`, an error is logged because we are going to lose some information which users should restore manually later in the editor.
 
-```txt
-[INF] --Parsing app #21@1699
-[INF] Fragment location: 2.3-2.4
-[INF] Item ID changed from 93759564-48cf-4efd-af93-4e6e9685050a to c634eece-6e31-445f-b7f4-a616a7cdc80e
-[ERR] Part has overlaps: 3.6, 4.5, 5.3, 6.3, 14.5, 15.3, 15.5, 16.2, 16.4, 16.6, 17.5-17.6, 17.6, 19.3, 21.2
-[INF] Completed PART [fr.net.fusisoft.apparatus] 1582-1698: 3.6, 4.5, 5.3, 6.3, 14.5, 15.3, 15.5, 16.2, 16.4, 16.6, 17.5-17.6, 17.6, 19.3, 21.2
-[INF] Completed PART [fr.net.fusisoft.apparatus:margin] 1582-1698: 5.1-5.5, 6.1-6.6
+For instance, given this overlap:
+
+```xml
+<app from="#d003w158" to="#d003w158">
+    <lem wit="#lw2-8 #lw2-20 #lw2-33">et</lem>
+    <rdg source="#lb2-51">
+        <note type="operation" target="#lb2-51">om.</note>
+        <note type="details" target="#lb2-51"> 319, 7</note>
+    </rdg>
+</app>
+<app from="#d003w158" to="#d003w160">
+    <lem wit="#lw2-8 #lw2-20 #lw2-33">et dictu uideo
+        <note type="details" target="#lw2-8"> <emph style="font-style:italic">p.c.</emph></note>
+    </lem>
+    <rdg source="#lb2-47">dictu et visu
+        <note type="details" target="#lb2-47"> 3, 10, 6</note>
+        <ident n="d003w158">DICTV</ident>
+        <ident n="d003w159">ET</ident>
+        <ident n="d003w160">VISV</ident>
+    </rdg>
+</app>
 ```
 
-Here the overlap is logged as an error (`[ERR]`): the overlap effectively happens between coordinates `17.5-17.6` and `17.6`.
+we merge the first overlap (whose extent is less than the other one) into the second:
+
+```xml
+<app from="#d003w158" to="#d003w160">
+    <lem wit="#lw2-8 #lw2-20 #lw2-33">et dictu uideo
+        <note type="details" target="#lw2-8"> <emph style="font-style:italic">p.c.</emph></note>
+    </lem>
+    <rdg source="#lb2-47">dictu et visu
+        <note type="details" target="#lb2-47"> 3, 10, 6</note>
+        <ident n="d003w158">DICTV</ident>
+        <ident n="d003w159">ET</ident>
+        <ident n="d003w160">VISV</ident>
+    </rdg>
+    <!-- pasted from overlapping entry -->
+    <rdg source="#lb2-51" n="d003w158 d003w158">
+        <note type="operation" target="#lb2-51">om.</note>
+        <note type="details" target="#lb2-51"> 319, 7</note>
+    </rdg>
+</app>
+```
 
 ### Header
 
