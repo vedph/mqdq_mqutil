@@ -231,9 +231,17 @@ namespace Mqutil.Commands
                             }
 
                             // append content of source into target in XML,
-                            // excluding the lem child
-                            target.Element.Add(source.Element.Elements()
-                                .Where(e => e.Name.LocalName != "lem"));
+                            // excluding the lem child, and adding @n to each child
+                            string nValue =
+                                source.Element.Attribute("from").Value.Substring(1)
+                                + " "
+                                + source.Element.Attribute("to").Value.Substring(1);
+                            foreach (XElement child in source.Element.Elements()
+                                .Where(e => e.Name.LocalName != "lem"))
+                            {
+                                child.SetAttributeValue("n", nValue);
+                                target.Element.Add(child);
+                            }
 
                             // remove source from XML and locs
                             source.Element.Remove();
