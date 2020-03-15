@@ -18,6 +18,42 @@ Note: for Linux users, you should run the program like this:
 dotnet ./Mqutil.dll ...arguments...
 ```
 
+### Report Overlaps Command
+
+Parse the MQDQ apparatus and text documents creating a Markdown overlaps report into the specified file.
+
+Syntax:
+
+```ps1
+.\Mqutil.exe <ApparatusFilesDir> <ApparatusFilesMask> <OutputFilePath> [-r] [-s]
+```
+
+where:
+
+- `ApparatusFilesDir` is the apparatus file(s) directory.
+- `ApparatusFilesMask` is the apparatus file(s) mask.
+- `OutputFilePath` is the output file path.
+- `-r` means that the files mask is a regular expression.
+- `-s` recurses subdirectories when matching input files.
+
+### Remove Overlaps Command
+
+Remove app overlaps from text documents saving the updated documents into the specified directory.
+
+Syntax:
+
+```ps1
+.\Mqutil.exe <ApparatusFilesDir> <ApparatusFilesMask> <OutputDir> [-r] [-s]
+```
+
+where:
+
+- `ApparatusFilesDir` is the apparatus file(s) directory.
+- `ApparatusFilesMask` is the apparatus file(s) mask.
+- `OutputDir` is the output directory. If it does not exist, it will be created.
+- `-r` means that the files mask is a regular expression.
+- `-s` recurses subdirectories when matching input files.
+
 ### Partition Command
 
 The `partition` command partitions all the files matching the specified mask and requiring partitioning, saving a copy of each file (either partitioned or not) in the specified output directory.

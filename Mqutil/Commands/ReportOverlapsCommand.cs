@@ -52,9 +52,9 @@ namespace Mqutil.Commands
             command.HelpOption("-?|-h|--help");
 
             CommandArgument appDirArgument = command.Argument("[app-file-dir]",
-                "The input entries files directory");
+                "The input apparatus files directory");
             CommandArgument appMaskArgument = command.Argument("[app-file-mask]",
-                "The input entries files mask");
+                "The input apparatus files mask");
             CommandArgument outputPathArgument = command.Argument("[output-path]",
                 "The output file path");
 
