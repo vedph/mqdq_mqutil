@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -93,14 +94,41 @@ namespace Mq.Migration
         }
 
         /// <summary>
-        /// Adds data from the specified <c>ident</c> element.
+        /// Adds data from the specified <c>ident</c> or <c>rdg</c> element.
+        /// The <see cref="Idents"/> list contains <c>ident</c>'s values with
+        /// their <c>n</c> attribute, eventually followed by the value of the
+        /// <c>n</c> attribute of the parent <c>rdg</c> element.
+        /// This in turn comes from merging an overlapping <c>app</c> element
+        /// into another one, and preserves the original from-to location of
+        /// the overlapping <c>app</c>.
         /// </summary>
         /// <param name="identElem">The ident element.</param>
         /// <exception cref="ArgumentNullException">identElem</exception>
         public void AddIdent(XElement identElem)
         {
             if (identElem == null) throw new ArgumentNullException(nameof(identElem));
-            Idents.Add($"{identElem.Value.Trim()}#{identElem.Attribute("n").Value}");
+
+            string identValue = identElem.Name.LocalName == "rdg"
+                ? $"@{identElem.Attribute("n")?.Value}"
+                : $"{identElem.Value.Trim()}#{identElem.Attribute("n").Value}";
+            if (identValue == null) return;
+
+            string rdgLoc = Idents.FirstOrDefault(
+                i => i.StartsWith("@", StringComparison.Ordinal));
+            if (rdgLoc != null)
+            {
+                if (identValue.StartsWith("@", StringComparison.Ordinal))
+                {
+                    // this should never happen
+                    Logger?.LogError("Duplicate rdg@n attribute in idents list");
+                    Idents.Add(identValue);
+                }
+                else Idents.Insert(Idents.IndexOf(rdgLoc), identValue);
+            }
+            else
+            {
+                Idents.Add(identValue);
+            }
         }
 
         /// <summary>

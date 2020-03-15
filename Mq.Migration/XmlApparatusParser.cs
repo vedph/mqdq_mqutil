@@ -656,6 +656,8 @@ namespace Mq.Migration
                                 ParseWit(child.Attribute("wit")?.Value, entry);
                                 ParseSource(child.Attribute("source")?.Value, entry);
                                 content = ParseVariantContent(child);
+                                // rdg@n
+                                content.AddIdent(child);
                                 AddContentToEntry(content, entry);
                                 break;
                             case "note":
