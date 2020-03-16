@@ -36,6 +36,12 @@ where:
 - `-r` means that the files mask is a regular expression.
 - `-s` recurses subdirectories when matching input files.
 
+Sample:
+
+```ps1
+.\Mqutil.exe report-overlaps E:\Work\mqdq\ *-app.xml E:\Work\mqdqc\overlaps.md -s
+```
+
 ### Remove Overlaps Command
 
 Remove app overlaps from text documents saving the updated documents into the specified directory.
@@ -53,6 +59,12 @@ where:
 - `OutputDir` is the output directory. If it does not exist, it will be created.
 - `-r` means that the files mask is a regular expression.
 - `-s` recurses subdirectories when matching input files.
+
+Sample:
+
+```ps1
+.\Mqutil.exe remove-overlaps E:\Work\mqdq\ *-app.xml E:\Work\mqdqc\app\ -s
+```
 
 ### Partition Command
 
@@ -207,7 +219,7 @@ echo PARSE APPARATUS
 pause
 
 echo IMPORT THESAURI
-%mqu% import-thes %srcdir% *-app.xml %dstdir%thesauri.json -s
+%mqu% import-thes %dstdir%app\*.xml %dstdir%thesauri.json
 pause
 ```
 
