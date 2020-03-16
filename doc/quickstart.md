@@ -45,7 +45,5 @@ The log file is named `mqutil-log...txt` (where `...` is a set of digits represe
 (5) **import thesauri**: parse the headers of the apparatus documents, extracting thesauri data from `listBib` and `listWit` into JSON-serialized thesauri. These are ready to be pasted into a Cadmus profile.
 
 ```ps1
-.\Mqutil.exe import-thes E:\Work\mqdq\ *-app.xml E:\Work\mqdqc\thesauri.json
+.\Mqutil.exe import-thes E:\Work\mqdqc\app\*-app.xml E:\Work\mqdqc\thesauri.json
 ```
-
-Note that as we are just parsing headers we do not need to refer to the apparatus files produced by merging overlaps; we can directly use the original files.
