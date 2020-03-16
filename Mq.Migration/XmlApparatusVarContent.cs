@@ -108,6 +108,12 @@ namespace Mq.Migration
         {
             if (identElem == null) throw new ArgumentNullException(nameof(identElem));
 
+            if (identElem.Name.LocalName != "ident"
+                && identElem.Name.LocalName != "rdg")
+            {
+                return;
+            }
+
             string identValue = identElem.Name.LocalName == "rdg"
                 ? $"@{identElem.Attribute("n")?.Value}"
                 : $"{identElem.Value.Trim()}#{identElem.Attribute("n").Value}";

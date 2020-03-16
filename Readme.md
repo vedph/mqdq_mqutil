@@ -187,7 +187,7 @@ set dstdir=E:\Work\mqdqc\
 set mqu=D:\Projects\Core20\Vedph\Mqutil\Mqutil\bin\Debug\netcoreapp3.1\Mqutil.exe
 
 echo REPORT OVERLAPS
-%mqu% report-overlaps %srcdir% *-app.xml %dstdir%~overlaps.md -s
+%mqu% report-overlaps %srcdir% *-app.xml %dstdir%overlaps.md -s
 pause
 
 echo REMOVE OVERLAPS
