@@ -117,7 +117,7 @@ namespace Mq.Migration
             string identValue = identElem.Name.LocalName == "rdg"
                 ? $"@{identElem.Attribute("n")?.Value}"
                 : $"{identElem.Value.Trim()}#{identElem.Attribute("n").Value}";
-            if (identValue == null) return;
+            if (string.IsNullOrEmpty(identValue) || identValue == "@") return;
 
             string rdgLoc = Idents.FirstOrDefault(
                 i => i.StartsWith("@", StringComparison.Ordinal));
