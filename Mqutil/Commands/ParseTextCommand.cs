@@ -115,6 +115,8 @@ namespace Mqutil.Commands
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddSerilog(Log.Logger);
+            Log.Logger.Information("PARSE TEXT");
+
             XmlTextParser parser = new XmlTextParser
             {
                 Logger = loggerFactory.CreateLogger("parse-text")

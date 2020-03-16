@@ -178,7 +178,7 @@ where:
 
 ## Processing Corpus
 
-We can process the whole corpus using a batch like this; just replace the values for `srcdir` (=the source MQDQ directory, as downloaded), `dstdir` (=the root target directory, a new folder in your target drive), and `mqu` (the path to the Mqutil program):
+We can process the whole corpus using a batch like this; just replace the values for `srcdir` (=the source MQDQ directory, as downloaded), `dstdir` (=the root target directory, a new folder in your target drive), and `mqu` (the path to the `Mqutil` program):
 
 ```bat
 @echo off
@@ -186,16 +186,28 @@ set srcdir=E:\Work\mqdq\
 set dstdir=E:\Work\mqdqc\
 set mqu=D:\Projects\Core20\Vedph\Mqutil\Mqutil\bin\Debug\netcoreapp3.1\Mqutil.exe
 
+echo REPORT OVERLAPS
+%mqu% report-overlaps %srcdir% *-app.xml %dstdir%~overlaps.md -s
+pause
+
+echo REMOVE OVERLAPS
+%mqu% remove-overlaps %srcdir% *-app.xml %dstdir%app\ -s
+pause
+
 echo PARTITION
-%mqu% partition %srcdir% "^[^-]+-[^-]+\.xml" %dstdir% -r -s
+%mqu% partition %srcdir% "^[^-]+-[^-]+\.xml" %dstdir%txt -r -s
 pause
 
 echo PARSE TEXT
-%mqu% parse-text %dstdir% *.xml %dstdir%txt\
+%mqu% parse-text %dstdir%txt *.xml %dstdir%jtxt\
 pause
 
 echo PARSE APPARATUS
-%mqu% parse-app %srcdir% *-app.xml %dstdir%txt\ %dstdir%app\ -s
+%mqu% parse-app %dstdir%app *-app.xml %dstdir%jtxt\ %dstdir%japp\
+pause
+
+echo IMPORT THESAURI
+.\Mqutil.exe import-thes %srcdir% *-app.xml %dstdir%thesauri.json
 pause
 ```
 

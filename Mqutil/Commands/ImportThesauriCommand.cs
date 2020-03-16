@@ -68,6 +68,7 @@ namespace Mqutil.Commands
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddSerilog(Log.Logger);
+            Log.Logger.Information("IMPORT THESAURI");
 
             XmlThesaurusParser parser = new XmlThesaurusParser
             {

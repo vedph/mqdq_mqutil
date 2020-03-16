@@ -132,6 +132,8 @@ namespace Mqutil.Commands
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddSerilog(Log.Logger);
+            Log.Logger.Information("PARSE APPARATUS");
+
             XmlApparatusParser parser = new XmlApparatusParser
             {
                 Logger = loggerFactory.CreateLogger("parse-app")

@@ -135,6 +135,7 @@ namespace Mqutil.Commands
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddSerilog(Log.Logger);
+            Log.Logger.Information("IMPORT JSON TEXT AND APPARATUS");
 
             if (!_dry)
             {

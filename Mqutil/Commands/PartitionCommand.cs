@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.CommandLineUtils;
 using Mq.Migration;
 using Mqutil.Services;
+using Serilog;
 using System;
 using System.Globalization;
 using System.IO;
@@ -118,6 +119,7 @@ namespace Mqutil.Commands
                 $"Min: {_minTreshold}\n" +
                 $"Max: {_maxTreshold}\n" +
                 $"Recursive: {_recursive}\n");
+            Log.Logger.Information("PARTITION");
 
             XmlPartitioner partitioner = new XmlPartitioner
             {

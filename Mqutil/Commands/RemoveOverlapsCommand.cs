@@ -161,6 +161,7 @@ namespace Mqutil.Commands
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddSerilog(Log.Logger);
+            Log.Logger.Information("REMOVE OVERLAPS");
 
             if (!Directory.Exists(_outputDir))
                 Directory.CreateDirectory(_outputDir);
