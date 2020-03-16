@@ -59,6 +59,8 @@ namespace Mq.Migration
         private Thesaurus ParseSource(XElement sourceElem, string id,
             bool authors)
         {
+            if (sourceElem == null) return null;
+
             Thesaurus thesaurus = new Thesaurus(
                 $"apparatus-{(authors? "authors":"witnesses")}.{id}@en");
 
@@ -104,6 +106,8 @@ namespace Mq.Migration
                 .Element(XmlHelper.TEI + "listBibl")
                 .Element(XmlHelper.TEI + "listBibl"),
                 id, true);
+
+            if (witnesses == null && authors == null) return null;
 
             return new[] { witnesses, authors };
         }

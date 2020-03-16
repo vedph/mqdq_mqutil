@@ -207,7 +207,7 @@ echo PARSE APPARATUS
 pause
 
 echo IMPORT THESAURI
-.\Mqutil.exe import-thes %srcdir% *-app.xml %dstdir%thesauri.json
+%mqu% import-thes %srcdir% *-app.xml %dstdir%thesauri.json -s
 pause
 ```
 

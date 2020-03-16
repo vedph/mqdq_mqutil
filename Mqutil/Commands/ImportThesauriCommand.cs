@@ -106,14 +106,17 @@ namespace Mqutil.Commands
                         LoadOptions.PreserveWhitespace);
 
                     // parse items
-                    string docId = Path.GetFileNameWithoutExtension(filePath)
-                        .Replace("-app", "");
+                    string docId = inputFileName.Replace("-app", "");
                     Thesaurus[] thesauri = parser.Parse(doc, docId);
-                    witCount += thesauri[0].GetEntries().Count;
-                    authCount += thesauri[1].GetEntries().Count;
+                    if (thesauri == null) continue;
+
+                    witCount += thesauri[0]?.GetEntries().Count ?? 0;
+                    authCount += thesauri[1]?.GetEntries().Count ?? 0;
 
                     for (int i = 0; i < thesauri.Length; i++)
                     {
+                        if (thesauri[i] == null) continue;
+
                         SerializableThesaurus th = new SerializableThesaurus
                         {
                             Id = thesauri[i].Id

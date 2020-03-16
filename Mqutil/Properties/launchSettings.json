@@ -2,7 +2,7 @@
   "profiles": {
     "Mqutil": {
       "commandName": "Project",
-      "commandLineArgs": "parse-app E:\\Work\\mqdqc\\app\\ *-app.xml E:\\Work\\mqdqc\\jtxt\\ E:\\Work\\mqdqc\\japp\\"
+      "commandLineArgs": "import-thes E:\\Work\\mqdqc\\app\\*.xml E:\\Work\\mqdqc\\thesauri.json"
     }
   }
 }
