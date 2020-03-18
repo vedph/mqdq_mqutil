@@ -10,6 +10,7 @@ namespace Mq.Migration
     /// </summary>
     public static class XmlHelper
     {
+        public static string CIT_SEPARATOR = "\u2016";
         public static readonly XNamespace TEI = "http://www.tei-c.org/ns/1.0";
         public static readonly XNamespace XML = "http://www.w3.org/XML/1998/namespace";
 
@@ -21,8 +22,7 @@ namespace Mq.Migration
         /// <exception cref="ArgumentNullException">doc</exception>
         public static XElement GetTeiBody(XDocument doc)
         {
-            if (doc == null)
-                throw new System.ArgumentNullException(nameof(doc));
+            if (doc == null) throw new ArgumentNullException(nameof(doc));
 
             return doc.Root
                 .Element(TEI + "text")
@@ -33,7 +33,7 @@ namespace Mq.Migration
             (a.Name.Namespace == XML ? "xml:" : "") + a.Name.LocalName;
 
         private static string ConcatDivAttributes(XElement div) =>
-            string.Join("\u2016",
+            string.Join(CIT_SEPARATOR,
             div.Attributes().Select(a => $"{GetAttributeName(a)}={a.Value}"));
 
         /// <summary>

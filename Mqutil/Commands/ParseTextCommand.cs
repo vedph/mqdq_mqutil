@@ -7,10 +7,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -21,22 +21,23 @@ namespace Mqutil.Commands
         private readonly string _inputFileDir;
         private readonly string _inputFileMask;
         private readonly string _outputDir;
+        private readonly string _flagDivIdList;
         private readonly int _maxItemPerFile;
         private readonly bool _regexMask;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ParseTextCommand"/> class.
+        /// Initializes a new instance of the <see cref="ParseTextCommand" /> class.
         /// </summary>
         /// <param name="inputFileDir">The input files directory.</param>
         /// <param name="inputFileMask">The input files mask.</param>
         /// <param name="outputDir">The output dir.</param>
+        /// <param name="flagDivIdList">The optional div identifiers list to be
+        /// used for flagging with 1 items matching them.</param>
         /// <param name="maxItemPerFile">The maximum item per file.</param>
-        /// <param name="regexMask">True if file mask is a regular expression.
-        /// </param>
-        /// <exception cref="ArgumentNullException">inputFileMask or outputDir
-        /// </exception>
+        /// <param name="regexMask">True if file mask is a regular expression.</param>
+        /// <exception cref="ArgumentNullException">inputFileMask or outputDir</exception>
         public ParseTextCommand(string inputFileDir, string inputFileMask,
-            string outputDir, int maxItemPerFile, bool regexMask)
+            string outputDir, string flagDivIdList, int maxItemPerFile, bool regexMask)
         {
             _inputFileDir = inputFileDir ??
                 throw new ArgumentNullException(nameof(inputFileDir));
@@ -44,6 +45,7 @@ namespace Mqutil.Commands
                 throw new ArgumentNullException(nameof(inputFileMask));
             _outputDir = outputDir ??
                 throw new ArgumentNullException(nameof(outputDir));
+            _flagDivIdList = flagDivIdList;
             _maxItemPerFile = maxItemPerFile;
             _regexMask = regexMask;
         }
@@ -71,6 +73,9 @@ namespace Mqutil.Commands
             CommandArgument outputArgument = command.Argument("[output]",
                 "The output directory");
 
+            CommandOption flagDivIdListOption = command.Option("-d|--div-list",
+                "The path to the div IDs list file used to flag items with 1",
+                CommandOptionType.SingleValue);
             CommandOption maxItemPerFileOption = command.Option("-m|--max",
                 "Max number of items per output file",
                 CommandOptionType.SingleValue);
@@ -89,6 +94,7 @@ namespace Mqutil.Commands
                     inputDirArgument.Value,
                     inputMaskArgument.Value,
                     outputArgument.Value,
+                    flagDivIdListOption.Value(),
                     max,
                     regexMaskOption.HasValue());
                 return 0;
@@ -102,6 +108,22 @@ namespace Mqutil.Commands
             writer.Close();
         }
 
+        private static HashSet<string> LoadDivIds(string path,
+            string prefix, string suffix)
+        {
+            HashSet<string> ids = new HashSet<string>();
+            using (StreamReader reader = new StreamReader(path, Encoding.UTF8))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(line))
+                        ids.Add(prefix + line.Trim() + suffix);
+                }
+            }
+            return ids;
+        }
+
         public Task Run()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -111,6 +133,7 @@ namespace Mqutil.Commands
                 $"Input dir:  {_inputFileDir}\n" +
                 $"Input mask: {_inputFileMask}\n" +
                 $"Output dir: {_outputDir}\n" +
+                $"Div IDs list: {_flagDivIdList ?? "(none)"}\n" +
                 $"Max items per file: {_maxItemPerFile}\n");
 
             ILoggerFactory loggerFactory = new LoggerFactory();
@@ -128,6 +151,12 @@ namespace Mqutil.Commands
 
             if (!Directory.Exists(_outputDir))
                 Directory.CreateDirectory(_outputDir);
+
+            // load div IDs list if requested, prefixing and suffixing them
+            // so that we are ready to find them in the item's title
+            HashSet<string> flagDivIds = _flagDivIdList != null
+                ? LoadDivIds(_flagDivIdList, "xml:id=", XmlHelper.CIT_SEPARATOR)
+                : null;
 
             // for each input document
             foreach (string filePath in FileEnumerator.Enumerate(
@@ -155,6 +184,13 @@ namespace Mqutil.Commands
                     doc, Path.GetFileNameWithoutExtension(filePath)))
                 {
                     if (++itemCount % 10 == 0) Console.Write('.');
+
+                    // set flag if required
+                    if (flagDivIds.Any(s =>
+                        item.Title.IndexOf(s, StringComparison.Ordinal) > -1))
+                    {
+                        item.Flags |= 1;
+                    }
 
                     // create new output file if required
                     if (writer == null

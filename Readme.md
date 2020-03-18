@@ -92,7 +92,7 @@ where:
 Sample:
 
 ```ps1
-.\Mqutil.exe partition C:\Users\dfusi\Desktop\mqdq\VERG-eclo.xml C:\Users\dfusi\Desktop\mqdq\part\
+.\Mqutil.exe partition E:\Work\mqdq\ "^[^-]+-[^-]+\.xml" E:\Work\mqdqc\txt\ -r -s
 ```
 
 ### Parse Text Command
@@ -102,7 +102,7 @@ The `parse-text` command is used to parse text documents, dumping the output int
 Syntax:
 
 ```ps1
-.\Mqutil.exe parse-text <InputFilesDir> <InputFilesMask> <OutputDir> [-m MaxItemsPerFile] [-r]
+.\Mqutil.exe parse-text <InputFilesDir> <InputFilesMask> <OutputDir> [-m MaxItemsPerFile] [-r] [-d div-list-path]
 ```
 
 where:
@@ -112,11 +112,12 @@ where:
 - `OutputDir` is the output directory (will be created if not exists).
 - `-m` is the maximum count of desired items per output file. The default value is 100. Set to 0 to output a single file (not recommended unless your input files are small).
 - `-r` means that the files mask is a regular expression.
+- `[-d div-list-path]` specifies the path to a text file containing a list of div IDs to be flagged with 1. This list is optionally produced by the `remove-overlaps` command (see above). The typical usage is flagging for revision items with overlap errors.
 
 Sample:
 
 ```ps1
-.\Mqutil.exe parse-text C:\Users\dfusi\Desktop\mqdq\part\VERG-eclo.xml c:\users\dfusi\desktop\mqdq\part\txt
+.\Mqutil.exe parse-text E:\Work\mqdqc\txt\ *.xml E:\Work\mqdqc\jtxt\ -d E:\Work\mqdqc\app\overlap-err-divs.txt
 ```
 
 Output files will be created in the output directory, and named after the corresponding input files, plus a numeric suffix.
@@ -204,6 +205,7 @@ echo REPORT OVERLAPS
 pause
 
 echo REMOVE OVERLAPS
+echo (please keep the next log for editors reference)
 %mqu% remove-overlaps %srcdir% *-app.xml %dstdir%app\ -s -d
 pause
 
@@ -212,7 +214,7 @@ echo PARTITION
 pause
 
 echo PARSE TEXT
-%mqu% parse-text %dstdir%txt *.xml %dstdir%jtxt\
+%mqu% parse-text %dstdir%txt *.xml %dstdir%jtxt\ -d %dstdir%app\overlap-err-divs.txt
 pause
 
 echo PARSE APPARATUS
