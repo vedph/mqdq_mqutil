@@ -21,8 +21,16 @@ namespace Mq.Migration
     public sealed class XmlApparatusParser : IHasLogger
     {
         private const char NOTE_SECT_SEP = '`';
-        private const string TYPE_ANCIENT_NOTE = "ancient-note";
-        private const string TYPE_MARGIN_NOTE = "margin-note";
+
+        /// <summary>
+        /// The @type attribute value for ancient note.
+        /// </summary>
+        public const string TYPE_ANCIENT_NOTE = "ancient-note";
+
+        /// <summary>
+        /// The @type attribute value for margin note.
+        /// </summary>
+        public const string TYPE_MARGIN_NOTE = "margin-note";
 
         private readonly Regex _bracesRegex;
         private JsonTextIndex _textIndex;

@@ -49,7 +49,7 @@ Remove app overlaps from text documents saving the updated documents into the sp
 Syntax:
 
 ```ps1
-.\Mqutil.exe <ApparatusFilesDir> <ApparatusFilesMask> <OutputDir> [-r] [-s]
+.\Mqutil.exe <ApparatusFilesDir> <ApparatusFilesMask> <OutputDir> [-r] [-s] [-d]
 ```
 
 where:
@@ -59,11 +59,12 @@ where:
 - `OutputDir` is the output directory. If it does not exist, it will be created.
 - `-r` means that the files mask is a regular expression.
 - `-s` recurses subdirectories when matching input files.
+- `-d` additionally writes a file named `overlap-err-divs.txt` in the output directory, having a line for each distinct ID of `div`'s containing overlap removal errors. This can be used later in import, to flag the corresponding items.
 
 Sample:
 
 ```ps1
-.\Mqutil.exe remove-overlaps E:\Work\mqdq\ *-app.xml E:\Work\mqdqc\app\ -s
+.\Mqutil.exe remove-overlaps E:\Work\mqdq\ *-app.xml E:\Work\mqdqc\app\ -s -d
 ```
 
 ### Partition Command
@@ -203,7 +204,7 @@ echo REPORT OVERLAPS
 pause
 
 echo REMOVE OVERLAPS
-%mqu% remove-overlaps %srcdir% *-app.xml %dstdir%app\ -s
+%mqu% remove-overlaps %srcdir% *-app.xml %dstdir%app\ -s -d
 pause
 
 echo PARTITION

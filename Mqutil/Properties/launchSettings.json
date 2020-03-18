@@ -2,7 +2,7 @@
   "profiles": {
     "Mqutil": {
       "commandName": "Project",
-      "commandLineArgs": "import-thes E:\\Work\\mqdqc\\app\\*.xml E:\\Work\\mqdqc\\thesauri.json"
+      "commandLineArgs": "remove-overlaps E:\\Work\\mqdq\\ *-app.xml E:\\Work\\mqdqx\\app\\ -s -d"
     }
   }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -19,10 +20,11 @@ namespace Mqutil.Commands
         private readonly string _outputDir;
         private readonly bool _regexMask;
         private readonly bool _recursive;
+        private readonly bool _writeDivList;
 
         public RemoveOverlapsCommand(string appFileDir,
             string appFileMask, string outputDir, bool regexMask,
-            bool recursive)
+            bool recursive, bool writeDivList)
         {
             _appFileDir = appFileDir ??
                 throw new ArgumentNullException(nameof(appFileDir));
@@ -32,6 +34,7 @@ namespace Mqutil.Commands
                 throw new ArgumentNullException(nameof(outputDir));
             _regexMask = regexMask;
             _recursive = recursive;
+            _writeDivList = writeDivList;
         }
 
         /// <summary>
@@ -62,6 +65,9 @@ namespace Mqutil.Commands
             CommandOption recursiveOption = command.Option("-s|--sub",
                 "Recurse subdirectories in matching files masks",
                 CommandOptionType.NoValue);
+            CommandOption writeDivListOption = command.Option("-d|--div-list",
+                "Also write the list of all the div IDs having any overlap removal error",
+                CommandOptionType.NoValue);
 
             command.OnExecute(() =>
             {
@@ -70,7 +76,8 @@ namespace Mqutil.Commands
                     appMaskArgument.Value,
                     outputDirArgument.Value,
                     regexMaskOption.HasValue(),
-                    recursiveOption.HasValue());
+                    recursiveOption.HasValue(),
+                    writeDivListOption.HasValue());
                 return 0;
             });
         }
@@ -154,7 +161,8 @@ namespace Mqutil.Commands
             Console.ResetColor();
             Console.WriteLine(
                 $"Input:  {_appFileMask}\n" +
-                $"Output: {_outputDir}\n");
+                $"Output: {_outputDir}\n" +
+                $"Div list: {(_writeDivList ? "yes" : "no")}\n");
 
             int inputFileCount = 0;
             int removedCount = 0;
@@ -165,6 +173,8 @@ namespace Mqutil.Commands
 
             if (!Directory.Exists(_outputDir))
                 Directory.CreateDirectory(_outputDir);
+
+            HashSet<string> errDivIds = new HashSet<string>();
 
             // for each app document
             WordIdList widList = new WordIdList
@@ -223,10 +233,14 @@ namespace Mqutil.Commands
                                 source.Element.Element(XmlHelper.TEI + "lem"),
                                 target.Element.Element(XmlHelper.TEI + "lem")))
                             {
+                                string divId = source.Element.Ancestors(
+                                        XmlHelper.TEI + "div1")
+                                    .First()
+                                    .Attribute(XmlHelper.XML + "id").Value;
+
+                                errDivIds.Add(divId);
                                 Log.Logger.Error("Removed overlapping app lost sources at div "
-                                    + source.Element.Ancestors(XmlHelper.TEI + "div1")
-                                        .First()
-                                        .Attribute(XmlHelper.XML + "id").Value
+                                    + divId
                                     + ": "
                                     + GetAttributesDump(source.Element));
                             }
@@ -262,6 +276,18 @@ namespace Mqutil.Commands
                 // save
                 string path = Path.Combine(_outputDir, Path.GetFileName(filePath));
                 doc.Save(path, SaveOptions.OmitDuplicateNamespaces);
+            }
+
+            if (_writeDivList)
+            {
+                using (StreamWriter listWriter = new StreamWriter(
+                        Path.Combine(_outputDir, "overlap-err-divs.txt"),
+                        false, Encoding.UTF8))
+                {
+                    foreach (string id in errDivIds)
+                        listWriter.WriteLine(id);
+                    listWriter.Flush();
+                }
             }
 
             Console.WriteLine($"\nInput documents: {inputFileCount}");
