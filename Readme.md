@@ -190,6 +190,12 @@ where:
 - `-d` triggers a dry run, where nothing is written to the database.
 - `-r` means that the files mask is a regular expression.
 
+Sample:
+
+```ps1
+.\Mqutil.exe import-json E:\Work\mqdqc\jtxt\ *.json E:\Work\mqdqc\japp\ E:\Work\mqdqc\mqdq-profile.txt mqdq -d
+```
+
 ## Processing Corpus
 
 We can process the whole corpus using a batch like this; just replace the values for `srcdir` (=the source MQDQ directory, as downloaded), `dstdir` (=the root target directory, a new folder in your target drive), and `mqu` (the path to the `Mqutil` program):

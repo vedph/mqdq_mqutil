@@ -122,7 +122,7 @@ namespace Mqutil.Commands
 
         public Task Run()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("IMPORT JSON TEXT AND APPARATUS\n");
             Console.ResetColor();
             Console.WriteLine(
@@ -201,7 +201,7 @@ namespace Mqutil.Commands
             foreach (string fileName in fileNames)
             {
                 foreach (string appFilePath in Directory.EnumerateFiles(
-                    _appFileDir, fileName + "-app_*.json"))
+                    _appFileDir, fileName + "*-app_*.json"))
                 {
                     Console.WriteLine(appFilePath);
                     using (Stream stream = new FileStream(appFilePath, FileMode.Open,
