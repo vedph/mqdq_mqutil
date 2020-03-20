@@ -186,7 +186,7 @@ namespace Mqutil.Commands
             // 1) import text
             string[] files = FileEnumerator.Enumerate(
                 _txtFileDir, _txtFileMask, _regexMask).ToArray();
-            List<string> fileNames = new List<string>();
+            HashSet<string> fileNames = new HashSet<string>();
 
             Console.WriteLine($"Importing text from {files.Length} file(s)...");
 
@@ -210,10 +210,12 @@ namespace Mqutil.Commands
 
             foreach (string fileName in fileNames)
             {
+                Console.WriteLine(fileName);
+
                 foreach (string appFilePath in Directory.EnumerateFiles(
-                    _appFileDir, fileName + "*-app_*.json"))
+                    _appFileDir, fileName + "-app_*.json"))
                 {
-                    Console.WriteLine(appFilePath);
+                    Console.WriteLine("  " + appFilePath);
                     using (Stream stream = new FileStream(appFilePath, FileMode.Open,
                         FileAccess.Read, FileShare.Read))
                     {
