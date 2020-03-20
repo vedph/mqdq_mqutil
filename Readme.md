@@ -193,7 +193,7 @@ where:
 Sample:
 
 ```ps1
-.\Mqutil.exe import-json E:\Work\mqdqc\jtxt\ *.json E:\Work\mqdqc\japp\ E:\Work\mqdqc\mqdq-profile.txt mqdq -d
+.\Mqutil.exe import-json E:\Work\mqdqc\jtxt\ *.json E:\Work\mqdqc\japp\ E:\Work\mqdqc\mqdq-profile.json mqdq -d
 ```
 
 ## Processing Corpus

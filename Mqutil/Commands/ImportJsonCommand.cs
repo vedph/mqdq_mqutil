@@ -161,6 +161,16 @@ namespace Mqutil.Commands
                     Log.Information("Database created.");
                 }
             }
+            else
+            {
+                if (!File.Exists(_profilePath))
+                {
+                    string error = "Profile path not found: " + _profilePath;
+                    Console.WriteLine(error);
+                    Log.Error(error);
+                    return Task.CompletedTask;
+                }
+            }
 
             ICadmusRepository repository =
                 _repositoryService.CreateRepository(_database);
