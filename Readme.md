@@ -235,3 +235,11 @@ pause
 The partition command targets only the texts; this is why we're using a regular expression to match them only, excluding apparatuses. The parse apparatus command instead does the inverse, but here a simple file mask is enough. In both cases, given that each document is in its own subfolder, we add the `-s` option to recurse subdirectories.
 
 Note that once files have been partitioned, all the following text-related processing happens on the partitioned files, rather than on the original ones.
+
+To create a Cadmus database and import JSON files:
+
+```ps1
+.\Mqutil.exe import-json E:\Work\mqdqc\jtxt\ *.json E:\Work\mqdqc\japp\ E:\Work\mqdqc\mqdq-profile.json mqdq -d
+```
+
+Remove the `-d` option to disable dry run and truly import data.

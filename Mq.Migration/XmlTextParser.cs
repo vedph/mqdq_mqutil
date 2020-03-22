@@ -1,6 +1,5 @@
 ﻿using Cadmus.Core;
 using Cadmus.Parts.General;
-using Fusi.Tools.Text;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,14 +16,12 @@ namespace Mq.Migration
     /// </summary>
     public sealed class XmlTextParser : IHasLogger
     {
-        private readonly TextCutterOptions _headOptions;
-        private readonly TextCutterOptions _tailOptions;
-        private readonly Regex _digitsRegex;
         private readonly Regex _escRegex;
         private readonly IItemSortKeyBuilder _sortKeyBuilder;
         private string _docId;
         private string _facetId;
         private string _userId;
+        private int _partitionNr;
 
         /// <summary>
         /// Gets or sets the logger.
@@ -64,43 +61,14 @@ namespace Mq.Migration
         /// </summary>
         public XmlTextParser()
         {
-            _headOptions = new TextCutterOptions
-            {
-                LimitAsPercents = false,
-                LineFlattening = true,
-                MaxLength = 30,
-                MinusLimit = 5,
-                PlusLimit = 5
-            };
-            _tailOptions = new TextCutterOptions
-            {
-                LimitAsPercents = false,
-                LineFlattening = true,
-                MaxLength = 30,
-                MinusLimit = 5,
-                PlusLimit = 5,
-                Reversed = true,
-                Ellipsis = ""
-            };
             _facetId = "default";
             _userId = "zeus";
-            _digitsRegex = new Regex(@"\d+");
             _escRegex = new Regex(@"\(==([^)]+)\)");
             _sortKeyBuilder = new StandardItemSortKeyBuilder();
         }
 
         private static bool IsLOrP(XElement e) =>
             e.Name == XmlHelper.TEI + "l" || e.Name == XmlHelper.TEI + "p";
-
-        private string GetDescriptionText(string text)
-        {
-            text = _digitsRegex.Replace(text, "");
-            text = text.Trim();
-
-            if (text.Length <= 80) return text;
-            return TextCutter.Cut(text, _headOptions)
-                   + TextCutter.Cut(text, _tailOptions);
-        }
 
         private string GetKeyFromAttrName(XName name)
         {
@@ -243,8 +211,10 @@ namespace Mq.Migration
         private IItem ImportPartition(XElement div,
             IList<XElement> rowElements)
         {
+            _partitionNr++;
+
             // build citation
-            string cit = XmlHelper.GetBreakPointCitation(
+            string cit = XmlHelper.GetBreakPointCitation(_partitionNr,
                 div.Elements().FirstOrDefault(IsLOrP),
                 _docId);
 
@@ -385,6 +355,8 @@ namespace Mq.Migration
         {
             if (doc == null) throw new ArgumentNullException(nameof(doc));
             _docId = id ?? throw new ArgumentNullException(nameof(id));
+
+            _partitionNr = 0;
 
             if (doc.Root.Descendants(XmlHelper.TEI + "pb").Any())
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -39,16 +40,24 @@ namespace Mq.Migration
         /// <summary>
         /// Gets the break point citation.
         /// </summary>
+        /// <param name="partitionNr">The partition ordinal number or 0 to
+        /// avoid inserting it.</param>
         /// <param name="firstChild">The first child.</param>
         /// <param name="docId">The document identifier.</param>
         /// <returns>The citation.</returns>
-        public static string GetBreakPointCitation(XElement firstChild,
+        public static string GetBreakPointCitation(
+            int partitionNr,
+            XElement firstChild,
             string docId)
         {
             StringBuilder sb = new StringBuilder();
 
             // filename
             sb.Append(docId);
+
+            // partition number
+            if (partitionNr > 0)
+                sb.Append(' ').Append(partitionNr.ToString("00000"));
 
             // line number # line ID
             sb.Append(' ')
