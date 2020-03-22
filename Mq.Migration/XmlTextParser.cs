@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
@@ -190,6 +191,46 @@ namespace Mq.Migration
                                 last.Attribute("n").Value);
         }
 
+        private string GetPartTextDescription(TiledTextPart part)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            // collect head text
+            int ya = 0, xa = 0;
+            foreach (TextTileRow row in part.Rows)
+            {
+                ya++;
+                xa = 0;
+                foreach (TextTile tile in row.Tiles)
+                {
+                    xa++;
+                    if (sb.Length > 0) sb.Append(' ');
+                    sb.Append(tile.Data["text"]);
+                    if (sb.Length >= 40) goto tail;
+                }
+            }
+            tail:
+            // collect tail text
+            int i = sb.Length;
+            for (int yb = part.Rows.Count; yb >= ya; yb--)
+            {
+                for (int xb = part.Rows[yb - 1].Tiles.Count;
+                     yb == ya? xb > xa : xb > 0;
+                     xb--)
+                {
+                    sb.Insert(i, part.Rows[yb - 1].Tiles[xb - 1].Data["text"]);
+                    sb.Insert(i, ' ');
+                    if (sb.Length - i >= 40)
+                    {
+                        sb.Insert(i, "... ");
+                        goto end;
+                    }
+                }
+            }
+            end:
+            return sb.ToString();
+        }
+
         /// <summary>
         /// Imports the partition into a Cadmus item.
         /// </summary>
@@ -212,9 +253,9 @@ namespace Mq.Migration
             Item item = new Item
             {
                 Title = cit,
-                Description = (nBounds != null ?
-                    $"{nBounds.Item1}-{nBounds.Item2} " : "") +
-                    GetDescriptionText(div.Value.Trim()),
+                //Description = (nBounds != null ?
+                //    $"{nBounds.Item1}-{nBounds.Item2} " : "") +
+                //    GetDescriptionText(div.Value.Trim()),
                 FacetId = _facetId,
                 GroupId = _docId,
                 CreatorId = _userId,
@@ -268,6 +309,10 @@ namespace Mq.Migration
 
                 part.Rows.Add(row);
             }
+
+            item.Description = (nBounds != null ?
+                    $"{nBounds.Item1}-{nBounds.Item2} " : "")
+                    + GetPartTextDescription(part);
 
             item.SortKey = _sortKeyBuilder.BuildKey(item, null);
             int i = item.SortKey.IndexOf(' ', item.SortKey.IndexOf(' ') + 1);
