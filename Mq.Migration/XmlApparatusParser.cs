@@ -355,10 +355,12 @@ namespace Mq.Migration
             part.Fragments.Add(fr);
         }
 
-        private TiledTextLayerPart<ApparatusLayerFragment> CreatePart(string docId)
+        private TiledTextLayerPart<ApparatusLayerFragment> CreatePart(
+            string itemId, string docId)
         {
             return new TiledTextLayerPart<ApparatusLayerFragment>
             {
+                ItemId = itemId,
                 ThesaurusScope = docId,
                 CreatorId = _userId,
                 UserId = _userId
@@ -392,6 +394,7 @@ namespace Mq.Migration
             TiledTextLayerPart<ApparatusLayerFragment> ancPart =
                 new TiledTextLayerPart<ApparatusLayerFragment>
                 {
+                    ItemId = part.ItemId,
                     ThesaurusScope = part.ThesaurusScope,
                     CreatorId = part.CreatorId,
                     UserId = part.UserId,
@@ -400,6 +403,7 @@ namespace Mq.Migration
             TiledTextLayerPart<ApparatusLayerFragment> margPart =
                 new TiledTextLayerPart<ApparatusLayerFragment>
                 {
+                    ItemId = part.ItemId,
                     ThesaurusScope = part.ThesaurusScope,
                     CreatorId = part.CreatorId,
                     UserId = part.UserId,
@@ -543,7 +547,9 @@ namespace Mq.Migration
             XElement bodyElem = doc.Root
                 .Element(XmlHelper.TEI + "text")
                 .Element(XmlHelper.TEI + "body");
-            var part = CreatePart(id);
+
+            // create a part to host fragments; we still don't know its item ID
+            var part = CreatePart(null, id);
             int partFirstLineNr = 1;
             string divId;
 
@@ -612,12 +618,14 @@ namespace Mq.Migration
                             string.Join(" ", locs));
                     }
 
-                    // if the location refers to another item, change part
+                    // if the location refers to another item, change part;
+                    // this happens either because we still have no item assigned...
                     if (part.ItemId == null)
                     {
                         part.ItemId = itemId;
                         Logger?.LogInformation($"Item ID set to {itemId}");
                     }
+                    // ...or because the assigned item was different from the new one
                     else if (part.ItemId != itemId)
                     {
                         Logger?.LogInformation(
@@ -633,8 +641,7 @@ namespace Mq.Migration
                                 yield return p;
                             }
                         }
-                        part = CreatePart(id);
-                        part.ItemId = itemId;
+                        part = CreatePart(itemId, id);
                         partFirstLineNr = GetElementLineNumber(appElem);
                     }
 
