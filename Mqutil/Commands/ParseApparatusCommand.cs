@@ -169,12 +169,13 @@ namespace Mqutil.Commands
                 };
 
                 // load index
-                LoadTextIndex(inputFileName.Replace("-app", ""));
+                string textFileName = inputFileName.Replace("-app", "");
+                LoadTextIndex(textFileName);
 
                 // parse
                 int partCount = 0, outputFileCount = 0;
 
-                foreach (var part in parser.Parse(doc, inputFileName, _textIndex))
+                foreach (var part in parser.Parse(doc, textFileName, _textIndex))
                 {
                     if (++partCount % 10 == 0) Console.Write('.');
 
