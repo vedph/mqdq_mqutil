@@ -361,7 +361,7 @@ namespace Mq.Migration
             return new TiledTextLayerPart<ApparatusLayerFragment>
             {
                 ItemId = itemId,
-                ThesaurusScope = docId,
+                ThesaurusScope = docId.ToLowerInvariant(),
                 CreatorId = _userId,
                 UserId = _userId
             };
