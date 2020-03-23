@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{C4A30C7F-74A
 	ProjectSection(SolutionItems) = preProject
 		doc\apparatus-sample.md = doc\apparatus-sample.md
 		doc\apparatus.md = doc\apparatus.md
+		doc\docker-seed.md = doc\docker-seed.md
 		doc\import.md = doc\import.md
 		doc\index.md = doc\index.md
 		doc\mqdq-app-chars.tsv = doc\mqdq-app-chars.tsv
