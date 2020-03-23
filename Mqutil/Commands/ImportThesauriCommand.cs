@@ -126,8 +126,7 @@ namespace Mqutil.Commands
 
                         string json = JsonSerializer.Serialize(th, options);
                         writer.Write(json);
-                        writer.WriteLine(i == 0 || inputFileCount + 1 < files.Length ?
-                            "," : "");
+                        writer.WriteLine(",");
                     }
                 }
                 writer.WriteLine("]");
