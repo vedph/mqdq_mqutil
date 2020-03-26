@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -65,16 +64,16 @@ namespace Mq.Migration
               .Append('#')
               .Append(firstChild.Attribute(XML + "id").Value);
 
-            // div1 attrs
-            XElement div1 = firstChild.Ancestors(TEI + "div1").First();
-            sb.Append(' ').Append(ConcatDivAttributes(div1));
+            //// div1 attrs
+            //XElement div1 = firstChild.Ancestors(TEI + "div1").First();
+            //sb.Append(' ').Append(ConcatDivAttributes(div1));
 
-            // div2 attrs if any
-            XElement div2 = div1.Descendants(TEI + "div2").LastOrDefault();
-            if (div2 != null)
-            {
-                sb.Append(' ').Append(ConcatDivAttributes(div2));
-            }
+            //// div2 attrs if any
+            //XElement div2 = div1.Descendants(TEI + "div2").LastOrDefault();
+            //if (div2 != null)
+            //{
+            //    sb.Append(' ').Append(ConcatDivAttributes(div2));
+            //}
 
             return sb.ToString();
         }
