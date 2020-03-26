@@ -8,4 +8,4 @@ This is a dummy tool to be used for importing MQDQ documents into Cadmus for edi
 - [apparatus](apparatus.md): apparatus analysis and import plan.
 - [apparatus sample](apparatus-sample.md): sample of apparatus parsing.
 - [import](import.md): import plan.
-- export: export data from the Cadmus database into the source XML documents.
+- [export](export.md): export plan.
