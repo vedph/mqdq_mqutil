@@ -42,7 +42,5 @@ The citation is built by concatenating these components, separated by space:
 1. the file name without extension (e.g. `LVCR-rena`).
 2. the line number, always found at `l@n`.
 3. `l@xml:id` must be preserved, too; we append it to the line number after a `#` character.
-4. `div1` attributes, each with the form name=value separated by U+2016 (double vertical pipe, e.g. `xml:id=d001‖type=section‖decls=#md‖met=H`). This is a character which never occurs in the current MQDQ files.
-5. `div2` attributes, when there is a `div2`.
 
-Thus, a citation (no `div2`) would be like this: `LVCR-rena 20#d001l20 xml:id=d001‖type=section‖decls=#md‖met=H`.
+Thus, a citation (no `div2`) would be like this: `LVCR-rena 20#d001l20`.
