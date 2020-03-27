@@ -2,6 +2,7 @@
 using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Mq.Migration;
 using Mqutil.Services;
 using Serilog;
 using System;
@@ -60,7 +61,7 @@ namespace Mqutil.Commands
             });
         }
 
-        public Task Run()
+        public async Task Run()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("EXPORT TEXT INTO TEI FILES\n");
@@ -76,8 +77,8 @@ namespace Mqutil.Commands
             ICadmusRepository repository =
                 _repositoryService.CreateRepository(_database);
 
-            // TODO
-            throw new NotImplementedException();
+            TextExporter exporter = new TextExporter(repository);
+            await exporter.ExportAsync(_outputDir);
         }
     }
 }

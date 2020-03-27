@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Mq.Migration
@@ -77,5 +78,14 @@ namespace Mq.Migration
 
             return sb.ToString();
         }
+
+        /// <summary>
+        /// Gets the line information into a formatted string.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <returns>String with Y,X or empty if no line info.</returns>
+        public static string GetLineInfo(XElement element) =>
+            element is IXmlLineInfo info
+                ? $"{info.LineNumber},{info.LinePosition}" : "";
     }
 }
