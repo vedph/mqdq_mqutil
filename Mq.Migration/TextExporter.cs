@@ -1,6 +1,7 @@
 ﻿using Cadmus.Core;
 using Cadmus.Core.Storage;
 using Cadmus.Parts.General;
+using Fusi.Tools;
 using Fusi.Tools.Data;
 using Microsoft.Extensions.Logging;
 using System;
@@ -156,7 +157,8 @@ namespace Mq.Migration
             return i == -1 ? null : groupId.Substring(0, i);
         }
 
-        public async Task ExportAsync(string outputDir)
+        public async Task ExportAsync(string outputDir,
+            IProgress<ProgressReport> progress)
         {
             if (outputDir is null)
                 throw new ArgumentNullException(nameof(outputDir));
@@ -169,6 +171,8 @@ namespace Mq.Migration
             DataPage<string> groupPage =
                 await _repository.GetDistinctGroupIdsAsync(groupFilter);
             Logger?.LogInformation($"Groups found: {groupPage.Total}");
+
+            ProgressReport report = progress != null? new ProgressReport() : null;
 
             ItemFilter itemFilter = new ItemFilter
             {
@@ -213,6 +217,7 @@ namespace Mq.Migration
 
                     // for each item in the group, sorted by key:
                     itemFilter.GroupId = groupId;
+                    itemFilter.PageNumber = 1;
                     DataPage<ItemInfo> itemPage = _repository.GetItems(itemFilter);
 
                     while (itemFilter.PageNumber <= itemPage.PageCount)
@@ -247,6 +252,14 @@ namespace Mq.Migration
                     }
 
                     doc.Save(filePath, SaveOptions.OmitDuplicateNamespaces);
+
+                    if (progress != null)
+                    {
+                        report.Count++;
+                        report.Percent = report.Count * 100 / groupPage.Total;
+                        report.Message = groupId;
+                        progress.Report(report);
+                    }
                 } // group
 
                 // next groups page

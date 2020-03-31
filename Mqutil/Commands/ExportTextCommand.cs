@@ -6,8 +6,10 @@ using Microsoft.Extensions.Logging;
 using Mq.Migration;
 using Mqutil.Services;
 using Serilog;
+using ShellProgressBar;
 using System;
 using System.Threading.Tasks;
+using Fusi.Tools;
 
 namespace Mqutil.Commands
 {
@@ -78,7 +80,19 @@ namespace Mqutil.Commands
                 _repositoryProvider.CreateRepository(_database);
 
             TextExporter exporter = new TextExporter(repository);
-            await exporter.ExportAsync(_outputDir);
+
+            using (var bar = new ProgressBar(100, "Exporting...",
+                new ProgressBarOptions
+                {
+                    ProgressCharacter = '.',
+                    ProgressBarOnBottom = true,
+                    DisplayTimeInRealTime = false
+                }))
+            {
+                await exporter.ExportAsync(_outputDir,
+                    new Progress<ProgressReport>(
+                        r => bar.Tick(r.Percent, r.Message)));
+            }
         }
     }
 }
