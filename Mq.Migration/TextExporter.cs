@@ -82,16 +82,6 @@ namespace Mq.Migration
             }
         }
 
-        private void ClearDocDivContents(XDocument doc)
-        {
-            XElement body = XmlHelper.GetTeiBody(doc);
-
-            foreach (XElement div in body.Descendants(XmlHelper.TEI + "div2"))
-            {
-                ClearDivContents(div);
-            }
-        }
-
         private void AppendItemContent(IItem item, XElement div, bool hasWords)
         {
             if (IncludeComments) div.Add(new XComment("item " + item.Id));
@@ -136,6 +126,12 @@ namespace Mq.Migration
             }
         }
 
+        private static string GetGroupIdDirectoryName(string groupId)
+        {
+            int i = groupId.IndexOf('-');
+            return i == -1 ? null : groupId.Substring(0, i);
+        }
+
         public async Task ExportAsync(string outputDir)
         {
             if (outputDir is null)
@@ -162,8 +158,21 @@ namespace Mq.Migration
                 {
                     Logger?.LogInformation(groupId);
 
-                    // open the target document
-                    string filePath = Path.Combine(outputDir, groupId + ".xml");
+                    // open the target document: it is assumed that the target
+                    // files are under their author subdirectory, which is
+                    // the part of the group ID before the first dash; e.g.
+                    // ABLAB-epig is under a subdirectory named ABLAB
+                    string authDirName = GetGroupIdDirectoryName(groupId);
+                    string filePath = authDirName == null
+                        ? Path.Combine(outputDir, groupId + ".xml")
+                        : Path.Combine(outputDir, authDirName, groupId + ".xml");
+
+                    if (!File.Exists(filePath))
+                    {
+                        Logger?.LogError($"Target file not exists: {filePath}");
+                        continue;
+                    }
+
                     XDocument doc = XDocument.Load(filePath,
                         LoadOptions.PreserveWhitespace |
                         LoadOptions.SetLineInfo);
@@ -173,7 +182,10 @@ namespace Mq.Migration
                     bool hasWordElems = await HasWordGranularityAsync(doc, groupId);
 
                     // clear the div children except for initial head
-                    ClearDocDivContents(doc);
+                    foreach (XElement div in body.Descendants(XmlHelper.TEI + "div2"))
+                        ClearDivContents(div);
+                    foreach (XElement div in body.Descendants(XmlHelper.TEI + "div1"))
+                        ClearDivContents(div);
 
                     // for each item in the group, sorted by key:
                     itemFilter.GroupId = groupId;

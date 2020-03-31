@@ -63,7 +63,6 @@ namespace Mqutil.Commands
 
         public async Task Run()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("EXPORT TEXT INTO TEI FILES\n");
             Console.ResetColor();
             Console.WriteLine(
