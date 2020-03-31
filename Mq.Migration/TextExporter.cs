@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -19,6 +20,8 @@ namespace Mq.Migration
     /// </summary>
     public sealed class TextExporter : IHasLogger
     {
+        static private readonly Regex _tailRegex = new Regex(@"[^\p{L}]+$");
+
         private readonly ICadmusRepository _repository;
         private readonly string _tiledTextPartTypeId;
 
@@ -95,11 +98,35 @@ namespace Mq.Migration
                 case XmlTextParser.KEY_PATCH:
                 case XmlTextParser.KEY_TEXT:
                     return null;
+
                 default:
-                    return name == "id"
-                        ? new XAttribute(XmlHelper.XML + "id", value)
-                        : new XAttribute(name, value);
+                    // id is a special case, and maps to xml:id
+                    if (name == "id")
+                        return new XAttribute(XmlHelper.XML + "id", value);
+                    // any other XML-namespaced attribute has the xml_ prefix
+                    if (name.StartsWith("xml_", StringComparison.Ordinal))
+                        return new XAttribute(XmlHelper.XML + name, value);
+                    // else it's a TEI attribute
+                    return new XAttribute(name, value);
             }
+        }
+
+        private static string GetTileText(TextTile tile)
+        {
+            string text = tile.Data[XmlTextParser.KEY_TEXT];
+
+            if (tile.Data.ContainsKey(XmlTextParser.KEY_PATCH))
+            {
+                string patch = tile.Data[XmlTextParser.KEY_PATCH];
+
+                // the escape should be inserted before a non-alphabetic tail
+                Match m = _tailRegex.Match(text);
+                return m.Success
+                    ? $"{text.Substring(0, m.Index)}(=={patch}){m.Value}"
+                    : $"{text}(=={patch})";
+            }
+
+            return text;
         }
 
         private void AppendItemContent(IItem item, XElement div, bool hasWords)
@@ -129,23 +156,19 @@ namespace Mq.Migration
                     foreach (TextTile tile in row.Tiles)
                     {
                         XElement w = new XElement(XmlHelper.TEI + "w",
-                            tile.Data[XmlTextParser.KEY_TEXT]);
+                            GetTileText(tile));
                         foreach (var pair in tile.Data)
                         {
                             XAttribute attr = GetAttribute(pair.Key, pair.Value);
                             if (attr != null) w.Add(attr);
                         }
                         lp.Add(w);
-
-                        // patch: render as escape
-                        if (tile.Data.ContainsKey(XmlTextParser.KEY_PATCH))
-                            lp.Value += $"(=={tile.Data[XmlTextParser.KEY_PATCH]})";
                     }
                 }
                 else
                 {
                     lp.Value = string.Join(" ", from t in row.Tiles
-                        select t.Data[XmlTextParser.KEY_TEXT]);
+                        select GetTileText(t));
                 }
                 div.Add(lp);
             }
@@ -265,6 +288,12 @@ namespace Mq.Migration
                 // next groups page
                 if (++groupFilter.PageNumber <= groupPage.PageCount)
                     groupPage = await _repository.GetDistinctGroupIdsAsync(groupFilter);
+            }
+            if (progress != null)
+            {
+                report.Count = groupPage.Total;
+                report.Percent = 100;
+                progress.Report(report);
             }
         }
     }

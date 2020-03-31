@@ -100,7 +100,7 @@ namespace Mq.Migration
             if (name.Namespace == XmlHelper.XML)
             {
                 if (name.LocalName == "id") return "id";
-                // this should not happen, anyway don't loose information
+                // this should not happen, anyway don't lose information
                 return "xml_" + name;
             }
 
@@ -112,8 +112,18 @@ namespace Mq.Migration
             Match m = _escRegex.Match(text);
             if (m.Success)
             {
+                StringBuilder sb = new StringBuilder();
+                // text before esc
+                if (m.Index > 0) sb.Append(text, 0, m.Index);
+                // text after esc
+                if (m.Index + m.Length < text.Length)
+                {
+                    sb.Append(text, m.Index + m.Length,
+                        text.Length - (m.Index + m.Length));
+                }
+
                 return Tuple.Create(
-                    text.Substring(0, m.Index),
+                    sb.ToString(),
                     m.Groups[1].Value);
             }
             return null;
