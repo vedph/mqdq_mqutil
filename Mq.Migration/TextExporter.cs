@@ -4,6 +4,7 @@ using Cadmus.Parts.General;
 using Fusi.Tools.Data;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -195,12 +196,16 @@ namespace Mq.Migration
                     {
                         foreach (ItemInfo info in itemPage.Items)
                         {
+                            int i = info.Title.LastIndexOf('#');
+                            Debug.Assert(i > -1);
+                            string id = info.Title.Substring(i + 1);
+
                             // locate the target div element via its @xml:id
                             // (log error and continue if not found)
                             XElement div = body.Descendants()
                                 .FirstOrDefault(e => (e.Name.LocalName == "div1"
                                     || e.Name.LocalName == "div2")
-                                    && e.Attribute(XmlHelper.XML + "id")?.Value == info.Id);
+                                    && e.Attribute(XmlHelper.XML + "id")?.Value == id);
                             if (div == null)
                             {
                                 Logger?.LogError(
