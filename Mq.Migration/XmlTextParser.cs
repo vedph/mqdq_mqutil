@@ -16,6 +16,29 @@ namespace Mq.Migration
     /// </summary>
     public sealed class XmlTextParser : IHasLogger
     {
+        /// <summary>
+        /// The name of the data key representing text (<c>text</c>).
+        /// </summary>
+        public const string KEY_TEXT = "text";
+
+        /// <summary>
+        /// The name of the data key added to notify that the unique
+        /// text has been split into several words (<c>_split</c>).
+        /// </summary>
+        public const string KEY_SPLIT = "_split";
+
+        /// <summary>
+        /// The name of the data key added to preserve the original element
+        /// name (this can be either <c>l</c> or <c>p</c>; <c>_name</c>).
+        /// </summary>
+        public const string KEY_NAME = "_name";
+
+        /// <summary>
+        /// The name of the data key used to preserve a legacy escape as a
+        /// patch (<c>patch</c>).
+        /// </summary>
+        public const string KEY_PATCH = "patch";
+
         private readonly Regex _escRegex;
         private readonly IItemSortKeyBuilder _sortKeyBuilder;
         private string _docId;
@@ -114,10 +137,10 @@ namespace Mq.Migration
                 var textAndPatch = GetTextAndPatch(w.Value);
                 if (textAndPatch != null)
                 {
-                    tile.Data["text"] = textAndPatch.Item1;
-                    tile.Data["patch"] = textAndPatch.Item2;
+                    tile.Data[KEY_TEXT] = textAndPatch.Item1;
+                    tile.Data[KEY_PATCH] = textAndPatch.Item2;
                 }
-                else tile.Data["text"] = w.Value;
+                else tile.Data[KEY_TEXT] = w.Value;
                 row.Tiles.Add(tile);
             }
         }
@@ -135,10 +158,10 @@ namespace Mq.Migration
                 var textAndPatch = GetTextAndPatch(wi.Item1);
                 if (textAndPatch != null)
                 {
-                    tile.Data["text"] = textAndPatch.Item1;
-                    tile.Data["patch"] = textAndPatch.Item2;
+                    tile.Data[KEY_TEXT] = textAndPatch.Item1;
+                    tile.Data[KEY_PATCH] = textAndPatch.Item2;
                 }
-                else tile.Data["text"] = wi.Item1;
+                else tile.Data[KEY_TEXT] = wi.Item1;
 
                 tile.Data["id"] = wi.Item2;
                 row.Tiles.Add(tile);
@@ -173,7 +196,7 @@ namespace Mq.Migration
                 {
                     xa++;
                     if (sb.Length > 0) sb.Append(' ');
-                    sb.Append(tile.Data["text"]);
+                    sb.Append(tile.Data[KEY_TEXT]);
                     if (sb.Length >= 40) goto tail;
                 }
             }
@@ -186,7 +209,7 @@ namespace Mq.Migration
                      yb == ya? xb > xa : xb > 0;
                      xb--)
                 {
-                    sb.Insert(i, part.Rows[yb - 1].Tiles[xb - 1].Data["text"]);
+                    sb.Insert(i, part.Rows[yb - 1].Tiles[xb - 1].Data[KEY_TEXT]);
                     sb.Insert(i, ' ');
                     if (sb.Length - i >= 40)
                     {
@@ -247,7 +270,7 @@ namespace Mq.Migration
                 {
                     Y = y++
                 };
-                row.Data["_name"] = rowElement.Name.LocalName;
+                row.Data[KEY_NAME] = rowElement.Name.LocalName;
 
                 // row's attributes
                 foreach (XAttribute attr in rowElement.Attributes())
@@ -264,7 +287,7 @@ namespace Mq.Migration
                 else
                 {
                     int divNr = div.ElementsBeforeSelf(div.Name).Count() + 1;
-                    row.Data["_split"] = "1";
+                    row.Data[KEY_SPLIT] = "1";
                     var wordAndIds = from w in rowElement.Value.Split(' ')
                                      select Tuple.Create(
                                          w,

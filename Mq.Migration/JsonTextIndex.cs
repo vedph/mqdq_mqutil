@@ -71,7 +71,7 @@ namespace Mq.Migration
                             if (text)
                             {
                                 payload.Text = tileElem.GetProperty("data")
-                                    .GetProperty("text").GetString();
+                                    .GetProperty(XmlTextParser.KEY_TEXT).GetString();
                             }
                             _index[tileId] = payload;
                         }

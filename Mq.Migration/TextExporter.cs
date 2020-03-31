@@ -89,8 +89,10 @@ namespace Mq.Migration
         {
             switch (name)
             {
-                case "_name":
-                case "_split":
+                case XmlTextParser.KEY_NAME:
+                case XmlTextParser.KEY_SPLIT:
+                case XmlTextParser.KEY_PATCH:
+                case XmlTextParser.KEY_TEXT:
                     return null;
                 default:
                     return name == "id"
@@ -114,8 +116,8 @@ namespace Mq.Migration
 
             foreach (TextTileRow row in part.Rows)
             {
-                string name = row.Data.ContainsKey("_name") ?
-                    row.Data["_name"] : "l";
+                string name = row.Data.ContainsKey(XmlTextParser.KEY_NAME) ?
+                    row.Data[XmlTextParser.KEY_NAME] : "l";
                 XElement lp = new XElement(XmlHelper.TEI + name);
 
                 foreach (var pair in row.Data)
@@ -126,21 +128,23 @@ namespace Mq.Migration
                     foreach (TextTile tile in row.Tiles)
                     {
                         XElement w = new XElement(XmlHelper.TEI + "w",
-                            tile.Data["text"]);
-                        foreach (var pair in tile.Data.Where(p =>
-                            p.Key != "text"
-                            && p.Key != "_split"
-                            && p.Key != "_name"))
+                            tile.Data[XmlTextParser.KEY_TEXT]);
+                        foreach (var pair in tile.Data)
                         {
-                            w.Add(GetAttribute(pair.Key, pair.Value));
+                            XAttribute attr = GetAttribute(pair.Key, pair.Value);
+                            if (attr != null) w.Add(attr);
                         }
                         lp.Add(w);
+
+                        // patch: render as escape
+                        if (tile.Data.ContainsKey(XmlTextParser.KEY_PATCH))
+                            lp.Value += $"(=={tile.Data[XmlTextParser.KEY_PATCH]})";
                     }
                 }
                 else
                 {
                     lp.Value = string.Join(" ", from t in row.Tiles
-                                               select t.Data["text"]);
+                        select t.Data[XmlTextParser.KEY_TEXT]);
                 }
                 div.Add(lp);
             }
