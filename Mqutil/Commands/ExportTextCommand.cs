@@ -79,7 +79,10 @@ namespace Mqutil.Commands
             ICadmusRepository repository =
                 _repositoryProvider.CreateRepository(_database);
 
-            TextExporter exporter = new TextExporter(repository);
+            TextExporter exporter = new TextExporter(repository)
+            {
+                Logger = loggerFactory.CreateLogger("export")
+            };
 
             using (var bar = new ProgressBar(100, "Exporting...",
                 new ProgressBarOptions
