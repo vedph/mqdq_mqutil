@@ -214,18 +214,13 @@ namespace Mq.Migration
             _partitionNr++;
 
             // build citation
-            string cit = XmlHelper.GetBreakPointCitation(_partitionNr,
-                div.Elements().FirstOrDefault(IsLOrP),
-                _docId);
+            string cit = XmlHelper.GetBreakPointCitation(_partitionNr, div, _docId);
 
             // item
             var nBounds = GetPartitionNBoundaries(rowElements);
             Item item = new Item
             {
                 Title = cit,
-                //Description = (nBounds != null ?
-                //    $"{nBounds.Item1}-{nBounds.Item2} " : "") +
-                //    GetDescriptionText(div.Value.Trim()),
                 FacetId = _facetId,
                 GroupId = _docId,
                 CreatorId = _userId,

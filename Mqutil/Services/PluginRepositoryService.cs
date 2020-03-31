@@ -8,11 +8,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace Mqutil.Services
 {
-    internal sealed class RepositoryService
+    // TODO: refactor as IRepositoryProvider
+
+    [Obsolete]
+    internal sealed class PluginRepositoryService
     {
         private readonly IConfiguration _configuration;
 
-        public RepositoryService(IConfiguration configuration)
+        public PluginRepositoryService(IConfiguration configuration)
         {
             _configuration = configuration ??
                 throw new ArgumentNullException(nameof(configuration));
@@ -37,7 +40,7 @@ namespace Mqutil.Services
             repository.Configure(new MongoCadmusRepositoryOptions
             {
                 ConnectionString = string.Format(
-                    _configuration.GetConnectionString("Mongo"),
+                    _configuration.GetConnectionString("Default"),
                     database)
             });
 

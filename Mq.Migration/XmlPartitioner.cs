@@ -109,9 +109,8 @@ namespace Mq.Migration
 
         private void InsertBreakPast(XElement l)
         {
-            string n = XmlHelper.GetBreakPointCitation(0, l, _docId);
-            l.AddAfterSelf(new XElement(XmlHelper.TEI + "pb",
-                new XAttribute("n", n)));
+            // string n = XmlHelper.GetBreakPointCitation(0, l, _docId);
+            l.AddAfterSelf(new XElement(XmlHelper.TEI + "pb"));
         }
 
         /// <summary>

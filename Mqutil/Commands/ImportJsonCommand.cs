@@ -1,4 +1,5 @@
-﻿using Cadmus.Core.Config;
+﻿using Cadmus.Core;
+using Cadmus.Core.Config;
 using Cadmus.Core.Storage;
 using Cadmus.Mongo;
 using Microsoft.Extensions.CommandLineUtils;
@@ -31,7 +32,7 @@ namespace Mqutil.Commands
         private readonly string _database;
         private readonly bool _dry;
         private readonly bool _regexMask;
-        private readonly RepositoryService _repositoryService;
+        private readonly IRepositoryProvider _repositoryProvider;
 
         public ImportJsonCommand(AppOptions options,
             string txtFileDir,
@@ -58,7 +59,7 @@ namespace Mqutil.Commands
             _regexMask = regexMask;
 
             _config = options.Configuration;
-            _repositoryService = new RepositoryService(_config);
+            _repositoryProvider = new StandardRepositoryProvider(_config);
         }
 
         /// <summary>
@@ -141,7 +142,7 @@ namespace Mqutil.Commands
             {
                 // create database if not exists
                 string connection = string.Format(CultureInfo.InvariantCulture,
-                    _config.GetConnectionString("Mongo"),
+                    _config.GetConnectionString("Default"),
                     _database);
 
                 IDatabaseManager manager = new MongoDatabaseManager();
@@ -173,7 +174,7 @@ namespace Mqutil.Commands
             }
 
             ICadmusRepository repository =
-                _repositoryService.CreateRepository(_database);
+                _repositoryProvider.CreateRepository(_database);
 
             JsonImporter importer = new JsonImporter(repository)
             {

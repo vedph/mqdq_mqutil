@@ -19,6 +19,7 @@ namespace Mq.Migration
     public sealed class TextExporter : IHasLogger
     {
         private readonly ICadmusRepository _repository;
+        private readonly string _tiledTextPartTypeId;
 
         /// <summary>
         /// Gets or sets the logger.
@@ -35,6 +36,7 @@ namespace Mq.Migration
         {
             _repository = repository
                 ?? throw new ArgumentNullException(nameof(repository));
+            _tiledTextPartTypeId = new TiledTextPart().TypeId;
         }
 
         private async Task<bool> HasWordGranularityAsync(XDocument doc,
@@ -83,11 +85,18 @@ namespace Mq.Migration
             }
         }
 
+        private static XAttribute GetAttribute(string name, string value) =>
+            name == "id"
+                ? new XAttribute(XmlHelper.XML + "id", value)
+                : new XAttribute(name, value);
+
         private void AppendItemContent(IItem item, XElement div, bool hasWords)
         {
             if (IncludeComments) div.Add(new XComment("item " + item.Id));
 
-            TiledTextPart part = item.Parts.OfType<TiledTextPart>().FirstOrDefault();
+            TiledTextPart part = item.Parts.Find(p => p.TypeId == _tiledTextPartTypeId)
+                as TiledTextPart;
+
             if (part == null)
             {
                 Logger?.LogError($"Item {item.Id} has no text part");
@@ -101,7 +110,7 @@ namespace Mq.Migration
                 XElement lp = new XElement(XmlHelper.TEI + name);
 
                 foreach (var pair in row.Data)
-                    lp.SetAttributeValue(pair.Key, pair.Value);
+                    lp.Add(GetAttribute(pair.Key, pair.Value));
 
                 if (hasWords)
                 {
@@ -114,7 +123,7 @@ namespace Mq.Migration
                             && p.Key != "_split"
                             && p.Key != "_name"))
                         {
-                            w.SetAttributeValue(pair.Key, pair.Value);
+                            w.Add(GetAttribute(pair.Key, pair.Value));
                         }
                         lp.Add(w);
                     }
@@ -124,6 +133,7 @@ namespace Mq.Migration
                     lp.Value = string.Join(" ", from t in row.Tiles
                                                select t.Data["text"]);
                 }
+                div.Add(lp);
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using Cadmus.Core.Storage;
+﻿using Cadmus.Core;
+using Cadmus.Core.Storage;
 using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ namespace Mqutil.Commands
         private readonly IConfiguration _config;
         private readonly string _outputDir;
         private readonly string _database;
-        private readonly RepositoryService _repositoryService;
+        private readonly IRepositoryProvider _repositoryProvider;
 
         public ExportTextCommand(AppOptions options,
             string database, string outputDir)
@@ -28,7 +29,7 @@ namespace Mqutil.Commands
                 ?? throw new ArgumentNullException(nameof(database));
 
             _config = options.Configuration;
-            _repositoryService = new RepositoryService(_config);
+            _repositoryProvider = new StandardRepositoryProvider(_config);
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace Mqutil.Commands
             Log.Logger.Information("EXPORT TEXT INTO TEI FILES");
 
             ICadmusRepository repository =
-                _repositoryService.CreateRepository(_database);
+                _repositoryProvider.CreateRepository(_database);
 
             TextExporter exporter = new TextExporter(repository);
             await exporter.ExportAsync(_outputDir);
