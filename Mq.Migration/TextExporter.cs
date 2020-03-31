@@ -85,10 +85,19 @@ namespace Mq.Migration
             }
         }
 
-        private static XAttribute GetAttribute(string name, string value) =>
-            name == "id"
-                ? new XAttribute(XmlHelper.XML + "id", value)
-                : new XAttribute(name, value);
+        private static XAttribute GetAttribute(string name, string value)
+        {
+            switch (name)
+            {
+                case "_name":
+                case "_split":
+                    return null;
+                default:
+                    return name == "id"
+                        ? new XAttribute(XmlHelper.XML + "id", value)
+                        : new XAttribute(name, value);
+            }
+        }
 
         private void AppendItemContent(IItem item, XElement div, bool hasWords)
         {
@@ -185,7 +194,7 @@ namespace Mq.Migration
                     }
 
                     XDocument doc = XDocument.Load(filePath,
-                        LoadOptions.PreserveWhitespace |
+                        // LoadOptions.PreserveWhitespace |
                         LoadOptions.SetLineInfo);
                     XElement body = XmlHelper.GetTeiBody(doc);
 
