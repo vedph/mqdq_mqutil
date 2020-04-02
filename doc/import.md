@@ -51,9 +51,7 @@ Once this phase is completed, we have remodeled and imported all the works text 
 
 ### 2. Apparatus
 
-Importing apparatus requires that text have been parsed first, so that we have their JSON dumps available.
-
-TODO:
+Importing [apparatus](apparatus.md) requires that text have been parsed first, so that we have their JSON dumps available.
 
 ### 3. Thesauri
 

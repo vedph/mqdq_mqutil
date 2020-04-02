@@ -220,13 +220,13 @@ Ideally, the note text including the variant is split in MQDQ into these parts:
 
 The target model `note` is a unique string where a divider character (backtick) is used to end each section. For the sake of readability, here I use `|` to represent this divider character.
 
-Thus, `one || two | three` means that section 1 = `one`, section 2 is not present, section 3 = `two`, section 4 = `three`.
+Thus, `one || two | three` means that section 1 = `one`, section 2 is not present, section 3 = `two`, section 4 = `three`. When there is no such separator, this means that only section 1 is present.
 
 #### Elements lem or rdg
 
 These elements are variant readings; they are formally equal, the only difference being that `lem` is the chosen reading.
 
-Optionally with `@type` (in `lem` the only value seems `ancient-note` TODO: confirm), `@source` (authors; multiple tokens separated by space), `@wit` (witnesses; multiple tokens separated by space), they contain _text mixed_ with `ident` (normalized form), `add` (note section 1 or 4), `note` (note section 2 or 3).
+Optionally with `@type` (in `lem` the only value seems `ancient-note`), `@source` (authors; multiple tokens separated by space), `@wit` (witnesses; multiple tokens separated by space), they contain _text mixed_ with `ident` (normalized form), `add` (note section 1 or 4), `note` (note section 2 or 3).
 
 #### Element add
 
