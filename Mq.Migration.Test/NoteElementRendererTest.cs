@@ -202,5 +202,26 @@ namespace Mq.Migration.Test
                 "hello<lb />world!</add>",
                 elem.ToString());
         }
+
+        [Fact]
+        public void Render_BoldInItalic_NestedEmph()
+        {
+            NoteElementRenderer renderer = new NoteElementRenderer();
+
+            IList<XElement> elements = renderer.Render("hello _my __world___!");
+
+            Assert.Single(elements);
+            // 1: add @type=abstract
+            XElement elem = elements[0];
+            Assert.Equal(XmlHelper.TEI + "add", elem.Name);
+            Assert.Equal("abstract", elem.Attribute("type")?.Value);
+            Assert.True(elem.HasElements);
+            Assert.Equal("<add type=\"abstract\" " +
+                $"xmlns=\"{TEI_NS}\">" +
+                "hello <emph style=\"font-style:italic\">my " +
+                "<emph style=\"font-weight:bold\">world</emph></emph>" +
+                "!</add>",
+                elem.ToString());
+        }
     }
 }
