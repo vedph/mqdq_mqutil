@@ -180,7 +180,7 @@ There are 2 types of notes:
 
 As for formatting:
 
-- underscore(s) for Markdown italic and bold become `emph` elements with a `style` attribute equal to `font-style:italic` or `font-style:bold`.
+- underscore(s) for Markdown italic and bold become `emph` elements with a `style` attribute equal to `font-style:italic` or `font-weight:bold`.
 - each newline in the note's text is rendered as an empty `lb` element.
 
 ### B.6. Building XML from Fragment
