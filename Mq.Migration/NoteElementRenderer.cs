@@ -95,7 +95,7 @@ namespace Mq.Migration
                             sb.Clear();
                         }
                         if (current != target) current = target;
-                        current.Add(XmlHelper.TEI + "lb");
+                        current.Add(new XElement(XmlHelper.TEI + "lb"));
                         i++;
                         break;
 

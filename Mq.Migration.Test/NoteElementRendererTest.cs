@@ -6,6 +6,8 @@ namespace Mq.Migration.Test
 {
     public sealed class NoteElementRendererTest
     {
+        private const string TEI_NS = "http://www.tei-c.org/ns/1.0";
+
         [Fact]
         public void Render_Empty_None()
         {
@@ -158,8 +160,46 @@ namespace Mq.Migration.Test
             Assert.Equal("abstract", elem.Attribute("type")?.Value);
             Assert.True(elem.HasElements);
             Assert.Equal("<add type=\"abstract\" " +
-                "xmlns=\"http://www.tei-c.org/ns/1.0\">" +
+                $"xmlns=\"{TEI_NS}\">" +
                 "hello <emph style=\"font-weight:bold\">world</emph>!</add>",
+                elem.ToString());
+        }
+
+        [Fact]
+        public void Render_Italic_Emph()
+        {
+            NoteElementRenderer renderer = new NoteElementRenderer();
+
+            IList<XElement> elements = renderer.Render("hello _world_!");
+
+            Assert.Single(elements);
+            // 1: add @type=abstract
+            XElement elem = elements[0];
+            Assert.Equal(XmlHelper.TEI + "add", elem.Name);
+            Assert.Equal("abstract", elem.Attribute("type")?.Value);
+            Assert.True(elem.HasElements);
+            Assert.Equal("<add type=\"abstract\" " +
+                $"xmlns=\"{TEI_NS}\">" +
+                "hello <emph style=\"font-style:italic\">world</emph>!</add>",
+                elem.ToString());
+        }
+
+        [Fact]
+        public void Render_Newline_Lb()
+        {
+            NoteElementRenderer renderer = new NoteElementRenderer();
+
+            IList<XElement> elements = renderer.Render("hello\r\nworld!");
+
+            Assert.Single(elements);
+            // 1: add @type=abstract
+            XElement elem = elements[0];
+            Assert.Equal(XmlHelper.TEI + "add", elem.Name);
+            Assert.Equal("abstract", elem.Attribute("type")?.Value);
+            Assert.True(elem.HasElements);
+            Assert.Equal("<add type=\"abstract\" " +
+                $"xmlns=\"{TEI_NS}\">" +
+                "hello<lb />world!</add>",
                 elem.ToString());
         }
     }
