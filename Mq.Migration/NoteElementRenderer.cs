@@ -8,7 +8,8 @@ namespace Mq.Migration
 {
     /// <summary>
     /// XML note element(s) renderer. This is used by exporters to render
-    /// a note text into 1 or more XML elements.
+    /// a note text into 1 or more XML elements, keeping into account Markdown
+    /// markers for bold and italic, and newlines.
     /// </summary>
     /// <seealso cref="Mq.Migration.IHasLogger" />
     public sealed class NoteElementRenderer : IHasLogger
@@ -18,47 +19,63 @@ namespace Mq.Migration
         /// </summary>
         public ILogger Logger { get; set; }
 
-        private string RenderText(string text)
+        private void RenderText(string text, XElement target)
         {
             // bold = __...__
             // italic = _..._
             // (CR)LF = lb
-            StringBuilder sb = new StringBuilder(text);
+            StringBuilder sb = new StringBuilder();
             int i = 0;
             Stack<char> emphStack = new Stack<char>();
+            XElement current = target;
 
             while (i < text.Length)
             {
                 switch (text[i])
                 {
                     case '_':
+                        if (sb.Length > 0)
+                        {
+                            current.Add(sb.ToString());
+                            sb.Clear();
+                        }
                         // __ = bold
                         if (i + 1 < text.Length && text[i + 1] == '_')
                         {
-                            if (emphStack.Peek() == 'b')
+                            // closing
+                            if (emphStack.Count > 0 && emphStack.Peek() == 'b')
                             {
                                 emphStack.Pop();
-                                sb.Append("</emph>");
+                                current = current.Parent;
                             }
+                            // opening
                             else
                             {
+                                XElement emph = new XElement(XmlHelper.TEI + "emph",
+                                    new XAttribute("style", "font-weight:bold"));
+                                current.Add(emph);
+                                current = emph;
                                 emphStack.Push('b');
-                                sb.Append("<emph style=\"font-weight:bold\">");
                             }
                             i += 2;
                         }
                         // _ = italic
                         else
                         {
-                            if (emphStack.Peek() == 'i')
+                            // closing
+                            if (emphStack.Count > 0 && emphStack.Peek() == 'i')
                             {
                                 emphStack.Pop();
-                                sb.Append("</emph>");
+                                current = current.Parent;
                             }
+                            // opening
                             else
                             {
+                                XElement emph = new XElement(XmlHelper.TEI + "emph",
+                                    new XAttribute("style", "font-style:italic"));
+                                current.Add(emph);
+                                current = emph;
                                 emphStack.Push('i');
-                                sb.Append("<emph style=\"font-style:italic\">");
                             }
                             i++;
                         }
@@ -72,17 +89,32 @@ namespace Mq.Migration
                         }
                         goto case '\n';
                     case '\n':
-                        sb.AppendLine("<br />");
+                        if (sb.Length > 0)
+                        {
+                            current.Add(sb.ToString());
+                            sb.Clear();
+                        }
+                        if (current != target) current = target;
+                        current.Add(XmlHelper.TEI + "lb");
                         i++;
                         break;
+
                     default:
                         sb.Append(text[i++]);
                         break;
                 }
             }
-            return sb.ToString();
+            if (sb.Length > 0) current.Add(sb.ToString());
         }
 
+        /// <summary>
+        /// Renders the specified note's text.
+        /// </summary>
+        /// <param name="text">The note's text.</param>
+        /// <param name="target">The optional target ID. When specified,
+        /// it will be added to the <c>target</c> attribute.</param>
+        /// <returns>Note element(s).</returns>
+        /// <exception cref="ArgumentNullException">text</exception>
         public IList<XElement> Render(string text, string target = null)
         {
             if (text == null) throw new ArgumentNullException(nameof(text));
@@ -125,7 +157,8 @@ namespace Mq.Migration
                 if (target != null) noteElem.SetAttributeValue("target", target);
 
                 // text value
-                noteElem.Value = RenderText(sections[i]);
+                RenderText(sections[i], noteElem);
+
                 if (noteElem.Value.Length > 0) noteElems.Add(noteElem);
             }
             return noteElems;
