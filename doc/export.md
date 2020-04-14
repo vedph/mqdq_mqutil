@@ -74,11 +74,15 @@ When the selection of text is not contiguous (what in TEI is encoded with a `@lo
 
 Once in the editor, operators can edit the fragments at will; so we cannot know what an operator may have done to each of the fragments belonging to the same group. He may have edited them to more specifically assign each portion of data to a more precise selection of the text, thus refactoring the whole group, or even making the group itself no more useful, as far as now each entry is refactored to refer to its specific text portion; or he may have deleted and merged some of them; or he may just have left them untouched.
 
-When exporting, we must define a specific policy for such sparse fragments. We cannot keep the sparse fragments as separated entries. This anyway would lose their connection, unless we are sure that operators have dealt with each sparse fragment by refactoring it, which is not the case.
+When exporting, we must define a specific policy for such sparse fragments. Here we have two options, and the choice between them depends on a) legacy software requirements and b) the desired TEI schema:
 
-As we must repurpose the output so that it best fits the *legacy software* and its intended way of operating, we should probably try to regroup the sparse fragments entries into a unique `app` entry, merging their locations into a single `@loc` attribute. The simplest option would of course be preserving the sparse fragments rather than regrouping them; but probably this would not fit the legacy software requirements.
+1. keep the sparse fragments as separated entries, just as they are in the database. This anyway once in TEI would lose their connection, unless we are sure that operators have dealt with each sparse fragment by refactoring it.
 
-Anyway, a first issue is posed by the fact that the database model here is potentially more granular than the XML model, as in a fragment we can assign a group ID to each single entry, whereas here we want to group several `app` elements into a single one, which implies that all the entries in each `app` element must belong to the same group ID. It could not be the case that in the same `app` there is an entry belonging to a group and another not belonging to it, because in this scenario we could not merge the whole `app` including them.
+2. try to regroup the sparse fragments entries into a unique `app` entry, merging their locations into a single `@loc` attribute.
+
+Option #1 is the simplest, and does not pose technical issues. We just output the entries as they are, ignoring the fact that they once belonged to a same unit.
+
+In option #2, a first issue is posed by the fact that the database model here is potentially more granular than the XML model, as in a fragment we can assign a group ID to each single entry, whereas here we want to group several `app` elements into a single one, which implies that all the entries in each `app` element must belong to the same group ID. It could not be the case that in the same `app` there is an entry belonging to a group and another not belonging to it, because in this scenario we could not merge the whole `app` including them.
 
 So, if we are going to regroup, we should assume that if any of the entries in the fragment belongs to a group, the *whole fragment* belongs to that group. Otherwise, trying to dissect its contents into distinct `app` elements might produce incorrect and/or confusing results. Thus, operators working with groups should be aware of this limitation, which is artificial for the Cadmus model, but required for compatibility with the desired output.
 
