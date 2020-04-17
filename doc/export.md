@@ -68,6 +68,8 @@ As for TEI, there is no specific order to follow when producing sequences of `ap
 
 In any case, diffing issues will appear whatever option we choose, because in a number of cases we have merged the overlapping entries, and this will of course produce a different XML code at least for those cases.
 
+We chose option 1.
+
 ### B.3. Sparse Fragments
 
 When the selection of text is not contiguous (what in TEI is encoded with a `@loc` rather than with a `@from`-`@to` pair), we have sparse fragments grouped under a same group ID. The importer performs this splitting automatically: when it finds a `@loc`, it makes a copy of the fragment for each of its target locations, grouping all these fragments under the same group ID.
@@ -91,6 +93,8 @@ With these assumptions, we define a merge procedure which takes into account dif
 - *scenario 1*: *all the entries in all the sparse fragments are identical*. This is the situation after the import procedure, where the original `app` entry has been split into a set of grouped sparse fragments. In this case, we can simply collect the locations from all the fragments and just output one of them with these locations. All the other fragments, having identical entries, will just be dropped.
 
 - *scenario 2*: scenario 1 is not true. This means that some editing has occurred. We can safely assume that this was *not* a complete refactoring, which separated the fragments so that the group is no more useful; because in this case the operator should have removed the connection among the fragments, by deleting their group ID. So, we can merge the fragments into one by *collecting* all their locations (into `@loc`) and *concatenating* all their entries in the order they are defined in each of the fragments, sorted by their location (in ascending order).
+
+Anyway, we chose option 1, so the only concern is marking the `app` entries belonging to the same group in some way.
 
 ### B.4. Converting Coordinates
 

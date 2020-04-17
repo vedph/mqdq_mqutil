@@ -18,28 +18,14 @@ namespace Mq.Migration
     /// Text exporter. This extracts the text from database items, and
     /// injects it back into the corresponding TEI text documents.
     /// </summary>
-    public sealed class TextExporter : IHasLogger
+    public sealed class TextExporter : ExporterBase
     {
         static private readonly Regex _tailRegex = new Regex(@"[^\p{L}]+$");
 
-        private readonly ICadmusRepository _repository;
         private readonly string _tiledTextPartTypeId;
 
-        /// <summary>
-        /// Gets or sets the logger.
-        /// </summary>
-        public ILogger Logger { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to include some comments
-        /// in the output XML. These can be used for diagnostic purposes.
-        /// </summary>
-        public bool IncludeComments { get; set; }
-
-        public TextExporter(ICadmusRepository repository)
+        public TextExporter(ICadmusRepository repository) : base(repository)
         {
-            _repository = repository
-                ?? throw new ArgumentNullException(nameof(repository));
             _tiledTextPartTypeId = new TiledTextPart().TypeId;
         }
 
@@ -53,40 +39,8 @@ namespace Mq.Migration
 
             // else we must query the database to find out if any of
             // the items corresponding to the document has layers
-            int layerCount = await _repository.GetGroupLayersCountAsync(groupId);
+            int layerCount = await Repository.GetGroupLayersCountAsync(groupId);
             return layerCount > 0;
-        }
-
-        /// <summary>
-        /// Clears the div contents by removing all the children elements
-        /// except for the initial <c>head</c> and any other <c>div</c>'s.
-        /// </summary>
-        /// <param name="div">The div element to be cleared.</param>
-        private void ClearDivContents(XElement div)
-        {
-            XElement head = div.Elements(XmlHelper.TEI + "head").FirstOrDefault();
-            if (head != null)
-            {
-                if (head.ElementsBeforeSelf().Any())
-                {
-                    Logger?.LogError(
-                        $"Unexpected elements before head in {div.Name.LocalName}"
-                        + " at " + XmlHelper.GetLineInfo(div));
-                }
-                foreach (XElement sibling in head.ElementsAfterSelf()
-                    .Where(e => !e.Name.LocalName.StartsWith("div")).ToList())
-                {
-                    sibling.Remove();
-                }
-            }
-            else
-            {
-                foreach (XElement child in div.Elements()
-                    .Where(e => !e.Name.LocalName.StartsWith("div")).ToList())
-                {
-                    child.Remove();
-                }
-            }
         }
 
         private static XAttribute GetAttribute(string name, string value)
@@ -174,12 +128,6 @@ namespace Mq.Migration
             }
         }
 
-        private static string GetGroupIdDirectoryName(string groupId)
-        {
-            int i = groupId.IndexOf('-');
-            return i == -1 ? null : groupId.Substring(0, i);
-        }
-
         public async Task ExportAsync(string outputDir,
             IProgress<ProgressReport> progress)
         {
@@ -192,7 +140,7 @@ namespace Mq.Migration
                 PageSize = 100
             };
             DataPage<string> groupPage =
-                await _repository.GetDistinctGroupIdsAsync(groupFilter);
+                await Repository.GetDistinctGroupIdsAsync(groupFilter);
             Logger?.LogInformation($"Groups found: {groupPage.Total}");
 
             ProgressReport report = progress != null? new ProgressReport() : null;
@@ -241,7 +189,7 @@ namespace Mq.Migration
                     // for each item in the group, sorted by key:
                     itemFilter.GroupId = groupId;
                     itemFilter.PageNumber = 1;
-                    DataPage<ItemInfo> itemPage = _repository.GetItems(itemFilter);
+                    DataPage<ItemInfo> itemPage = Repository.GetItems(itemFilter);
 
                     while (itemFilter.PageNumber <= itemPage.PageCount)
                     {
@@ -265,13 +213,13 @@ namespace Mq.Migration
                             }
 
                             // get the item
-                            IItem item = _repository.GetItem(info.Id);
+                            IItem item = Repository.GetItem(info.Id);
 
                             // build and append content elements
                             AppendItemContent(item, div, hasWordElems);
                         }
                         if (++itemFilter.PageNumber <= itemPage.PageCount)
-                            itemPage = _repository.GetItems(itemFilter);
+                            itemPage = Repository.GetItems(itemFilter);
                     }
 
                     doc.Save(filePath, SaveOptions.OmitDuplicateNamespaces);
@@ -287,7 +235,7 @@ namespace Mq.Migration
 
                 // next groups page
                 if (++groupFilter.PageNumber <= groupPage.PageCount)
-                    groupPage = await _repository.GetDistinctGroupIdsAsync(groupFilter);
+                    groupPage = await Repository.GetDistinctGroupIdsAsync(groupFilter);
             }
             if (progress != null)
             {

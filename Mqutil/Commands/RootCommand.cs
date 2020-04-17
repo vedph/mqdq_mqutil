@@ -24,6 +24,7 @@ namespace Mqutil.Commands
             app.Command("import-thes", c => ImportThesauriCommand.Configure(c, options));
             app.Command("import-json", c => ImportJsonCommand.Configure(c, options));
             app.Command("export-text", c => ExportTextCommand.Configure(c, options));
+            app.Command("export-app", c => ExportApparatusCommand.Configure(c, options));
 
             app.OnExecute(() =>
             {
