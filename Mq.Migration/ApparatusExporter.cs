@@ -27,6 +27,7 @@ namespace Mq.Migration
         private readonly string _layerPartTypeId;
         private readonly string[] _apparatusFrIds;
         private readonly NoteElementRenderer _noteRenderer;
+        private readonly LocationToIdMapper _locMapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApparatusExporter"/> class.
@@ -48,6 +49,7 @@ namespace Mq.Migration
                 $"{frTag}:margin"
             };
             _noteRenderer = new NoteElementRenderer();
+            _locMapper = new LocationToIdMapper();
         }
 
         private TiledTextLayerPart<ApparatusLayerFragment> GetApparatusPart(
@@ -142,6 +144,7 @@ namespace Mq.Migration
 
         private void AppendApparatusContent(
             string roleId,
+            IItem item,
             TiledTextLayerPart<ApparatusLayerFragment> part,
             XElement div)
         {
@@ -155,7 +158,25 @@ namespace Mq.Migration
                 if (fr.Entries.Count == 0) continue;
 
                 XElement app = new XElement(XmlHelper.TEI + "app");
-                // tag 2nd token = type attribute
+
+                // location
+                var ft = _locMapper.Map(fr.Location, item);
+                if (ft != null)
+                {
+                    if (ft.Item2 != null)
+                    {
+                        app.SetAttributeValue("from", "#" + ft.Item1);
+                        app.SetAttributeValue("to", "#" + ft.Item2);
+                    }
+                    else
+                    {
+                        string target = "#" + ft.Item1;
+                        app.SetAttributeValue("from", target);
+                        app.SetAttributeValue("to", target);
+                    }
+                }
+
+                // tag 2nd token = @type
                 if (!string.IsNullOrEmpty(fr.Tag))
                 {
                     int i = fr.Tag.IndexOf(' ');
@@ -181,7 +202,7 @@ namespace Mq.Migration
                 {
                     Logger?.LogError($"Item {item.Id} has no {roleId} part");
                 }
-                else AppendApparatusContent(roleId, part, div);
+                else AppendApparatusContent(roleId, item, part, div);
             }
         }
 
