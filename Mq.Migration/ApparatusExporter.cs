@@ -192,7 +192,8 @@ namespace Mq.Migration
 
         private bool AppendItemContent(IItem item, XElement div)
         {
-            if (IncludeComments) div.Add(new XComment("item " + item.Id));
+            if (IncludeComments)
+                div.Add(new XComment($"item {item.Title} ({item.Id})"));
 
             int count = 0;
             foreach (string roleId in _apparatusFrIds)
@@ -210,7 +211,7 @@ namespace Mq.Migration
                 }
             }
             if (count == 0)
-                Logger?.LogError($"Item {item.Id} has no apparatus part");
+                Logger?.LogWarning($"Item {item.Id} has no apparatus part");
             return count > 0;
         }
 
@@ -258,12 +259,12 @@ namespace Mq.Migration
                     // ABLAB-epig is under a subdirectory named ABLAB
                     string authDirName = GetGroupIdDirectoryName(groupId);
                     string filePath = authDirName == null
-                        ? Path.Combine(outputDir, groupId + ".xml")
-                        : Path.Combine(outputDir, authDirName, groupId + ".xml");
+                        ? Path.Combine(outputDir, groupId + "-app.xml")
+                        : Path.Combine(outputDir, authDirName, groupId + "-app.xml");
 
                     if (!File.Exists(filePath))
                     {
-                        Logger?.LogError($"Target file not exists: {filePath}");
+                        Logger?.LogWarning($"Target file not exists: {filePath}");
                         continue;
                     }
 
