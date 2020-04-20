@@ -9,6 +9,7 @@ using Mqutil.Services;
 using Serilog;
 using ShellProgressBar;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Mqutil.Commands
@@ -56,7 +57,7 @@ namespace Mqutil.Commands
 
             command.OnExecute(() =>
             {
-                options.Command = new ExportTextCommand(
+                options.Command = new ExportApparatusCommand(
                     options,
                     databaseArgument.Value,
                     outputDirArgument.Value);
@@ -74,7 +75,7 @@ namespace Mqutil.Commands
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddSerilog(Log.Logger);
-            Log.Logger.Information("EXPORT TEXT INTO TEI FILES");
+            Log.Logger.Information("EXPORT APPARATUS INTO TEI FILES");
 
             ICadmusRepository repository =
                 _repositoryProvider.CreateRepository(_database);
@@ -83,6 +84,8 @@ namespace Mqutil.Commands
             {
                 Logger = loggerFactory.CreateLogger("export")
             };
+            if (!Directory.Exists(_outputDir))
+                Directory.CreateDirectory(_outputDir);
 
             using (var bar = new ProgressBar(100, "Exporting...",
                 new ProgressBarOptions
