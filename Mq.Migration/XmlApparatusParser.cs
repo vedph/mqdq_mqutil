@@ -252,7 +252,14 @@ namespace Mq.Migration
 
             // ident's
             if (content.Idents.Count > 0)
-                entry.NormValue = string.Join(" ", content.Idents);
+            {
+                /// when there are several ident's, each gets appended after
+                /// a backtick; for instance, in AEDIT-epig-app.xml,
+                /// ident=MIHI with @n="d001w19 d001w20" and ident=SVBITO
+                /// with @n=d001w21 will go into a single normValue
+                /// equal to "MIHI #d001w19 d001w20`SVBITO #d001w21"
+                entry.NormValue = string.Join("`", content.Idents);
+            }
 
             // notes
             if (content.Notes.Count > 0)

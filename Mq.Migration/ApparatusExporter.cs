@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -28,6 +29,7 @@ namespace Mq.Migration
         private readonly string[] _apparatusFrIds;
         private readonly NoteElementRenderer _noteRenderer;
         private readonly LocationToIdMapper _locMapper;
+        private readonly Regex _identRegex;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApparatusExporter"/> class.
@@ -50,6 +52,9 @@ namespace Mq.Migration
             };
             _noteRenderer = new NoteElementRenderer();
             _locMapper = new LocationToIdMapper();
+
+            // for parsing normValue (=ident + # + @n` N times)
+            _identRegex = new Regex(@"(?<i>[^#]+)(?:\#(?<n>[^`]+)`?)?");
         }
 
         private TiledTextLayerPart<ApparatusLayerFragment> GetApparatusPart(
@@ -67,6 +72,7 @@ namespace Mq.Migration
             foreach (ApparatusAnnotatedValue source in sources)
             {
                 if (sb.Length > 0) sb.Append(' ');
+                sb.Append('#');
                 sb.Append(source.Value);
 
                 if (!string.IsNullOrEmpty(source.Note))
@@ -104,6 +110,23 @@ namespace Mq.Migration
                     return;
             }
 
+            // witnesses and authors: @wit, @source, note, add
+            // witnesses (@wit)
+            if (entry.Witnesses?.Count > 0)
+            {
+                XElement t = target ?? app;
+                string ids = RenderEntrySources(entry.Witnesses, t);
+                if (ids.Length > 0) t.SetAttributeValue("wit", ids);
+            }
+
+            // authors (@source)
+            if (entry.Authors?.Count > 0)
+            {
+                XElement t = target ?? app;
+                string ids = RenderEntrySources(entry.Authors, t);
+                if (ids.Length > 0) t.SetAttributeValue("source", ids);
+            }
+
             // normValue = ident's with optional @n
             // only lem/rdg should have ident's (??)
             if (!string.IsNullOrEmpty(entry.NormValue))
@@ -115,39 +138,16 @@ namespace Mq.Migration
                 }
                 else
                 {
-                    foreach (string token in entry.NormValue.Split())
+                    // ident [@n]+
+                    foreach (Match m in _identRegex.Matches(entry.NormValue))
                     {
-                        if (token.Length == 0) continue;
-
-                        // ident [@n]
-                        XElement ident = new XElement(XmlHelper.TEI + "ident");
-                        int i = token.IndexOf('#');
-                        if (i > -1)
-                        {
-                            ident.Value = token.Substring(0, i);
-                            ident.SetAttributeValue("n", token.Substring(i + 1));
-                        }
-                        else ident.Value = token;
+                        XElement ident = new XElement(XmlHelper.TEI + "ident",
+                            m.Groups["i"].Value);
+                        if (m.Groups["n"].Length > 0)
+                            ident.SetAttributeValue("n", m.Groups["n"].Value);
                         target.Add(ident);
                     }
                 }
-            }
-
-            // witnesses and authors
-            target = target ?? app;
-
-            // witnesses (@wit)
-            if (entry.Witnesses?.Count > 0)
-            {
-                string ids = RenderEntrySources(entry.Witnesses, target);
-                if (ids.Length > 0) target.SetAttributeValue("wit", ids);
-            }
-
-            // authors (@source)
-            if (entry.Authors?.Count > 0)
-            {
-                string ids = RenderEntrySources(entry.Authors, target);
-                if (ids.Length > 0) target.SetAttributeValue("source", ids);
             }
         }
 
@@ -167,6 +167,7 @@ namespace Mq.Migration
                 if (fr.Entries.Count == 0) continue;
 
                 // app
+                if (IncludeComments) div.Add(new XComment($"fr {fr.Location}"));
                 XElement app = new XElement(XmlHelper.TEI + "app");
                 div.Add(app);
 
