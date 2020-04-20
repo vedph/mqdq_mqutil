@@ -158,7 +158,10 @@ namespace Mq.Migration
             XElement div)
         {
             if (IncludeComments)
-                div.Add(new XComment($"apparatus {roleId} ({part.Fragments.Count})"));
+            {
+                div.Add(new XComment(
+                    $"apparatus {roleId} ({part.Fragments.Count} in {part.Id})"));
+            }
 
             // each fragment is an app element
             foreach (ApparatusLayerFragment fr in part.Fragments)

@@ -257,3 +257,80 @@ the normalized value is:
 ```
 
 - **tag**: composed by the original `app` element's `div1` ID + space + the value of its optional `@type`. The latter is put in the `@type` attribute of the `app` element. It is copied unchanged when found, and has no real usage in Cadmus except for preserving the attribute value.
+
+### B.7. Exporting Apparatus Sample
+
+Original XML: the original XML from `AEDIT-epig-app.xml` has a first `div1` with 3 `app` elements, which follow a `head` element. When exporting to a copy of the original XML document, all the children of `div1` except the initial `head` element are removed, and then content gets built and injected at their place.
+
+Here is the first `app` child:
+
+```xml
+<app from="#d001w13" to="#d001w13">
+    <lem source="#lb1-1">uerba
+        <note type="details" target="#lb1-1"> 19, 9, 11 <emph style="font-style:italic">codd</emph>. <emph style="font-style:italic">Vaticanus Reg. Lat.</emph> 597 <emph style="font-style:italic">p.c</emph>. <emph style="font-style:italic">et Leidensis Voss. F</emph> 112</note>
+    </lem>
+    <rdg source="#lb1-1">membra
+        <note type="details" target="#lb1-1"> 19, 9, 11 <emph style="font-style:italic">codd. plerique</emph></note>
+        <ident n="d001w13">MEMBRA</ident>
+    </rdg>
+</app>
+```
+
+This is imported into a part which contains 3 fragments. The first is:
+
+```json
+{
+  "location": "2.6",
+  "tag": "d001",
+  "entries": [
+    {
+      "type": 0,
+      "tag": null,
+      "value": "uerba",
+      "normValue": null,
+      "isAccepted": true,
+      "groupId": null,
+      "witnesses": [],
+      "authors": [
+        {
+          "value": "lb1-1",
+          "note": "`` 19, 9, 11 _codd_. _Vaticanus Reg. Lat._ 597 _p.c_. _et Leidensis Voss. F_ 112"
+        }
+      ],
+      "note": null
+    },
+    {
+      "type": 0,
+      "tag": null,
+      "value": "membra",
+      "normValue": "MEMBRA#d001w13",
+      "isAccepted": false,
+      "groupId": null,
+      "witnesses": [],
+      "authors": [
+        {
+          "value": "lb1-1",
+          "note": "`` 19, 9, 11 _codd. plerique_"
+        }
+      ],
+      "note": null
+    }
+  ]
+}
+```
+
+This gets exported as:
+
+```xml
+<!--item AEDIT-epig 00001 #d001 (16ea2959-b58e-4b02-ad7a-6aa022338e6a)-->
+<!--apparatus fr.net.fusisoft.apparatus (3 in b67997fe-6388-4ece-ba03-ef18772a655e)-->
+<!--fr 2.6-->
+<app from="#d001w13" to="#d001w13">
+  <lem source="#lb1-1">uerba<note type="details" target="#lb1-1"> 19, 9, 11 <emph style="font-style:italic">codd</emph>. <emph style="font-style:italic">Vaticanus Reg. Lat.</emph> 597 <emph style="font-style:italic">p.c</emph>. <emph style="font-style:italic">et Leidensis Voss. F</emph> 112</note></lem>
+  <rdg source="#lb1-1">membra<note type="details" target="#lb1-1"> 19, 9, 11 <emph style="font-style:italic">codd. plerique</emph></note><ident n="d001w13">MEMBRA</ident></rdg>
+</app>
+```
+
+To start with, note the comments: these are output only if requested by user. In this case, they are useful to diagnose the export result. The first comment dumps the item's title and ID; the second one the part's type ID, fragments count, and ID. Finally, each fragment is preceded by a comment with its location.
+
+The content of the exported code is equivalent to the original one; the most relevant difference here is some indentation. This happens because the original document XML applies indentation to mixed content, but this cannot be done without altering the content itself. In the context of the MQDQ software this does not harm, but in mixed content (i.e. when the content of an element is a mixture of text nodes and children elements) whitespace is significant; so, adding whitespace after e.g. `uerba` to let `note` start on the next line would effectively insert spaces in the text value of the element. The exporter still applies indent, but only when this does not alter the data.
