@@ -198,13 +198,53 @@ Sample:
 
 ## Export Text Command
 
-TODO:
+The `export-text` command exports the text from database into existing TEI documents, replacing their content where needed.
+
+Syntax:
+
+```ps1
+.\Mqutil.exe export-text <DatabaseName> <OutputDir> [-c] [-d]
+```
+
+where:
+
+- `DatabaseName` is the source database name.
+- `OutputDir` is the directory where TEI text documents to be updated are located.
+- `-c` adds comments in the output files.
+- `-d` triggers a dry run, where nothing is written to the output files.
+
+Sample:
+
+```ps1
+.\Mqutil.exe export-text mqdq E:\Work\mqdqe\ -c -d
+```
 
 ## Export Apparatus Command
 
-TODO:
+The `export-app` command
+
+Syntax:
+
+```ps1
+.\Mqutil.exe export-app <DatabaseName> <OutputDir> [-c] [-d]
+```
+
+where:
+
+- `DatabaseName` is the source database name.
+- `OutputDir` is the directory where TEI text documents to be updated are located.
+- `-c` adds comments in the output files.
+- `-d` triggers a dry run, where nothing is written to the output files.
+
+Sample:
+
+```ps1
+.\Mqutil.exe export-app mqdq E:\Work\mqdqe\ -c -d
+```
 
 ## Processing Corpus
+
+### Creating Files
 
 We can process the whole corpus using a batch like this; just replace the values for `srcdir` (=the source MQDQ directory, as downloaded), `dstdir` (=the root target directory, a new folder in your target drive), and `mqu` (the path to the `Mqutil` program):
 
@@ -244,6 +284,8 @@ The partition command targets only the texts; this is why we're using a regular 
 
 Note that once files have been partitioned, all the following text-related processing happens on the partitioned files, rather than on the original ones.
 
+### Importing Database
+
 To create a Cadmus database and import JSON files:
 
 ```ps1
@@ -251,3 +293,14 @@ To create a Cadmus database and import JSON files:
 ```
 
 Remove the `-d` option to disable dry run and truly import data.
+
+### Exporting Database
+
+To export the database, you must first copy the imported documents in the output folder, keeping their subdirectories. Then:
+
+```ps1
+.\Mqutil.exe export-text mqdq E:\Work\mqdqe\ -c -d
+.\Mqutil.exe export-app mqdq E:\Work\mqdqe\ -c -d
+```
+
+Remove `-d` to effectively write to the files.
