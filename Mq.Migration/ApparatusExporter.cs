@@ -133,13 +133,22 @@ namespace Mq.Migration
                 }
             }
 
-            // witnesses
-            if (entry.Witnesses?.Count > 0)
-                RenderEntrySources(entry.Witnesses, target ?? app);
+            // witnesses and authors
+            target = target ?? app;
 
-            // authors
+            // witnesses (@wit)
+            if (entry.Witnesses?.Count > 0)
+            {
+                string ids = RenderEntrySources(entry.Witnesses, target);
+                if (ids.Length > 0) target.SetAttributeValue("wit", ids);
+            }
+
+            // authors (@source)
             if (entry.Authors?.Count > 0)
-                RenderEntrySources(entry.Authors, target ?? app);
+            {
+                string ids = RenderEntrySources(entry.Authors, target);
+                if (ids.Length > 0) target.SetAttributeValue("source", ids);
+            }
         }
 
         private void AppendApparatusContent(
@@ -157,9 +166,11 @@ namespace Mq.Migration
                 // nope if no entries
                 if (fr.Entries.Count == 0) continue;
 
+                // app
                 XElement app = new XElement(XmlHelper.TEI + "app");
+                div.Add(app);
 
-                // location
+                // map location into @from, @to
                 var ft = _locMapper.Map(fr.Location, item);
                 if (ft != null)
                 {
@@ -176,15 +187,14 @@ namespace Mq.Migration
                     }
                 }
 
-                // tag 2nd token = @type
+                // 2nd token of tag, if any = @type
                 if (!string.IsNullOrEmpty(fr.Tag))
                 {
                     int i = fr.Tag.IndexOf(' ');
                     if (i > -1) app.SetAttributeValue("type", fr.Tag.Substring(i + 1));
                 }
-                div.Add(app);
 
-                // add fragment's entries
+                // add fragment's entries to app
                 foreach (ApparatusEntry entry in fr.Entries)
                     AppendEntryContent(entry, app);
             }
@@ -314,7 +324,7 @@ namespace Mq.Migration
                     }
 
                     // if no apparatus was found, don't touch the original document
-                    if (anyApparatus)
+                    if (anyApparatus && !IsDryModeEnabled)
                         doc.Save(filePath, SaveOptions.OmitDuplicateNamespaces);
 
                     if (progress != null)

@@ -23,6 +23,11 @@ namespace Mq.Migration
         public bool IncludeComments { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether dry mode is enabled.
+        /// </summary>
+        public bool IsDryModeEnabled { get; set; }
+
+        /// <summary>
         /// Gets the repository.
         /// </summary>
         protected ICadmusRepository Repository { get; private set; }

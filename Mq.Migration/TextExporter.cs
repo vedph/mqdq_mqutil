@@ -222,7 +222,8 @@ namespace Mq.Migration
                             itemPage = Repository.GetItems(itemFilter);
                     }
 
-                    doc.Save(filePath, SaveOptions.OmitDuplicateNamespaces);
+                    if (!IsDryModeEnabled)
+                        doc.Save(filePath, SaveOptions.OmitDuplicateNamespaces);
 
                     if (progress != null)
                     {

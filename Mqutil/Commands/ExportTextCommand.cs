@@ -19,10 +19,11 @@ namespace Mqutil.Commands
         private readonly string _outputDir;
         private readonly string _database;
         private readonly bool _comments;
+        private readonly bool _dry;
         private readonly IRepositoryProvider _repositoryProvider;
 
         public ExportTextCommand(AppOptions options,
-            string database, string outputDir, bool comments)
+            string database, string outputDir, bool comments, bool dry)
         {
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
@@ -31,6 +32,7 @@ namespace Mqutil.Commands
             _database = database
                 ?? throw new ArgumentNullException(nameof(database));
             _comments = comments;
+            _dry = dry;
 
             _config = options.Configuration;
             _repositoryProvider = new StandardRepositoryProvider(_config);
@@ -57,6 +59,8 @@ namespace Mqutil.Commands
                 "The output directory with target TEI documents");
             CommandOption commentOption = command.Option("-c|--comments",
                 "Include comments in output", CommandOptionType.NoValue);
+            CommandOption dryOption = command.Option("-d|--dry",
+                "Dry run: do not write output", CommandOptionType.NoValue);
 
             command.OnExecute(() =>
             {
@@ -64,7 +68,8 @@ namespace Mqutil.Commands
                     options,
                     databaseArgument.Value,
                     outputDirArgument.Value,
-                    commentOption.HasValue());
+                    commentOption.HasValue(),
+                    dryOption.HasValue());
                 return 0;
             });
         }
@@ -75,7 +80,9 @@ namespace Mqutil.Commands
             Console.ResetColor();
             Console.WriteLine(
                 $"Database: {_database}\n" +
-                $"Output dir: {_outputDir}\n");
+                $"Output dir: {_outputDir}\n" +
+                $"Comments: {_comments}\n" +
+                $"Dry: {_dry}\n");
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddSerilog(Log.Logger);
@@ -87,7 +94,8 @@ namespace Mqutil.Commands
             TextExporter exporter = new TextExporter(repository)
             {
                 Logger = loggerFactory.CreateLogger("export"),
-                IncludeComments = _comments
+                IncludeComments = _comments,
+                IsDryModeEnabled = _dry
             };
 
             using (var bar = new ProgressBar(100, "Exporting...",
