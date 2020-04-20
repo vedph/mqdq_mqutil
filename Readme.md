@@ -196,6 +196,14 @@ Sample:
 .\Mqutil.exe import-json E:\Work\mqdqc\jtxt\ *.json E:\Work\mqdqc\japp\ E:\Work\mqdqc\mqdq-profile.json mqdq -d
 ```
 
+## Export Text Command
+
+TODO:
+
+## Export Apparatus Command
+
+TODO:
+
 ## Processing Corpus
 
 We can process the whole corpus using a batch like this; just replace the values for `srcdir` (=the source MQDQ directory, as downloaded), `dstdir` (=the root target directory, a new folder in your target drive), and `mqu` (the path to the `Mqutil` program):

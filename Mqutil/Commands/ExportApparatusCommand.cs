@@ -19,10 +19,11 @@ namespace Mqutil.Commands
         private readonly IConfiguration _config;
         private readonly string _outputDir;
         private readonly string _database;
+        private readonly bool _comments;
         private readonly IRepositoryProvider _repositoryProvider;
 
         public ExportApparatusCommand(AppOptions options,
-            string database, string outputDir)
+            string database, string outputDir, bool comments)
         {
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
@@ -30,6 +31,7 @@ namespace Mqutil.Commands
                 ?? throw new ArgumentNullException(nameof(outputDir));
             _database = database
                 ?? throw new ArgumentNullException(nameof(database));
+            _comments = comments;
 
             _config = options.Configuration;
             _repositoryProvider = new StandardRepositoryProvider(_config);
@@ -54,13 +56,16 @@ namespace Mqutil.Commands
                 "The database name");
             CommandArgument outputDirArgument = command.Argument("[output-dir]",
                 "The output directory with target TEI documents");
+            CommandOption commentOption = command.Option("-c|--comments",
+                "Include comments in output", CommandOptionType.NoValue);
 
             command.OnExecute(() =>
             {
                 options.Command = new ExportApparatusCommand(
                     options,
                     databaseArgument.Value,
-                    outputDirArgument.Value);
+                    outputDirArgument.Value,
+                    commentOption.HasValue());
                 return 0;
             });
         }
@@ -71,7 +76,8 @@ namespace Mqutil.Commands
             Console.ResetColor();
             Console.WriteLine(
                 $"Database: {_database}\n" +
-                $"Output dir: {_outputDir}\n");
+                $"Output dir: {_outputDir}\n" +
+                $"Comments: {_comments}\n");
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddSerilog(Log.Logger);
@@ -82,7 +88,8 @@ namespace Mqutil.Commands
 
             ApparatusExporter exporter = new ApparatusExporter(repository)
             {
-                Logger = loggerFactory.CreateLogger("export")
+                Logger = loggerFactory.CreateLogger("export"),
+                IncludeComments = _comments
             };
             if (!Directory.Exists(_outputDir))
                 Directory.CreateDirectory(_outputDir);

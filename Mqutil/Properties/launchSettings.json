@@ -2,7 +2,7 @@
   "profiles": {
     "Mqutil": {
       "commandName": "Project",
-      "commandLineArgs": "export-text mqdq E:\\Work\\mqdqe\\"
+      "commandLineArgs": "export-app mqdq E:\\Work\\mqdqe\\"
     }
   }
 }

@@ -190,20 +190,28 @@ namespace Mq.Migration
             }
         }
 
-        private void AppendItemContent(IItem item, XElement div)
+        private bool AppendItemContent(IItem item, XElement div)
         {
             if (IncludeComments) div.Add(new XComment("item " + item.Id));
 
+            int count = 0;
             foreach (string roleId in _apparatusFrIds)
             {
                 TiledTextLayerPart<ApparatusLayerFragment> part =
                     GetApparatusPart(item.Parts, roleId);
                 if (part == null)
                 {
-                    Logger?.LogError($"Item {item.Id} has no {roleId} part");
+                    Logger?.LogInformation($"Item {item.Id} has no {roleId} part");
                 }
-                else AppendApparatusContent(roleId, item, part, div);
+                else
+                {
+                    AppendApparatusContent(roleId, item, part, div);
+                    count++;
+                }
             }
+            if (count == 0)
+                Logger?.LogError($"Item {item.Id} has no apparatus part");
+            return count > 0;
         }
 
         /// <summary>
@@ -227,7 +235,10 @@ namespace Mq.Migration
                 await Repository.GetDistinctGroupIdsAsync(groupFilter);
             Logger?.LogInformation($"Groups found: {groupPage.Total}");
 
-            ProgressReport report = progress != null ? new ProgressReport() : null;
+            ProgressReport report = progress != null ? new ProgressReport
+            {
+                Count = 0
+            } : null;
 
             ItemFilter itemFilter = new ItemFilter
             {
@@ -269,6 +280,7 @@ namespace Mq.Migration
                     itemFilter.GroupId = groupId;
                     itemFilter.PageNumber = 1;
                     DataPage<ItemInfo> itemPage = Repository.GetItems(itemFilter);
+                    bool anyApparatus = false;
 
                     while (itemFilter.PageNumber <= itemPage.PageCount)
                     {
@@ -294,13 +306,15 @@ namespace Mq.Migration
                             }
 
                             // build and append content elements
-                            AppendItemContent(item, div);
+                            if (AppendItemContent(item, div)) anyApparatus = true;
                         }
                         if (++itemFilter.PageNumber <= itemPage.PageCount)
                             itemPage = Repository.GetItems(itemFilter);
                     }
 
-                    doc.Save(filePath, SaveOptions.OmitDuplicateNamespaces);
+                    // if no apparatus was found, don't touch the original document
+                    if (anyApparatus)
+                        doc.Save(filePath, SaveOptions.OmitDuplicateNamespaces);
 
                     if (progress != null)
                     {
