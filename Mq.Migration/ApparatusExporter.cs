@@ -92,7 +92,7 @@ namespace Mq.Migration
             {
                 case ApparatusEntryType.Replacement:
                     // replacement = lem/rdg with value
-                    target.Value = entry.Value;
+                    target.Add(entry.Value);
                     // groupId = @n (temporary solution)
                     // TODO: decide an attribute
                     if (!string.IsNullOrEmpty(entry.GroupId))
@@ -120,6 +120,10 @@ namespace Mq.Migration
                     return;
             }
 
+            // tag: @type
+            if (!string.IsNullOrEmpty(entry.Tag))
+                target.SetAttributeValue("type", entry.Tag);
+
             // witnesses and authors: @wit, @source, note, add
             // witnesses (@wit)
             if (entry.Witnesses?.Count > 0)
@@ -139,7 +143,7 @@ namespace Mq.Migration
             // only lem/rdg should have ident's (??)
             if (!string.IsNullOrEmpty(entry.NormValue))
             {
-                if (target == null)
+                if (entry.Type == ApparatusEntryType.Replacement)
                 {
                     Logger?.LogError(
                         "NormValue in non-replacement entry: " +
