@@ -319,8 +319,20 @@ namespace Mq.Migration
                                     && e.Attribute(XmlHelper.XML + "id")?.Value == id);
                             if (div == null)
                             {
-                                Logger?.LogError(
-                                    $"Target div {id} for item ID {info.Id} not found");
+                                // if target ID was not found but we had
+                                // layer parts for it, it's an error
+                                if (item.Parts.Any(p => p.TypeId.StartsWith(
+                                    _layerPartTypeId, StringComparison.Ordinal)))
+                                {
+                                    string layerPartIds = string.Join(", ",
+                                        from p in item.Parts
+                                        where p.TypeId.StartsWith(
+                                            _layerPartTypeId, StringComparison.Ordinal)
+                                        select p.Id);
+                                    Logger?.LogError(
+                                        $"Target div {id} not found for item ID {info.Id} " +
+                                        $"having layer parts {layerPartIds}");
+                                }
                                 continue;
                             }
 

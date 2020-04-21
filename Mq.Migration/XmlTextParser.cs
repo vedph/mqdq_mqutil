@@ -271,6 +271,7 @@ namespace Mq.Migration
             };
             item.Parts.Add(part);
 
+            string divId = div.Attribute(XmlHelper.XML + "id")?.Value;
             int y = 1;
             int wordNr = 1;
             foreach (XElement rowElement in rowElements)
@@ -296,12 +297,22 @@ namespace Mq.Migration
                 }
                 else
                 {
-                    int divNr = div.ElementsBeforeSelf(div.Name).Count() + 1;
+                    // the word ID should be equal to "d" + divID + "w" + N;
+                    // if we have no div ID (which should not happen), use
+                    // the div ordinal number to build one
+                    string idPrefix;
+                    if (divId == null)
+                    {
+                        int divNr = div.ElementsBeforeSelf(div.Name).Count() + 1;
+                        idPrefix = $"d{divNr:000}";
+                    }
+                    else idPrefix = divId;
+
                     row.Data[KEY_SPLIT] = "1";
                     var wordAndIds = from w in rowElement.Value.Split(' ')
                                      select Tuple.Create(
                                          w,
-                                         $"d{divNr:000}w{wordNr++}");
+                                         $"{idPrefix}w{wordNr++}");
                     AddTiles(wordAndIds, row);
                 }
 
