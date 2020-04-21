@@ -258,10 +258,11 @@ set mqu=D:\Projects\Core20\Vedph\Mqutil\Mqutil\bin\Debug\netcoreapp3.1\Mqutil.ex
 
 echo REPORT OVERLAPS
 %mqu% report-overlaps %srcdir% *-app.xml %dstdir%overlaps.md -s
+echo (please keep the next log for editors reference;
+echo  you can just delete the current log before advancing)
 pause
 
 echo REMOVE OVERLAPS
-echo (please keep the next log for editors reference)
 %mqu% remove-overlaps %srcdir% *-app.xml %dstdir%app\ -s -d
 pause
 

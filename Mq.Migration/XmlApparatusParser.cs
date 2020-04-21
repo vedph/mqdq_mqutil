@@ -381,7 +381,6 @@ namespace Mq.Migration
                 foreach (ApparatusEntry entry in fr.Entries
                     .Where(e => e.Value == null))
                 {
-                    entry.IsAccepted = false;
                     entry.Type = ApparatusEntryType.Note;
                 }
             }

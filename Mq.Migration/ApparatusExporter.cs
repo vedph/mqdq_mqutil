@@ -84,16 +84,15 @@ namespace Mq.Migration
         private void AppendEntryContent(ApparatusEntry entry, XElement app,
             string partId)
         {
-            XElement target = null;
+            XElement target = new XElement(XmlHelper.TEI +
+                        (entry.IsAccepted ? "lem" : "rdg"));
 
             // only replacement/note are allowed for TEI
             switch (entry.Type)
             {
                 case ApparatusEntryType.Replacement:
                     // replacement = lem/rdg with value
-                    target = new XElement(XmlHelper.TEI +
-                        (entry.IsAccepted ? "lem" : "rdg"),
-                        entry.Value);
+                    target.Value = entry.Value;
                     // groupId = @n (temporary solution)
                     // TODO: decide an attribute
                     if (!string.IsNullOrEmpty(entry.GroupId))
@@ -108,7 +107,11 @@ namespace Mq.Migration
                         Logger?.LogInformation("Note entry without content: " +
                             $"{entry} ({partId})");
                     }
-                    else app.Add(_noteRenderer.Render(entry.Note));
+                    else
+                    {
+                        target.Add(_noteRenderer.Render(entry.Note));
+                    }
+                    app.Add(target);
                     break;
 
                 default:
@@ -121,17 +124,15 @@ namespace Mq.Migration
             // witnesses (@wit)
             if (entry.Witnesses?.Count > 0)
             {
-                XElement t = target ?? app;
-                string ids = RenderEntrySources(entry.Witnesses, t);
-                if (ids.Length > 0) t.SetAttributeValue("wit", ids);
+                string ids = RenderEntrySources(entry.Witnesses, target);
+                if (ids.Length > 0) target.SetAttributeValue("wit", ids);
             }
 
             // authors (@source)
             if (entry.Authors?.Count > 0)
             {
-                XElement t = target ?? app;
-                string ids = RenderEntrySources(entry.Authors, t);
-                if (ids.Length > 0) t.SetAttributeValue("source", ids);
+                string ids = RenderEntrySources(entry.Authors, target);
+                if (ids.Length > 0) target.SetAttributeValue("source", ids);
             }
 
             // normValue = ident's with optional @n
@@ -181,6 +182,12 @@ namespace Mq.Migration
                 if (IncludeComments) div.Add(new XComment($"fr {fr.Location}"));
                 XElement app = new XElement(XmlHelper.TEI + "app");
                 div.Add(app);
+
+                // @type
+                if (roleId == _apparatusFrIds[1])
+                    app.SetAttributeValue("type", "ancient-note");
+                else if (roleId == _apparatusFrIds[2])
+                    app.SetAttributeValue("type", "margin-note");
 
                 // map location into @from, @to
                 var ft = _locMapper.Map(fr.Location, item);
