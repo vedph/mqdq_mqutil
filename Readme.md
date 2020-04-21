@@ -244,7 +244,9 @@ Sample:
 
 ## Processing Corpus
 
-### Creating Files
+To process the whole corpus from the original TEI files to the database and back to the updated TEI files, follow the procedure described in this section.
+
+### 1. Creating Files
 
 We can process the whole corpus using a batch like this; just replace the values for `srcdir` (=the source MQDQ directory, as downloaded), `dstdir` (=the root target directory, a new folder in your target drive), and `mqu` (the path to the `Mqutil` program):
 
@@ -284,7 +286,7 @@ The partition command targets only the texts; this is why we're using a regular 
 
 Note that once files have been partitioned, all the following text-related processing happens on the partitioned files, rather than on the original ones.
 
-### Importing Database
+### 2. Importing Database
 
 To create a Cadmus database and import JSON files:
 
@@ -292,11 +294,11 @@ To create a Cadmus database and import JSON files:
 .\Mqutil.exe import-json E:\Work\mqdqc\jtxt\ *.json E:\Work\mqdqc\japp\ E:\Work\mqdqc\mqdq-profile.json mqdq -d
 ```
 
-Remove the `-d` option to disable dry run and truly import data.
+Remove the `-d` option to disable dry run and truly import data. You will now find a MongoDB database named `mqdq`. If the database already exists, remove it before importing.
 
-### Exporting Database
+### 3. Exporting Database
 
-To export the database, you must first copy the imported documents in the output folder, keeping their subdirectories. Then:
+To export the database, you must first copy the original documents in the output folder, keeping their subdirectories (thus, e.g. `ABLAB-epig.xml` and `ABLAB-epig-app.xml` under `ABLAB`, etc., all these folders under a common target folder). Then:
 
 ```ps1
 .\Mqutil.exe export-text mqdq E:\Work\mqdqe\ -c -d
