@@ -81,7 +81,8 @@ namespace Mq.Migration
             return sb.ToString();
         }
 
-        private void AppendEntryContent(ApparatusEntry entry, XElement app)
+        private void AppendEntryContent(ApparatusEntry entry, XElement app,
+            string partId)
         {
             XElement target = null;
 
@@ -104,13 +105,15 @@ namespace Mq.Migration
                     // note = add/note
                     if (string.IsNullOrEmpty(entry.Note))
                     {
-                        Logger?.LogWarning($"Note entry without content: {entry}");
+                        Logger?.LogInformation("Note entry without content: " +
+                            $"{entry} ({partId})");
                     }
                     else app.Add(_noteRenderer.Render(entry.Note));
                     break;
 
                 default:
-                    Logger?.LogError($"Invalid apparatus entry type: {entry.Type}");
+                    Logger?.LogError(
+                        $"Invalid apparatus entry type: {entry.Type} ({partId})");
                     return;
             }
 
@@ -138,7 +141,8 @@ namespace Mq.Migration
                 if (target == null)
                 {
                     Logger?.LogError(
-                        $"NormValue in non-replacement entry: \"{entry.NormValue}\"");
+                        "NormValue in non-replacement entry: " +
+                        $"\"{entry.NormValue}\" ({partId})");
                 }
                 else
                 {
@@ -204,7 +208,7 @@ namespace Mq.Migration
 
                 // add fragment's entries to app
                 foreach (ApparatusEntry entry in fr.Entries)
-                    AppendEntryContent(entry, app);
+                    AppendEntryContent(entry, app, part.Id);
             }
         }
 
@@ -229,7 +233,7 @@ namespace Mq.Migration
                 }
             }
             if (count == 0)
-                Logger?.LogWarning($"Item {item.Id} has no apparatus part");
+                Logger?.LogInformation($"Item {item.Id} has no apparatus part");
             return count > 0;
         }
 
