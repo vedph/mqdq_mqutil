@@ -102,7 +102,11 @@ namespace Mq.Migration
 
                 case ApparatusEntryType.Note:
                     // note = add/note
-                    app.Add(_noteRenderer.Render(entry.Note));
+                    if (string.IsNullOrEmpty(entry.Note))
+                    {
+                        Logger?.LogWarning($"Note entry without content: {entry}");
+                    }
+                    else app.Add(_noteRenderer.Render(entry.Note));
                     break;
 
                 default:
@@ -316,7 +320,7 @@ namespace Mq.Migration
                             if (div == null)
                             {
                                 Logger?.LogError(
-                                    $"Target div for item ID {info.Id} not found");
+                                    $"Target div {id} for item ID {info.Id} not found");
                                 continue;
                             }
 
