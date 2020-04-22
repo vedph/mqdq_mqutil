@@ -140,26 +140,23 @@ namespace Mq.Migration
             }
 
             // normValue = ident's with optional @n
-            // only lem/rdg should have ident's (??)
+            // usually only lem/rdg should have ident's
             if (!string.IsNullOrEmpty(entry.NormValue))
             {
                 if (entry.Type != ApparatusEntryType.Replacement)
                 {
-                    Logger?.LogError(
+                    Logger?.LogWarning(
                         "NormValue in non-replacement entry: " +
                         $"\"{entry.NormValue}\" ({partId})");
                 }
-                else
+                // ident [@n]+
+                foreach (Match m in _identRegex.Matches(entry.NormValue))
                 {
-                    // ident [@n]+
-                    foreach (Match m in _identRegex.Matches(entry.NormValue))
-                    {
-                        XElement ident = new XElement(XmlHelper.TEI + "ident",
-                            m.Groups["i"].Value);
-                        if (m.Groups["n"].Length > 0)
-                            ident.SetAttributeValue("n", m.Groups["n"].Value);
-                        target.Add(ident);
-                    }
+                    XElement ident = new XElement(XmlHelper.TEI + "ident",
+                        m.Groups["i"].Value);
+                    if (m.Groups["n"].Length > 0)
+                        ident.SetAttributeValue("n", m.Groups["n"].Value);
+                    target.Add(ident);
                 }
             }
         }
@@ -177,13 +174,16 @@ namespace Mq.Migration
             }
 
             // each fragment is an app element
+            int frIndex = 0;
             foreach (ApparatusLayerFragment fr in part.Fragments)
             {
                 // nope if no entries
                 if (fr.Entries.Count == 0) continue;
 
                 // app
-                if (IncludeComments) div.Add(new XComment($"fr {fr.Location}"));
+                if (IncludeComments)
+                    div.Add(new XComment($"fr {fr.Location} [{frIndex++}]"));
+
                 XElement app = new XElement(XmlHelper.TEI + "app");
                 div.Add(app);
 

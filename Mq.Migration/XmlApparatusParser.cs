@@ -423,8 +423,6 @@ namespace Mq.Migration
                        || f.Entries.Any(e => e.Tag == TYPE_ANCIENT_NOTE))
                 .ToList())
             {
-                ApparatusLayerFragment targetFr = null;
-
                 // app@type=margin -> tag with margin: move whole fragment
                 if (fr.Tag.Contains(TYPE_MARGIN_NOTE))
                 {
@@ -434,33 +432,38 @@ namespace Mq.Migration
                     continue;
                 }
 
-                // else examine parts, some might belong to ancient
+                // else examine parts: some might belong to ancient
                 var ancEntries = fr.Entries
                     .Where(e => e.Tag == TYPE_ANCIENT_NOTE)
                     .ToList();
-                ancEntryCount += ancEntries.Count;
 
-                // if all the entries are to be moved, move the whole fragment
-                if (ancEntries.Count == fr.Entries.Count)
+                // any ancient?
+                if (ancEntries.Count > 0)
                 {
-                    ancPart.AddFragment(fr);
-                    part.Fragments.Remove(fr);
-                    continue;
-                }
+                    ancEntryCount += ancEntries.Count;
 
-                // else move only the ancient entries to a cloned fragment
-                if (targetFr == null)
-                {
-                    targetFr = new ApparatusLayerFragment
+                    // if all the entries are to be moved, move the whole fragment
+                    // from the standard part to the ancient part
+                    if (ancEntries.Count == fr.Entries.Count)
+                    {
+                        ancPart.AddFragment(fr);
+                        part.Fragments.Remove(fr);
+                        continue;
+                    }
+
+                    // else move only the ancient entries to a cloned fragment,
+                    // which gets added to the ancient part
+                    ApparatusLayerFragment targetFr = new ApparatusLayerFragment
                     {
                         Location = fr.Location,
                         Tag = fr.Tag
                     };
-                }
-                foreach (var entry in ancEntries)
-                {
-                    targetFr.Entries.Add(entry);
-                    fr.Entries.Remove(entry);
+                    foreach (var entry in ancEntries)
+                    {
+                        targetFr.Entries.Add(entry);
+                        fr.Entries.Remove(entry);
+                    }
+                    ancPart.AddFragment(targetFr);
                 }
             }
 
@@ -596,8 +599,10 @@ namespace Mq.Migration
                                 appElem.Attribute("to").Value);
                             continue;
                         }
-                        Logger?.LogInformation("Fragment location: {Location}",
-                            fr.Location);
+                        Logger?.LogInformation(
+                            $"Fragment location: {fr.Location} " +
+                            $"{appElem.Attribute("from").Value}-" +
+                            $"{appElem.Attribute("to").Value}");
                     }
                     // @loc provides multiple locations, each to be assigned
                     // to a clone of this fragment; thus, we keep the locations
@@ -620,8 +625,9 @@ namespace Mq.Migration
                         itemId = itemIdAndlocs.Item1;
                         locs = itemIdAndlocs.Item2;
 
-                        Logger?.LogInformation("Fragment locations: {Location}",
-                            string.Join(" ", locs));
+                        Logger?.LogInformation(
+                            $"Fragment locations: {string.Join(" ", locs)} " +
+                            $"{appElem.Attribute("loc").Value}");
                     }
 
                     // if the location refers to another item, change part;
