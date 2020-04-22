@@ -327,6 +327,8 @@ namespace Mq.Migration
             int i = item.SortKey.IndexOf(' ', item.SortKey.IndexOf(' ') + 1);
             item.SortKey = item.SortKey.Substring(0, i);
 
+            Logger?.LogInformation(item.ToString());
+
             return item;
         }
 
@@ -396,14 +398,17 @@ namespace Mq.Migration
             _docId = id ?? throw new ArgumentNullException(nameof(id));
 
             _partitionNr = 0;
+            Logger?.LogInformation($"-- Parsing {id}");
 
             if (doc.Root.Descendants(XmlHelper.TEI + "pb").Any())
             {
+                Logger?.LogInformation("Document is partitioned");
                 foreach (IItem item in ImportPartitionedText(doc))
                     yield return item;
             }
             else
             {
+                Logger?.LogInformation("Document is not partitioned");
                 foreach (IItem item in ImportUnpartitionedText(doc))
                     yield return item;
             }

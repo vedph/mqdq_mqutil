@@ -9,3 +9,9 @@ This is a dummy tool to be used for importing MQDQ documents into Cadmus for edi
 - [apparatus sample](apparatus-sample.md): sample of apparatus parsing.
 - [import](import.md): import plan.
 - [export](export.md): export plan.
+
+## Directions for Checking
+
+- [check remove overlap](ck-remove-overlaps.md)
+- [check partitioning](ck-partition.md)
+- [check export apparatus](ck-export-app.md)

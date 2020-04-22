@@ -174,7 +174,8 @@ namespace Mqutil.Commands
             if (!Directory.Exists(_outputDir))
                 Directory.CreateDirectory(_outputDir);
 
-            HashSet<string> errDivIds = new HashSet<string>();
+            HashSet<Tuple<string, string>> errDivIds =
+                new HashSet<Tuple<string, string>>();
 
             // for each app document
             WordIdList widList = new WordIdList
@@ -186,6 +187,8 @@ namespace Mqutil.Commands
             {
                 Console.WriteLine();
                 Log.Logger.Information("Parsing {FilePath}", filePath);
+                string docId = Path.GetFileNameWithoutExtension(filePath)
+                    .Replace("-app", "");
 
                 // load app document
                 string inputFileName = Path.GetFileNameWithoutExtension(filePath);
@@ -238,7 +241,7 @@ namespace Mqutil.Commands
                                     .First()
                                     .Attribute(XmlHelper.XML + "id").Value;
 
-                                errDivIds.Add(divId);
+                                errDivIds.Add(Tuple.Create(docId, divId));
                                 Log.Logger.Error("Removed overlapping app lost sources at div "
                                     + divId
                                     + ": "
@@ -281,11 +284,11 @@ namespace Mqutil.Commands
             if (_writeDivList)
             {
                 using (StreamWriter listWriter = new StreamWriter(
-                        Path.Combine(_outputDir, "overlap-err-divs.txt"),
+                        Path.Combine(_outputDir, "~overlap-err-divs.txt"),
                         false, Encoding.UTF8))
                 {
-                    foreach (string id in errDivIds)
-                        listWriter.WriteLine(id);
+                    foreach (var id in errDivIds)
+                        listWriter.WriteLine($"{id.Item1} {id.Item2}");
                     listWriter.Flush();
                 }
             }

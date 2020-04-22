@@ -8,13 +8,11 @@ Also, I prefer to generate comments in the exported documents, so that I can pre
 
 So, here the best approach is probably comparing `app` with `app`, in the context of the same parent element.
 
-## Sample
-
-### Log
+## Log
 
 The first check is looking at the operation log and examine any eventual error (look for `[ERR]`) or warning (look for `[WRN]`).
 
-There should be no error, while warning can be useful to ensure that nothing is unexpected. For instance, here are the first lines (omitting the timestamps for brevity):
+There should be no error, while warning can be useful to ensure that nothing is unexpected. For instance, here are the first lines of a log (omitting the timestamps for brevity):
 
 ```txt
 [INF] EXPORT APPARATUS INTO TEI FILES
@@ -32,6 +30,8 @@ There should be no error, while warning can be useful to ensure that nothing is 
 Here you can see that warnings are just reporting the fact that the target apparatus document is missing; this is normal for some documents, which only have text, and is not an issue.
 
 The log reports each work as a group of items; here we have 611 groups (=works). For each group, each item is analyzed, and if it has apparatus layers they are exported. For instance, for `ABLAB-epig` there is no apparatus content, so no export happens.
+
+## Sample
 
 ### Comparing div Elements
 

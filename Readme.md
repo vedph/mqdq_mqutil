@@ -117,7 +117,7 @@ where:
 Sample:
 
 ```ps1
-.\Mqutil.exe parse-text E:\Work\mqdqc\txt\ *.xml E:\Work\mqdqc\jtxt\ -d E:\Work\mqdqc\app\overlap-err-divs.txt
+.\Mqutil.exe parse-text E:\Work\mqdqc\txt\ *.xml E:\Work\mqdqc\jtxt\ -d E:\Work\mqdqc\app\~overlap-err-divs.txt
 ```
 
 Output files will be created in the output directory, and named after the corresponding input files, plus a numeric suffix.
@@ -271,7 +271,7 @@ echo PARTITION
 pause
 
 echo PARSE TEXT
-%mqu% parse-text %dstdir%txt *.xml %dstdir%jtxt\ -d %dstdir%app\overlap-err-divs.txt
+%mqu% parse-text %dstdir%txt *.xml %dstdir%jtxt\ -d %dstdir%app\~overlap-err-divs.txt
 pause
 
 echo PARSE APPARATUS
@@ -280,6 +280,15 @@ pause
 
 echo IMPORT THESAURI
 %mqu% import-thes %dstdir%app\*.xml %dstdir%thesauri.json
+echo Break here if you don't want to import the database
+pause
+
+echo DRY IMPORT DATABASE
+%mqu% import-json %dstdir%jtxt\ *.json %dstdir%japp\ %dstdir%mqdq-profile.json mqdq -d
+pause
+
+echo IMPORT DATABASE
+%mqu% import-json %dstdir%jtxt\ *.json %dstdir%japp\ %dstdir%mqdq-profile.json mqdq
 pause
 ```
 

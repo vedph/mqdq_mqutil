@@ -8,6 +8,7 @@ using Newtonsoft.Json.Serialization;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -108,17 +109,28 @@ namespace Mqutil.Commands
             writer.Close();
         }
 
-        private static HashSet<string> LoadDivIds(string path,
-            string prefix, string suffix)
+        private static Dictionary<string, HashSet<string>> LoadDivIds(
+            string path, string prefix)
         {
-            HashSet<string> ids = new HashSet<string>();
+            Dictionary<string, HashSet<string>> ids =
+                new Dictionary<string, HashSet<string>>();
+
             using (StreamReader reader = new StreamReader(path, Encoding.UTF8))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
                     if (!string.IsNullOrWhiteSpace(line))
-                        ids.Add(prefix + line.Trim() + suffix);
+                    {
+                        int i = line.IndexOf(' ');
+                        Debug.Assert(i > -1);
+                        string docId = line.Substring(0, i);
+                        string divId = line.Substring(i + 1);
+
+                        if (!ids.ContainsKey(docId))
+                            ids[docId] = new HashSet<string>();
+                        ids[docId].Add(prefix + divId);
+                    }
                 }
             }
             return ids;
@@ -154,8 +166,9 @@ namespace Mqutil.Commands
 
             // load div IDs list if requested, prefixing and suffixing them
             // so that we are ready to find them in the item's title
-            HashSet<string> flagDivIds = _flagDivIdList != null
-                ? LoadDivIds(_flagDivIdList, "xml:id=", XmlHelper.CIT_SEPARATOR)
+            Dictionary<string, HashSet<string>> flagDivIds =
+                _flagDivIdList != null
+                ? LoadDivIds(_flagDivIdList, "#")
                 : null;
 
             // for each input document
@@ -186,10 +199,12 @@ namespace Mqutil.Commands
                     if (++itemCount % 10 == 0) Console.Write('.');
 
                     // set flag if required
-                    if (flagDivIds.Any(s =>
-                        item.Title.IndexOf(s, StringComparison.Ordinal) > -1))
+                    if (flagDivIds.ContainsKey(inputFileName)
+                        && flagDivIds[inputFileName].Any(s =>
+                        item.Title.EndsWith(s, StringComparison.Ordinal)))
                     {
                         item.Flags |= 1;
+                        Log.Logger.Information($"Flagged item {item}");
                     }
 
                     // create new output file if required

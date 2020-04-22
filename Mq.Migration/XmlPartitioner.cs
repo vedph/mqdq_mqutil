@@ -16,7 +16,6 @@ namespace Mq.Migration
         private readonly Regex _breakRegex;
         private XElement _lastBreakPoint;
         private bool _exceeded;
-        private string _docId;
         private int _minTreshold;
         private int _maxTreshold;
 
@@ -133,7 +132,6 @@ namespace Mq.Migration
             // do nothing if partitioning is not required
             if (!IsApplicable(doc)) return false;
 
-            _docId = id;
             bool touched = false;
 
             // examine each div1 requiring partitioning
