@@ -45,7 +45,7 @@ Let us then start with `app` elements from A: first, observe their order. In A, 
 24 from="#d001w675" to="#d001w675"
 ```
 
-In B, we find another order, following the distribution of data into layers (I prefix each entry with the corresponding entry number in A). I include the comments in the list. These comments are inserted to mark the start of a new set of data: there is one whenever a new item starts, a new part starts, or a new fragment starts. The item is recorded with its title and ID; the part with its role ID and ID; the fragment with its location. Should you need to, you can inspect items and parts by finding their ID in the database.
+In B, we find another order, following the distribution of data into layers. In the following list, I prefix each entry with the corresponding entry number in A; I also include the comments. These comments are inserted on request to mark the start of a new set of data: there is one whenever a new item starts, a new part starts, or a new fragment starts. The item is recorded with its title and ID; the part with its role ID and ID; the fragment with its location. Should you need to, you can inspect items and parts by finding their ID in the database.
 
 ```txt
 <!--item VERG-eclo 00001 #d001 (95736d55-7b62-4898-879e-500087e0b73a)-->
@@ -127,7 +127,7 @@ We can now turn to the content of each entry, comparing A with B. So, for instan
 </app>
 ```
 
-The corresponding entry in B is:
+The corresponding entry in B is totally equivalent, even if not literally equal:
 
 ```xml
 <!--apparatus fr.net.fusisoft.apparatus:margin (2 in 643b0135-0aec-4ff5-b4a8-4e0990a8fc52)-->
@@ -139,3 +139,33 @@ The corresponding entry in B is:
   </lem>
 </app>
 ```
+
+Then we turn to the second entry; in A:
+
+```xml
+<app from="#d001w9" to="#d001w9">
+  <lem wit="#lw1-16 #lw1-21">siluestrem</lem>
+  <rdg source="#lb1-50 #lb1-25">agrestem
+      <note type="details" target="#lb1-50"> 9, 4, 85,</note>
+      <note type="details" target="#lb1-25"> SI 244</note>
+      <ident n="d001w9">AGRESTEM</ident>
+  </rdg>
+  <rdg source="#lb1-56" type="ancient-note">
+      <add type="abstract"><emph style="font-style:italic">silvestrem</emph>, agrestem<emph style="font-style:italic">.</emph></add>
+  </rdg>
+</app>
+```
+
+and in B:
+
+```xml
+<!--item VERG-eclo 00001 #d001 (95736d55-7b62-4898-879e-500087e0b73a)-->
+<!--apparatus fr.net.fusisoft.apparatus (3 in 333f9657-849c-49ec-9b32-3732a5250c9d)-->
+<!--fr 3.1-->
+<app from="#d001w9" to="#d001w9">
+  <lem wit="#lw1-16 #lw1-21">siluestrem</lem>
+  <rdg source="#lb1-50 #lb1-25">agrestem<note type="details" target="#lb1-50"> 9, 4, 85,</note><note type="details" target="#lb1-25"> SI 244</note><ident n="d001w9">AGRESTEM</ident></rdg>
+</app>
+```
+
+The entry is equivalent, except for the usual indentation (required by the mixed content of the parent element), and the lack of the ancient note `rdg` element. This is due to the fact that ancient notes are moved to a separate layer.

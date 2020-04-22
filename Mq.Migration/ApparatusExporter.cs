@@ -143,7 +143,7 @@ namespace Mq.Migration
             // only lem/rdg should have ident's (??)
             if (!string.IsNullOrEmpty(entry.NormValue))
             {
-                if (entry.Type == ApparatusEntryType.Replacement)
+                if (entry.Type != ApparatusEntryType.Replacement)
                 {
                     Logger?.LogError(
                         "NormValue in non-replacement entry: " +
