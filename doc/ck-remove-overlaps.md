@@ -33,6 +33,10 @@ For instance, here are the first lines of a log:
 
 The log lists each apparatus file and notifies about merging or errors in overlap removal.
 
+## Checking
+
+To check the results of this operation, just compare with a diff tool the input and output apparatus documents.
+
 ## Overlaps List
 
 When requested, the remove overlaps command also outputs a file named `~overlap-err-divs.txt`, which contains a list of shortened file names and div IDs, one item per line.
