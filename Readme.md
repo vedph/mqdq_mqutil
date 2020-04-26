@@ -308,14 +308,18 @@ Remove the `-d` option to disable dry run and truly import data. You will now fi
 
 ### 3. Exporting Database
 
-To export the database, you must first copy the original documents in the output folder, keeping their subdirectories (thus, e.g. `ABLAB-epig.xml` and `ABLAB-epig-app.xml` under `ABLAB`, etc., all these folders under a common target folder). Then:
-
 ```ps1
+.\Mqutil.exe prepare-export E:\Work\mqdq\ E:\Work\mqdqc\app\ E:\Work\mqdqe\
 .\Mqutil.exe export-text mqdq E:\Work\mqdqe\ -c -d
 .\Mqutil.exe export-app mqdq E:\Work\mqdqe\ -c -d
 ```
 
-Remove `-d` to effectively write to the files.
+Remove `-d` to effectively write to the files (`-c` adds comments, which are usually kept for diagnostic purposes):
+
+```ps1
+.\Mqutil.exe export-text mqdq E:\Work\mqdqe\ -c
+.\Mqutil.exe export-app mqdq E:\Work\mqdqe\ -c
+```
 
 ### Files Overview
 

@@ -2,7 +2,7 @@
   "profiles": {
     "Mqutil": {
       "commandName": "Project",
-      "commandLineArgs": "parse-text E:\\Work\\mqdqc\\txt *.xml E:\\Work\\mqdqc\\jtxt\\ -d E:\\Work\\mqdqc\\app\\~overlap-err-divs.txt"
+      "commandLineArgs": "prepare-export E:\\Work\\mqdq\\ E:\\Work\\mqdqc\\app\\ E:\\Work\\mqdqe\\"
     }
   }
 }
