@@ -196,6 +196,28 @@ Sample:
 .\Mqutil.exe import-json E:\Work\mqdqc\jtxt\ *.json E:\Work\mqdqc\japp\ E:\Work\mqdqc\mqdq-profile.json mqdq -d
 ```
 
+## Prepare Export Command
+
+The `prepare-export` command prepares the output directory for exporting. This implies copying all the text files in their corresponding subdirectories from the original files directory, and adding to each the corresponding apparatus file (when present) from the directory with the apparatus files processed to remove overlaps.
+
+Syntax:
+
+```ps1
+.\Mqutil.exe prepare-export <OriginalFilesDir> <ProcessedApparatusFilesDir> <OutputDir>
+```
+
+where:
+
+- `OriginalFilesDir` is the root directory of the original files. This contains a subdirectory for each author.
+- `ProcessedApparatusFilesDir` is the directory containing the apparatus files where overlaps have been removed.
+- `OutputDir` is the directory to be prepared for export. If existing, it will removed before being recreated.
+
+Sample:
+
+```ps1
+.\Mqutil.exe prepare-export E:\Work\mqdq\ E:\Work\mqdqc\app\ E:\Work\mqdqe\
+```
+
 ## Export Text Command
 
 The `export-text` command exports the text from database into existing TEI documents, replacing their content where needed.
