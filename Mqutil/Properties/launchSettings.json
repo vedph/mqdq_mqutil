@@ -2,7 +2,7 @@
   "profiles": {
     "Mqutil": {
       "commandName": "Project",
-      "commandLineArgs": "prepare-export E:\\Work\\mqdq\\ E:\\Work\\mqdqc\\app\\ E:\\Work\\mqdqe\\"
+      "commandLineArgs": "add-credit E:\\Work\\mqdqe\\ \"Software for data migration, remodeling and editing\" \"Daniele Fusi\" -d"
     }
   }
 }

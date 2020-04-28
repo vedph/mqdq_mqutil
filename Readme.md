@@ -243,7 +243,7 @@ Sample:
 
 ## Export Apparatus Command
 
-The `export-app` command
+The `export-app` command exports the apparatus into existing TEI files.
 
 Syntax:
 
@@ -263,6 +263,30 @@ Sample:
 ```ps1
 .\Mqutil.exe export-app mqdq E:\Work\mqdqe\ -c -d
 ```
+
+## Add Credit Command
+
+The `add-credit` command adds a `respStmt` element to the header under `TEI/teiHeader/fileDesc/seriesStmt/`, with this structure:
+
+```xml
+<respStmt>
+  <resp key="MQDQ">...</resp>
+    <persName>...</persName>
+</respStmt>
+```
+
+Syntax:
+
+```ps1
+.\Mqutil.exe add-credit <TextFilesRootDir> <RespValue> <PersValue> [-d]
+```
+
+where:
+
+- `TextFilesRootDir` is the root directory of the TEI text files. Each text file is found under a subdirectory in this root.
+- `RespValue` is the value for the `resp` element.
+- `PersValue` is the value for the `persName` element under `resp`.
+- `-d` triggers a dry run, where nothing is written to the output files.
 
 ## Processing Corpus
 
@@ -341,6 +365,14 @@ Remove `-d` to effectively write to the files (`-c` adds comments, which are usu
 ```ps1
 .\Mqutil.exe export-text mqdq E:\Work\mqdqe\ -c
 .\Mqutil.exe export-app mqdq E:\Work\mqdqe\ -c
+```
+
+### 4. Adding Credits
+
+To add credits in the header, we can do this either in the original files or in the exported files. It must be done only once, as the next editing cycle will just pick up the existing header with the additional credits.
+
+```ps1
+.\Mqutil.exe add-credit E:\Work\mqdqe\ "Software for data migration, remodeling and editing" "Daniele Fusi" -d
 ```
 
 ### Files Overview

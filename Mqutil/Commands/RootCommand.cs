@@ -26,6 +26,7 @@ namespace Mqutil.Commands
             app.Command("prepare-export", c => PrepareExportCommand.Configure(c, options));
             app.Command("export-text", c => ExportTextCommand.Configure(c, options));
             app.Command("export-app", c => ExportApparatusCommand.Configure(c, options));
+            app.Command("add-credit", c => AddCreditCommand.Configure(c, options));
 
             app.OnExecute(() =>
             {
