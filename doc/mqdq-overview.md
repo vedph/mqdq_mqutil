@@ -12,13 +12,13 @@ This type of editing of course implies a database, rather than a set of text fil
 
 Thus, the solution for this editing operation is as follows:
 
-1. import and remodel text and apparatus from TEI documents into a Cadmus database.
+1. [import and remodel](import.md) text and apparatus from TEI documents into a Cadmus database. Also, a list of *testimonia* and philologists is derived from text headers and feeds a number of Cadmus thesauri.
 2. edit in Cadmus.
-3. export text and apparatus from the Cadmus database back into the original TEI documents. This allows preserving all their general infrastructure and header, while replacing their text and apparatus content.
+3. [export text and apparatus](export.md) from the Cadmus database back into the original TEI documents. This allows preserving all their general infrastructure and header, while replacing their text and apparatus content.
 
 Thus, I designed and implemented these tools:
 
-- a set of tools for partitioning texts (for obvious reasons, we cannot think of editing a full-length word in a single web page), parsing texts, parsing apparatuses, remodel them into the Cadmus architecture, and importing all them.
+- a set of tools for [partitioning](partition.md) texts (for obvious reasons, we cannot think of editing a full-length word in a single web page), parsing texts, parsing apparatuses, remodel them into the Cadmus architecture, and importing all them.
 - a set of tools for exporting data from the database into the original TEI documents, replacing their content with newly generated XML code.
 
 Apart from building a fully structured database as a byproduct, this solution also has the advantage of making the editing process much easier, as standoff editing for a critical apparatus is prone to issues and errors, and usually much longer and complex for untrained operators.
@@ -43,7 +43,7 @@ For instance:
 </l>
 ```
 
-The IDs were alogorithmically generated, but we can make no assumptions about them, as they might have been manually edited. So the "ordered" appearance like the one sampled above is the most frequent, but we cannot assume it. All what we can say is that every `w` has its own ID, unique inside the document.
+The IDs were algorithmically generated, but we can make no assumptions about them, as they might have been manually edited. So the "ordered" appearance like the one sampled above is the most frequent, but we cannot assume it. All what we can say is that every `w` has its own ID, unique inside the document.
 
 Here is an apparatus entry sample:
 
@@ -141,3 +141,16 @@ The import/export process may change two aspects of the original apparatus:
 - the linking to the text files:
   - `@loc` (sparse entries) is avoided and replaced by multiple `@from`/`@to` pairs grouped under the same ID.
   - in some cases, for a number of reasons the original files may present overlapping `app` elements, i.e. different elements referring to two regions of text which partially or totally overlap. This is not allowed for a number of theorical and practical reasons, so the importer merges these entries. When data are exported back into TEI, the original entries will appear merged.
+
+## Cadmus Modeling
+
+Without delving into details, the modeling of text and apparatus data follows this [profile](mqdq-profile.json). This profile also contains the thesauri as extracted from the TEI text headers by the import tool. Each work has its own set of testimonia and philologists, so each work has two thesauri in this profile.
+
+Cadmus has items (records), and items have a composite virtual model built of an aggregation of independent, specialized models, called parts. Parts can represent any piece of structured and semantically autonomous data: a date, a note, a text, an apparatus, etc.
+
+The model for MQDQ is very simple. Its parts are:
+
+- **text** (tiled text): this holds the text. Each item is a portion of an original text. Thus, a work (unless very short) gets typically split into a number of items, all belonging to the same group (the work). Each item has a text part with the text and a number of arbitrary metadata attached to each of its words. This is the tiled text part model, see [import](import.md) for more.
+- **apparatus**: the same part model used with up to 3 different roles (for apparatus, ancient notes apparatus, margin notes apparatus).
+
+No other parts are currently used, as the primary purpose is representing only the information present in the original TEI documents.
