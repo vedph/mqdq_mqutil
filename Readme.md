@@ -375,6 +375,8 @@ To add credits in the header, we can do this either in the original files or in 
 .\Mqutil.exe add-credit E:\Work\mqdqe\ "Software for data migration, remodeling and editing" "Daniele Fusi" -d
 ```
 
+Remove `-d` to effectively write to the files.
+
 ### Files Overview
 
 If using the above batch, or a corresponding folder structure, you will have the following folders under some root folder including all the MQDQ materials:

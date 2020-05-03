@@ -6,6 +6,7 @@ using Fusi.Tools.Data;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -125,6 +126,19 @@ namespace Mq.Migration
                         select GetTileText(t));
                 }
                 div.Add(lp);
+
+                // append lb element(s) after l/p if required
+                if (row.Data.ContainsKey(XmlTextParser.KEY_LB))
+                {
+                    if (int.TryParse(
+                        row.Data[XmlTextParser.KEY_LB],
+                        NumberStyles.Integer,
+                        CultureInfo.InvariantCulture, out int n))
+                    {
+                        for (int i = 0; i < n; i++)
+                            div.Add(new XElement(XmlHelper.TEI + "lb"));
+                    }
+                }
             }
         }
 

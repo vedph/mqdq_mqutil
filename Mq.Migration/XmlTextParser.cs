@@ -3,6 +3,7 @@ using Cadmus.Parts.General;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -26,6 +27,12 @@ namespace Mq.Migration
         /// text has been split into several words (<c>_split</c>).
         /// </summary>
         public const string KEY_SPLIT = "_split";
+
+        /// <summary>
+        /// The name of the data key added to notify that the row
+        /// is followed by lb element(s) (<c>_lb</c>).
+        /// </summary>
+        public const string KEY_LB = "_lb";
 
         /// <summary>
         /// The name of the data key added to preserve the original element
@@ -288,6 +295,17 @@ namespace Mq.Migration
                 {
                     string key = GetKeyFromAttrName(attr.Name);
                     row.Data[key] = attr.Value;
+                }
+
+                // lb sibling(s) immediately following p/l become attribute _lb
+                // with value=their count
+                XElement nextSibling = rowElement.ElementsAfterSelf()
+                    .FirstOrDefault();
+                if (nextSibling?.Name.LocalName == "lb")
+                {
+                    int n = nextSibling.ElementsAfterSelf()
+                        .TakeWhile(e => e.Name.LocalName == "br").Count() + 1;
+                    row.Data[KEY_LB] = n.ToString(CultureInfo.InvariantCulture);
                 }
 
                 // tiles
