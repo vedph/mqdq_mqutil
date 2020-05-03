@@ -26,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{C4A30C7F-74A
 		doc\index.md = doc\index.md
 		doc\mqdq-app-chars.tsv = doc\mqdq-app-chars.tsv
 		doc\mqdq-app-report.html = doc\mqdq-app-report.html
+		doc\mqdq-overview.md = doc\mqdq-overview.md
 		doc\mqdq-txt-chars.tsv = doc\mqdq-txt-chars.tsv
 		doc\mqdq-txt-report.html = doc\mqdq-txt-report.html
 		doc\partition.md = doc\partition.md

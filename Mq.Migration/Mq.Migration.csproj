@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadmus.Core" Version="2.2.33" />
-    <PackageReference Include="Cadmus.Parts" Version="2.2.41" />
-    <PackageReference Include="Cadmus.Philology.Parts" Version="2.2.41" />
+    <PackageReference Include="Cadmus.Core" Version="2.2.35" />
+    <PackageReference Include="Cadmus.Parts" Version="2.2.43" />
+    <PackageReference Include="Cadmus.Philology.Parts" Version="2.2.43" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
