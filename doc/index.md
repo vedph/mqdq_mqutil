@@ -18,7 +18,7 @@ This is a dummy tool to be used for importing MQDQ documents into Cadmus for edi
 - [check export text](ck-export-text.md)
 - [check export apparatus](ck-export-app.md)
 
-For those brave solus willing to use the MongoDB database in their checking, its full dump is included in its compressed format (`agz`). You can restore it using the `mongorestore` utility, or use a GUI if you prefer.
+For those brave souls willing to use the MongoDB database in their checking, its full dump is included in its compressed format (`agz`). You can restore it using the `mongorestore` utility, or use a GUI if you prefer.
 
 I can list two GUIs: [Mongo Compass](https://www.mongodb.com/products/compass) and [Studio 3T for MongoDB](https://studio3t.com/), which has a lot more functions but requires you to register; its Academic license is free.
 

@@ -107,7 +107,7 @@ When editing inside Cadmus, the escapes are removed from the text and modeled as
 Explorative resources provided by using software tools of mine:
 
 - [XML structure of text files](mqdq-app-report.html): download this and open locally to see it, as GitHub just shows the source HTML code.
-- [count of all the character codes used in the text](mqdq-app-chars.tsv)
+- [count of all the character codes used in the apparatus](mqdq-app-chars.tsv)
 
 The XML documents tree is as follows:
 
