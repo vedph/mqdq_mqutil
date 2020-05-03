@@ -68,8 +68,8 @@ This situation is anyway emended by my migration software (see below), so we can
 
 Explorative resources provided by using software tools of mine:
 
-- [XML structure of text files](https://github.com/vedph/mqdq_mqutil/blob/master/doc/mqdq-txt-report.html): download this and open locally to see it, as GitHub just shows the source HTML code.
-- [count of all the character codes used in the text](https://github.com/vedph/mqdq_mqutil/blob/master/doc/mqdq-txt-chars.tsv)
+- [XML structure of text files](mqdq-txt-report.html): download this and open locally to see it, as GitHub just shows the source HTML code.
+- [count of all the character codes used in the text](mqdq-txt-chars.tsv)
 
 The XML structure document is an interactive HTML report produced by a software tool of mine, used to inspect the tree of an XML document. It provides users with a quick and interactive overview of the elements and attributes effectively used in a set of documents, together with their location and frequency.
 
@@ -106,8 +106,8 @@ When editing inside Cadmus, the escapes are removed from the text and modeled as
 
 Explorative resources provided by using software tools of mine:
 
-- [XML structure of text files](https://github.com/vedph/mqdq_mqutil/blob/master/doc/mqdq-app-report.html): download this and open locally to see it, as GitHub just shows the source HTML code.
-- [count of all the character codes used in the text](https://github.com/vedph/mqdq_mqutil/blob/master/doc/mqdq-app-chars.tsv)
+- [XML structure of text files](mqdq-app-report.html): download this and open locally to see it, as GitHub just shows the source HTML code.
+- [count of all the character codes used in the text](mqdq-app-chars.tsv)
 
 The XML documents tree is as follows:
 
@@ -120,7 +120,7 @@ The XML documents tree is as follows:
 
 The `app` elements are rebuilt by the export process and reinjected under each `div1`, past their initial `head` child (which is kept unchanged), in place of all the old `app` elements.
 
-You can find more about apparatus modeling and discussion about the issues listed below [here](https://github.com/vedph/mqdq_mqutil/blob/master/doc/apparatus.md).
+You can find more about apparatus modeling and discussion about the issues listed below [here](apparatus.md).
 
 The most relevant peculiarities for `app` entries are:
 
