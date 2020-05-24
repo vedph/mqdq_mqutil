@@ -49,8 +49,6 @@ namespace Mq.Migration
                 _maxTreshold = value;
             }
         }
-
-        public static string TEI { get; set; }
         #endregion
 
         /// <summary>

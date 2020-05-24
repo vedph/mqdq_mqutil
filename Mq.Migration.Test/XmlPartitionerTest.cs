@@ -16,7 +16,7 @@ namespace Mq.Migration.Test
             int i = 0;
             foreach (string n in numbers)
             {
-                XElement l = div1.Elements(XmlPartitioner.TEI + "l")
+                XElement l = div1.Elements(XmlHelper.TEI + "l")
                     .First(e => e.Attribute("n").Value == n);
                 Assert.Same(l.ElementsAfterSelf().First(), breaks[i++]);
             }
@@ -100,7 +100,7 @@ namespace Mq.Migration.Test
             bool touched = partitioner.Partition(doc, "sample");
 
             Assert.False(touched);
-            Assert.False(doc.Descendants(XmlPartitioner.TEI + "pb").Any());
+            Assert.False(doc.Descendants(XmlHelper.TEI + "pb").Any());
         }
 
         [Fact]
@@ -118,7 +118,7 @@ namespace Mq.Migration.Test
             Assert.True(touched);
 
             List<XElement> breaks =
-                doc.Descendants(XmlPartitioner.TEI + "pb").ToList();
+                doc.Descendants(XmlHelper.TEI + "pb").ToList();
 
             AssertExpectedBreaks(breaks, new[] { "13", "27", "37", "43" });
         }
@@ -138,7 +138,7 @@ namespace Mq.Migration.Test
             Assert.True(touched);
 
             List<XElement> breaks =
-                doc.Descendants(XmlPartitioner.TEI + "pb").ToList();
+                doc.Descendants(XmlHelper.TEI + "pb").ToList();
 
             AssertExpectedBreaks(breaks, new[] { "9", "16", "27", "37", "43" });
         }
@@ -158,7 +158,7 @@ namespace Mq.Migration.Test
             Assert.True(touched);
 
             List<XElement> breaks =
-                doc.Descendants(XmlPartitioner.TEI + "pb").ToList();
+                doc.Descendants(XmlHelper.TEI + "pb").ToList();
 
             AssertExpectedBreaks(breaks, new[] { "10" });
         }
@@ -178,7 +178,7 @@ namespace Mq.Migration.Test
             Assert.True(touched);
 
             List<XElement> breaks =
-                doc.Descendants(XmlPartitioner.TEI + "pb").ToList();
+                doc.Descendants(XmlHelper.TEI + "pb").ToList();
 
             AssertExpectedBreaks(breaks, new[] { "4", "10" });
         }
