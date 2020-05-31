@@ -377,6 +377,16 @@ To add credits in the header, we can do this either in the original files or in 
 
 Remove `-d` to effectively write to the files.
 
+### 5. Adding Pins Index
+
+The pins index is managed by the Cadmus editor; whenever a part is saved, it gets updated. When importing a database, it must be created before using Cadmus, as in this case all the parts get imported without their pins index. The tool is the Cadmus API tool named `CadmusTool`, which can be used with this syntax:
+
+```ps1
+.\CadmusTool.exe index mqdq E:\Work\mqdqc\mqdq-profile.json
+```
+
+This creates a new MySql database named `index` using the specified Cadmus profile for MQDQ.
+
 ### Files Overview
 
 If using the above batch, or a corresponding folder structure, you will have the following folders under some root folder including all the MQDQ materials:
