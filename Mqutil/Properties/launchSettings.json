@@ -2,7 +2,7 @@
   "profiles": {
     "Mqutil": {
       "commandName": "Project",
-      "commandLineArgs": "add-credit E:\\Work\\mqdqe\\ \"Software for data migration, remodeling and editing\" \"Daniele Fusi\" -d"
+      "commandLineArgs": "parse-app E:\\Work\\mqdqc\\app\\ anth*-app.xml E:\\Work\\mqdqc\\jtxt\\ E:\\Work\\mqdqc\\japp\\"
     }
   }
 }

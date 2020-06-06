@@ -19,5 +19,18 @@
         /// Gets or sets the note's text value.
         /// </summary>
         public string Value { get; set; }
+
+        /// <summary>
+        /// Converts to string.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="string" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return $"{SectionId}"
+                + (Target != null ? $"=>{Target}" : "")
+                + ": " + Value;
+        }
     }
 }

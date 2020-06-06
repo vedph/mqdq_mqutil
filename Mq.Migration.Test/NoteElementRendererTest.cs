@@ -139,8 +139,29 @@ namespace Mq.Migration.Test
             Assert.Equal("details", elem.Attribute("type")?.Value);
             Assert.Equal("section 3", elem.Value);
 
-            // 3: add @type=intertext
+            // 4: add @type=intertext
             elem = elements[3];
+            Assert.Equal(XmlHelper.TEI + "add", elem.Name);
+            Assert.Equal("intertext", elem.Attribute("type")?.Value);
+            Assert.Equal("section 4", elem.Value);
+        }
+
+        [Fact]
+        public void Render_3Separators_AddAbstractAddIntertext()
+        {
+            NoteElementRenderer renderer = new NoteElementRenderer();
+
+            IList<XElement> elements = renderer.Render("section 1```section 4");
+
+            Assert.Equal(2, elements.Count);
+            // 1: add @type=abstract
+            XElement elem = elements[0];
+            Assert.Equal(XmlHelper.TEI + "add", elem.Name);
+            Assert.Equal("abstract", elem.Attribute("type")?.Value);
+            Assert.Equal("section 1", elem.Value);
+
+            // 4: add @type=intertext
+            elem = elements[1];
             Assert.Equal(XmlHelper.TEI + "add", elem.Name);
             Assert.Equal("intertext", elem.Attribute("type")?.Value);
             Assert.Equal("section 4", elem.Value);
