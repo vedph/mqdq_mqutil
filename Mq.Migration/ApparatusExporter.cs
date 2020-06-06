@@ -97,6 +97,9 @@ namespace Mq.Migration
                     // TODO: decide an attribute
                     if (!string.IsNullOrEmpty(entry.GroupId))
                         target.SetAttributeValue("n", entry.GroupId);
+                    // note
+                    if (!string.IsNullOrEmpty(entry.Note))
+                        target.Add(_noteRenderer.Render(entry.Note));
                     app.Add(target);
                     break;
 

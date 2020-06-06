@@ -2,7 +2,7 @@
   "profiles": {
     "Mqutil": {
       "commandName": "Project",
-      "commandLineArgs": "parse-app E:\\Work\\mqdqc\\app\\ anth*-app.xml E:\\Work\\mqdqc\\jtxt\\ E:\\Work\\mqdqc\\japp\\"
+      "commandLineArgs": "export-app mqdq E:\\Work\\mqdqe\\ -c -d"
     }
   }
 }
