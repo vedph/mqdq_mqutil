@@ -44,10 +44,10 @@ namespace Mq.Migration
             TagAttribute attr = typeof(ApparatusLayerFragment).GetTypeInfo()
                 .GetCustomAttribute<TagAttribute>();
             string frTag = attr != null ? attr.Tag : GetType().FullName;
+            // apparatus fragment IDs for plain apparatus and margin apparatus
             _apparatusFrIds = new string[]
             {
                 frTag,
-                $"{frTag}:ancient",
                 $"{frTag}:margin"
             };
             _noteRenderer = new NoteElementRenderer();
@@ -94,7 +94,6 @@ namespace Mq.Migration
                     // replacement = lem/rdg with value
                     target.Add(entry.Value);
                     // groupId = @n (temporary solution)
-                    // TODO: decide an attribute
                     if (!string.IsNullOrEmpty(entry.GroupId))
                         target.SetAttributeValue("n", entry.GroupId);
                     // note
@@ -192,8 +191,6 @@ namespace Mq.Migration
 
                 // @type
                 if (roleId == _apparatusFrIds[1])
-                    app.SetAttributeValue("type", "ancient-note");
-                else if (roleId == _apparatusFrIds[2])
                     app.SetAttributeValue("type", "margin-note");
 
                 // map location into @from, @to

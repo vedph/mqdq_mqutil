@@ -22,17 +22,20 @@ namespace Mq.Migration
         {
             if (app == null) throw new ArgumentNullException(nameof(app));
 
-            // app with type=margin-note is on another layer
+            // app with type=margin-note is on another layer,
+            // so no overlap is possible
             if (app.Attribute("type")?.Value == XmlApparatusParser.TYPE_MARGIN_NOTE)
                 return false;
 
-            // overlaps are possible when any of the lem/rdg is not ancient-note
+            // else, overlaps are possible when any of the lem/rdg has no type,
+            // or its type is different from ancient-note
             var children = app.Elements()
                 .Where(e => e.Name.LocalName == "lem"
                        || e.Name.LocalName == "rdg");
 
-            return children.Any(e => e.Attribute("type") == null
-                || e.Attribute("type").Value != XmlApparatusParser.TYPE_ANCIENT_NOTE);
+            return children.Any(
+                e => e.Attribute("type") == null
+                || e.Attribute("type").Value == XmlApparatusParser.TYPE_ANCIENT_NOTE);
         }
 
         /// <summary>

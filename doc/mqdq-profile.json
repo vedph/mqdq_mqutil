@@ -26,15 +26,6 @@
         },
         {
           "typeId": "net.fusisoft.tiled-text-layer",
-          "roleId": "fr.net.fusisoft.apparatus:ancient",
-          "name": "ancient apparatus",
-          "description": "Critical apparatus: ancient notes.",
-          "colorKey": "F26744",
-          "groupKey": "text",
-          "sortKey": "text-apparatus-ancient"
-        },
-        {
-          "typeId": "net.fusisoft.tiled-text-layer",
           "roleId": "fr.net.fusisoft.apparatus:margin",
           "name": "margin apparatus",
           "description": "Critical apparatus: marginal notes.",
@@ -284,11 +275,11 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Augustanus nunc Dresdensis 118, s..."
+          "value": "D"
         },
         {
           "id": "lw1-2",
-          "value": "Monacensis lat. 14420 (S. Emmerami)"
+          "value": "E"
         },
         {
           "id": "lw1-3",
@@ -296,7 +287,7 @@
         },
         {
           "id": "lw1-4",
-          "value": "Laurentianus pl. XXXIII cod. 20, s..."
+          "value": "F"
         },
         {
           "id": "lw1-5",
@@ -308,11 +299,11 @@
         },
         {
           "id": "lw1-7",
-          "value": "liber S. Galli 198, s. X"
+          "value": "g"
         },
         {
           "id": "lw1-8",
-          "value": "Sancti Galli 197, s. IX"
+          "value": "G"
         },
         {
           "id": "lw1-9",
@@ -324,7 +315,7 @@
         },
         {
           "id": "lw1-11",
-          "value": "Leidensis Voss. lat. Q 86, s..."
+          "value": "L"
         },
         {
           "id": "lw1-12",
@@ -336,7 +327,7 @@
         },
         {
           "id": "lw1-14",
-          "value": "Monacensis lat. 330, s. XI"
+          "value": "M"
         },
         {
           "id": "lw1-15",
@@ -344,7 +335,7 @@
         },
         {
           "id": "lw1-16",
-          "value": "Laudunensis 273, s. IX ex."
+          "value": "n"
         },
         {
           "id": "lw1-17",
@@ -352,7 +343,7 @@
         },
         {
           "id": "lw1-18",
-          "value": "Laudunensis 279, s. IX"
+          "value": "N"
         },
         {
           "id": "lw1-19",
@@ -360,7 +351,7 @@
         },
         {
           "id": "lw1-20",
-          "value": "Vaticanus Reginae 2078, s..."
+          "value": "R"
         },
         {
           "id": "lw1-21",
@@ -372,7 +363,7 @@
         },
         {
           "id": "lw1-23",
-          "value": "Vindobonensis 261/R 2132 (391 Endlicheri)"
+          "value": "V"
         },
         {
           "id": "lw1-24",
@@ -444,7 +435,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parisinus Latinus 10318 (Salmasianus)"
+          "value": "A"
         }
       ]
     },
@@ -503,147 +494,147 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus C. 74 Sup., sec..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Bodleianus E. Mus. 66, sec..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "Cantabrigiensis B. 14. 3, sec..."
+          "value": "C"
         },
         {
           "id": "lw1-4",
-          "value": "Parisinus Mazarinus 3862, sec..."
+          "value": "D"
         },
         {
           "id": "lw1-5",
-          "value": "Einsidlensis 302, sec. X"
+          "value": "E"
         },
         {
           "id": "lw1-6",
-          "value": "Parisinus 8095, sec. IX med."
+          "value": "F"
         },
         {
           "id": "lw1-7",
-          "value": "Gothanus 115, sec. XI"
+          "value": "G"
         },
         {
           "id": "lw1-8",
-          "value": "Parisinus 16700, sec. IX"
+          "value": "H"
         },
         {
           "id": "lw1-9",
-          "value": "Aurelianensis 295, sec. IX ;..."
+          "value": "I"
         },
         {
           "id": "lw1-10",
-          "value": "Parisinus 8318, sec. XI"
+          "value": "J"
         },
         {
           "id": "lw1-11",
-          "value": "Parisinus 8319, sec. IX-X ;..."
+          "value": "KParisinus 8319, sec. IX-X ;..."
         },
         {
           "id": "lw1-12",
-          "value": "Londinensis 18363, sec. IX ;..."
+          "value": "L"
         },
         {
           "id": "lw1-13",
-          "value": "Londinensis 11034, sec. IX"
+          "value": "La"
         },
         {
           "id": "lw1-14",
-          "value": "Monacensis 19451, sec. X (vel sec. XI)"
+          "value": "M"
         },
         {
           "id": "lw1-15",
-          "value": "Etonensis 150 (Bl. 6. 5)"
+          "value": "N"
         },
         {
           "id": "lw1-16",
-          "value": "Vaticanus Pal. Lat. 1716, sec..."
+          "value": "O"
         },
         {
           "id": "lw1-17",
-          "value": "Parisinus 12284, sec. IX in."
+          "value": "P"
         },
         {
           "id": "lw1-18",
-          "value": "Parisinus 9347, sec. IX"
+          "value": "R"
         },
         {
           "id": "lw1-19",
-          "value": "Sangallensis Bibl. Vad. 336, sec..."
+          "value": "S"
         },
         {
           "id": "lw1-20",
-          "value": "Parisinus 18554, sec. IX med."
+          "value": "T"
         },
         {
           "id": "lw1-21",
-          "value": "Valentianensis 412 (393 bis)"
+          "value": "U"
         },
         {
           "id": "lw1-22",
-          "value": "Vaticanus Reg. 300, sec. X"
+          "value": "V"
         },
         {
           "id": "lw1-23",
-          "value": "Valentianensis 390, sec. IX"
+          "value": "Va"
         },
         {
           "id": "lw1-24",
-          "value": "Aurelianensis 80, sec. X-XI"
+          "value": "W"
         },
         {
           "id": "lw1-25",
-          "value": "Parisinus 18555, sec. IX"
+          "value": "X"
         },
         {
           "id": "lw1-26",
-          "value": "Cartonensis 70, sec. IX ;..."
+          "value": "Y"
         },
         {
           "id": "lw1-27",
-          "value": "Vossianus Q. 86, sec. IX"
+          "value": "ZVossianus Q. 86, sec. IX"
         },
         {
           "id": "lw1-28",
-          "value": "Parisinus 8092, sec. X"
+          "value": "Γ"
         },
         {
           "id": "lw1-29",
-          "value": "Londinensis, Harleianus 3093, sec..."
+          "value": "Δ"
         },
         {
           "id": "lw1-30",
-          "value": "Parisinus 2773, sec. IX-.X"
+          "value": "ΘParisinus 2773, sec. IX-.X"
         },
         {
           "id": "lw1-31",
-          "value": "Trevericus 1093/1469, a. 1048"
+          "value": "Λ"
         },
         {
           "id": "lw1-32",
-          "value": "Parisinus 17905, sec. IX-X"
+          "value": "Π"
         },
         {
           "id": "lw1-33",
-          "value": "Parisinus 13336, sec. X-XI"
+          "value": "Σ"
         },
         {
           "id": "lw1-34",
-          "value": "Parisinus 8096, sec. XI"
+          "value": "Φ"
         },
         {
           "id": "lw1-35",
-          "value": "Vossianus O. 72, sec. XI in."
+          "value": "Ξ"
         },
         {
           "id": "lw1-36",
-          "value": "Londinensis, Harleianus 3072, sec..."
+          "value": "Ψ"
         },
         {
           "id": "lw1-37",
@@ -651,7 +642,7 @@
         },
         {
           "id": "lw1-38",
-          "value": "Bruxellensis 185, sec. X"
+          "value": "Ω"
         }
       ]
     },
@@ -669,115 +660,115 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus C. 74 Sup., sec..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Bodleianus E. Mus. 66, sec..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "Cantabrigiensis B. 14. 3, sec..."
+          "value": "C"
         },
         {
           "id": "lw1-4",
-          "value": "Parisinus Mazarinus 3862, sec..."
+          "value": "D"
         },
         {
           "id": "lw1-5",
-          "value": "Parisinus 8095, sec. IX med."
+          "value": "F"
         },
         {
           "id": "lw1-6",
-          "value": "Gothanus 115, sec. XI"
+          "value": "G"
         },
         {
           "id": "lw1-7",
-          "value": "Parisinus 16700, sec. IX"
+          "value": "H"
         },
         {
           "id": "lw1-8",
-          "value": "Aurelianensis 295, sec. IX ;..."
+          "value": "I"
         },
         {
           "id": "lw1-9",
-          "value": "Parisinus 8318, sec. XI"
+          "value": "J"
         },
         {
           "id": "lw1-10",
-          "value": "Parisinus 8319, sec. IX-X ;..."
+          "value": "KParisinus 8319, sec. IX-X ;..."
         },
         {
           "id": "lw1-11",
-          "value": "Londinensis 11034, sec. IX"
+          "value": "La"
         },
         {
           "id": "lw1-12",
-          "value": "Parisinus 12284, sec. IX in."
+          "value": "P"
         },
         {
           "id": "lw1-13",
-          "value": "Parisinus 9347, sec. IX"
+          "value": "R"
         },
         {
           "id": "lw1-14",
-          "value": "Sangallensis Bibl. Vad. 336, sec..."
+          "value": "S"
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus 18554, sec. IX med."
+          "value": "T"
         },
         {
           "id": "lw1-16",
-          "value": "Valentianensis 412 (393 bis)"
+          "value": "U"
         },
         {
           "id": "lw1-17",
-          "value": "Vaticanus Reg. 300, sec. X"
+          "value": "V"
         },
         {
           "id": "lw1-18",
-          "value": "Parisinus 18555, sec. IX"
+          "value": "X"
         },
         {
           "id": "lw1-19",
-          "value": "Cartonensis 70, sec. IX ;..."
+          "value": "Y"
         },
         {
           "id": "lw1-20",
-          "value": "Vossianus Q. 86, sec. IX"
+          "value": "ZVossianus Q. 86, sec. IX"
         },
         {
           "id": "lw1-21",
-          "value": "Londinensis, Harleianus 3093, sec..."
+          "value": "Δ"
         },
         {
           "id": "lw1-22",
-          "value": "Parisinus 2773, sec. IX-.X"
+          "value": "ΘParisinus 2773, sec. IX-.X"
         },
         {
           "id": "lw1-23",
-          "value": "Parisinus 17905, sec. IX-X"
+          "value": "Π"
         },
         {
           "id": "lw1-24",
-          "value": "Parisinus 13336, sec. X-XI"
+          "value": "Σ"
         },
         {
           "id": "lw1-25",
-          "value": "Parisinus 8096, sec. XI"
+          "value": "Φ"
         },
         {
           "id": "lw1-26",
-          "value": "Vossianus O. 72, sec. XI in."
+          "value": "Ξ"
         },
         {
           "id": "lw1-27",
-          "value": "Londinensis, Harleianus 3072, sec..."
+          "value": "Ψ"
         },
         {
           "id": "lw1-28",
-          "value": "Bruxellensis 185, sec. X"
+          "value": "Ω"
         }
       ]
     },
@@ -786,11 +777,11 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parisinus 9347, sec. IX"
+          "value": "R"
         },
         {
           "id": "lw1-2",
-          "value": "Parisinus 2773, sec. IX-.X"
+          "value": "ΘParisinus 2773, sec. IX-.X"
         },
         {
           "id": "lw1-3",
@@ -816,7 +807,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Monacensis 19451, sec. X (vel sec. XI)"
+          "value": "M"
         }
       ]
     },
@@ -825,83 +816,83 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus C. 74 Sup., sec..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Parisinus Mazarinus 3862, sec..."
+          "value": "D"
         },
         {
           "id": "lw1-3",
-          "value": "Gothanus 115, sec. XI"
+          "value": "G"
         },
         {
           "id": "lw1-4",
-          "value": "Parisinus 16700, sec. IX"
+          "value": "H"
         },
         {
           "id": "lw1-5",
-          "value": "Aurelianensis 295, sec. IX ;..."
+          "value": "I"
         },
         {
           "id": "lw1-6",
-          "value": "Parisinus 8318, sec. XI"
+          "value": "J"
         },
         {
           "id": "lw1-7",
-          "value": "Parisinus 8319, sec. IX-X ;..."
+          "value": "KParisinus 8319, sec. IX-X ;..."
         },
         {
           "id": "lw1-8",
-          "value": "Londinensis 18363, sec. IX ;..."
+          "value": "L"
         },
         {
           "id": "lw1-9",
-          "value": "Etonensis 150 (Bl. 6. 5)"
+          "value": "N"
         },
         {
           "id": "lw1-10",
-          "value": "Parisinus 12284, sec. IX in."
+          "value": "P"
         },
         {
           "id": "lw1-11",
-          "value": "Parisinus 9347, sec. IX"
+          "value": "R"
         },
         {
           "id": "lw1-12",
-          "value": "Sangallensis Bibl. Vad. 336, sec..."
+          "value": "S"
         },
         {
           "id": "lw1-13",
-          "value": "Valentianensis 412 (393 bis)"
+          "value": "U"
         },
         {
           "id": "lw1-14",
-          "value": "Cartonensis 70, sec. IX ;..."
+          "value": "Y"
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus 8092, sec. X"
+          "value": "Γ"
         },
         {
           "id": "lw1-16",
-          "value": "Londinensis, Harleianus 3093, sec..."
+          "value": "Δ"
         },
         {
           "id": "lw1-17",
-          "value": "Parisinus 2773, sec. IX-.X"
+          "value": "ΘParisinus 2773, sec. IX-.X"
         },
         {
           "id": "lw1-18",
-          "value": "Trevericus 1093/1469, a. 1048"
+          "value": "Λ"
         },
         {
           "id": "lw1-19",
-          "value": "Parisinus 13336, sec. X-XI"
+          "value": "Σ"
         },
         {
           "id": "lw1-20",
-          "value": "Vossianus O. 72, sec. XI in."
+          "value": "Ξ"
         }
       ]
     },
@@ -1004,11 +995,11 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus D 52 inf., Milano,..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Einsidlensis 338, Einsiedeln,..."
+          "value": "e"
         },
         {
           "id": "lw1-3",
@@ -1016,19 +1007,19 @@
         },
         {
           "id": "lw1-4",
-          "value": "Bononiensis 188, Boulogne-sur-Mer,..."
+          "value": "g"
         },
         {
           "id": "lw1-5",
-          "value": "Leidensis Vossianus Q 79, Leiden,..."
+          "value": "l"
         },
         {
           "id": "lw1-6",
-          "value": "Bernensis 88, Bern, X sec."
+          "value": "n"
         },
         {
           "id": "lw1-7",
-          "value": "Vindobonensis Palatinus 107 (Philol., 128)"
+          "value": "V"
         }
       ]
     },
@@ -1343,7 +1334,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "codex Ambrosianus D 52 inf..."
+          "value": "Acodex Ambrosianus D 52 inf..."
         },
         {
           "id": "lw1-2",
@@ -1543,7 +1534,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Antuerpiensis M. 16. 8 (saec. X in.)"
+          "value": "A"
         },
         {
           "id": "lw1-2",
@@ -1551,15 +1542,15 @@
         },
         {
           "id": "lw1-3",
-          "value": "Bernensis A92 + 455 (saec. IX/X)"
+          "value": "Bern"
         },
         {
           "id": "lw1-4",
-          "value": "Bambergensis M. V. 12 (saec. XI)"
+          "value": "C"
         },
         {
           "id": "lw1-5",
-          "value": "Bonnensis 175 (saec. IX/X)"
+          "value": "D"
         },
         {
           "id": "lw1-6",
@@ -1567,43 +1558,43 @@
         },
         {
           "id": "lw1-7",
-          "value": "Sangallensis 844 (saec. IX med.)"
+          "value": "F"
         },
         {
           "id": "lw1-8",
-          "value": "Gothanus 103 + 104 (saec. XI/XII)"
+          "value": "Goth"
         },
         {
           "id": "lw1-9",
-          "value": "Harleianus 3095 (saec. IX/X)"
+          "value": "Harl"
         },
         {
           "id": "lw1-10",
-          "value": "Laurentianus LXXVIII. 19 (saec. XII)"
+          "value": "Hib"
         },
         {
           "id": "lw1-11",
-          "value": "Bernensis 179 (saec. IX/X)"
+          "value": "K"
         },
         {
           "id": "lw1-12",
-          "value": "Laurentianus XIV. 15 (saec. IX in.)"
+          "value": "L"
         },
         {
           "id": "lw1-13",
-          "value": "Laudunensis 439 (saec. IX)"
+          "value": "Laud"
         },
         {
           "id": "lw1-14",
-          "value": "Turonensis 803 (saec. IX ex.)"
+          "value": "M"
         },
         {
           "id": "lw1-15",
-          "value": "Neapolitanus IV. G. 68 (saec. IX)"
+          "value": "N"
         },
         {
           "id": "lw1-16",
-          "value": "Notkeri exemplar (Sangall. 810, 825)"
+          "value": "Notker"
         },
         {
           "id": "lw1-17",
@@ -1611,7 +1602,7 @@
         },
         {
           "id": "lw1-18",
-          "value": "Parisinus BN lat. 7181 (saec. IX med.)"
+          "value": "P"
         },
         {
           "id": "lw1-19",
@@ -1619,15 +1610,15 @@
         },
         {
           "id": "lw1-20",
-          "value": "Tegernseensis Clm 18765 (saec. IX in.)"
+          "value": "T"
         },
         {
           "id": "lw1-21",
-          "value": "Vaticanus lat. 3363 (saec. IX)"
+          "value": "V"
         },
         {
           "id": "lw1-22",
-          "value": "Vindobonensis 271 (saec. IX/X)"
+          "value": "Vind"
         },
         {
           "id": "lw1-23",
@@ -2009,7 +2000,7 @@
       "id": "apparatus-authors.cee@en",
       "entries": [
         {
-          "id": "lb1-1",
+          "id": "lb2-1",
           "value": "Bianchi-Stanco"
         }
       ]
@@ -2248,47 +2239,47 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Milano, Bibl. Ambrosiana, D 52 inf..."
+          "value": "AMilano, Bibl. Ambrosiana,..."
         },
         {
           "id": "lw1-2",
-          "value": "London, British Museum, Harl..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "London, British Museum, Cotton Tib..."
+          "value": "C"
         },
         {
           "id": "lw1-4",
-          "value": "Dresden, Sächsische Landesbibl..."
+          "value": "D"
         },
         {
           "id": "lw1-5",
-          "value": "London, British Museum, Harl..."
+          "value": "H"
         },
         {
           "id": "lw1-6",
-          "value": "Cambridge, Trinity College, MS... (945)"
+          "value": "K"
         },
         {
           "id": "lw1-7",
-          "value": "Leiden, Bibl. Rijksuniversiteit,..."
+          "value": "L"
         },
         {
           "id": "lw1-8",
-          "value": "Montpellier, Bibl. Interuniver..."
+          "value": "M"
         },
         {
           "id": "lw1-9",
-          "value": "Siena, Bibl. Comunale degli... (26 VI L)"
+          "value": "S"
         },
         {
           "id": "lw1-10",
-          "value": "London, British Museum, Cotton Tib..."
+          "value": "T"
         },
         {
           "id": "lw1-11",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "VCittà del Vaticano, Bibl..."
         },
         {
           "id": "lw1-12",
@@ -2524,15 +2515,15 @@
         },
         {
           "id": "lw1-2",
-          "value": "Laurentianus 33.9"
+          "value": "Flor"
         },
         {
           "id": "lw1-3",
-          "value": "Laurentianus 33.4"
+          "value": "F₃"
         },
         {
           "id": "lw1-4",
-          "value": "Ambrosianus S 66 sup., saec..."
+          "value": "K₄"
         }
       ]
     },
@@ -2598,7 +2589,7 @@
         },
         {
           "id": "lw1-13",
-          "value": "Ambrosianus S 66 sup., saec..."
+          "value": "K₄"
         },
         {
           "id": "lw1-14",
@@ -2804,7 +2795,7 @@
         },
         {
           "id": "lw1-3",
-          "value": "Antuerpiensis M 17.1"
+          "value": "A₂"
         },
         {
           "id": "lw1-4",
@@ -2820,7 +2811,7 @@
         },
         {
           "id": "lw1-7",
-          "value": "Cantabrigiensis Coll. Corp..."
+          "value": "C₁"
         },
         {
           "id": "lw1-8",
@@ -2868,11 +2859,11 @@
         },
         {
           "id": "lw1-19",
-          "value": "Laurentianus S. Marci 250"
+          "value": "F₂"
         },
         {
           "id": "lw1-20",
-          "value": "Laurentianus 33.4"
+          "value": "F₃"
         },
         {
           "id": "lw1-21",
@@ -2892,11 +2883,11 @@
         },
         {
           "id": "lw1-25",
-          "value": "Cracouiensis 71"
+          "value": "g"
         },
         {
           "id": "lw1-26",
-          "value": "Varsouiensis B. O. Z. 50"
+          "value": "g₂"
         },
         {
           "id": "lw1-27",
@@ -2928,7 +2919,7 @@
         },
         {
           "id": "lw1-34",
-          "value": "Leidensis 294"
+          "value": "J₃"
         },
         {
           "id": "lw1-35",
@@ -2948,7 +2939,7 @@
         },
         {
           "id": "lw1-39",
-          "value": "Londiniensis Egerton 2627"
+          "value": "L₁"
         },
         {
           "id": "lw1-40",
@@ -2960,11 +2951,11 @@
         },
         {
           "id": "lw1-42",
-          "value": "Londiniensis Additional 6042"
+          "value": "L₃"
         },
         {
           "id": "lw1-43",
-          "value": "Londiniensis Harley 2753"
+          "value": "L₄"
         },
         {
           "id": "lw1-44",
@@ -3044,11 +3035,11 @@
         },
         {
           "id": "lw1-63",
-          "value": "Parisinus lat. 8295"
+          "value": "P₃"
         },
         {
           "id": "lw1-64",
-          "value": "Parisinus lat. 8296"
+          "value": "P₄"
         },
         {
           "id": "lw1-65",
@@ -3064,7 +3055,7 @@
         },
         {
           "id": "lw1-68",
-          "value": "Vaticanus Ottobonianus lat..."
+          "value": "R₁₁"
         },
         {
           "id": "lw1-69",
@@ -3112,7 +3103,7 @@
         },
         {
           "id": "lw1-80",
-          "value": "Vaticanus lat. 2807 + Vaticanus..."
+          "value": "R₄"
         },
         {
           "id": "lw1-81",
@@ -3180,7 +3171,7 @@
         },
         {
           "id": "lw1-97",
-          "value": "Parmensis Palatinus 2504"
+          "value": "Z"
         },
         {
           "id": "lw1-98",
@@ -3263,15 +3254,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "United Kingdom, Cambridge,... (B.01.42)"
+          "value": "C"
         }
       ]
     },
@@ -3301,11 +3292,11 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "United Kingdom, Cambridge,... (B.01.42)"
+          "value": "C"
         }
       ]
     },
@@ -3314,11 +3305,11 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "United Kingdom, Cambridge,... (B.01.42)"
+          "value": "C"
         },
         {
           "id": "lw1-3",
@@ -3331,15 +3322,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "United Kingdom, Cambridge,... (B.01.42)"
+          "value": "C"
         }
       ]
     },
@@ -3369,15 +3360,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "United Kingdom, Cambridge,... (B.01.42)"
+          "value": "C"
         }
       ]
     },
@@ -3407,15 +3398,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "United Kingdom, Cambridge,... (B.01.42)"
+          "value": "C"
         }
       ]
     },
@@ -3424,15 +3415,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "France, Laon, Bibliothèque..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "United Kingdom, Cambridge,... (B.01.42)"
+          "value": "C"
         },
         {
           "id": "lw1-4",
@@ -4304,7 +4295,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Sankt Gallen, Stiftsbibliothek,... (cod. miscellaneus)"
+          "value": "Sangall. 397Sankt Gallen,... (cod. miscellaneus)"
         }
       ]
     },
@@ -4914,7 +4905,7 @@
         },
         {
           "id": "lw1-3",
-          "value": "cod. Vatic. lat. 2836, misc. (saec. XV/XVI)"
+          "value": "Bob."
         },
         {
           "id": "lw1-4",
@@ -4926,7 +4917,7 @@
         },
         {
           "id": "lw1-6",
-          "value": "nova impressio editonis Parmensis,..."
+          "value": "V²"
         },
         {
           "id": "lw1-7",
@@ -5156,7 +5147,7 @@
         },
         {
           "id": "lw1-2",
-          "value": "cod. Parisinus lat. 8071 (olim Thuaneus)"
+          "value": "B"
         }
       ]
     },
@@ -5230,7 +5221,7 @@
         },
         {
           "id": "lw1-2",
-          "value": "cod. Parisinus lat. 8071 (olim Thuaneus)"
+          "value": "B"
         },
         {
           "id": "lw1-3",
@@ -5338,15 +5329,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Gudianus 331"
+          "value": "GGudianus 331"
         },
         {
           "id": "lw1-2",
-          "value": "Harleianus 2685"
+          "value": "H"
         },
         {
           "id": "lw1-3",
-          "value": "Trevericus VI 3 (NA XVII 609)"
+          "value": "T"
         }
       ]
     },
@@ -5465,15 +5456,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus 0 136 sup."
+          "value": "aAmbrosianus 0 136 sup."
         },
         {
           "id": "lw1-2",
-          "value": "Bernensis 363"
+          "value": "BBernensis 363"
         },
         {
           "id": "lw1-3",
-          "value": "Blandinianus vetustissimus,..."
+          "value": "Bl"
         },
         {
           "id": "lw1-4",
@@ -5481,23 +5472,23 @@
         },
         {
           "id": "lw1-5",
-          "value": "Monacensis 14685 atque eae partes..."
+          "value": "CMonacensis 14685 atque eae partes..."
         },
         {
           "id": "lw1-6",
-          "value": "Monacensis 14685 atque eae partes..."
+          "value": "EMonacensis 14685 atque eae partes..."
         },
         {
           "id": "lw1-7",
-          "value": "cod. S. Eugendi (St Claude) 2"
+          "value": "Kcod. S. Eugendi (St Claude) 2"
         },
         {
           "id": "lw1-8",
-          "value": "Leidensis B.P.L. lat. 28"
+          "value": "lLeidensis B.P.L. lat. 28"
         },
         {
           "id": "lw1-9",
-          "value": "Mellicensis 177"
+          "value": "MMellicensis 177"
         },
         {
           "id": "lw1-10",
@@ -5505,15 +5496,15 @@
         },
         {
           "id": "lw1-11",
-          "value": "Vaticanus Reg. lat. 1703"
+          "value": "RVaticanus Reg. lat. 1703"
         },
         {
           "id": "lw1-12",
-          "value": "Parisinus 7973"
+          "value": "u"
         },
         {
           "id": "lw1-13",
-          "value": "Parisinus 8213"
+          "value": "v"
         },
         {
           "id": "lw1-14",
@@ -5521,27 +5512,27 @@
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus 7975"
+          "value": "γ"
         },
         {
           "id": "lw1-16",
-          "value": "Harleianus 2725"
+          "value": "δHarleianus 2725"
         },
         {
           "id": "lw1-17",
-          "value": "Parisinus lat. 7972"
+          "value": "λ"
         },
         {
           "id": "lw1-18",
-          "value": "Parisinus lat. 10310"
+          "value": "πParisinus lat. 10310"
         },
         {
           "id": "lw1-19",
-          "value": "Sangallensis oppidanus 312"
+          "value": "σ"
         },
         {
           "id": "lw1-20",
-          "value": "Parisinus lat. 7974"
+          "value": "φ"
         },
         {
           "id": "lw1-21",
@@ -5549,7 +5540,7 @@
         },
         {
           "id": "lw1-22",
-          "value": "Parisinus lat. 7971"
+          "value": "ψ"
         },
         {
           "id": "lw1-23",
@@ -5603,19 +5594,19 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Codex Ambrosianus O 136 sup., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
-          "value": "Codex Parisinus lat. 7900 A, saec..."
+          "value": "A"
         },
         {
           "id": "lw1-3",
-          "value": "Codex Bernensis 363, saec. IX"
+          "value": "B"
         },
         {
           "id": "lw1-4",
-          "value": "Codex Argentoratensis C VII 7,..."
+          "value": "D"
         },
         {
           "id": "lw1-5",
@@ -5627,23 +5618,23 @@
         },
         {
           "id": "lw1-7",
-          "value": "Editio Mediolanensis V. anno..."
+          "value": "Ed. Mediol. 1477"
         },
         {
           "id": "lw1-8",
-          "value": "Codex Leidensis B. P. L. lat..."
+          "value": "l"
         },
         {
           "id": "lw1-9",
-          "value": "Codex Laurentianus 34, 1, saec..."
+          "value": "L"
         },
         {
           "id": "lw1-10",
-          "value": "Codex Mellicensis 177, saec..."
+          "value": "M"
         },
         {
           "id": "lw1-11",
-          "value": "Porphyrionis codex Vaticanus..."
+          "value": "P"
         },
         {
           "id": "lw1-12",
@@ -5651,19 +5642,19 @@
         },
         {
           "id": "lw1-13",
-          "value": "Vaticanus Reginae lat. 1703,..."
+          "value": "R"
         },
         {
           "id": "lw1-14",
-          "value": "Codex Parisinus 7973, saec..."
+          "value": "u"
         },
         {
           "id": "lw1-15",
-          "value": "Codex Parisinus 8213, saec. XII ex."
+          "value": "v"
         },
         {
           "id": "lw1-16",
-          "value": "Codex Blandini (an)"
+          "value": "V"
         },
         {
           "id": "lw1-17",
@@ -5671,27 +5662,27 @@
         },
         {
           "id": "lw1-18",
-          "value": "Codex Parisinus lat. 7975, saec..."
+          "value": "γ"
         },
         {
           "id": "lw1-19",
-          "value": "Codex Harleianus 2725, saec..."
+          "value": "δ"
         },
         {
           "id": "lw1-20",
-          "value": "Codex Parisinus lat. 7972, saec..."
+          "value": "λ"
         },
         {
           "id": "lw1-21",
-          "value": "Codex Parisinus lat. 10310, saec..."
+          "value": "π"
         },
         {
           "id": "lw1-22",
-          "value": "Scholia 'Ps.-Acrontea'"
+          "value": "Σ"
         },
         {
           "id": "lw1-23",
-          "value": "Codex Parisinus lat. 7974, saec..."
+          "value": "φ"
         },
         {
           "id": "lw1-24",
@@ -5699,7 +5690,7 @@
         },
         {
           "id": "lw1-25",
-          "value": "Codex Parisinus lat. 7971, saec..."
+          "value": "ψ"
         },
         {
           "id": "lw1-26",
@@ -5761,19 +5752,19 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Codex Ambrosianus O 136 sup., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
-          "value": "Codex Parisinus lat. 7900 A, saec..."
+          "value": "A"
         },
         {
           "id": "lw1-3",
-          "value": "Codex Bernensis 363, saec. IX"
+          "value": "B"
         },
         {
           "id": "lw1-4",
-          "value": "Codex Argentoratensis C VII 7,..."
+          "value": "D"
         },
         {
           "id": "lw1-5",
@@ -5785,19 +5776,19 @@
         },
         {
           "id": "lw1-7",
-          "value": "Codex Leidensis B. P. L. lat..."
+          "value": "l"
         },
         {
           "id": "lw1-8",
-          "value": "Codex Laurentianus 34, 1, saec..."
+          "value": "L"
         },
         {
           "id": "lw1-9",
-          "value": "Codex Mellicensis 177, saec..."
+          "value": "M"
         },
         {
           "id": "lw1-10",
-          "value": "Porphyrionis codex Vaticanus..."
+          "value": "P"
         },
         {
           "id": "lw1-11",
@@ -5805,7 +5796,7 @@
         },
         {
           "id": "lw1-12",
-          "value": "Vaticanus Reginae lat. 1703,..."
+          "value": "R"
         },
         {
           "id": "lw1-13",
@@ -5813,11 +5804,11 @@
         },
         {
           "id": "lw1-14",
-          "value": "Codex Blandini (an)"
+          "value": "V"
         },
         {
           "id": "lw1-15",
-          "value": "Codex Vossianus lat. Q. 21"
+          "value": "z"
         },
         {
           "id": "lw1-16",
@@ -5825,27 +5816,27 @@
         },
         {
           "id": "lw1-17",
-          "value": "Codex Parisinus lat. 7975, saec..."
+          "value": "γ"
         },
         {
           "id": "lw1-18",
-          "value": "Codex Harleianus 2725, saec..."
+          "value": "δ"
         },
         {
           "id": "lw1-19",
-          "value": "Codex Parisinus lat. 7972, saec..."
+          "value": "λ"
         },
         {
           "id": "lw1-20",
-          "value": "Codex Parisinus lat. 10310, saec..."
+          "value": "π"
         },
         {
           "id": "lw1-21",
-          "value": "Scholia 'Ps.-Acrontea'"
+          "value": "Σ"
         },
         {
           "id": "lw1-22",
-          "value": "Codex Parisinus lat. 7974, saec..."
+          "value": "φ"
         },
         {
           "id": "lw1-23",
@@ -5853,7 +5844,7 @@
         },
         {
           "id": "lw1-24",
-          "value": "Codex Parisinus lat. 7971, saec..."
+          "value": "ψ"
         },
         {
           "id": "lw1-25",
@@ -5915,23 +5906,23 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Codex Ambrosianus O 136 sup., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
-          "value": "Codex Parisinus lat. 7900 A, saec..."
+          "value": "A"
         },
         {
           "id": "lw1-3",
-          "value": "Codex Bernensis 363, saec. IX"
+          "value": "B"
         },
         {
           "id": "lw1-4",
-          "value": " (uel E)"
+          "value": "C"
         },
         {
           "id": "lw1-5",
-          "value": "Codex Argentoratensis C VII 7,..."
+          "value": "D"
         },
         {
           "id": "lw1-6",
@@ -5943,27 +5934,27 @@
         },
         {
           "id": "lw1-8",
-          "value": "Codex Gothanus Bibliothecae..."
+          "value": "g"
         },
         {
           "id": "lw1-9",
-          "value": "Codex Leidensis B. P. L. lat..."
+          "value": "l"
         },
         {
           "id": "lw1-10",
-          "value": "Codex Laurentianus 34, 1, saec..."
+          "value": "L"
         },
         {
           "id": "lw1-11",
-          "value": "Codex Mellicensis 177, saec..."
+          "value": "M"
         },
         {
           "id": "lw1-12",
-          "value": "Porphyrionis codex Vaticanus..."
+          "value": "P"
         },
         {
           "id": "lw1-13",
-          "value": "Codex Parisinus 8072 uar..."
+          "value": "Parisinus 8072 uar."
         },
         {
           "id": "lw1-14",
@@ -5971,19 +5962,19 @@
         },
         {
           "id": "lw1-15",
-          "value": "Vaticanus Reginae lat. 1703,..."
+          "value": "R"
         },
         {
           "id": "lw1-16",
-          "value": "Codex Parisinus 7973, saec..."
+          "value": "u"
         },
         {
           "id": "lw1-17",
-          "value": "Codex Blandini (an)"
+          "value": "V"
         },
         {
           "id": "lw1-18",
-          "value": "Codex Vossianus lat. Q. 21"
+          "value": "z"
         },
         {
           "id": "lw1-19",
@@ -5991,27 +5982,27 @@
         },
         {
           "id": "lw1-20",
-          "value": "Codex Parisinus lat. 7975, saec..."
+          "value": "γ"
         },
         {
           "id": "lw1-21",
-          "value": "Codex Harleianus 2725, saec..."
+          "value": "δ"
         },
         {
           "id": "lw1-22",
-          "value": "Codex Parisinus lat. 7972, saec..."
+          "value": "λ"
         },
         {
           "id": "lw1-23",
-          "value": "Codex Parisinus lat. 10310, saec..."
+          "value": "π"
         },
         {
           "id": "lw1-24",
-          "value": "Scholia 'Ps.-Acrontea'"
+          "value": "Σ"
         },
         {
           "id": "lw1-25",
-          "value": "Codex Parisinus lat. 7974, saec..."
+          "value": "φ"
         },
         {
           "id": "lw1-26",
@@ -6019,7 +6010,7 @@
         },
         {
           "id": "lw1-27",
-          "value": "Codex Parisinus lat. 7971, saec..."
+          "value": "ψ"
         },
         {
           "id": "lw1-28",
@@ -6085,19 +6076,19 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Codex Ambrosianus O 136 sup., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
-          "value": "Codex Parisinus lat. 7900 A, saec..."
+          "value": "A"
         },
         {
           "id": "lw1-3",
-          "value": "Codex Bernensis 363, saec. IX"
+          "value": "B"
         },
         {
           "id": "lw1-4",
-          "value": " (uel E)"
+          "value": "C"
         },
         {
           "id": "lw1-5",
@@ -6105,35 +6096,35 @@
         },
         {
           "id": "lw1-6",
-          "value": "Codex Gothanus Bibliothecae..."
+          "value": "g"
         },
         {
           "id": "lw1-7",
-          "value": "Codex Leidensis B. P. L. lat..."
+          "value": "l"
         },
         {
           "id": "lw1-8",
-          "value": "Codex Laurentianus 34, 1, saec..."
+          "value": "L"
         },
         {
           "id": "lw1-9",
-          "value": "Porphyrionis codex Vaticanus... (interpretatio)"
+          "value": "PPorphyrionis codex Vaticanus... (interpretatio)"
         },
         {
           "id": "lw1-10",
-          "value": "Vaticanus Reginae lat. 1703,..."
+          "value": "R"
         },
         {
           "id": "lw1-11",
-          "value": "Codex Parisinus 7973, saec..."
+          "value": "u"
         },
         {
           "id": "lw1-12",
-          "value": "Codex Vaticanus lat. 3866, saec..."
+          "value": "U"
         },
         {
           "id": "lw1-13",
-          "value": "Codex Blandini (an)"
+          "value": "V"
         },
         {
           "id": "lw1-14",
@@ -6141,31 +6132,31 @@
         },
         {
           "id": "lw1-15",
-          "value": "Codex Parisinus lat. 7975, saec..."
+          "value": "γ"
         },
         {
           "id": "lw1-16",
-          "value": "Codex Harleianus 2725, saec..."
+          "value": "δ"
         },
         {
           "id": "lw1-17",
-          "value": "Codex Parisinus lat. 7972, saec..."
+          "value": "λ"
         },
         {
           "id": "lw1-18",
-          "value": "Codex Parisinus lat. 10310, saec..."
+          "value": "π"
         },
         {
           "id": "lw1-19",
-          "value": "Scholia 'Ps.-Acrontea'"
+          "value": "Σ"
         },
         {
           "id": "lw1-20",
-          "value": "Codex Parisinus lat. 7974, saec..."
+          "value": "φ"
         },
         {
           "id": "lw1-21",
-          "value": "Codex Parisinus lat. 7971, saec..."
+          "value": "ψ"
         },
         {
           "id": "lw1-22",
@@ -6203,23 +6194,23 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Codex Ambrosianus O 136 sup., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
-          "value": "Codex Parisinus lat. 7900 A, saec..."
+          "value": "A"
         },
         {
           "id": "lw1-3",
-          "value": "Codex Bernensis 363, saec. IX"
+          "value": "B"
         },
         {
           "id": "lw1-4",
-          "value": " (uel E)"
+          "value": "C"
         },
         {
           "id": "lw1-5",
-          "value": "Codex Harleianus 2688, saec..."
+          "value": "d"
         },
         {
           "id": "lw1-6",
@@ -6227,51 +6218,51 @@
         },
         {
           "id": "lw1-7",
-          "value": "Codex Leidensis B. P. L. lat..."
+          "value": "l"
         },
         {
           "id": "lw1-8",
-          "value": "Codex Laurentianus 34, 1, saec..."
+          "value": "L"
         },
         {
           "id": "lw1-9",
-          "value": "Codex Mellicensis 177, saec..."
+          "value": "M"
         },
         {
           "id": "lw1-10",
-          "value": "Porphyrionis codex Vaticanus... (interpretatio)"
+          "value": "PPorphyrionis codex Vaticanus... (interpretatio)"
         },
         {
           "id": "lw1-11",
-          "value": "Vaticanus Reginae lat. 1703,..."
+          "value": "R"
         },
         {
           "id": "lw1-12",
-          "value": "Codex Parisinus 7973, saec..."
+          "value": "u"
         },
         {
           "id": "lw1-13",
-          "value": "Codex Blandini (an)"
+          "value": "V"
         },
         {
           "id": "lw1-14",
-          "value": "Codex Parisinus lat. 7975, saec..."
+          "value": "γ"
         },
         {
           "id": "lw1-15",
-          "value": "Codex Harleianus 2725, saec..."
+          "value": "δ"
         },
         {
           "id": "lw1-16",
-          "value": "Codex Parisinus lat. 7972, saec..."
+          "value": "λ"
         },
         {
           "id": "lw1-17",
-          "value": "Codex Parisinus lat. 10310, saec..."
+          "value": "π"
         },
         {
           "id": "lw1-18",
-          "value": "Codex Parisinus lat. 7974, saec..."
+          "value": "φ"
         },
         {
           "id": "lw1-19",
@@ -6284,15 +6275,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus 0 136 sup."
+          "value": "aAmbrosianus 0 136 sup."
         },
         {
           "id": "lw1-2",
-          "value": "Parisinus lat. 7900 A"
+          "value": "AParisinus lat. 7900 A"
         },
         {
           "id": "lw1-3",
-          "value": "Blandinianus vetustissimus,..."
+          "value": "Bl"
         },
         {
           "id": "lw1-4",
@@ -6304,27 +6295,27 @@
         },
         {
           "id": "lw1-6",
-          "value": "Monacensis 14685 atque eae partes..."
+          "value": "CMonacensis 14685 atque eae partes..."
         },
         {
           "id": "lw1-7",
-          "value": "Harleianus 2688"
+          "value": "dHarleianus 2688"
         },
         {
           "id": "lw1-8",
-          "value": "Monacensis 14685 atque eae partes..."
+          "value": "EMonacensis 14685 atque eae partes..."
         },
         {
           "id": "lw1-9",
-          "value": "Gothanus duc. B 61"
+          "value": "gGothanus duc. B 61"
         },
         {
           "id": "lw1-10",
-          "value": "Leidensis B.P.L. lat. 28"
+          "value": "lLeidensis B.P.L. lat. 28"
         },
         {
           "id": "lw1-11",
-          "value": "Mellicensis 177"
+          "value": "MMellicensis 177"
         },
         {
           "id": "lw1-12",
@@ -6332,19 +6323,19 @@
         },
         {
           "id": "lw1-13",
-          "value": "Vaticanus Reg. lat. 1703"
+          "value": "RVaticanus Reg. lat. 1703"
         },
         {
           "id": "lw1-14",
-          "value": "Parisinus 8213"
+          "value": "vParisinus 8213"
         },
         {
           "id": "lw1-15",
-          "value": "Oxoniensis Bodleianus olim..."
+          "value": "x"
         },
         {
           "id": "lw1-16",
-          "value": "Vossianus lat. Q. 21"
+          "value": "zVossianus lat. Q. 21"
         },
         {
           "id": "lw1-17",
@@ -6352,27 +6343,27 @@
         },
         {
           "id": "lw1-18",
-          "value": "Parisinus 7975"
+          "value": "γParisinus 7975"
         },
         {
           "id": "lw1-19",
-          "value": "Harleianus 2725"
+          "value": "δHarleianus 2725"
         },
         {
           "id": "lw1-20",
-          "value": "Parisinus lat. 7972"
+          "value": "λParisinus lat. 7972"
         },
         {
           "id": "lw1-21",
-          "value": "Parisinus lat. 10310"
+          "value": "πParisinus lat. 10310"
         },
         {
           "id": "lw1-22",
-          "value": "Sangallensis oppidanus 312"
+          "value": "σ"
         },
         {
           "id": "lw1-23",
-          "value": "Parisinus lat. 7974"
+          "value": "φParisinus lat. 7974"
         },
         {
           "id": "lw1-24",
@@ -6380,7 +6371,7 @@
         },
         {
           "id": "lw1-25",
-          "value": "Parisinus lat. 7971"
+          "value": "ψParisinus lat. 7971"
         },
         {
           "id": "lw1-26",
@@ -6434,19 +6425,19 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus 0 136 sup."
+          "value": "aAmbrosianus 0 136 sup."
         },
         {
           "id": "lw1-2",
-          "value": "Blandinianus vetustissimus,..."
+          "value": "Bl"
         },
         {
           "id": "lw1-3",
-          "value": "Monacensis 14685 atque eae partes..."
+          "value": "CMonacensis 14685 atque eae partes..."
         },
         {
           "id": "lw1-4",
-          "value": "Harleianus 2688"
+          "value": "dHarleianus 2688"
         },
         {
           "id": "lw1-5",
@@ -6454,15 +6445,15 @@
         },
         {
           "id": "lw1-6",
-          "value": "Gothanus duc. B 61"
+          "value": "gGothanus duc. B 61"
         },
         {
           "id": "lw1-7",
-          "value": "Leidensis B.P.L. lat. 28"
+          "value": "lLeidensis B.P.L. lat. 28"
         },
         {
           "id": "lw1-8",
-          "value": "Mellicensis 177"
+          "value": "MMellicensis 177"
         },
         {
           "id": "lw1-9",
@@ -6470,15 +6461,15 @@
         },
         {
           "id": "lw1-10",
-          "value": "Vaticanus Reg. lat. 1703"
+          "value": "RVaticanus Reg. lat. 1703"
         },
         {
           "id": "lw1-11",
-          "value": "Parisinus 8213"
+          "value": "vParisinus 8213"
         },
         {
           "id": "lw1-12",
-          "value": "Vossianus lat. Q. 21"
+          "value": "zVossianus lat. Q. 21"
         },
         {
           "id": "lw1-13",
@@ -6486,27 +6477,27 @@
         },
         {
           "id": "lw1-14",
-          "value": "Parisinus 7975"
+          "value": "γParisinus 7975"
         },
         {
           "id": "lw1-15",
-          "value": "Harleianus 2725"
+          "value": "δHarleianus 2725"
         },
         {
           "id": "lw1-16",
-          "value": "Parisinus lat. 7972"
+          "value": "λParisinus lat. 7972"
         },
         {
           "id": "lw1-17",
-          "value": "Parisinus lat. 10310"
+          "value": "πParisinus lat. 10310"
         },
         {
           "id": "lw1-18",
-          "value": "Sangallensis oppidanus 312"
+          "value": "σ"
         },
         {
           "id": "lw1-19",
-          "value": "Parisinus lat. 7974"
+          "value": "φParisinus lat. 7974"
         },
         {
           "id": "lw1-20",
@@ -6514,7 +6505,7 @@
         },
         {
           "id": "lw1-21",
-          "value": "Parisinus lat. 7971"
+          "value": "ψParisinus lat. 7971"
         },
         {
           "id": "lw1-22",
@@ -6564,19 +6555,19 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Codex Ambrosianus O 136 sup., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
-          "value": "Codex Parisinus lat. 7900 A, saec..."
+          "value": "A"
         },
         {
           "id": "lw1-3",
-          "value": "Codex Bernensis 363, saec. IX"
+          "value": "B"
         },
         {
           "id": "lw1-4",
-          "value": " (uel E)"
+          "value": "C"
         },
         {
           "id": "lw1-5",
@@ -6588,35 +6579,35 @@
         },
         {
           "id": "lw1-7",
-          "value": "Codex Leidensis B. P. L. lat..."
+          "value": "l"
         },
         {
           "id": "lw1-8",
-          "value": "Codex Laurentianus 34, 1, saec..."
+          "value": "L"
         },
         {
           "id": "lw1-9",
-          "value": "Codex Mellicensis 177, saec..."
+          "value": "M"
         },
         {
           "id": "lw1-10",
-          "value": "Porphyrionis codex Vaticanus..."
+          "value": "P"
         },
         {
           "id": "lw1-11",
-          "value": "Vaticanus Reginae lat. 1703,..."
+          "value": "R"
         },
         {
           "id": "lw1-12",
-          "value": "Codex Parisinus 7973, saec..."
+          "value": "u"
         },
         {
           "id": "lw1-13",
-          "value": "Codex Vaticanus lat. 3866, saec..."
+          "value": "U"
         },
         {
           "id": "lw1-14",
-          "value": "Codex Blandini (an)"
+          "value": "V"
         },
         {
           "id": "lw1-15",
@@ -6624,35 +6615,35 @@
         },
         {
           "id": "lw1-16",
-          "value": "Codex Parisinus lat. 7975, saec..."
+          "value": "γ"
         },
         {
           "id": "lw1-17",
-          "value": "Codex Harleianus 2725, saec..."
+          "value": "δ"
         },
         {
           "id": "lw1-18",
-          "value": "Codex Parisinus lat. 7972, saec..."
+          "value": "λ"
         },
         {
           "id": "lw1-19",
-          "value": "Codex Parisinus lat. 10310, saec..."
+          "value": "π"
         },
         {
           "id": "lw1-20",
-          "value": "Scholia codicum γ et cognatoru..."
+          "value": "σΓ"
         },
         {
           "id": "lw1-21",
-          "value": "Scholia 'Ps.-Acrontea'"
+          "value": "Σ"
         },
         {
           "id": "lw1-22",
-          "value": "Codex Parisinus lat. 7974, saec..."
+          "value": "φ"
         },
         {
           "id": "lw1-23",
-          "value": "Codex Parisinus lat. 7971, saec..."
+          "value": "ψ"
         },
         {
           "id": "lw1-24",
@@ -6702,15 +6693,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus 0 136 sup."
+          "value": "aAmbrosianus 0 136 sup."
         },
         {
           "id": "lw1-2",
-          "value": "Bernensis 363"
+          "value": "BBernensis 363"
         },
         {
           "id": "lw1-3",
-          "value": "Blandinianus vetustissimus,..."
+          "value": "Bl"
         },
         {
           "id": "lw1-4",
@@ -6722,7 +6713,7 @@
         },
         {
           "id": "lw1-6",
-          "value": "Monacensis 14685 atque eae partes..."
+          "value": "CMonacensis 14685 atque eae partes..."
         },
         {
           "id": "lw1-7",
@@ -6730,23 +6721,23 @@
         },
         {
           "id": "lw1-8",
-          "value": "Monacensis 14685 atque eae partes..."
+          "value": "EMonacensis 14685 atque eae partes..."
         },
         {
           "id": "lw1-9",
-          "value": "Gothanus duc. B 61"
+          "value": "gGothanus duc. B 61"
         },
         {
           "id": "lw1-10",
-          "value": "cod. S. Eugendi (St Claude) 2"
+          "value": "Kcod. S. Eugendi (St Claude) 2"
         },
         {
           "id": "lw1-11",
-          "value": "Leidensis B.P.L. lat. 28"
+          "value": "lLeidensis B.P.L. lat. 28"
         },
         {
           "id": "lw1-12",
-          "value": "Mellicensis 177"
+          "value": "MMellicensis 177"
         },
         {
           "id": "lw1-13",
@@ -6754,15 +6745,15 @@
         },
         {
           "id": "lw1-14",
-          "value": "Vaticanus Reg. lat. 1703"
+          "value": "RVaticanus Reg. lat. 1703"
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus 7973"
+          "value": "u"
         },
         {
           "id": "lw1-16",
-          "value": "Vossianus lat. Q. 21"
+          "value": "zVossianus lat. Q. 21"
         },
         {
           "id": "lw1-17",
@@ -6770,27 +6761,27 @@
         },
         {
           "id": "lw1-18",
-          "value": "Parisinus 7975"
+          "value": "γ"
         },
         {
           "id": "lw1-19",
-          "value": "Harleianus 2725"
+          "value": "δHarleianus 2725"
         },
         {
           "id": "lw1-20",
-          "value": "Parisinus lat. 7972"
+          "value": "λParisinus lat. 7972"
         },
         {
           "id": "lw1-21",
-          "value": "Parisinus lat. 10310"
+          "value": "πParisinus lat. 10310"
         },
         {
           "id": "lw1-22",
-          "value": "Sangallensis oppidanus 312"
+          "value": "σ"
         },
         {
           "id": "lw1-23",
-          "value": "Parisinus lat. 7974"
+          "value": "φParisinus lat. 7974"
         },
         {
           "id": "lw1-24",
@@ -6798,7 +6789,7 @@
         },
         {
           "id": "lw1-25",
-          "value": "Parisinus lat. 7971"
+          "value": "ψParisinus lat. 7971"
         },
         {
           "id": "lw1-26",
@@ -6868,11 +6859,11 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus 0 136 sup."
+          "value": "aAmbrosianus 0 136 sup."
         },
         {
           "id": "lw1-2",
-          "value": "Blandinianus vetustissimus,..."
+          "value": "Bl"
         },
         {
           "id": "lw1-3",
@@ -6880,7 +6871,7 @@
         },
         {
           "id": "lw1-4",
-          "value": "Monacensis 14685 atque eae partes..."
+          "value": "CMonacensis 14685 atque eae partes..."
         },
         {
           "id": "lw1-5",
@@ -6888,35 +6879,35 @@
         },
         {
           "id": "lw1-6",
-          "value": "Monacensis 14685 atque eae partes..."
+          "value": "EMonacensis 14685 atque eae partes..."
         },
         {
           "id": "lw1-7",
-          "value": "Gothanus duc. B 61"
+          "value": "gGothanus duc. B 61"
         },
         {
           "id": "lw1-8",
-          "value": "cod. S. Eugendi (St Claude) 2"
+          "value": "Kcod. S. Eugendi (St Claude) 2"
         },
         {
           "id": "lw1-9",
-          "value": "Leidensis B.P.L. lat. 28"
+          "value": "lLeidensis B.P.L. lat. 28"
         },
         {
           "id": "lw1-10",
-          "value": "Monacensis lat. 375 saec..."
+          "value": "m"
         },
         {
           "id": "lw1-11",
-          "value": "Mellicensis 177"
+          "value": "MMellicensis 177"
         },
         {
           "id": "lw1-12",
-          "value": "Vaticanus Ottobonianus lat..."
+          "value": "Ott."
         },
         {
           "id": "lw1-13",
-          "value": "Oxoniensis collegii Reginensis..."
+          "value": "Oxon.Oxoniensis collegii..."
         },
         {
           "id": "lw1-14",
@@ -6924,27 +6915,27 @@
         },
         {
           "id": "lw1-15",
-          "value": "Vaticanus Reg. lat. 1703"
+          "value": "RVaticanus Reg. lat. 1703"
         },
         {
           "id": "lw1-16",
-          "value": "Vaticani 1703 pars extrema (s. 2,1,16 poteras - 2,8,95)"
+          "value": "R2Vaticani 1703 pars extrema (s. 2,1,16 poteras - 2,8,95)"
         },
         {
           "id": "lw1-17",
-          "value": "Parisinus 7973"
+          "value": "u"
         },
         {
           "id": "lw1-18",
-          "value": "Parisinus 8213"
+          "value": "v"
         },
         {
           "id": "lw1-19",
-          "value": "Oxoniensis Bodleianus olim..."
+          "value": "x"
         },
         {
           "id": "lw1-20",
-          "value": "Vossianus lat. Q. 21"
+          "value": "zVossianus lat. Q. 21"
         },
         {
           "id": "lw1-21",
@@ -6952,19 +6943,19 @@
         },
         {
           "id": "lw1-22",
-          "value": "Parisinus 7975"
+          "value": "γ"
         },
         {
           "id": "lw1-23",
-          "value": "Parisinus lat. 7972"
+          "value": "λParisinus lat. 7972"
         },
         {
           "id": "lw1-24",
-          "value": "Sangallensis oppidanus 312"
+          "value": "σ"
         },
         {
           "id": "lw1-25",
-          "value": "Parisinus lat. 7974"
+          "value": "φParisinus lat. 7974"
         },
         {
           "id": "lw1-26",
@@ -6972,7 +6963,7 @@
         },
         {
           "id": "lw1-27",
-          "value": "Parisinus lat. 7971"
+          "value": "ψParisinus lat. 7971"
         },
         {
           "id": "lw1-28",
@@ -7080,87 +7071,87 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Augiensis (Karoliruh.)"
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Bernensis 534, sec. IX-X"
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "Bobiensis (nunc Ambrosianus C 74)"
+          "value": "BbBobiensis (nunc Ambrosianus C 74)"
         },
         {
           "id": "lw1-4",
-          "value": "Bodleianus 527, sec. XIII"
+          "value": "Bodl."
         },
         {
           "id": "lw1-5",
-          "value": "codex collegii corporis Christi..."
+          "value": "C"
         },
         {
           "id": "lw1-6",
-          "value": "Cantabrig. Gg 35, sec. XI"
+          "value": "C³Cantabrig. Gg 35, sec. XI"
         },
         {
           "id": "lw1-7",
-          "value": "Gedanensis XVII A 9. 66, sec..."
+          "value": "G"
         },
         {
           "id": "lw1-8",
-          "value": "Helmstadiensis 553, sec. XI"
+          "value": "H"
         },
         {
           "id": "lw1-9",
-          "value": "Harleianus 3093, sec. XI"
+          "value": "HlHarleianus 3093, sec. XI"
         },
         {
           "id": "lw1-10",
-          "value": "Karoliruhensis 217, sec. IX (ff. 1-39 e 44)"
+          "value": "K₁, (ff. 1-39 e 44)"
         },
         {
           "id": "lw1-11",
-          "value": "Karoliruhensis 217, sec. IX (ff.68 ss.)"
+          "value": "K₂Karoliruhensis 217, sec. IX (ff.68 ss.)"
         },
         {
           "id": "lw1-12",
-          "value": "Laudunensis 101, sec. IX"
+          "value": "L"
         },
         {
           "id": "lw1-13",
-          "value": "Monacensis 6402 (olim Frising. 202)"
+          "value": "M"
         },
         {
           "id": "lw1-14",
-          "value": "Montepessulanus 362, sec. IX"
+          "value": "Mp"
         },
         {
           "id": "lw1-15",
-          "value": "Neoclaustroburgensis 1243, sec..."
+          "value": "N"
         },
         {
           "id": "lw1-16",
-          "value": "Parisinus 9347 (olim Remensis)"
+          "value": "PParisinus 9347 (olim Remensis)"
         },
         {
           "id": "lw1-17",
-          "value": "codex Musei Britannici 15 A XVI,..."
+          "value": "R"
         },
         {
           "id": "lw1-18",
-          "value": "Turicensis C 68, sec. IX"
+          "value": "T"
         },
         {
           "id": "lw1-19",
-          "value": "Vaticanus reginae Sueciae 333, sec..."
+          "value": "V₁"
         },
         {
           "id": "lw1-20",
-          "value": "Vaticanus Ottobianus 35, sec..."
+          "value": "V₂"
         },
         {
           "id": "lw1-21",
-          "value": "consensus codicum"
+          "value": "Ωconsensus codicum"
         }
       ]
     },
@@ -7198,7 +7189,7 @@
         },
         {
           "id": "lw1-2",
-          "value": "Parisinus 8071"
+          "value": "F"
         },
         {
           "id": "lw1-3",
@@ -7206,7 +7197,7 @@
         },
         {
           "id": "lw1-4",
-          "value": "Parisinus 9345"
+          "value": "H"
         },
         {
           "id": "lw1-5",
@@ -7230,7 +7221,7 @@
         },
         {
           "id": "lw1-10",
-          "value": "Florilegium Sangallense"
+          "value": "Sang."
         },
         {
           "id": "lw1-11",
@@ -7824,7 +7815,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parisinus 10318 (codex Salmasianus)"
+          "value": "A"
         },
         {
           "id": "lw1-2",
@@ -8216,7 +8207,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Bruxellensis 10699 (olim cusanus)"
+          "value": "a"
         },
         {
           "id": "lw1-2",
@@ -8224,7 +8215,7 @@
         },
         {
           "id": "lw1-3",
-          "value": "Venetus Marcianus Lat. XII 69 c..."
+          "value": "b"
         },
         {
           "id": "lw1-4",
@@ -8236,11 +8227,11 @@
         },
         {
           "id": "lw1-6",
-          "value": "Leidensis Vossianus (237)"
+          "value": "c"
         },
         {
           "id": "lw1-7",
-          "value": "Bodleianus Auct. F. 4. 34 post..."
+          "value": "d"
         },
         {
           "id": "lw1-8",
@@ -8248,7 +8239,7 @@
         },
         {
           "id": "lw1-9",
-          "value": "Caesenas 25.5 anni 1457"
+          "value": "e"
         },
         {
           "id": "lw1-10",
@@ -8260,11 +8251,11 @@
         },
         {
           "id": "lw1-12",
-          "value": "Parisinus LAtinus 8022 c. 1460"
+          "value": "f"
         },
         {
           "id": "lw1-13",
-          "value": "Bruxellensis 10012 (olim Gemblacensis)"
+          "value": "G"
         },
         {
           "id": "lw1-14",
@@ -8280,19 +8271,19 @@
         },
         {
           "id": "lw1-17",
-          "value": "Bostoniensis Bibl. Publ. Q. Med... (olim G 38 46)"
+          "value": "i"
         },
         {
           "id": "lw1-18",
-          "value": "Monacensis 15743 c. 1460"
+          "value": "k"
         },
         {
           "id": "lw1-19",
-          "value": "Oxoniensis Coll. Corp. Christ..."
+          "value": "l"
         },
         {
           "id": "lw1-20",
-          "value": "Lipsiensis 1465 saec. XI"
+          "value": "L"
         },
         {
           "id": "lw1-21",
@@ -8304,11 +8295,11 @@
         },
         {
           "id": "lw1-23",
-          "value": "Parisinus Nouv. Acqu. Latinus 483..."
+          "value": "m"
         },
         {
           "id": "lw1-24",
-          "value": "Matritensis 3678 anni 1417"
+          "value": "M"
         },
         {
           "id": "lw1-25",
@@ -8324,7 +8315,7 @@
         },
         {
           "id": "lw1-28",
-          "value": "Londoniensis Bibl. Brit. Add... (I 1-727)"
+          "value": "NLondoniensis Bibl. Brit. Add... (I 1-727)"
         },
         {
           "id": "lw1-29",
@@ -8344,7 +8335,7 @@
         },
         {
           "id": "lw1-33",
-          "value": "Vaticanus Palatinus Latinus 1711,..."
+          "value": "p"
         },
         {
           "id": "lw1-34",
@@ -8352,7 +8343,7 @@
         },
         {
           "id": "lw1-35",
-          "value": "Parmensis Palat. 283 (I 1-15)"
+          "value": "P"
         },
         {
           "id": "lw1-36",
@@ -8364,11 +8355,11 @@
         },
         {
           "id": "lw1-38",
-          "value": "Vaticanus Latinus 8172 c. 1470"
+          "value": "r"
         },
         {
           "id": "lw1-39",
-          "value": "Holkhamicus 331 c. 1470"
+          "value": "t"
         },
         {
           "id": "lw1-40",
@@ -8376,11 +8367,11 @@
         },
         {
           "id": "lw1-41",
-          "value": "Vaticanus Urbin. Lat. 667 c..."
+          "value": "u"
         },
         {
           "id": "lw1-42",
-          "value": "Vaticanus Urbin. Lat. 668 c..."
+          "value": "v"
         },
         {
           "id": "lw1-43",
@@ -8388,15 +8379,15 @@
         },
         {
           "id": "lw1-44",
-          "value": "Leidensis Vossianus (390)"
+          "value": "w"
         },
         {
           "id": "lw1-45",
-          "value": "Leidensis Vossianus (390)"
+          "value": "xLeidensis Vossianus (390)"
         },
         {
           "id": "lw1-46",
-          "value": "Florentinus Laurentianus plut. 30..."
+          "value": "y"
         }
       ]
     },
@@ -8825,11 +8816,11 @@
       "id": "apparatus-witnesses.marc-frag@en",
       "entries": [
         {
-          "id": "lw1-1",
+          "id": "lw2-1",
           "value": "Monacensis 14734, saec. X-XI"
         },
         {
-          "id": "lw1-2",
+          "id": "lw2-2",
           "value": "Cheltenhamensis Phillippsianus 816,..."
         }
       ]
@@ -8838,11 +8829,11 @@
       "id": "apparatus-authors.marc-frag@en",
       "entries": [
         {
-          "id": "lb1-1",
+          "id": "lb3-1",
           "value": "Bücheler, ler, Kleine Schriften, I,... (= Osnabrück 1965)"
         },
         {
-          "id": "lb1-2",
+          "id": "lb3-2",
           "value": "Corssen"
         }
       ]
@@ -8885,15 +8876,15 @@
         },
         {
           "id": "lw1-5",
-          "value": "Florentinus Bibliothecae..."
+          "value": "f"
         },
         {
           "id": "lw1-6",
-          "value": "Florentinus Bibliothecae..."
+          "value": "F"
         },
         {
           "id": "lw1-7",
-          "value": "Guelferbytanus Gudianus Lat..."
+          "value": "G"
         },
         {
           "id": "lw1-8",
@@ -8901,35 +8892,35 @@
         },
         {
           "id": "lw1-9",
-          "value": "Berolinensis (olim Lucensis)"
+          "value": "L"
         },
         {
           "id": "lw1-10",
-          "value": "Vaticanus Palatinus Lat. 1696,..."
+          "value": "P"
         },
         {
           "id": "lw1-11",
-          "value": "Londiniensis Musei Britannici..."
+          "value": "Q"
         },
         {
           "id": "lw1-12",
-          "value": "Leidensis Vossianus Lat. Q 86, a..."
+          "value": "R"
         },
         {
           "id": "lw1-13",
-          "value": "Parisinus Lat. 8071 (Thuaneus)"
+          "value": "T"
         },
         {
           "id": "lw1-14",
-          "value": "Vaticanus Lat. 3294, saec..."
+          "value": "V"
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus Lat. 8067 (Puteaneus)"
+          "value": "X"
         },
         {
           "id": "lw1-16",
-          "value": "Mediolanensis Bibliothecae..."
+          "value": "Y"
         },
         {
           "id": "lw1-17",
@@ -8991,35 +8982,35 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Florentinus Bibliothecae..."
+          "value": "f"
         },
         {
           "id": "lw1-2",
-          "value": "Florentinus Bibliothecae..."
+          "value": "F"
         },
         {
           "id": "lw1-3",
-          "value": "Frisingensia excerpta bibliothecae... (6292)"
+          "value": "Fris."
         },
         {
           "id": "lw1-4",
-          "value": "Berolinensis (olim Lucensis)"
+          "value": "L"
         },
         {
           "id": "lw1-5",
-          "value": "Vaticanus Palatinus Lat. 1696,..."
+          "value": "P"
         },
         {
           "id": "lw1-6",
-          "value": "Londiniensis Musei Britannici..."
+          "value": "Q"
         },
         {
           "id": "lw1-7",
-          "value": "Leidensis Vossianus Lat. Q 86, a..."
+          "value": "R"
         },
         {
           "id": "lw1-8",
-          "value": "Parisinus Lat. 8071 (Thuaneus)"
+          "value": "T"
         },
         {
           "id": "lw1-9",
@@ -9077,7 +9068,7 @@
         },
         {
           "id": "lw1-4",
-          "value": "Cantabrigiensis Corpus Christi..."
+          "value": "c"
         },
         {
           "id": "lw1-5",
@@ -9089,67 +9080,67 @@
         },
         {
           "id": "lw1-7",
-          "value": "Florentinus Bibliothecae..."
+          "value": "f"
         },
         {
           "id": "lw1-8",
-          "value": "Florentinus Bibliothecae..."
+          "value": "F"
         },
         {
           "id": "lw1-9",
-          "value": "Guelferbytanus Gudianus Lat..."
+          "value": "G"
         },
         {
           "id": "lw1-10",
-          "value": "Londiniensis Harleianus 2700, saec..."
+          "value": "h"
         },
         {
           "id": "lw1-11",
-          "value": "Londiniensis Musei Britannici..."
+          "value": "k"
         },
         {
           "id": "lw1-12",
-          "value": "Florentinus Bibliothecae..."
+          "value": "l"
         },
         {
           "id": "lw1-13",
-          "value": "Berolinensis (olim Lucensis)"
+          "value": "L"
         },
         {
           "id": "lw1-14",
-          "value": "Vaticanus Palatinus Lat. 1696,..."
+          "value": "P"
         },
         {
           "id": "lw1-15",
-          "value": "Londiniensis Musei Britannici..."
+          "value": "Q"
         },
         {
           "id": "lw1-16",
-          "value": "Leidensis Vossianus Lat. Q 86, a..."
+          "value": "R"
         },
         {
           "id": "lw1-17",
-          "value": "Parisinus Lat. 8071 (Thuaneus)"
+          "value": "T"
         },
         {
           "id": "lw1-18",
-          "value": "Vaticanus Lat. 3295, saec..."
+          "value": "v"
         },
         {
           "id": "lw1-19",
-          "value": "Vaticanus Lat. 3296, saec. XV"
+          "value": "v1"
         },
         {
           "id": "lw1-20",
-          "value": "Vaticanus Lat. 6848, saec..."
+          "value": "v2"
         },
         {
           "id": "lw1-21",
-          "value": "Vaticanus Lat. 3294, saec..."
+          "value": "V"
         },
         {
           "id": "lw1-22",
-          "value": "Parisinus Lat. 8067 (Puteaneus)"
+          "value": "X"
         },
         {
           "id": "lw1-23",
@@ -9283,39 +9274,39 @@
         },
         {
           "id": "lw1-3",
-          "value": "Florentinus Bibliothecae..."
+          "value": "f"
         },
         {
           "id": "lw1-4",
-          "value": "Florentinus Bibliothecae..."
+          "value": "F"
         },
         {
           "id": "lw1-5",
-          "value": "Berolinensis (olim Lucensis)"
+          "value": "L"
         },
         {
           "id": "lw1-6",
-          "value": "Vaticanus Palatinus Lat. 1696,..."
+          "value": "P"
         },
         {
           "id": "lw1-7",
-          "value": "Londiniensis Musei Britannici..."
+          "value": "Q"
         },
         {
           "id": "lw1-8",
-          "value": "Leidensis Vossianus Lat. Q 86, a..."
+          "value": "R"
         },
         {
           "id": "lw1-9",
-          "value": "Parisinus Lat. 8071 (Thuaneus)"
+          "value": "T"
         },
         {
           "id": "lw1-10",
-          "value": "Vaticanus Lat. 3294, saec..."
+          "value": "V"
         },
         {
           "id": "lw1-11",
-          "value": "Parisinus Lat. 8067 (Puteaneus)"
+          "value": "X"
         },
         {
           "id": "lw1-12",
@@ -9377,7 +9368,7 @@
         },
         {
           "id": "lw1-4",
-          "value": "Diezianum florilegium Beroline... (60)"
+          "value": "D"
         },
         {
           "id": "lw1-5",
@@ -9385,47 +9376,47 @@
         },
         {
           "id": "lw1-6",
-          "value": "Florentinus Bibliothecae..."
+          "value": "f"
         },
         {
           "id": "lw1-7",
-          "value": "Florentinus Bibliothecae..."
+          "value": "F"
         },
         {
           "id": "lw1-8",
-          "value": "Guelferbytanus Gudianus Lat..."
+          "value": "G"
         },
         {
           "id": "lw1-9",
-          "value": "Berolinensis (olim Lucensis)"
+          "value": "L"
         },
         {
           "id": "lw1-10",
-          "value": "Nostradamensia excerpta Parisi... (188)"
+          "value": "N"
         },
         {
           "id": "lw1-11",
-          "value": "Vaticanus Palatinus Lat. 1696,..."
+          "value": "P"
         },
         {
           "id": "lw1-12",
-          "value": "Londiniensis Musei Britannici..."
+          "value": "Q"
         },
         {
           "id": "lw1-13",
-          "value": "Leidensis Vossianus Lat. Q 86, a..."
+          "value": "R"
         },
         {
           "id": "lw1-14",
-          "value": "Parisinus Lat. 8071 (Thuaneus)"
+          "value": "T"
         },
         {
           "id": "lw1-15",
-          "value": "Vaticanus Lat. 3294, saec..."
+          "value": "V"
         },
         {
           "id": "lw1-16",
-          "value": "Parisinus Lat. 8067 (Puteaneus)"
+          "value": "X"
         },
         {
           "id": "lw1-17",
@@ -9499,47 +9490,47 @@
         },
         {
           "id": "lw1-5",
-          "value": "Florentinus Bibliothecae..."
+          "value": "f"
         },
         {
           "id": "lw1-6",
-          "value": "Florentinus Bibliothecae..."
+          "value": "F"
         },
         {
           "id": "lw1-7",
-          "value": "Guelferbytanus Gudianus Lat..."
+          "value": "G"
         },
         {
           "id": "lw1-8",
-          "value": "Berolinensis (olim Lucensis)"
+          "value": "L"
         },
         {
           "id": "lw1-9",
-          "value": "Nostradamensia excerpta Parisi... (188)"
+          "value": "N"
         },
         {
           "id": "lw1-10",
-          "value": "Vaticanus Palatinus Lat. 1696,..."
+          "value": "P"
         },
         {
           "id": "lw1-11",
-          "value": "Londiniensis Musei Britannici..."
+          "value": "Q"
         },
         {
           "id": "lw1-12",
-          "value": "Leidensis Vossianus Lat. Q 86, a..."
+          "value": "R"
         },
         {
           "id": "lw1-13",
-          "value": "Parisinus Lat. 8071 (Thuaneus)"
+          "value": "T"
         },
         {
           "id": "lw1-14",
-          "value": "Vaticanus Lat. 3294, saec..."
+          "value": "V"
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus Lat. 8067 (Puteaneus)"
+          "value": "X"
         },
         {
           "id": "lw1-16",
@@ -9633,47 +9624,47 @@
         },
         {
           "id": "lw1-5",
-          "value": "Florentinus Bibliothecae..."
+          "value": "f"
         },
         {
           "id": "lw1-6",
-          "value": "Florentinus Bibliothecae..."
+          "value": "F"
         },
         {
           "id": "lw1-7",
-          "value": "Guelferbytanus Gudianus Lat..."
+          "value": "G"
         },
         {
           "id": "lw1-8",
-          "value": "Berolinensis (olim Lucensis)"
+          "value": "L"
         },
         {
           "id": "lw1-9",
-          "value": "Nostradamensia excerpta Parisi... (188)"
+          "value": "N"
         },
         {
           "id": "lw1-10",
-          "value": "Vaticanus Palatinus Lat. 1696,..."
+          "value": "P"
         },
         {
           "id": "lw1-11",
-          "value": "Londiniensis Musei Britannici..."
+          "value": "Q"
         },
         {
           "id": "lw1-12",
-          "value": "Leidensis Vossianus Lat. Q 86, a..."
+          "value": "R"
         },
         {
           "id": "lw1-13",
-          "value": "Parisinus Lat. 8071 (Thuaneus)"
+          "value": "T"
         },
         {
           "id": "lw1-14",
-          "value": "Vaticanus Lat. 3294, saec..."
+          "value": "V"
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus Lat. 8067 (Puteaneus)"
+          "value": "X"
         },
         {
           "id": "lw1-16",
@@ -9771,7 +9762,7 @@
         },
         {
           "id": "lw1-4",
-          "value": "Diezianum florilegium Beroline... (60)"
+          "value": "D"
         },
         {
           "id": "lw1-5",
@@ -9779,43 +9770,43 @@
         },
         {
           "id": "lw1-6",
-          "value": "Florentinus Bibliothecae..."
+          "value": "f"
         },
         {
           "id": "lw1-7",
-          "value": "Guelferbytanus Gudianus Lat..."
+          "value": "G"
         },
         {
           "id": "lw1-8",
-          "value": "Berolinensis (olim Lucensis)"
+          "value": "L"
         },
         {
           "id": "lw1-9",
-          "value": "Nostradamensia excerpta Parisi... (188)"
+          "value": "N"
         },
         {
           "id": "lw1-10",
-          "value": "Vaticanus Palatinus Lat. 1696,..."
+          "value": "P"
         },
         {
           "id": "lw1-11",
-          "value": "Londiniensis Musei Britannici..."
+          "value": "Q"
         },
         {
           "id": "lw1-12",
-          "value": "Leidensis Vossianus Lat. Q 86, a..."
+          "value": "R"
         },
         {
           "id": "lw1-13",
-          "value": "Parisinus Lat. 8071 (Thuaneus)"
+          "value": "T"
         },
         {
           "id": "lw1-14",
-          "value": "Vaticanus Lat. 3294, saec..."
+          "value": "V"
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus Lat. 8067 (Puteaneus)"
+          "value": "X"
         },
         {
           "id": "lw1-16",
@@ -9885,39 +9876,39 @@
         },
         {
           "id": "lw1-4",
-          "value": "Florentinus Bibliothecae..."
+          "value": "f"
         },
         {
           "id": "lw1-5",
-          "value": "Berolinensis (olim Lucensis)"
+          "value": "L"
         },
         {
           "id": "lw1-6",
-          "value": "Nostradamensia excerpta Parisi... (188)"
+          "value": "N"
         },
         {
           "id": "lw1-7",
-          "value": "Vaticanus Palatinus Lat. 1696,..."
+          "value": "P"
         },
         {
           "id": "lw1-8",
-          "value": "Londiniensis Musei Britannici..."
+          "value": "Q"
         },
         {
           "id": "lw1-9",
-          "value": "Leidensis Vossianus Lat. Q 86, a..."
+          "value": "R"
         },
         {
           "id": "lw1-10",
-          "value": "Parisinus Lat. 8071 (Thuaneus)"
+          "value": "T"
         },
         {
           "id": "lw1-11",
-          "value": "Vaticanus Lat. 3294, saec..."
+          "value": "V"
         },
         {
           "id": "lw1-12",
-          "value": "Parisinus Lat. 8067 (Puteaneus)"
+          "value": "X"
         },
         {
           "id": "lw1-13",
@@ -10090,7 +10081,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Oxford, Bodleian Library, MS Bodl..."
+          "value": "Bo"
         },
         {
           "id": "lw1-2",
@@ -10118,27 +10109,27 @@
         },
         {
           "id": "lw1-8",
-          "value": "Oxford, Bodleian Library, MS Lat..."
+          "value": "Ga"
         },
         {
           "id": "lw1-9",
-          "value": "København, Det Kongelige Bibliotek,..."
+          "value": "H"
         },
         {
           "id": "lw1-10",
-          "value": "Göttingen, Niedersächsischen..."
+          "value": "Lu²Göttingen, Niedersächsischen..."
         },
         {
           "id": "lw1-11",
-          "value": "London, British Museum, MS Reg..."
+          "value": "M"
         },
         {
           "id": "lw1-12",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "P"
         },
         {
           "id": "lw1-13",
-          "value": "Stuttgart, Württemberghischen..."
+          "value": "St"
         },
         {
           "id": "lw1-14",
@@ -10146,19 +10137,19 @@
         },
         {
           "id": "lw1-15",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "Va"
         },
         {
           "id": "lw1-16",
-          "value": "Wien, Nationalbibliothek, MS Lat..."
+          "value": "Vi"
         },
         {
           "id": "lw1-17",
-          "value": "Città del Vaticano, Biblioteca..."
+          "value": "VrCittà del Vaticano, Biblioteca..."
         },
         {
           "id": "lw1-18",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "VuCittà del Vaticano, Bibl..."
         }
       ]
     },
@@ -10204,267 +10195,267 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Eton, Eton College, 150 (Bl 6,5)"
+          "value": "AEton, Eton College, 150 (Bl 6,5)"
         },
         {
           "id": "lw1-2",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "B, ff. 22r.-32r."
         },
         {
           "id": "lw1-3",
-          "value": "Berlin, Staatsbibliothek, Lat..."
+          "value": "Ba, ff. 57r-90."
         },
         {
           "id": "lw1-4",
-          "value": "Oxford, Bodleian Library, Auct. F... (2195)"
+          "value": "Bd"
         },
         {
           "id": "lw1-5",
-          "value": "Berlin, Staatsbibliothek,..."
+          "value": "Bn, ff. 149v.-153r."
         },
         {
           "id": "lw1-6",
-          "value": "Oxford, Bodleian Library, Bodl..."
+          "value": "Bo"
         },
         {
           "id": "lw1-7",
-          "value": "London, British Museum, Add..."
+          "value": "Br, ff. 18-21v."
         },
         {
           "id": "lw1-8",
-          "value": "Roma, Bibl. Casanatense, 537 (B:IV 20)"
+          "value": "C, ff. 83r.-90v."
         },
         {
           "id": "lw1-9",
-          "value": "Cambridge, Peterhouse, 215 (2.1.8)"
+          "value": "Ca, ff. 69r.-72v."
         },
         {
           "id": "lw1-10",
-          "value": "Cambridge, Peterhouse, 207 (2.1.0)"
+          "value": "Cd, ff. 26r-36v."
         },
         {
           "id": "lw1-11",
-          "value": "Krakòv, Bibl. Jagiellonska,... (B B XXVII 4)"
+          "value": "Cr, ff. 199-214."
         },
         {
           "id": "lw1-12",
-          "value": "Krakòv, Bibl. Jagiellonska,... (B B VI 14)"
+          "value": "Cv"
         },
         {
           "id": "lw1-13",
-          "value": "Firenze, Bibl. Riccardiana, 1224,..."
+          "value": "F, ff. 1r-7v."
         },
         {
           "id": "lw1-14",
-          "value": "Città del Vaticano, Bibl. Apost..."
+          "value": "Fe, ff. 109r.-115v."
         },
         {
           "id": "lw1-15",
-          "value": "Firenze. Bibl. Riccardiana, 636,..."
+          "value": "Fg, ff. 1r.-14r."
         },
         {
           "id": "lw1-16",
-          "value": "Fulda, Hessische Landesbibliothek,..."
+          "value": "Fu"
         },
         {
           "id": "lw1-17",
-          "value": "Leiden, Bibl. Rijksuniversiteit,..."
+          "value": "G, ff. 1-13."
         },
         {
           "id": "lw1-18",
-          "value": "Oxford, Bodleian Library, Lat..."
+          "value": "Ga, f. 245r.-254r."
         },
         {
           "id": "lw1-19",
-          "value": "Firenze, Bibl. Laurenziana, Gadd... (vv.1-6)"
+          "value": "Gad, f. 98r. (vv.1-6)."
         },
         {
           "id": "lw1-20",
-          "value": "Cape Town, South African Library,..."
+          "value": "Gr, ff. 63r-76v."
         },
         {
           "id": "lw1-21",
-          "value": "Wolfenbüttel, Herzog-August-..."
+          "value": "Gu, ff. 127r.-139r."
         },
         {
           "id": "lw1-22",
-          "value": "København, Det Kongelige Bibliotek,..."
+          "value": "H, f. 1r-10v."
         },
         {
           "id": "lw1-23",
-          "value": "København, Det Kongelige Bibliotek,..."
+          "value": "Ha, ff. 177r-184r."
         },
         {
           "id": "lw1-24",
-          "value": "Helsinki, Universitetsbiblioteket,... (Membr. Auct. Class. 1)"
+          "value": "He, f. 48."
         },
         {
           "id": "lw1-25",
-          "value": "Leiden, Bibl. Rijksuniversiteit,..."
+          "value": "L, ff. 10r-18v."
         },
         {
           "id": "lw1-26",
-          "value": "Firenze, Bibl. Laureanziana, Plut..."
+          "value": "La, ff. 59r-72r."
         },
         {
           "id": "lw1-27",
-          "value": "Firenze, Bibl. Laurenziana, Aedil..."
+          "value": "LbFirenze, Bibl. Laurenziana,..."
         },
         {
           "id": "lw1-28",
-          "value": "Leiden, Bibl. Rijksuniversiteit,..."
+          "value": "Ld"
         },
         {
           "id": "lw1-29",
-          "value": "Lincoln, Cathedral Chapter Library,... (C. 5.8)"
+          "value": "Li, ff. 124r.-133v."
         },
         {
           "id": "lw1-30",
-          "value": "London, British Museum, MS Reg..."
+          "value": "Lr, ff. 111r.-127v."
         },
         {
           "id": "lw1-31",
-          "value": "Roma, Biblioteca Casanatense, 869,..."
+          "value": "LT"
         },
         {
           "id": "lw1-32",
-          "value": "Göttingen, Universitätsbibliothek,..."
+          "value": "LuGöttingen, Universitätsbibli..."
         },
         {
           "id": "lw1-33",
-          "value": "London, British Museum, Reg..."
+          "value": "M, f. 25v.-36v."
         },
         {
           "id": "lw1-34",
-          "value": "Firenze, Bibl. Nazionale Centrale,... (Magl. VII 1083)"
+          "value": "Ma, ff. 61r.-73v."
         },
         {
           "id": "lw1-35",
-          "value": "Paris, Bibl. Nationale, MS Lat... (vv. 1-6)"
+          "value": "Man, f. 119r. (vv. 1-6)."
         },
         {
           "id": "lw1-36",
-          "value": "Milano, Bibl. Braidense, AD-X-43,..."
+          "value": "Mb, ff. 106v.-108v."
         },
         {
           "id": "lw1-37",
-          "value": "Firenze, Bibl. Nazionale Centrale,... (Magl. VII 1134)"
+          "value": "Mg, ff. 40r.-53r."
         },
         {
           "id": "lw1-38",
-          "value": "München, Bayerische Staatsbibl..."
+          "value": "Mn, ff. 243r.-217r."
         },
         {
           "id": "lw1-39",
-          "value": "München, Bayerische Staatsbibl..."
+          "value": "Mo, ff. 85r.-98r."
         },
         {
           "id": "lw1-40",
-          "value": "Venezia, Bibl. Naz. Marciana, lat... (4653)"
+          "value": "Mr, ff. 67r.-81r."
         },
         {
           "id": "lw1-41",
-          "value": "Milano, Biblioteca Trivulziana,..."
+          "value": "Mt, ff. 1r.-15r."
         },
         {
           "id": "lw1-42",
-          "value": "Napoli, Bibl. Nazionale, Lat. IV C..."
+          "value": "Ne, ff. 58r.-62v., 86v.-89r."
         },
         {
           "id": "lw1-43",
-          "value": "Pesaro, Bibl. Oliveriana, 1167,..."
+          "value": "Ol, ff. 89r.-102v."
         },
         {
           "id": "lw1-44",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "P, ff. 72v.-82v."
         },
         {
           "id": "lw1-45",
-          "value": "Padova, Bibl. Capitolare, MS C 64,..."
+          "value": "Pa, ff. 1v.-12v."
         },
         {
           "id": "lw1-46",
-          "value": "Paris, Bibl. Nationale, 8319, sec... (vv.1-6)"
+          "value": "Par, f. 41r. (vv.1-6)."
         },
         {
           "id": "lw1-47",
-          "value": "Paris, Bibl. Nationale, Lat..."
+          "value": "Pl, ff. 49r-63v."
         },
         {
           "id": "lw1-48",
-          "value": "Padova, Musei civici, CM 422,..."
+          "value": "Pm, ff. 44r.-56r."
         },
         {
           "id": "lw1-49",
-          "value": "Paris, Bibl. Nationale, n.a. Lat..."
+          "value": "Pn, ff. 53r.-62r."
         },
         {
           "id": "lw1-50",
-          "value": "Palermo, Bibl. Nazionale, F.M..."
+          "value": "Po, ff. 58v.-71r."
         },
         {
           "id": "lw1-51",
-          "value": "Paris, Bibl. Nationale, Lat..."
+          "value": "Pp, ff. 59r.-71v."
         },
         {
           "id": "lw1-52",
-          "value": "Paris, Bibl. Nationale, Lat..."
+          "value": "Pr, ff. 72r.-77r."
         },
         {
           "id": "lw1-53",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "R, ff. 89v.-95v."
         },
         {
           "id": "lw1-54",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "S, ff. 91-98."
         },
         {
           "id": "lw1-55",
-          "value": "San Daniele del Friuli, Biblioteca..."
+          "value": "Sd, ff. 50v.-54v."
         },
         {
           "id": "lw1-56",
-          "value": "Padova, Biblioteca del Seminario..."
+          "value": "Sp, ff. 57r.-69v."
         },
         {
           "id": "lw1-57",
-          "value": "Stuttgart, Württembergische..."
+          "value": "St, ff. 337r.-355v."
         },
         {
           "id": "lw1-58",
-          "value": "Trier, Stadtbibliothek, 1092/1335,..."
+          "value": "T, ff. 45r-54v."
         },
         {
           "id": "lw1-59",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "V"
         },
         {
           "id": "lw1-60",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "Va, f. 25r.-36v."
         },
         {
           "id": "lw1-61",
-          "value": "Wien, Nationalbibliothek, Lat..."
+          "value": "Vd, ff. 136r.-147v."
         },
         {
           "id": "lw1-62",
-          "value": "Wien, Nationalbibliothek, Lat..."
+          "value": "Vi, ff. 144r.-151r."
         },
         {
           "id": "lw1-63",
-          "value": "Wien, Nationalbibliothek, Lat..."
+          "value": "Vn, ff. 97v.-109v."
         },
         {
           "id": "lw1-64",
-          "value": "Vorau, Stiftsbibliothek (Kapitelbibl.)"
+          "value": "Vo, ff. 63v-66r (76 vv.)."
         },
         {
           "id": "lw1-65",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "Vr, ff. 25r.-36r."
         },
         {
           "id": "lw1-66",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "VuCittà del Vaticano, Bibl..."
         }
       ]
     },
@@ -11052,15 +11043,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Londiniensis Mus. Brit. Add..."
+          "value": "Ab"
         },
         {
           "id": "lw1-2",
-          "value": "Londiniensis Mus. Brit. Add..."
+          "value": "Ac"
         },
         {
           "id": "lw1-3",
-          "value": "Bernensis 478, saec. XII-XIII"
+          "value": "B"
         },
         {
           "id": "lw1-4",
@@ -11068,19 +11059,19 @@
         },
         {
           "id": "lw1-5",
-          "value": "Diuionensis 497, saec. XIII ex."
+          "value": "D"
         },
         {
           "id": "lw1-6",
-          "value": "Coll. Etonensis 91, saec. XIII"
+          "value": "Ea"
         },
         {
           "id": "lw1-7",
-          "value": "Francofurtanus Barth. 110, saec..."
+          "value": "F"
         },
         {
           "id": "lw1-8",
-          "value": "Londiniensis Mus. Brit. Add... (olim Holkhamicus 322)"
+          "value": "H"
         },
         {
           "id": "lw1-9",
@@ -11088,19 +11079,19 @@
         },
         {
           "id": "lw1-10",
-          "value": "Neapolitanus Bibl. Nat. IV. F... (Borb. 261)"
+          "value": "N"
         },
         {
           "id": "lw1-11",
-          "value": "Oxoniensis Bibl. Bodl. Canon..."
+          "value": "Ob"
         },
         {
           "id": "lw1-12",
-          "value": "Parisini Latini 8242 manus secunda,..."
+          "value": "p"
         },
         {
           "id": "lw1-13",
-          "value": "Parisinus Latinus 8242 (Puteaneus)"
+          "value": "P"
         },
         {
           "id": "lw1-14",
@@ -11108,55 +11099,55 @@
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus Latinus 7993, saec..."
+          "value": "Pa"
         },
         {
           "id": "lw1-16",
-          "value": "Parisinus Latinus 7994, saec..."
+          "value": "Pb"
         },
         {
           "id": "lw1-17",
-          "value": "Parisinus Latinus 7997, saec..."
+          "value": "Pc"
         },
         {
           "id": "lw1-18",
-          "value": "Parisinus Latinus 8430, saec..."
+          "value": "Pf"
         },
         {
           "id": "lw1-19",
-          "value": "Antuerpiensis Plant. Lat. 68, saec..."
+          "value": "Q"
         },
         {
           "id": "lw1-20",
-          "value": "Parisinus Latinus 7311 (Regius)"
+          "value": "R"
         },
         {
           "id": "lw1-21",
-          "value": "Sangallensis 864, saec. XI"
+          "value": "S"
         },
         {
           "id": "lw1-22",
-          "value": "Turonensis 879, saec. XIII in."
+          "value": "T"
         },
         {
           "id": "lw1-23",
-          "value": "Vaticanus Barb. Lat. 26, saec..."
+          "value": "Va"
         },
         {
           "id": "lw1-24",
-          "value": "Vaticanus Palat. Lat. 1655, saec..."
+          "value": "Vb"
         },
         {
           "id": "lw1-25",
-          "value": "Perpinianensis 19, saec. XIII"
+          "value": "W"
         },
         {
           "id": "lw1-26",
-          "value": "Lipsiensis Rep. I, fol. 7, saec..."
+          "value": "X"
         },
         {
           "id": "lw1-27",
-          "value": "Lentiensis 329, saec. XII-XIII"
+          "value": "Z"
         },
         {
           "id": "lw1-28",
@@ -11266,7 +11257,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Bernensis 478, saec. XII-XIII"
+          "value": "B"
         },
         {
           "id": "lw1-2",
@@ -11274,19 +11265,19 @@
         },
         {
           "id": "lw1-3",
-          "value": "Diuionensis 497, saec. XIII ex."
+          "value": "D"
         },
         {
           "id": "lw1-4",
-          "value": "Coll. Etonensis 91, saec. XIII"
+          "value": "Ea"
         },
         {
           "id": "lw1-5",
-          "value": "Francofurtanus Barth. 110, saec..."
+          "value": "F"
         },
         {
           "id": "lw1-6",
-          "value": "Londiniensis Mus. Brit. Add... (olim Holkhamicus 322)"
+          "value": "H"
         },
         {
           "id": "lw1-7",
@@ -11294,31 +11285,31 @@
         },
         {
           "id": "lw1-8",
-          "value": "Neapolitanus Bibl. Nat. IV. F... (Borb. 261)"
+          "value": "N"
         },
         {
           "id": "lw1-9",
-          "value": "Parisini Latini 8242 manus secunda,..."
+          "value": "p"
         },
         {
           "id": "lw1-10",
-          "value": "Parisinus Latinus 8242 (Puteaneus)"
+          "value": "P"
         },
         {
           "id": "lw1-11",
-          "value": "Parisinus Latinus 7993, saec..."
+          "value": "Pa"
         },
         {
           "id": "lw1-12",
-          "value": "Parisinus Latinus 8430, saec..."
+          "value": "Pf"
         },
         {
           "id": "lw1-13",
-          "value": "Sangallensis 864, saec. XI"
+          "value": "S"
         },
         {
           "id": "lw1-14",
-          "value": "Turonensis 879, saec. XIII in."
+          "value": "T"
         },
         {
           "id": "lw1-15",
@@ -11348,47 +11339,47 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Antuerpiensis Plant. lat. D..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Bambergensis Bibl. Class. 30 (M.V.18)"
+          "value": "ba"
         },
         {
           "id": "lw1-3",
-          "value": "Berolinensis Diez. B. Sant..."
+          "value": "be"
         },
         {
           "id": "lw1-4",
-          "value": "Bernensis Bibl. Munic. 505, saec..."
+          "value": "B3"
         },
         {
           "id": "lw1-5",
-          "value": "Berolinensis Diez. B. Santen 1,..."
+          "value": "Be"
         },
         {
           "id": "lw1-6",
-          "value": "Dresdensis Bibl. Ref. A. 167-I,..."
+          "value": "d"
         },
         {
           "id": "lw1-7",
-          "value": "Escorialensis Bibl. S. Lorenzo Q..."
+          "value": "e"
         },
         {
           "id": "lw1-8",
-          "value": "Edinburgensis Bibl. Nat. Adv. Ms..."
+          "value": "Ed"
         },
         {
           "id": "lw1-9",
-          "value": "Escorialensis Bibl. S. Lorenzo P..."
+          "value": "Es"
         },
         {
           "id": "lw1-10",
-          "value": "Escorialensis Bibl. S. Lorenzo e..."
+          "value": "Es2"
         },
         {
           "id": "lw1-11",
-          "value": "Escorialensis Bibl. S. Lorenzo g..."
+          "value": "Es3"
         },
         {
           "id": "lw1-12",
@@ -11396,23 +11387,23 @@
         },
         {
           "id": "lw1-13",
-          "value": "Francofurtanus Bibl. Civ. M. S..."
+          "value": "F"
         },
         {
           "id": "lw1-14",
-          "value": "Londiniensis Bibl. Brit. Add..."
+          "value": "L"
         },
         {
           "id": "lw1-15",
-          "value": "Londiniensis Bibl. Brit. Add... (olim Holkhamicus 322)"
+          "value": "L2"
         },
         {
           "id": "lw1-16",
-          "value": "Londiniensis Bibl. Brit. Add..."
+          "value": "L4"
         },
         {
           "id": "lw1-17",
-          "value": "Leidensis Periz. Q. 16, saec..."
+          "value": "Ld"
         },
         {
           "id": "lw1-18",
@@ -11420,51 +11411,51 @@
         },
         {
           "id": "lw1-19",
-          "value": "Matritensis, Bibl. Nat. Ms. Res... (Vitr. 8-3, Res. 4a 3. M. 23)"
+          "value": "Ma"
         },
         {
           "id": "lw1-20",
-          "value": "Neapolitanus Bibl. Nat. IV.F... (Bibl. Borb. 261)"
+          "value": "N"
         },
         {
           "id": "lw1-21",
-          "value": "Oxoniensis Bibl. Bodl. Rawl. Q. D... (S.C. 16044)"
+          "value": "o"
         },
         {
           "id": "lw1-22",
-          "value": "Oxoniensis Bodl. Auct. F.4..."
+          "value": "O"
         },
         {
           "id": "lw1-23",
-          "value": "Oxoniensis Bodl. Canon. class. lat..."
+          "value": "O6"
         },
         {
           "id": "lw1-24",
-          "value": "Parisinus Bibl. Nat. lat..."
+          "value": "p"
         },
         {
           "id": "lw1-25",
-          "value": "Parisinus Bibl. Nat. lat..."
+          "value": "p6"
         },
         {
           "id": "lw1-26",
-          "value": "Parisinus Bibl. Nat. lat..."
+          "value": "P3"
         },
         {
           "id": "lw1-27",
-          "value": "Parisinus Bibl. Nat. lat..."
+          "value": "P4"
         },
         {
           "id": "lw1-28",
-          "value": "Perpinianensis 19 (anc. 10)"
+          "value": "Pe"
         },
         {
           "id": "lw1-29",
-          "value": "Neapolitanus, cod. Graecus II C 32,..."
+          "value": "Plan."
         },
         {
           "id": "lw1-30",
-          "value": "Parisinus Bibl. Nat. lat. 7311 (Regius)"
+          "value": "R"
         },
         {
           "id": "lw1-31",
@@ -11472,7 +11463,7 @@
         },
         {
           "id": "lw1-32",
-          "value": "Sangallensis Bibl. Cap. 821, saec..."
+          "value": "S2"
         },
         {
           "id": "lw1-33",
@@ -11480,11 +11471,11 @@
         },
         {
           "id": "lw1-34",
-          "value": "Turonensis Bibl. Munic. 879, ca. a..."
+          "value": "T"
         },
         {
           "id": "lw1-35",
-          "value": "Toletanus Bibl. Capit. 102-14,..."
+          "value": "To2"
         },
         {
           "id": "lw1-36",
@@ -11492,7 +11483,7 @@
         },
         {
           "id": "lw1-37",
-          "value": "Berolinensis, Hamiltonensis 471,..."
+          "value": "Y"
         }
       ]
     },
@@ -11618,15 +11609,15 @@
         },
         {
           "id": "lw1-2",
-          "value": "codex Bernensis 165, saec. IXex."
+          "value": "cod. Bernensis 165codex Bernensis..."
         },
         {
           "id": "lw1-3",
-          "value": "codex Bernensis 184, saec. IXex."
+          "value": "cod. Bernensis 184codex Bernensis..."
         },
         {
           "id": "lw1-4",
-          "value": "codex Gudianus saec. IX"
+          "value": "cod. Gudianus"
         },
         {
           "id": "lw1-5",
@@ -11634,23 +11625,23 @@
         },
         {
           "id": "lw1-6",
-          "value": "codex Parisinus 8069, saec..."
+          "value": "Ccodex Parisinus 8069, saec..."
         },
         {
           "id": "lw1-7",
-          "value": "Vossianum Lat. fol. 111, saec..."
+          "value": "EVossianum Lat. fol. 111, saec..."
         },
         {
           "id": "lw1-8",
-          "value": "Palatinus 487, saec. X"
+          "value": "PPalatinus 487, saec. X"
         },
         {
           "id": "lw1-9",
-          "value": "Vaticanus 3867, saec. V"
+          "value": "RVaticanus 3867, saec. V"
         },
         {
           "id": "lw1-10",
-          "value": "Vaticanus 1575, saec. X-XI"
+          "value": "ZVaticanus 1575, saec. X-XI"
         },
         {
           "id": "lw1-11",
@@ -11744,7 +11735,7 @@
         },
         {
           "id": "lw1-14",
-          "value": "Oxoniensis Bodl. Canon. Class. Lat..."
+          "value": "ObOxoniensis Bodl. Canon. Class..."
         },
         {
           "id": "lw1-15",
@@ -11768,7 +11759,7 @@
         },
         {
           "id": "lw1-20",
-          "value": "Florentinus Riccardianus 489, saec..."
+          "value": "Ri"
         },
         {
           "id": "lw1-21",
@@ -11934,43 +11925,43 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Canonicianus Latinus 20 Bibl..."
+          "value": "B"
         },
         {
           "id": "lw1-2",
-          "value": "Francofurtanus Bibl. Civ. et Univ..."
+          "value": "F"
         },
         {
           "id": "lw1-3",
-          "value": "Galeanus 213, nunc O.7.7 Collegii..."
+          "value": "G"
         },
         {
           "id": "lw1-4",
-          "value": "Holkhamicus Bibliothecae Comitis..."
+          "value": "H"
         },
         {
           "id": "lw1-5",
-          "value": "Philippicus 1796, nunc Berolin..."
+          "value": "P"
         },
         {
           "id": "lw1-6",
-          "value": "Antuerpiensis Plantinianus Latinus..."
+          "value": "Plantinianus"
         },
         {
           "id": "lw1-7",
-          "value": "Turonensis 879, circa annum 1200..."
+          "value": "T"
         },
         {
           "id": "lw1-8",
-          "value": "Vindobonensis Latinus 885, saec..."
+          "value": "V"
         },
         {
           "id": "lw1-9",
-          "value": "Parisinus Latinus Bibl. Nat..."
+          "value": "X"
         },
         {
           "id": "lw1-10",
-          "value": "codex Zamoscianus, scriptus anno..."
+          "value": "Zamoscianus"
         },
         {
           "id": "lw1-11",
@@ -12044,7 +12035,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Londinensis Mus. Brit. King's 26,..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
@@ -12052,7 +12043,7 @@
         },
         {
           "id": "lw1-3",
-          "value": "Vaticanus Barberinianus lat..."
+          "value": "Barb."
         },
         {
           "id": "lw1-4",
@@ -12060,7 +12051,7 @@
         },
         {
           "id": "lw1-5",
-          "value": "Oxoniensis Bodl. Auct. F.4..."
+          "value": "Bodl. F.4.30"
         },
         {
           "id": "lw1-6",
@@ -12068,7 +12059,7 @@
         },
         {
           "id": "lw1-7",
-          "value": "Fragmentum Caesenas, aetatis..."
+          "value": "c"
         },
         {
           "id": "lw1-8",
@@ -12076,7 +12067,7 @@
         },
         {
           "id": "lw1-9",
-          "value": "Laurentianus Acquisti e Doni 434,..."
+          "value": "d"
         },
         {
           "id": "lw1-10",
@@ -12084,7 +12075,7 @@
         },
         {
           "id": "lw1-11",
-          "value": "Vaticanus Palatinus lat. 1669,..."
+          "value": "E"
         },
         {
           "id": "lw1-12",
@@ -12116,7 +12107,7 @@
         },
         {
           "id": "lw1-19",
-          "value": "Hauniensis Bibl. Reg. Gl. kgl. S..."
+          "value": "Haun. 2009"
         },
         {
           "id": "lw1-20",
@@ -12128,11 +12119,11 @@
         },
         {
           "id": "lw1-22",
-          "value": "Laurentianus 36.10, saec. XIII ex."
+          "value": "Laur. 36.10"
         },
         {
           "id": "lw1-23",
-          "value": "Marcianus Florentinus 225, saec..."
+          "value": "M"
         },
         {
           "id": "lw1-24",
@@ -12160,7 +12151,7 @@
         },
         {
           "id": "lw1-30",
-          "value": "Vaticanus Ottobonianus lat..."
+          "value": "o"
         },
         {
           "id": "lw1-31",
@@ -12168,7 +12159,7 @@
         },
         {
           "id": "lw1-32",
-          "value": "Parisinus lat. 8001, saec. XII"
+          "value": "P"
         },
         {
           "id": "lw1-33",
@@ -12176,7 +12167,7 @@
         },
         {
           "id": "lw1-34",
-          "value": "Parisinus Latinus 7993, saec..."
+          "value": "Paris. 7993"
         },
         {
           "id": "lw1-35",
@@ -12200,11 +12191,11 @@
         },
         {
           "id": "lw1-40",
-          "value": "Laurentianus Strozzianus 120, saec..."
+          "value": "s²"
         },
         {
           "id": "lw1-41",
-          "value": "Laurentianus Strozzianus 121, saec..."
+          "value": "s¹"
         },
         {
           "id": "lw1-42",
@@ -12232,7 +12223,7 @@
         },
         {
           "id": "lw1-48",
-          "value": "Leidensis Vossianus lat. O..."
+          "value": "Voss."
         },
         {
           "id": "lw1-49",
@@ -12284,11 +12275,11 @@
         },
         {
           "id": "lw1-61",
-          "value": "Parisinus lat. 12246, saec. IX ex..."
+          "value": "π"
         },
         {
           "id": "lw1-62",
-          "value": "Vaticanus Urbinas 342, codex..."
+          "value": "υ"
         },
         {
           "id": "lw1-63",
@@ -13061,7 +13052,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Leidensis Vossianus Lat. Q. 86, c... (cc. 2; 3; 5, 1-2; 6-70 praeter...)"
+          "value": "VLeidensis Vossianus Lat. Q. 86, c... (cc. 2; 3; 5, 1-2; 6-70 praeter...)"
         }
       ]
     },
@@ -13408,15 +13399,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "cod. Parisinus lat. 8071 (olim Thuaneus)"
+          "value": "B"
         },
         {
           "id": "lw1-2",
-          "value": "cod. Lipsiensis rep. I. 74, saec..."
+          "value": "Lcod. Lipsiensis rep. I. 74, saec..."
         },
         {
           "id": "lw1-3",
-          "value": "cod. Laurentianus 73, 16, saec..."
+          "value": "Laur."
         }
       ]
     },
@@ -13425,7 +13416,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "cod. Parisinus lat. 8071 (olim Thuaneus)"
+          "value": "B"
         },
         {
           "id": "lw1-2",
@@ -13433,7 +13424,7 @@
         },
         {
           "id": "lw1-3",
-          "value": "cod. Laurentianus 73, 16, saec..."
+          "value": "Laur."
         }
       ]
     },
@@ -13459,23 +13450,23 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Laurentianus, Bibl. Laurent..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Wratislaviensis Rehd. 60, saec..."
+          "value": "cod. Wratisl."
         },
         {
           "id": "lw1-3",
-          "value": "Guelferbitanus 373 (Helmst. 338)"
+          "value": "H"
         },
         {
           "id": "lw1-4",
-          "value": "Laurentianus, Bibl. Laurent..."
+          "value": "Laurent. 39, 34"
         },
         {
           "id": "lw1-5",
-          "value": "Leidensis, bibl. Univers. Leid..."
+          "value": "V"
         },
         {
           "id": "lw1-6",
@@ -13561,27 +13552,27 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Leidensis Vossianus 38, circa..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "cod. Ambrosianus H 46 sup., saec..."
+          "value": "Ambr. H 46 sup."
         },
         {
           "id": "lw1-3",
-          "value": "Laurentianus plut. 36.49,..."
+          "value": "F"
         },
         {
           "id": "lw1-4",
-          "value": "Guelferbytanus Gudianus 224,..."
+          "value": "N"
         },
         {
           "id": "lw1-5",
-          "value": "Parisinus Lat. 7989, anno 1423..."
+          "value": "P"
         },
         {
           "id": "lw1-6",
-          "value": "cod. Paris. Lat. 7990, saec. XV ex."
+          "value": "Paris. 7990"
         },
         {
           "id": "lw1-7",
@@ -13819,51 +13810,51 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Leidensis Vossianus 38, circa..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Vaticanus Barber. VIII 23, saec..."
+          "value": "Barb. VIII 23"
         },
         {
           "id": "lw1-3",
-          "value": "Daventriensis I. 82 (olim 1792)"
+          "value": "DDaventriensis I. 82 (olim 1792)"
         },
         {
           "id": "lw1-4",
-          "value": "Laurentianus plut. 36.49,..."
+          "value": "F"
         },
         {
           "id": "lw1-5",
-          "value": "florilegium cod. Paris. 15155 (olim)"
+          "value": "Flor."
         },
         {
           "id": "lw1-6",
-          "value": "Marc. Lat. XII 82 ( = 4208)"
+          "value": "g"
         },
         {
           "id": "lw1-7",
-          "value": "Holkhamicus Misc. 36 (nunc Bodleianus)"
+          "value": "L"
         },
         {
           "id": "lw1-8",
-          "value": "Guelferbytanus Gudianus 224,..."
+          "value": "N"
         },
         {
           "id": "lw1-9",
-          "value": "Parisinus Lat. 7989, anno 1423..."
+          "value": "P"
         },
         {
           "id": "lw1-10",
-          "value": "cod. Salmanticensis Bibl. Univ..."
+          "value": "Salmat. 86"
         },
         {
           "id": "lw1-11",
-          "value": "Vaticanus Ottob. Lat. 1514, saec..."
+          "value": "V"
         },
         {
           "id": "lw1-12",
-          "value": "Leidensis Voss. 117, saec. XV"
+          "value": "Vo"
         },
         {
           "id": "lw1-13",
@@ -13871,7 +13862,7 @@
         },
         {
           "id": "lw1-14",
-          "value": "Voss. Lat. O 81, saec. XV"
+          "value": "αVoss. Lat. O 81, saec. XV"
         },
         {
           "id": "lw1-15",
@@ -13879,7 +13870,7 @@
         },
         {
           "id": "lw1-16",
-          "value": "cod. Paris. 8458, saec. XV"
+          "value": "π"
         },
         {
           "id": "lw1-17",
@@ -14273,51 +14264,51 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parisinus lat. 8084 saec. VI (\"Puteanus\")"
+          "value": "AParisinus lat. 8084 saec. VI (\"Puteanus\")"
         },
         {
           "id": "lw1-2",
-          "value": "Ambrosianus D 36 sup. saec. VII."
+          "value": "BAmbrosianus D 36 sup. saec. VII."
         },
         {
           "id": "lw1-3",
-          "value": "Cantabrigiensis Corp. Chr..."
+          "value": "C"
         },
         {
           "id": "lw1-4",
-          "value": "Dunelmensis B 4.9. saec. X."
+          "value": "DDunelmensis B 4.9. saec. X."
         },
         {
           "id": "lw1-5",
-          "value": "Leidensis Burm. Q. 3 saec. X:"
+          "value": "ELeidensis Burm. Q. 3 saec. X:"
         },
         {
           "id": "lw1-6",
-          "value": "Casinensis 374 saec. IX."
+          "value": "MCasinensis 374 saec. IX."
         },
         {
           "id": "lw1-7",
-          "value": "Parisinus lat. 8305 saec. X."
+          "value": "N"
         },
         {
           "id": "lw1-8",
-          "value": "Oxoniensis Oriel 3 saec. X."
+          "value": "O"
         },
         {
           "id": "lw1-9",
-          "value": "Parisinus lat. 8086 saec. X."
+          "value": "P"
         },
         {
           "id": "lw1-10",
-          "value": "Sangallensis 136 saec. IX vel X..."
+          "value": "S"
         },
         {
           "id": "lw1-11",
-          "value": "Bernensis bibl. urbanae 264 saec..."
+          "value": "U"
         },
         {
           "id": "lw1-12",
-          "value": "Vaticanus Reg. 321 saec. X."
+          "value": "V"
         }
       ]
     },
@@ -14326,7 +14317,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parasinus lat. 8084 saec. VI ('Puteanus')"
+          "value": "A"
         },
         {
           "id": "lw1-2",
@@ -14334,35 +14325,35 @@
         },
         {
           "id": "lw1-3",
-          "value": "Cantabrigiensis Corp. Chr..."
+          "value": "C"
         },
         {
           "id": "lw1-4",
-          "value": "Dunelmensis B 4.9. saec. X"
+          "value": "D"
         },
         {
           "id": "lw1-5",
-          "value": "Leidensis Burm. Q. 3 saec. X."
+          "value": "E"
         },
         {
           "id": "lw1-6",
-          "value": "Casinensis 374 saec. IX."
+          "value": "M"
         },
         {
           "id": "lw1-7",
-          "value": "Parisinus lat. 8305 saec. X."
+          "value": "N"
         },
         {
           "id": "lw1-8",
-          "value": "Oxoniensis Oriel 3 saec. X."
+          "value": "O"
         },
         {
           "id": "lw1-9",
-          "value": "Parisinus lat.8086 saec. X."
+          "value": "P"
         },
         {
           "id": "lw1-10",
-          "value": "Sangallensis 136 saec. IX vel X..."
+          "value": "S"
         },
         {
           "id": "lw1-11",
@@ -14370,7 +14361,7 @@
         },
         {
           "id": "lw1-12",
-          "value": "Vaticanus Reg. 321saec. X."
+          "value": "V"
         }
       ]
     },
@@ -14379,31 +14370,31 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parisinus lat. 8084 saec. VI (\"Puteanus\")"
+          "value": "AParisinus lat. 8084 saec. VI (\"Puteanus\")"
         },
         {
           "id": "lw1-2",
-          "value": "Cantabrigiensis Corp. Chr..."
+          "value": "C"
         },
         {
           "id": "lw1-3",
-          "value": "Dunelmensis B 4.9. saec. X."
+          "value": "DDunelmensis B 4.9. saec. X."
         },
         {
           "id": "lw1-4",
-          "value": "Leidensis Burm. Q. 3 saec. X:"
+          "value": "ELeidensis Burm. Q. 3 saec. X:"
         },
         {
           "id": "lw1-5",
-          "value": "Parisinus lat. 8305 saec. X."
+          "value": "N"
         },
         {
           "id": "lw1-6",
-          "value": "Parisinus lat. 8086 saec. X."
+          "value": "P"
         },
         {
           "id": "lw1-7",
-          "value": "Sangallensis 136 saec. IX vel X..."
+          "value": "S"
         }
       ]
     },
@@ -14412,35 +14403,35 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Dunelmensis B 4.9 saec. X"
+          "value": "DDunelmensis B 4.9 saec. X"
         },
         {
           "id": "lw1-2",
-          "value": "Leidensis Burm. Q. 3 saec. X."
+          "value": "E"
         },
         {
           "id": "lw1-3",
-          "value": "Parisinus lat. 8305 saec. X."
+          "value": "N"
         },
         {
           "id": "lw1-4",
-          "value": "Oxoniensis Oriel 3 saec. X."
+          "value": "O"
         },
         {
           "id": "lw1-5",
-          "value": "Parisinus lat. 8086 saec. X"
+          "value": "PParisinus lat. 8086 saec. X"
         },
         {
           "id": "lw1-6",
-          "value": "Sangallensis 136 saec. IX vel X..."
+          "value": "S"
         },
         {
           "id": "lw1-7",
-          "value": "Bernensis bibl. urbanae saec. X."
+          "value": "UBernensis bibl. urbanae saec. X."
         },
         {
           "id": "lw1-8",
-          "value": "Vaticanus Reg. 321saec. X."
+          "value": "VVaticanus Reg. 321saec. X."
         }
       ]
     },
@@ -14449,27 +14440,27 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Cantabrigiensis Corp. Christ..."
+          "value": "CCantabrigiensis Corp. Christ..."
         },
         {
           "id": "lw1-2",
-          "value": "Dunelmensis B 4.9. saec. X"
+          "value": "DDunelmensis B 4.9. saec. X"
         },
         {
           "id": "lw1-3",
-          "value": "Leidensis Burm. Q. saec. X."
+          "value": "ELeidensis Burm. Q. saec. X."
         },
         {
           "id": "lw1-4",
-          "value": "Parisinus lat. 8305 saec. X."
+          "value": "N"
         },
         {
           "id": "lw1-5",
-          "value": "Parisinus lat. 8086 saec. X."
+          "value": "P"
         },
         {
           "id": "lw1-6",
-          "value": "Vaticanus Reg. 321 saec. X."
+          "value": "V"
         }
       ]
     },
@@ -14478,47 +14469,47 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parisinus lat. 8084 saec. VI ('Puteanus')"
+          "value": "AParisinus lat. 8084 saec. VI ('Puteanus')"
         },
         {
           "id": "lw1-2",
-          "value": "Ambrosianus D 36 sup. saec. VII."
+          "value": "BAmbrosianus D 36 sup. saec. VII."
         },
         {
           "id": "lw1-3",
-          "value": "Canthabrigensis Corp. Chr..."
+          "value": "CCanthabrigensis Corp. Chr..."
         },
         {
           "id": "lw1-4",
-          "value": "Dunelmensis B 4.9. saec. X."
+          "value": "DDunelmensis B 4.9. saec. X."
         },
         {
           "id": "lw1-5",
-          "value": "Leidensis Burm. Q.3 saec. X."
+          "value": "ELeidensis Burm. Q.3 saec. X."
         },
         {
           "id": "lw1-6",
-          "value": "Casinensis 374 saec. IX."
+          "value": "MCasinensis 374 saec. IX."
         },
         {
           "id": "lw1-7",
-          "value": "Parisinus lat. 8305 saec. X."
+          "value": "N"
         },
         {
           "id": "lw1-8",
-          "value": "Parisinus lat. 8086 saec. X."
+          "value": "P"
         },
         {
           "id": "lw1-9",
-          "value": "Sangallensis 136 saec. IX vel X..."
+          "value": "S"
         },
         {
           "id": "lw1-10",
-          "value": "Bernensis bibl. urbanae 264 saec..."
+          "value": "U"
         },
         {
           "id": "lw1-11",
-          "value": "Vaticanus Reg. 321 saec. X."
+          "value": "V"
         }
       ]
     },
@@ -14527,43 +14518,43 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus D 36 sup. saec. VII."
+          "value": "BAmbrosianus D 36 sup. saec. VII."
         },
         {
           "id": "lw1-2",
-          "value": "Cantabrigiensis Corp. Chr..."
+          "value": "C"
         },
         {
           "id": "lw1-3",
-          "value": "Dunelmensis B 4.9. saec. X."
+          "value": "DDunelmensis B 4.9. saec. X."
         },
         {
           "id": "lw1-4",
-          "value": "Leidensis Burm. Q. 3 saec. X:"
+          "value": "ELeidensis Burm. Q. 3 saec. X:"
         },
         {
           "id": "lw1-5",
-          "value": "Casinensis 374 saec. IX."
+          "value": "MCasinensis 374 saec. IX."
         },
         {
           "id": "lw1-6",
-          "value": "Parisinus lat. 8305 saec. X."
+          "value": "N"
         },
         {
           "id": "lw1-7",
-          "value": "Oxoniensis Oriel 3 saec. X."
+          "value": "O"
         },
         {
           "id": "lw1-8",
-          "value": "Parisinus lat. 8086 saec. X."
+          "value": "P"
         },
         {
           "id": "lw1-9",
-          "value": "Sangallensis 136 saec. IX vel X..."
+          "value": "S"
         },
         {
           "id": "lw1-10",
-          "value": "Vaticanus Reg. 321 saec. X."
+          "value": "V"
         }
       ]
     },
@@ -14572,35 +14563,35 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Dunelmensis B 4.9. saec. X."
+          "value": "DDunelmensis B 4.9. saec. X."
         },
         {
           "id": "lw1-2",
-          "value": "Leidensis Burm. Q. 3 saec. X:"
+          "value": "ELeidensis Burm. Q. 3 saec. X:"
         },
         {
           "id": "lw1-3",
-          "value": "Parisinus lat. 8305 saec. X."
+          "value": "N"
         },
         {
           "id": "lw1-4",
-          "value": "Oxoniensis Oriel 3 saec. X."
+          "value": "O"
         },
         {
           "id": "lw1-5",
-          "value": "Parisinus lat. 8086 saec. X."
+          "value": "P"
         },
         {
           "id": "lw1-6",
-          "value": "Sangallensis 136 saec. IX vel X..."
+          "value": "S"
         },
         {
           "id": "lw1-7",
-          "value": "Bernensis bibl. urbanae 264 saec..."
+          "value": "U"
         },
         {
           "id": "lw1-8",
-          "value": "Vaticanus Reg. 321 saec. X."
+          "value": "V"
         }
       ]
     },
@@ -14609,63 +14600,63 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parisinus lat. 8084 saec. VI (\"Puteanus\")"
+          "value": "AParisinus lat. 8084 saec. VI (\"Puteanus\")"
         },
         {
           "id": "lw1-2",
-          "value": "Ambrosianus D 36 sup. saec... (def. Psych. 668-892)"
+          "value": "BAmbrosianus D 36 sup. saec... (def. Psych. 668-892)"
         },
         {
           "id": "lw1-3",
-          "value": "Cantabrigiensis Corp. Chr..."
+          "value": "C"
         },
         {
           "id": "lw1-4",
-          "value": "Dunelmensis B 4.9. saec. X."
+          "value": "DDunelmensis B 4.9. saec. X."
         },
         {
           "id": "lw1-5",
-          "value": "Leidensis Burm. Q.3 saec. X."
+          "value": "ELeidensis Burm. Q.3 saec. X."
         },
         {
           "id": "lw1-6",
-          "value": "Cantabrigensis Corp. Chr. 23 saec..."
+          "value": "K"
         },
         {
           "id": "lw1-7",
-          "value": "Casinensis 374 saec IX (pars minor saec XI)"
+          "value": "MCasinensis 374 saec IX (pars minor saec XI)"
         },
         {
           "id": "lw1-8",
-          "value": "Parisinus lat. 8305 saec. X."
+          "value": "N"
         },
         {
           "id": "lw1-9",
-          "value": "Oxoniensis Oriel 3 saec. X."
+          "value": "O"
         },
         {
           "id": "lw1-10",
-          "value": "Parisinus lat. 8086 saec. X (continet Psych. 811-915)"
+          "value": "PParisinus lat. 8086 saec. X (continet Psych. 811-915)"
         },
         {
           "id": "lw1-11",
-          "value": "Aurelianensis 307 saec XI (inc. a u. 111)"
+          "value": "R"
         },
         {
           "id": "lw1-12",
-          "value": "Sangallensis 136 saec. IX vel X..."
+          "value": "S"
         },
         {
           "id": "lw1-13",
-          "value": "Bernensis bibl. urbanae 264 saec... (def. 284-520 et a 641 usque ad...)"
+          "value": "UBernensis bibl. urbanae 264 saec... (def. 284-520 et a 641 usque ad...)"
         },
         {
           "id": "lw1-14",
-          "value": "Vaticanus Reg. 321 saec. X."
+          "value": "V"
         },
         {
           "id": "lw1-15",
-          "value": "Vaticanus Reg. 278 saec. IX (def. Praef. et u. 668-892)"
+          "value": "W"
         }
       ]
     },
@@ -14674,47 +14665,47 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus D 36 sup. saec. VII."
+          "value": "BAmbrosianus D 36 sup. saec. VII."
         },
         {
           "id": "lw1-2",
-          "value": "Cantabrigiensis Corp. Chr..."
+          "value": "C"
         },
         {
           "id": "lw1-3",
-          "value": "Dunelmensis B 4.9. saec. X."
+          "value": "DDunelmensis B 4.9. saec. X."
         },
         {
           "id": "lw1-4",
-          "value": "Leidensis Burm. Q. 3 saec. X:"
+          "value": "ELeidensis Burm. Q. 3 saec. X:"
         },
         {
           "id": "lw1-5",
-          "value": "Casinensis 374 saec. IX."
+          "value": "MCasinensis 374 saec. IX."
         },
         {
           "id": "lw1-6",
-          "value": "Parisinus lat. 8305 saec. X."
+          "value": "N"
         },
         {
           "id": "lw1-7",
-          "value": "Oxoniensis Oriel 3 saec. X."
+          "value": "O"
         },
         {
           "id": "lw1-8",
-          "value": "Parisinus lat. 8086 saec. X."
+          "value": "P"
         },
         {
           "id": "lw1-9",
-          "value": "Sangallensis 136 saec. IX vel X..."
+          "value": "S"
         },
         {
           "id": "lw1-10",
-          "value": "Bernensis bibl. urbanae 264 saec..."
+          "value": "U"
         },
         {
           "id": "lw1-11",
-          "value": "Vaticanus Reg. 321 saec. X."
+          "value": "V"
         }
       ]
     },
@@ -14770,19 +14761,19 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parisinus Latinus 10318 (Salmasianus)"
+          "value": "A, ff. 128-134"
         },
         {
           "id": "lw1-2",
-          "value": "Schedae Divionenses (Heidelberg Lat. 46)"
+          "value": "DSchedae Divionenses (Heidelberg Lat. 46)"
         },
         {
           "id": "lw1-3",
-          "value": "Apographon Heinsii (Heidelberg Lat. 46)"
+          "value": "H, ff. 50v-53v"
         },
         {
           "id": "lw1-4",
-          "value": "Leidensis Vossianus Oct. 16 saec..."
+          "value": "V"
         }
       ]
     },
@@ -14856,7 +14847,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus A 118 inf., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
@@ -14864,11 +14855,11 @@
         },
         {
           "id": "lw1-3",
-          "value": "Cantabrigiensis, Corpus Christi..."
+          "value": "C, foll. 1-39 tern. coll."
         },
         {
           "id": "lw1-4",
-          "value": "Laurentianus Plut. 37. 13 (\"Etruscus\")"
+          "value": "E, foll. 165"
         },
         {
           "id": "lw1-5",
@@ -14880,51 +14871,51 @@
         },
         {
           "id": "lw1-7",
-          "value": "Parisinus Lat. 11855, saec..."
+          "value": "F, foll. 228-87, bin. coll."
         },
         {
           "id": "lw1-8",
-          "value": "Ambrosianus G 89 inf., saec..."
+          "value": "g"
         },
         {
           "id": "lw1-9",
-          "value": "Ambrosianus H 77 inf., a. 1380"
+          "value": "H"
         },
         {
           "id": "lw1-10",
-          "value": "Cameracensis B 55, c. a. 1300,..."
+          "value": "K, foll. 166-236, bin. coll."
         },
         {
           "id": "lw1-11",
-          "value": "Laurentianus Plut. 24 sin. 4, a..."
+          "value": "l, foll. 162"
         },
         {
           "id": "lw1-12",
-          "value": "Codex Florentinus Laurentianus,..."
+          "value": "L2"
         },
         {
           "id": "lw1-13",
-          "value": "Ambrosianus D 276 inf., saec..."
+          "value": "MAmbrosianus D 276 inf., saec..."
         },
         {
           "id": "lw1-14",
-          "value": "Neapolitanus Bibl. Nat. IV.D.47, a..."
+          "value": "n, foll. 168"
         },
         {
           "id": "lw1-15",
-          "value": "Vaticanus Lat. 1769, saec..."
+          "value": "N"
         },
         {
           "id": "lw1-16",
-          "value": "Oxoniensis Canon. Class. Lat..."
+          "value": "Ox., foll. 123"
         },
         {
           "id": "lw1-17",
-          "value": "Parisinus Lat. 8260, saec..."
+          "value": "P"
         },
         {
           "id": "lw1-18",
-          "value": "Casinensis 392 P, saec. XIV in..."
+          "value": "Q, foll. 1-120, bin. coll."
         },
         {
           "id": "lw1-19",
@@ -14932,7 +14923,7 @@
         },
         {
           "id": "lw1-20",
-          "value": "Scorialensis 108 T. III. II, saec..."
+          "value": "S, foll. 60, bin. coll."
         },
         {
           "id": "lw1-21",
@@ -14944,11 +14935,11 @@
         },
         {
           "id": "lw1-23",
-          "value": "amissus codex quidam Patauinus,..."
+          "value": "μ"
         },
         {
           "id": "lw1-24",
-          "value": "Ex S et μ conflatus, codicum K et..."
+          "value": "ν"
         },
         {
           "id": "lw1-25",
@@ -14956,7 +14947,7 @@
         },
         {
           "id": "lw1-26",
-          "value": "codex deperditus, quo Nicolaus..."
+          "value": "τ"
         },
         {
           "id": "lw1-27",
@@ -15428,7 +15419,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus A 118 inf., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
@@ -15436,11 +15427,11 @@
         },
         {
           "id": "lw1-3",
-          "value": "Cantabrigiensis, Corpus Christi..."
+          "value": "C, foll. 1-39 tern. coll."
         },
         {
           "id": "lw1-4",
-          "value": "Laurentianus Plut. 37. 13 (\"Etruscus\")"
+          "value": "E, foll. 165"
         },
         {
           "id": "lw1-5",
@@ -15452,47 +15443,47 @@
         },
         {
           "id": "lw1-7",
-          "value": "Parisinus Lat. 11855, saec..."
+          "value": "F, foll. 228-87, bin. coll."
         },
         {
           "id": "lw1-8",
-          "value": "Ambrosianus G 89 inf., saec..."
+          "value": "g"
         },
         {
           "id": "lw1-9",
-          "value": "Exoniensis Bibl. Cathedralis 3549..."
+          "value": "G, foll. 190-194, tern. coll."
         },
         {
           "id": "lw1-10",
-          "value": "Ambrosianus H 77 inf., a. 1380"
+          "value": "H"
         },
         {
           "id": "lw1-11",
-          "value": "Laurentianus Plut. 24 sin. 4, a..."
+          "value": "l, foll. 162"
         },
         {
           "id": "lw1-12",
-          "value": "Ambrosianus D 276 inf., saec..."
+          "value": "M, foll., bin. coll."
         },
         {
           "id": "lw1-13",
-          "value": "Neapolitanus Bibl. Nat. IV.D.47, a..."
+          "value": "n, foll. 168"
         },
         {
           "id": "lw1-14",
-          "value": "Vaticanus Lat. 1769, saec..."
+          "value": "N"
         },
         {
           "id": "lw1-15",
-          "value": "Oxoniensis Canon. Class. Lat..."
+          "value": "Ox., foll. 123"
         },
         {
           "id": "lw1-16",
-          "value": "Parisinus Bibl. Nat. Lat..."
+          "value": "P, foll. 156"
         },
         {
           "id": "lw1-17",
-          "value": "Casinensis 392 P, saec. XIV in..."
+          "value": "Q, foll. 1-120, bin. coll."
         },
         {
           "id": "lw1-18",
@@ -15500,15 +15491,15 @@
         },
         {
           "id": "lw1-19",
-          "value": "Scorialensis T. III. II, saec..."
+          "value": "S, foll. 60, bin. coll."
         },
         {
           "id": "lw1-20",
-          "value": "Parisinus Bibl. Nat. Lat..."
+          "value": "TParisinus Bibl. Nat. Lat..."
         },
         {
           "id": "lw1-21",
-          "value": "Vaticanus Lat. 2829, saec. XIII ex..."
+          "value": "V, foll. 1-49, bin. coll."
         },
         {
           "id": "lw1-22",
@@ -15520,7 +15511,7 @@
         },
         {
           "id": "lw1-24",
-          "value": "Ex S et μ conflatus, codicum K et..."
+          "value": "ν"
         },
         {
           "id": "lw1-25",
@@ -15528,7 +15519,7 @@
         },
         {
           "id": "lw1-26",
-          "value": "codex deperditus, quo Nicolaus..."
+          "value": "τ"
         },
         {
           "id": "lw1-27",
@@ -15690,7 +15681,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus A 118 inf., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
@@ -15698,59 +15689,59 @@
         },
         {
           "id": "lw1-3",
-          "value": "Cantabrigiensis, Corpus Christi..."
+          "value": "C, foll. 1-39 tern. coll."
         },
         {
           "id": "lw1-4",
-          "value": "Etonensis 110, saec. XIV med..."
+          "value": "e"
         },
         {
           "id": "lw1-5",
-          "value": "Laurentianus Plut. 37. 13 (\"Etruscus\")"
+          "value": "E, foll. 165"
         },
         {
           "id": "lw1-6",
-          "value": "Parisinus Lat. 11855, saec..."
+          "value": "F, foll. 228-87, bin. coll."
         },
         {
           "id": "lw1-7",
-          "value": "Ambrosianus G 89 inf., saec..."
+          "value": "g"
         },
         {
           "id": "lw1-8",
-          "value": "Ambrosianus H 77 inf., a. 1380"
+          "value": "H"
         },
         {
           "id": "lw1-9",
-          "value": "Laurentianus Plut. 24 sin. 4, a..."
+          "value": "l, foll. 162"
         },
         {
           "id": "lw1-10",
-          "value": "Laurentianus Plut. 37, 6, a..."
+          "value": "L"
         },
         {
           "id": "lw1-11",
-          "value": "Ambrosianus D 276 inf., saec..."
+          "value": "M, foll., bin. coll."
         },
         {
           "id": "lw1-12",
-          "value": "Neapolitanus Bibl. Nat. IV.D.47, a..."
+          "value": "n, foll. 168"
         },
         {
           "id": "lw1-13",
-          "value": "Vaticanus Lat. 1769, saec..."
+          "value": "N"
         },
         {
           "id": "lw1-14",
-          "value": "Mutin. GG2, saec. XV"
+          "value": "O"
         },
         {
           "id": "lw1-15",
-          "value": "Oxoniensis Canon. Class. Lat..."
+          "value": "Ox., foll. 123"
         },
         {
           "id": "lw1-16",
-          "value": "Parisinus Lat. 8260, saec..."
+          "value": "P"
         },
         {
           "id": "lw1-17",
@@ -15758,15 +15749,15 @@
         },
         {
           "id": "lw1-18",
-          "value": "Scorialensis T. III. II, saec..."
+          "value": "S, ll. 60, bin. coll."
         },
         {
           "id": "lw1-19",
-          "value": "Parisinus Lat. 8031, saec. XV in..."
+          "value": "T, foll. 195"
         },
         {
           "id": "lw1-20",
-          "value": "Vaticanus Lat. 1647, a. 1391"
+          "value": "z"
         },
         {
           "id": "lw1-21",
@@ -15778,7 +15769,7 @@
         },
         {
           "id": "lw1-23",
-          "value": "amissus codex quidam Patauinus,..."
+          "value": "μ"
         },
         {
           "id": "lw1-24",
@@ -15786,7 +15777,7 @@
         },
         {
           "id": "lw1-25",
-          "value": "codex deperditus, quo Nicolaus..."
+          "value": "τ"
         },
         {
           "id": "lw1-26",
@@ -15984,43 +15975,43 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus A 118 inf., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
-          "value": "Cantabrigiensis, Corpus Christi..."
+          "value": "C, foll. 1-39 tern. coll."
         },
         {
           "id": "lw1-3",
-          "value": "Laurentianus Plut. 37. 13 (\"Etruscus\")"
+          "value": "E, foll. 165"
         },
         {
           "id": "lw1-4",
-          "value": "Ambrosianus G 89 inf., saec..."
+          "value": "g"
         },
         {
           "id": "lw1-5",
-          "value": "Ambrosianus H 77 inf., a. 1380"
+          "value": "H"
         },
         {
           "id": "lw1-6",
-          "value": "Laurentianus Plut. 24 sin. 4, a..."
+          "value": "l, foll. 162"
         },
         {
           "id": "lw1-7",
-          "value": "Laurentianus Plut. 37, 6, a..."
+          "value": "L"
         },
         {
           "id": "lw1-8",
-          "value": "Ambrosianus D 276 inf., saec..."
+          "value": "M, foll., bin. coll."
         },
         {
           "id": "lw1-9",
-          "value": "Neapolitanus Bibl. Nat. IV.D.47, a..."
+          "value": "n, foll. 168"
         },
         {
           "id": "lw1-10",
-          "value": "Parisinus Lat. 8260, saec..."
+          "value": "P"
         },
         {
           "id": "lw1-11",
@@ -16028,19 +16019,19 @@
         },
         {
           "id": "lw1-12",
-          "value": "Ambrosianus G 82 sup., saec. V in..."
+          "value": "RAmbrosianus G 82 sup., saec. V in..."
         },
         {
           "id": "lw1-13",
-          "value": "Scorialensis T. III. II, saec..."
+          "value": "S, ll. 60, bin. coll."
         },
         {
           "id": "lw1-14",
-          "value": "Parisinus Lat. 8031, saec. XV in..."
+          "value": "T, foll. 195"
         },
         {
           "id": "lw1-15",
-          "value": "Vaticanus Lat. 1647, a. 1391"
+          "value": "z"
         },
         {
           "id": "lw1-16",
@@ -16052,7 +16043,7 @@
         },
         {
           "id": "lw1-18",
-          "value": "amissus codex quidam Patauinus,..."
+          "value": "μ"
         },
         {
           "id": "lw1-19",
@@ -16064,7 +16055,7 @@
         },
         {
           "id": "lw1-21",
-          "value": "codex deperditus, quo Nicolaus..."
+          "value": "τ"
         },
         {
           "id": "lw1-22",
@@ -16206,7 +16197,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus A 118 inf., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
@@ -16218,75 +16209,75 @@
         },
         {
           "id": "lw1-4",
-          "value": "Cantabrigiensis, Corpus Christi..."
+          "value": "C, foll. 1-39 tern. coll."
         },
         {
           "id": "lw1-5",
-          "value": "Neapolitanus Bibl. Nat. IV.e..."
+          "value": "d, foll. 1-76, bin. coll."
         },
         {
           "id": "lw1-6",
-          "value": "Malatest. Caesen., saec. XIV"
+          "value": "D"
         },
         {
           "id": "lw1-7",
-          "value": "Etonensis 110, saec. XIV med..."
+          "value": "e"
         },
         {
           "id": "lw1-8",
-          "value": "Laurentianus Plut. 37. 13 (\"Etruscus\")"
+          "value": "E, foll. 165"
         },
         {
           "id": "lw1-9",
-          "value": "Ambrosianus G 89 inf., saec..."
+          "value": "g"
         },
         {
           "id": "lw1-10",
-          "value": "Exoniensis Bibl. Cathedralis 3549..."
+          "value": "G, foll. 190-194, tern. coll."
         },
         {
           "id": "lw1-11",
-          "value": "Ambrosianus H 77 inf., a. 1380"
+          "value": "H"
         },
         {
           "id": "lw1-12",
-          "value": "Laurentianus Plut. 24 sin. 4, a..."
+          "value": "l, foll. 162"
         },
         {
           "id": "lw1-13",
-          "value": "Laurentianus Plut. 37, 6, a..."
+          "value": "L"
         },
         {
           "id": "lw1-14",
-          "value": "Ambrosianus D 276 inf., saec..."
+          "value": "M, foll., bin. coll."
         },
         {
           "id": "lw1-15",
-          "value": "Neapolitanus Bibl. Nat. IV.D.47, a..."
+          "value": "n, foll. 168"
         },
         {
           "id": "lw1-16",
-          "value": "Vaticanus Lat. 1769, saec..."
+          "value": "N"
         },
         {
           "id": "lw1-17",
-          "value": "Mutin. GG2, saec. XV"
+          "value": "O"
         },
         {
           "id": "lw1-18",
-          "value": "Oxoniensis Canon. Class. Lat..."
+          "value": "Ox., foll. 123"
         },
         {
           "id": "lw1-19",
-          "value": "Parisinus Lat. 8260, saec..."
+          "value": "P"
         },
         {
           "id": "lw1-20",
-          "value": "Ambrosianus H 70 sup., c. a..."
+          "value": "q"
         },
         {
           "id": "lw1-21",
-          "value": "Vaticanus Reginensis Lat. 1500, a..."
+          "value": "r"
         },
         {
           "id": "lw1-22",
@@ -16294,23 +16285,23 @@
         },
         {
           "id": "lw1-23",
-          "value": "Scorialensis T. III. II, saec..."
+          "value": "S, ll. 60, bin. coll."
         },
         {
           "id": "lw1-24",
-          "value": "Parisinus Lat. 8031, saec. XV in..."
+          "value": "T, foll. 195"
         },
         {
           "id": "lw1-25",
-          "value": "Vaticanus Lat. 2829, saec. XIII ex..."
+          "value": "V, foll. 1-49, bin. coll."
         },
         {
           "id": "lw1-26",
-          "value": "Vaticanus Lat. 1647, a. 1391"
+          "value": "z"
         },
         {
           "id": "lw1-27",
-          "value": "Riccardianus Lat. 526, saec..."
+          "value": "Z"
         },
         {
           "id": "lw1-28",
@@ -16338,7 +16329,7 @@
         },
         {
           "id": "lw1-34",
-          "value": "codex deperditus, quo Nicolaus..."
+          "value": "τ"
         },
         {
           "id": "lw1-35",
@@ -16504,7 +16495,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus A 118 inf., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
@@ -16512,11 +16503,11 @@
         },
         {
           "id": "lw1-3",
-          "value": "Cantabrigiensis, Corpus Christi..."
+          "value": "C, foll. 1-39 tern. coll."
         },
         {
           "id": "lw1-4",
-          "value": "Laurentianus Plut. 37. 13 (\"Etruscus\")"
+          "value": "ELaurentianus Plut. 37. 13 (\"Etruscus\")"
         },
         {
           "id": "lw1-5",
@@ -16524,35 +16515,35 @@
         },
         {
           "id": "lw1-6",
-          "value": "Ambrosianus G 89 inf., saec..."
+          "value": "g"
         },
         {
           "id": "lw1-7",
-          "value": "Ambrosianus H 77 inf., a. 1380"
+          "value": "H"
         },
         {
           "id": "lw1-8",
-          "value": "Laurentianus Plut. 24 sin. 4, a..."
+          "value": "l, foll. 162"
         },
         {
           "id": "lw1-9",
-          "value": "Ambrosianus D 276 inf., saec..."
+          "value": "M, foll., bin. coll."
         },
         {
           "id": "lw1-10",
-          "value": "Neapolitanus Bibl. Nat. IV.D.47, a..."
+          "value": "n, foll. 168"
         },
         {
           "id": "lw1-11",
-          "value": "Vaticanus Lat. 1769, saec..."
+          "value": "N"
         },
         {
           "id": "lw1-12",
-          "value": "Oxoniensis Canon. Class. Lat..."
+          "value": "Ox., foll. 123"
         },
         {
           "id": "lw1-13",
-          "value": "Parisinus Lat. 8260, saec..."
+          "value": "P"
         },
         {
           "id": "lw1-14",
@@ -16560,19 +16551,19 @@
         },
         {
           "id": "lw1-15",
-          "value": "Ambrosianus G 82 sup., saec. V in..."
+          "value": "RAmbrosianus G 82 sup., saec. V in..."
         },
         {
           "id": "lw1-16",
-          "value": "Scorialensis 108 T. III. II, saec..."
+          "value": "S, foll. 60, bin. coll."
         },
         {
           "id": "lw1-17",
-          "value": "Parisinus Lat. 8031, saec. XV in..."
+          "value": "T, foll. 195"
         },
         {
           "id": "lw1-18",
-          "value": "'Excerpta Thuanea' in codice..."
+          "value": "Thu.'Excerpta Thuanea' in codice..."
         },
         {
           "id": "lw1-19",
@@ -16592,7 +16583,7 @@
         },
         {
           "id": "lw1-23",
-          "value": "codex deperditus, quo Nicolaus..."
+          "value": "τ"
         },
         {
           "id": "lw1-24",
@@ -16722,15 +16713,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus A 118 inf., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
-          "value": "Cantabrigiensis, Corpus Christi..."
+          "value": "C, foll. 1-39 tern. coll."
         },
         {
           "id": "lw1-3",
-          "value": "Laurentianus Plut. 37. 13 (\"Etruscus\")"
+          "value": "E, foll. 165"
         },
         {
           "id": "lw1-4",
@@ -16738,35 +16729,35 @@
         },
         {
           "id": "lw1-5",
-          "value": "Ambrosianus G 89 inf., saec..."
+          "value": "g"
         },
         {
           "id": "lw1-6",
-          "value": "Ambrosianus H 77 inf., a. 1380"
+          "value": "H"
         },
         {
           "id": "lw1-7",
-          "value": "Laurentianus Plut. 24 sin. 4, a..."
+          "value": "l, foll. 162"
         },
         {
           "id": "lw1-8",
-          "value": "Laurentianus Plut. 37, 6, a..."
+          "value": "L"
         },
         {
           "id": "lw1-9",
-          "value": "Ambrosianus D 276 inf., saec..."
+          "value": "M, foll., bin. coll."
         },
         {
           "id": "lw1-10",
-          "value": "Neapolitanus Bibl. Nat. IV.D.47, a..."
+          "value": "n, foll. 168"
         },
         {
           "id": "lw1-11",
-          "value": "Vaticanus Lat. 1769, saec..."
+          "value": "N"
         },
         {
           "id": "lw1-12",
-          "value": "Parisinus Lat. 8260, saec..."
+          "value": "P"
         },
         {
           "id": "lw1-13",
@@ -16774,19 +16765,19 @@
         },
         {
           "id": "lw1-14",
-          "value": "Scorialensis T. III. II, saec..."
+          "value": "S, ll. 60, bin. coll."
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus Lat. 8031, saec. XV in..."
+          "value": "T, foll. 195"
         },
         {
           "id": "lw1-16",
-          "value": "Vaticanus Lat. 2829, saec. XIII ex..."
+          "value": "V, foll. 1-49, bin. coll."
         },
         {
           "id": "lw1-17",
-          "value": "Vaticanus Lat. 1647, a. 1391"
+          "value": "z"
         },
         {
           "id": "lw1-18",
@@ -16802,7 +16793,7 @@
         },
         {
           "id": "lw1-21",
-          "value": "amissus codex quidam Patauinus,..."
+          "value": "μ"
         },
         {
           "id": "lw1-22",
@@ -16810,7 +16801,7 @@
         },
         {
           "id": "lw1-23",
-          "value": "codex deperditus, quo Nicolaus..."
+          "value": "τ"
         },
         {
           "id": "lw1-24",
@@ -16932,7 +16923,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus A 118 inf., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
@@ -16940,11 +16931,11 @@
         },
         {
           "id": "lw1-3",
-          "value": "Cantabrigiensis, Corpus Christi..."
+          "value": "C, foll. 1-39 tern. coll."
         },
         {
           "id": "lw1-4",
-          "value": "Laurentianus Plut. 37. 13 (\"Etruscus\")"
+          "value": "E, foll. 165"
         },
         {
           "id": "lw1-5",
@@ -16952,31 +16943,31 @@
         },
         {
           "id": "lw1-6",
-          "value": "Ambrosianus G 89 inf., saec..."
+          "value": "g"
         },
         {
           "id": "lw1-7",
-          "value": "Ambrosianus H 77 inf., a. 1380"
+          "value": "H"
         },
         {
           "id": "lw1-8",
-          "value": "Laurentianus Plut. 24 sin. 4, a..."
+          "value": "l, foll. 162"
         },
         {
           "id": "lw1-9",
-          "value": "Laurentianus Plut. 37, 6, a..."
+          "value": "L"
         },
         {
           "id": "lw1-10",
-          "value": "Ambrosianus D 276 inf., saec..."
+          "value": "M, foll., bin. coll."
         },
         {
           "id": "lw1-11",
-          "value": "Neapolitanus Bibl. Nat. IV.D.47, a..."
+          "value": "n, foll. 168"
         },
         {
           "id": "lw1-12",
-          "value": "Parisinus Lat. 8260, saec..."
+          "value": "P"
         },
         {
           "id": "lw1-13",
@@ -16984,15 +16975,15 @@
         },
         {
           "id": "lw1-14",
-          "value": "Scorialensis T. III. II, saec..."
+          "value": "S, ll. 60, bin. coll."
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus Lat. 8031, saec. XV in..."
+          "value": "T, foll. 195"
         },
         {
           "id": "lw1-16",
-          "value": "Vaticanus Lat. 1647, a. 1391"
+          "value": "z"
         },
         {
           "id": "lw1-17",
@@ -17008,7 +16999,7 @@
         },
         {
           "id": "lw1-20",
-          "value": "amissus codex quidam Patauinus,..."
+          "value": "μ"
         },
         {
           "id": "lw1-21",
@@ -17016,7 +17007,7 @@
         },
         {
           "id": "lw1-22",
-          "value": "codex deperditus, quo Nicolaus..."
+          "value": "τ"
         },
         {
           "id": "lw1-23",
@@ -17110,15 +17101,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus A 118 inf., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
-          "value": "Cantabrigiensis, Corpus Christi..."
+          "value": "C, foll. 1-39 tern. coll."
         },
         {
           "id": "lw1-3",
-          "value": "Laurentianus Plut. 37. 13 (\"Etruscus\")"
+          "value": "E, foll. 165"
         },
         {
           "id": "lw1-4",
@@ -17130,43 +17121,43 @@
         },
         {
           "id": "lw1-6",
-          "value": "Parisinus Lat. 11855, saec..."
+          "value": "F, foll. 228-87, bin. coll."
         },
         {
           "id": "lw1-7",
-          "value": "Ambrosianus G 89 inf., saec..."
+          "value": "g"
         },
         {
           "id": "lw1-8",
-          "value": "Ambrosianus H 77 inf., a. 1380"
+          "value": "H"
         },
         {
           "id": "lw1-9",
-          "value": "Laurentianus Plut. 24 sin. 4, a..."
+          "value": "l, foll. 162"
         },
         {
           "id": "lw1-10",
-          "value": "Laurentianus Plut. 37, 6, a..."
+          "value": "L"
         },
         {
           "id": "lw1-11",
-          "value": "Ambrosianus D 276 inf., saec..."
+          "value": "M, foll., bin. coll."
         },
         {
           "id": "lw1-12",
-          "value": "Neapolitanus Bibl. Nat. IV.D.47, a..."
+          "value": "n, foll. 168"
         },
         {
           "id": "lw1-13",
-          "value": "Vaticanus Lat. 1769, saec..."
+          "value": "N"
         },
         {
           "id": "lw1-14",
-          "value": "Parisinus Lat. 8260, saec..."
+          "value": "P"
         },
         {
           "id": "lw1-15",
-          "value": "Ambrosianus H 70 sup., c. a..."
+          "value": "q"
         },
         {
           "id": "lw1-16",
@@ -17174,15 +17165,15 @@
         },
         {
           "id": "lw1-17",
-          "value": "Scorialensis T. III. II, saec..."
+          "value": "S, ll. 60, bin. coll."
         },
         {
           "id": "lw1-18",
-          "value": "Parisinus Lat. 8031, saec. XV in..."
+          "value": "T, foll. 195"
         },
         {
           "id": "lw1-19",
-          "value": "Vaticanus Lat. 1647, a. 1391"
+          "value": "z"
         },
         {
           "id": "lw1-20",
@@ -17198,7 +17189,7 @@
         },
         {
           "id": "lw1-23",
-          "value": "amissus codex quidam Patauinus,..."
+          "value": "μ"
         },
         {
           "id": "lw1-24",
@@ -17206,7 +17197,7 @@
         },
         {
           "id": "lw1-25",
-          "value": "codex deperditus, quo Nicolaus..."
+          "value": "τ"
         },
         {
           "id": "lw1-26",
@@ -17336,15 +17327,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Ambrosianus A 118 inf., saec..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
-          "value": "Cantabrigiensis, Corpus Christi..."
+          "value": "C, foll. 1-39 tern. coll."
         },
         {
           "id": "lw1-3",
-          "value": "Laurentianus Plut. 37. 13 (\"Etruscus\")"
+          "value": "E, foll. 165"
         },
         {
           "id": "lw1-4",
@@ -17352,39 +17343,39 @@
         },
         {
           "id": "lw1-5",
-          "value": "Parisinus Lat. 11855, saec..."
+          "value": "F, foll. 228-87, bin. coll."
         },
         {
           "id": "lw1-6",
-          "value": "Ambrosianus G 89 inf., saec..."
+          "value": "g"
         },
         {
           "id": "lw1-7",
-          "value": "Ambrosianus H 77 inf., a. 1380"
+          "value": "H"
         },
         {
           "id": "lw1-8",
-          "value": "Laurentianus Plut. 24 sin. 4, a..."
+          "value": "l, foll. 162"
         },
         {
           "id": "lw1-9",
-          "value": "Laurentianus Plut. 37, 6, a..."
+          "value": "L"
         },
         {
           "id": "lw1-10",
-          "value": "Ambrosianus D 276 inf., saec..."
+          "value": "M, foll., bin. coll."
         },
         {
           "id": "lw1-11",
-          "value": "Neapolitanus Bibl. Nat. IV.D.47, a..."
+          "value": "n, foll. 168"
         },
         {
           "id": "lw1-12",
-          "value": "Oxoniensis Canon. Class. Lat..."
+          "value": "Ox., foll. 123"
         },
         {
           "id": "lw1-13",
-          "value": "Parisinus Lat. 8260, saec..."
+          "value": "P"
         },
         {
           "id": "lw1-14",
@@ -17392,15 +17383,15 @@
         },
         {
           "id": "lw1-15",
-          "value": "'Excerpta Thuanea' in codice..."
+          "value": "Thu.'Excerpta Thuanea' in codice..."
         },
         {
           "id": "lw1-16",
-          "value": "Codex Oxoniensis, New College 21,..."
+          "value": "W, fol. 31rin marg. inf. a manu..."
         },
         {
           "id": "lw1-17",
-          "value": "Vaticanus Lat. 1647, a. 1391"
+          "value": "z"
         },
         {
           "id": "lw1-18",
@@ -17416,11 +17407,11 @@
         },
         {
           "id": "lw1-21",
-          "value": "amissus codex quidam Patauinus,..."
+          "value": "μ"
         },
         {
           "id": "lw1-22",
-          "value": "Ex S et μ conflatus, codicum K et..."
+          "value": "ν"
         },
         {
           "id": "lw1-23",
@@ -17428,7 +17419,7 @@
         },
         {
           "id": "lw1-24",
-          "value": "codex deperditus, quo Nicolaus..."
+          "value": "τ"
         },
         {
           "id": "lw1-25",
@@ -17624,7 +17615,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Matritensis F 150, olim Clunia..."
+          "value": "C"
         },
         {
           "id": "lw1-2",
@@ -17632,15 +17623,15 @@
         },
         {
           "id": "lw1-3",
-          "value": "Cod. Parisinus 9551, saec. XII"
+          "value": "FCod. Parisinus 9551, saec..."
         },
         {
           "id": "lw1-4",
-          "value": "Cod. Parisinus 2781, saec..."
+          "value": "P"
         },
         {
           "id": "lw1-5",
-          "value": "Cod. Florentinus Laurentianus plut..."
+          "value": "T"
         },
         {
           "id": "lw1-6",
@@ -17648,7 +17639,7 @@
         },
         {
           "id": "lw1-7",
-          "value": "Vaticanus 3421"
+          "value": "Vatic. 3421"
         }
       ]
     },
@@ -17706,7 +17697,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Matritensis F 150, olim Clunia..."
+          "value": "C"
         },
         {
           "id": "lw1-2",
@@ -17714,7 +17705,7 @@
         },
         {
           "id": "lw1-3",
-          "value": "Cod. Parisinus 9551, saec. XII"
+          "value": "FCod. Parisinus 9551, saec..."
         },
         {
           "id": "lw1-4",
@@ -17726,7 +17717,7 @@
         },
         {
           "id": "lw1-6",
-          "value": "Cod. Florentinus Marcianus 554,..."
+          "value": "MCod. Florentinus Marcianus 554,..."
         },
         {
           "id": "lw1-7",
@@ -17750,7 +17741,7 @@
         },
         {
           "id": "lw1-12",
-          "value": "Cod. Parisinus 2781, saec..."
+          "value": "P"
         },
         {
           "id": "lw1-13",
@@ -17758,7 +17749,7 @@
         },
         {
           "id": "lw1-14",
-          "value": "Cod. Florentinus Laurentianus plut..."
+          "value": "T"
         },
         {
           "id": "lw1-15",
@@ -17800,11 +17791,11 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Firenze, Bibl. Laurenziana,..."
+          "value": "A, ff. 1-179v."
         },
         {
           "id": "lw1-2",
-          "value": "Oxford, Bodleian Library, Canon..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
@@ -17824,87 +17815,87 @@
         },
         {
           "id": "lw1-7",
-          "value": "Firenze, Bibl. Laurenziana, Plut..."
+          "value": "D, ff. 2-176r."
         },
         {
           "id": "lw1-8",
-          "value": "Firenze, Bibl. Laurenziana, Plut..."
+          "value": "E, ff. 1-191."
         },
         {
           "id": "lw1-9",
-          "value": "Firenze, Bibl. Laurenziana, Aed..."
+          "value": "F, ff. 1r-174r."
         },
         {
           "id": "lw1-10",
-          "value": "Firenze, Bibl. Laurenziana, Plut..."
+          "value": "G, ff. 1r-179."
         },
         {
           "id": "lw1-11",
-          "value": "London, British Museum, Harl..."
+          "value": "H, ff. 1-177."
         },
         {
           "id": "lw1-12",
-          "value": "Firenze, Bibl. Laurenziana, Plut..."
+          "value": "J, ff. 1-227."
         },
         {
           "id": "lw1-13",
-          "value": "Firenze, Bibl. Laurenziana, Plut..."
+          "value": "K, ff. 1-192r."
         },
         {
           "id": "lw1-14",
-          "value": "Firenze, Bibl. Laurenziana, Plut..."
+          "value": "L, ff. 1-206v."
         },
         {
           "id": "lw1-15",
-          "value": "Venezia, Bibl. Naz. Marciana, lat... (4519)"
+          "value": "M, ff. 3r-200."
         },
         {
           "id": "lw1-16",
-          "value": "Oxford, Bodleian Library, Add. C..."
+          "value": "N, ff. 2r-203v."
         },
         {
           "id": "lw1-17",
-          "value": "Oxford, Queen's College 314, saec..."
+          "value": "O, ff. 1-218."
         },
         {
           "id": "lw1-18",
-          "value": "Paris, Bibl. Nationale, Lat..."
+          "value": "P, ff. 1r-202r."
         },
         {
           "id": "lw1-19",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "Q, ff. 2-208r."
         },
         {
           "id": "lw1-20",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "R, ff. 1-174."
         },
         {
           "id": "lw1-21",
-          "value": "Paris, Bibl. Nationale, Lat... (?)"
+          "value": "T, ff. 4-225."
         },
         {
           "id": "lw1-22",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "U"
         },
         {
           "id": "lw1-23",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "V, ff. 1-179."
         },
         {
           "id": "lw1-24",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "W, ff. 1r-196v."
         },
         {
           "id": "lw1-25",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "X, ff. 1r-199v."
         },
         {
           "id": "lw1-26",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "Y, ff. 1r-184."
         },
         {
           "id": "lw1-27",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "Z, ff. 6r-152r."
         },
         {
           "id": "lw1-28",
@@ -17924,7 +17915,7 @@
         },
         {
           "id": "lw1-32",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "Γ, ff. 2-210r."
         },
         {
           "id": "lw1-33",
@@ -17932,31 +17923,31 @@
         },
         {
           "id": "lw1-34",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "Δ, ff. 1-136r."
         },
         {
           "id": "lw1-35",
-          "value": "Budapest, Eötvös Loránd Tudomá..."
+          "value": "Λ, ff. 1-185."
         },
         {
           "id": "lw1-36",
-          "value": "Città del Vaticano, Bibl..."
+          "value": "Π, ff. 1-145."
         },
         {
           "id": "lw1-37",
-          "value": "Roma, Bibl. Casanatense, Ms..."
+          "value": "Σ, ff. 1-207."
         },
         {
           "id": "lw1-38",
-          "value": "Oxford, Bodleian Library, Lat..."
+          "value": "Φ, ff. 1-185."
         },
         {
           "id": "lw1-39",
-          "value": "Cesena, Bibl. Malatestiana, Cod..."
+          "value": "Ξ, ff. 1-161."
         },
         {
           "id": "lw1-40",
-          "value": "New Haven, Conn., Yale University..."
+          "value": "Ψ, ff. 1-184."
         },
         {
           "id": "lw1-41",
@@ -18262,15 +18253,15 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Londiniensis, Britannici Musaei,..."
+          "value": "a"
         },
         {
           "id": "lw1-2",
-          "value": "Oxoniensis, Bodleian. Auct. F.5... (2195)"
+          "value": "bOxoniensis, Bodleian. Auct. F.5... (2195)"
         },
         {
           "id": "lw1-3",
-          "value": "Bernensis 156, saec. XI"
+          "value": "B"
         },
         {
           "id": "lw1-4",
@@ -18278,11 +18269,11 @@
         },
         {
           "id": "lw1-5",
-          "value": "Oxoniensis, Bodleian. Canon. Class... (18703)"
+          "value": "c"
         },
         {
           "id": "lw1-6",
-          "value": "Bruxellensis 5338, saec. XI"
+          "value": "C"
         },
         {
           "id": "lw1-7",
@@ -18294,11 +18285,11 @@
         },
         {
           "id": "lw1-9",
-          "value": "Londiniensis, Britannici Musaei,..."
+          "value": "d"
         },
         {
           "id": "lw1-10",
-          "value": "Etonensis 150, saec. XI"
+          "value": "EEtonensis 150, saec. XI"
         },
         {
           "id": "lw1-11",
@@ -18306,15 +18297,15 @@
         },
         {
           "id": "lw1-12",
-          "value": "Parmensis, Bibl. Palatinae,... (Pal. 3065)"
+          "value": "f"
         },
         {
           "id": "lw1-13",
-          "value": "Cantabrigensis, Peterhouse Bibl... (2.1.8)"
+          "value": "hCantabrigensis, Peterhouse Bibl... (2.1.8)"
         },
         {
           "id": "lw1-14",
-          "value": "Guelferbytanus Gudianus 54, saec..."
+          "value": "K"
         },
         {
           "id": "lw1-15",
@@ -18326,19 +18317,19 @@
         },
         {
           "id": "lw1-17",
-          "value": "Lincolnensis, Cath. Capit. Bibl... (C.5.8)"
+          "value": "lLincolnensis, Cath. Capit. Bibl... (C.5.8)"
         },
         {
           "id": "lw1-18",
-          "value": "Londiniensis, Britannici Musaei,..."
+          "value": "mLondiniensis, Britannici Musaei,..."
         },
         {
           "id": "lw1-19",
-          "value": "Cantabrigensis, Peterhouse Bibl... (2.1.0)"
+          "value": "pCantabrigensis, Peterhouse Bibl... (2.1.0)"
         },
         {
           "id": "lw1-20",
-          "value": "Puteanus (Parisinus Lat. 8051)"
+          "value": "P"
         },
         {
           "id": "lw1-21",
@@ -18346,7 +18337,7 @@
         },
         {
           "id": "lw1-22",
-          "value": "Parisinus Lat. 10317, saec. X"
+          "value": "Q"
         },
         {
           "id": "lw1-23",
@@ -18358,11 +18349,11 @@
         },
         {
           "id": "lw1-25",
-          "value": "Londiniensis, Britannici Musaei,..."
+          "value": "rLondiniensis, Britannici Musaei,..."
         },
         {
           "id": "lw1-26",
-          "value": "Ratisbonensis (Monacensis 14557)"
+          "value": "R"
         },
         {
           "id": "lw1-27",
@@ -18370,19 +18361,19 @@
         },
         {
           "id": "lw1-28",
-          "value": "Bruxellensis, Bibl. Univ., saec..."
+          "value": "t"
         },
         {
           "id": "lw1-29",
-          "value": "Parisinus Lat. 8040, saec. XI"
+          "value": "U"
         },
         {
           "id": "lw1-30",
-          "value": "Vaticanus Lat. 1663, saec..."
+          "value": "vVaticanus Lat. 1663, saec..."
         },
         {
           "id": "lw1-31",
-          "value": "Vigorniensis, Bibl. Cathedr..."
+          "value": "w"
         }
       ]
     },
@@ -19152,31 +19143,31 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "codex Alenconiensis 12, saec..."
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "codex Parisinus 4883 A, saec... (ex R descriptus)"
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "codex Parisinus Mazarinaeus 583,... (vv. 1-12 tantum continet)"
+          "value": "M"
         },
         {
           "id": "lw1-4",
-          "value": "codex Parisinus 2772, saec. IX (ut Mattiacci, p. 40, censet e...)"
+          "value": "Pcodex Parisinus 2772, saec... (ut Mattiacci, p. 40, censet e...)"
         },
         {
           "id": "lw1-5",
-          "value": "codex Vaticanus Reginensis 215,..."
+          "value": "R"
         },
         {
           "id": "lw1-6",
-          "value": "codex Parisinus 17160, saec. XII."
+          "value": "S"
         },
         {
           "id": "lw1-7",
-          "value": "Vindobonensis 143, saec. XIII (ex quo primus ed. M. Haupt...)"
+          "value": "VVindobonensis 143, saec. XIII (ex quo primus ed. M. Haupt...)"
         }
       ]
     },
@@ -19333,7 +19324,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Arundelianus 133, saec. XV"
+          "value": "A"
         },
         {
           "id": "lw1-2",
@@ -19349,7 +19340,7 @@
         },
         {
           "id": "lw1-5",
-          "value": "Helmstadiensis 332, saec. XV"
+          "value": "H"
         },
         {
           "id": "lw1-6",
@@ -19357,7 +19348,7 @@
         },
         {
           "id": "lw1-7",
-          "value": "Corsinianus 43 F 5 (uu. 1-6 habet)"
+          "value": "K"
         },
         {
           "id": "lw1-8",
@@ -19373,7 +19364,7 @@
         },
         {
           "id": "lw1-11",
-          "value": "Rehdigeranus 125, saec. XV"
+          "value": "R"
         },
         {
           "id": "lw1-12",
@@ -19381,7 +19372,7 @@
         },
         {
           "id": "lw1-13",
-          "value": "Stabulensis, nunc Parisinus Lat..."
+          "value": "S"
         },
         {
           "id": "lw1-14",
@@ -19421,7 +19412,7 @@
         },
         {
           "id": "lw1-23",
-          "value": "Corsinianus 43 F 5 (uu. 1-6 habet)"
+          "value": "Γ"
         },
         {
           "id": "lw1-24",
@@ -19429,7 +19420,7 @@
         },
         {
           "id": "lw1-25",
-          "value": "florilegii saec. XII, ut uidetur,..."
+          "value": "φ"
         },
         {
           "id": "lw1-26",
@@ -19715,11 +19706,11 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Arundelianus 133, saec. XV"
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Bruxellensis 10675-6, saec..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
@@ -19739,19 +19730,19 @@
         },
         {
           "id": "lw1-7",
-          "value": "Helmstadiensis 332, saec. XV"
+          "value": "H"
         },
         {
           "id": "lw1-8",
-          "value": "Corsinianus 43 F 21"
+          "value": "K"
         },
         {
           "id": "lw1-9",
-          "value": "Monacensis 18895, saec. XV"
+          "value": "M"
         },
         {
           "id": "lw1-10",
-          "value": "Ambrosianus O 74, saec. XV"
+          "value": "Q"
         },
         {
           "id": "lw1-11",
@@ -19759,7 +19750,7 @@
         },
         {
           "id": "lw1-12",
-          "value": "Redhigeranus 125, saec. XV"
+          "value": "R"
         },
         {
           "id": "lw1-13",
@@ -19767,7 +19758,7 @@
         },
         {
           "id": "lw1-14",
-          "value": "editio Romana Vergilii, a..."
+          "value": "ρ"
         },
         {
           "id": "lw1-15",
@@ -19775,7 +19766,7 @@
         },
         {
           "id": "lw1-16",
-          "value": "editio Romana Vergilii a. 1473"
+          "value": "ξ"
         },
         {
           "id": "lw1-17",
@@ -20013,7 +20004,7 @@
         },
         {
           "id": "lw1-20",
-          "value": "editio Romana Vergilii a. 1473"
+          "value": "ξ"
         },
         {
           "id": "lw1-21",
@@ -20263,7 +20254,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parisinus 7927, saec. X-XI"
+          "value": "A"
         },
         {
           "id": "lw1-2",
@@ -20271,7 +20262,7 @@
         },
         {
           "id": "lw1-3",
-          "value": "Parisinus 8093, saec. X"
+          "value": "E"
         },
         {
           "id": "lw1-4",
@@ -20279,11 +20270,11 @@
         },
         {
           "id": "lw1-5",
-          "value": "Fragmentum Graeciense 1814, saec..."
+          "value": "G"
         },
         {
           "id": "lw1-6",
-          "value": "Petauianus, nunc Reginensis Lat..."
+          "value": "I"
         },
         {
           "id": "lw1-7",
@@ -20295,7 +20286,7 @@
         },
         {
           "id": "lw1-9",
-          "value": "Bodleianus Auct. F I 17, saec..."
+          "value": "O"
         },
         {
           "id": "lw1-10",
@@ -20303,11 +20294,11 @@
         },
         {
           "id": "lw1-11",
-          "value": "Parisinus 8069, saec. XI"
+          "value": "T"
         },
         {
           "id": "lw1-12",
-          "value": "Trevirensis 1086, saec. IX-X"
+          "value": "W"
         },
         {
           "id": "lw1-13",
@@ -20357,11 +20348,11 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parisinus 7927, saec. X-XI"
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Bembinus, nunc Vaticanus 3252,..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
@@ -20373,7 +20364,7 @@
         },
         {
           "id": "lw1-5",
-          "value": "Parisinus 8093, saec. X"
+          "value": "E"
         },
         {
           "id": "lw1-6",
@@ -20381,23 +20372,23 @@
         },
         {
           "id": "lw1-7",
-          "value": "Petauianus, nunc Reginensis Lat..."
+          "value": "I"
         },
         {
           "id": "lw1-8",
-          "value": "Iuvenalis Ludi qui dicitur..."
+          "value": "L"
         },
         {
           "id": "lw1-9",
-          "value": "Bodleianus Auct. F I 17, saec..."
+          "value": "O"
         },
         {
           "id": "lw1-10",
-          "value": "Stabulensis, nunc Parisinus Lat..."
+          "value": "S"
         },
         {
           "id": "lw1-11",
-          "value": "Parisinus 8069, saec. XI"
+          "value": "T"
         },
         {
           "id": "lw1-12",
@@ -20413,7 +20404,7 @@
         },
         {
           "id": "lw1-15",
-          "value": "Trevirensis 1086, saec. IX-X"
+          "value": "W"
         },
         {
           "id": "lw1-16",
@@ -20425,7 +20416,7 @@
         },
         {
           "id": "lw1-18",
-          "value": "florilegii saec. XII, ut uidetur,..."
+          "value": "φflorilegii saec. XII, ut uidetur,..."
         },
         {
           "id": "lw1-19",
@@ -20567,7 +20558,7 @@
         },
         {
           "id": "lw1-3",
-          "value": "Parisinus 8093, saec. X"
+          "value": "E"
         },
         {
           "id": "lw1-4",
@@ -20575,15 +20566,15 @@
         },
         {
           "id": "lw1-5",
-          "value": "Fiechtianus, nunc mellicensis cim..."
+          "value": "F"
         },
         {
           "id": "lw1-6",
-          "value": "Petauianus, nunc Reginensis Lat..."
+          "value": "I"
         },
         {
           "id": "lw1-7",
-          "value": "Iuvenalis Ludi qui dicitur..."
+          "value": "L"
         },
         {
           "id": "lw1-8",
@@ -20607,15 +20598,15 @@
         },
         {
           "id": "lw1-13",
-          "value": "Bodleianus Auct. F I 17, saec..."
+          "value": "O"
         },
         {
           "id": "lw1-14",
-          "value": "Stabulensis, nunc Parisinus Lat..."
+          "value": "S"
         },
         {
           "id": "lw1-15",
-          "value": "Parisinus 8069, saec. XI"
+          "value": "T"
         },
         {
           "id": "lw1-16",
@@ -20623,7 +20614,7 @@
         },
         {
           "id": "lw1-17",
-          "value": "Trevirensis 1086, saec. IX-X"
+          "value": "W"
         },
         {
           "id": "lw1-18",
@@ -20769,7 +20760,7 @@
         },
         {
           "id": "lw1-8",
-          "value": "Helmstadiensis 332, saec. XV"
+          "value": "H"
         },
         {
           "id": "lw1-9",
@@ -20781,7 +20772,7 @@
         },
         {
           "id": "lw1-11",
-          "value": "Monacensis 18895, saec. XV"
+          "value": "M"
         },
         {
           "id": "lw1-12",
@@ -20915,19 +20906,19 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Parisinus 7927, saec. X-XI"
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Bembinus, nunc Vaticanus 3252,..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "Parisinus Lat. 7930, saec. XI"
+          "value": "D"
         },
         {
           "id": "lw1-4",
-          "value": "Parisinus 8093, saec. X"
+          "value": "E"
         },
         {
           "id": "lw1-5",
@@ -20935,7 +20926,7 @@
         },
         {
           "id": "lw1-6",
-          "value": "Fiechtianus, nunc Mellicensis cim..."
+          "value": "FFiechtianus, nunc Mellicensis cim..."
         },
         {
           "id": "lw1-7",
@@ -20943,15 +20934,15 @@
         },
         {
           "id": "lw1-8",
-          "value": "Fragmentum Graeciense 1814, saec..."
+          "value": "G"
         },
         {
           "id": "lw1-9",
-          "value": "Petauianus, nunc Reginensis Lat..."
+          "value": "I"
         },
         {
           "id": "lw1-10",
-          "value": "Iuvenalis Ludi qui dicitur..."
+          "value": "L"
         },
         {
           "id": "lw1-11",
@@ -20959,27 +20950,27 @@
         },
         {
           "id": "lw1-12",
-          "value": "Bodleianus Auct. F I 17, saec..."
+          "value": "O"
         },
         {
           "id": "lw1-13",
-          "value": "Parisinus Lat. 16236, saec. X"
+          "value": "P"
         },
         {
           "id": "lw1-14",
-          "value": "Vindobonensis Lat. 134, saec..."
+          "value": "R"
         },
         {
           "id": "lw1-15",
-          "value": "Stabulensis, nunc Parisinus Lat..."
+          "value": "S"
         },
         {
           "id": "lw1-16",
-          "value": "Parisinus 8069, saec. XI"
+          "value": "T"
         },
         {
           "id": "lw1-17",
-          "value": "Trevirensis 1086, saec. IX-X"
+          "value": "W"
         },
         {
           "id": "lw1-18",
@@ -21081,31 +21072,31 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Arundelianus 133, saec. XV"
+          "value": "A"
         },
         {
           "id": "lw1-2",
-          "value": "Bruxellensis 10675-6, saec..."
+          "value": "B"
         },
         {
           "id": "lw1-3",
-          "value": "Helmstadiensis 332, saec. XV"
+          "value": "H"
         },
         {
           "id": "lw1-4",
-          "value": "Corsinianus 43 F 21"
+          "value": "K"
         },
         {
           "id": "lw1-5",
-          "value": "Monacensis 18895, saec. XV"
+          "value": "M"
         },
         {
           "id": "lw1-6",
-          "value": "Ambrosianus O 74, saec. XV"
+          "value": "Q"
         },
         {
           "id": "lw1-7",
-          "value": "Redhigeranus 125, saec. XV"
+          "value": "R"
         },
         {
           "id": "lw1-8",
@@ -21113,7 +21104,7 @@
         },
         {
           "id": "lw1-9",
-          "value": "editio Romana Vergilii, a..."
+          "value": "ρ"
         },
         {
           "id": "lw1-10",
@@ -21121,7 +21112,7 @@
         },
         {
           "id": "lw1-11",
-          "value": "editio Romana Vergilii a. 1473"
+          "value": "ξ"
         },
         {
           "id": "lw1-12",
@@ -21199,7 +21190,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Bruxellensis 10675-6, saec..."
+          "value": "B"
         },
         {
           "id": "lw1-2",
@@ -21207,7 +21198,7 @@
         },
         {
           "id": "lw1-3",
-          "value": "Fragmentum Graeciense 1814, saec..."
+          "value": "G"
         },
         {
           "id": "lw1-4",
@@ -21227,7 +21218,7 @@
         },
         {
           "id": "lw1-8",
-          "value": "Rehdigeranus 125, saec. XV"
+          "value": "R"
         },
         {
           "id": "lw1-9",
@@ -21273,11 +21264,11 @@
         },
         {
           "id": "lw1-3",
-          "value": "Bembinus, nunc Vaticanus 3252,..."
+          "value": "B"
         },
         {
           "id": "lw1-4",
-          "value": "Parisinus 8093, saec. X"
+          "value": "E"
         },
         {
           "id": "lw1-5",
@@ -21363,7 +21354,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Bernensis 172 cum Parisino lat... [MO B. 12, saec. IX m.]"
+          "value": "aBernensis 172 cum Parisino lat... [MO B. 12, saec. IX m.]"
         },
         {
           "id": "lw1-2",
@@ -21371,31 +21362,31 @@
         },
         {
           "id": "lw1-3",
-          "value": "Vaticanus lat. 3256 cum Beroli... [CLA I 13 et VIII, p. 9]"
+          "value": "A"
         },
         {
           "id": "lw1-4",
-          "value": "Bernensis 165, olim Turonensis [MO B. 10, saec. IX 1/4]"
+          "value": "bBernensis 165, olim Turonensis [MO B. 10, saec. IX 1/4]"
         },
         {
           "id": "lw1-5",
-          "value": "Bernensis 184  [MO B. 13, saec. IX-X]"
+          "value": "cBernensis 184  [MO B. 13, saec. IX-X]"
         },
         {
           "id": "lw1-6",
-          "value": "Bernensis 255 + 239, in Gallia... [MO B. 14, saec. IX 2/3]"
+          "value": "d"
         },
         {
           "id": "lw1-7",
-          "value": "Bernensis 167, origine Autissi... (desunt Aen. 12.452-579;...)"
+          "value": "eBernensis 167, origine Autiss... (desunt Aen. 12.452-579;...)"
         },
         {
           "id": "lw1-8",
-          "value": "Oxoniensis Bodl. Auct. F. 2... [MO B. 155, saec. IX¹]"
+          "value": "fOxoniensis Bodl. Auct. F. 2... [MO B. 155, saec. IX¹]"
         },
         {
           "id": "lw1-9",
-          "value": "Vaticanus lat. 3225 (saec. IV)"
+          "value": "F"
         },
         {
           "id": "lw1-10",
@@ -21411,7 +21402,7 @@
         },
         {
           "id": "lw1-13",
-          "value": "Sangallensis 1394, saec. VI in... [CLA VII 977]"
+          "value": "G"
         },
         {
           "id": "lw1-14",
@@ -21419,15 +21410,15 @@
         },
         {
           "id": "lw1-15",
-          "value": "Valentianensis 407 (389)"
+          "value": "hValentianensis 407 (389)"
         },
         {
           "id": "lw1-16",
-          "value": "Hamburgensis Scrin. 52  [MO B. 69, saec. IX m.]"
+          "value": "k"
         },
         {
           "id": "lw1-17",
-          "value": "Mediceus Laurentianus lat. Plut... [CLA III 296]"
+          "value": "MMediceus Laurentianus lat. Plut... [CLA III 296]"
         },
         {
           "id": "lw1-18",
@@ -21435,7 +21426,7 @@
         },
         {
           "id": "lw1-19",
-          "value": " (Turcius Rufius Apronianus...)"
+          "value": "M²"
         },
         {
           "id": "lw1-20",
@@ -21455,19 +21446,19 @@
         },
         {
           "id": "lw1-24",
-          "value": "fortasse Pomponius Letus,..."
+          "value": "M⁷"
         },
         {
           "id": "lw1-25",
-          "value": "Neapolitanus Vind. lat. 6,... [MO B. 151, saec. X¹]"
+          "value": "nNeapolitanus Vind. lat. 6,... [MO B. 151, saec. X¹]"
         },
         {
           "id": "lw1-26",
-          "value": "Ausonensis, (\"Vic, Archivo Capitular\" 197)"
+          "value": "oAusonensis, (\"Vic, Archivo Capitular\" 197)"
         },
         {
           "id": "lw1-27",
-          "value": "Parisinus lat. 7906, in Germania... [CLA 1744]"
+          "value": "pParisinus lat. 7906, in Germania... [CLA 1744]"
         },
         {
           "id": "lw1-28",
@@ -21475,7 +21466,7 @@
         },
         {
           "id": "lw1-29",
-          "value": "Vaticanus Palatinus lat. 1631,... [CLA I 99]"
+          "value": "PVaticanus Palatinus lat... [CLA I 99]"
         },
         {
           "id": "lw1-30",
@@ -21491,7 +21482,7 @@
         },
         {
           "id": "lw1-33",
-          "value": "Parisinus lat. 7926  [MO B. 171, saec. IX 2/4]"
+          "value": "r"
         },
         {
           "id": "lw1-34",
@@ -21499,7 +21490,7 @@
         },
         {
           "id": "lw1-35",
-          "value": "Vaticanus lat. 3867, appellatus... (Romae uel Ravennae)"
+          "value": "RVaticanus lat. 3867, appellatus... (Romae uel Ravennae)"
         },
         {
           "id": "lw1-36",
@@ -21515,23 +21506,23 @@
         },
         {
           "id": "lw1-39",
-          "value": "Parisinus lat. 7928  [MO B. 173, saec. IX ex.]"
+          "value": "sParisinus lat. 7928  [MO B. 173, saec. IX ex.]"
         },
         {
           "id": "lw1-40",
-          "value": "Parisinus lat. 13043, olim... [MO B. 192, saec. IX 2/3]"
+          "value": "tParisinus lat. 13043, olim... [MO B. 192, saec. IX 2/3]"
         },
         {
           "id": "lw1-41",
-          "value": "Parisinus lat. 13044, olim... [MO B. 193, saec. IX ex.]"
+          "value": "uParisinus lat. 13044, olim... [MO B. 193, saec. IX ex.]"
         },
         {
           "id": "lw1-42",
-          "value": "Vaticanus lat. 1570, olim... [MO B. 256, saec. IX/X]"
+          "value": "vVaticanus lat. 1570, olim... [MO B. 256, saec. IX/X]"
         },
         {
           "id": "lw1-43",
-          "value": "Veronensis XL 38, exaratus saec... (apud Mantuam?)"
+          "value": "V"
         },
         {
           "id": "lw1-44",
@@ -21543,11 +21534,11 @@
         },
         {
           "id": "lw1-46",
-          "value": "Montepessulanus Fac. Med. 253  [MO B. 120, saec. IX 2/3]"
+          "value": "x"
         },
         {
           "id": "lw1-47",
-          "value": "Guelferbytanus Gudianus lat... (+ P1-2-3)"
+          "value": "γGuelferbytanus Gudianus lat... (+ P1-2-3)"
         },
         {
           "id": "lw1-48",
@@ -21571,7 +21562,7 @@
         },
         {
           "id": "lw1-53",
-          "value": "Pap. Ryl. 3.478 + Pap. Mil. 1... (Pack3 n. 2940)"
+          "value": "Π₆"
         },
         {
           "id": "lw1-54",
@@ -21909,7 +21900,7 @@
       "entries": [
         {
           "id": "lw1-1",
-          "value": "Bernensis 172 (ecl. 1-Aen. 5)"
+          "value": "aBernensis 172 (ecl. 1-Aen. 5)"
         },
         {
           "id": "lw1-2",
@@ -21917,7 +21908,7 @@
         },
         {
           "id": "lw1-3",
-          "value": "Bernensis 165, olim Turonensis [MO B. 10, saec. IX 1/4]"
+          "value": "bBernensis 165, olim Turonensis [MO B. 10, saec. IX 1/4]"
         },
         {
           "id": "lw1-4",
@@ -21925,7 +21916,7 @@
         },
         {
           "id": "lw1-5",
-          "value": "Bernensis 184  [MO B.13: saec. IX-X]"
+          "value": "cBernensis 184  [MO B.13: saec. IX-X]"
         },
         {
           "id": "lw1-6",
@@ -21933,23 +21924,23 @@
         },
         {
           "id": "lw1-7",
-          "value": "Bernensis 255 + 239, in Gallia... [MO B. 14, saec. IX 2/3]"
+          "value": "d"
         },
         {
           "id": "lw1-8",
-          "value": "Bernensis 167, origine Autissi... (desunt Aen. 12.452-579;...)"
+          "value": "eBernensis 167, origine Autiss... (desunt Aen. 12.452-579;...)"
         },
         {
           "id": "lw1-9",
-          "value": "Oxoniensis Bodl. Auct. F. 2... [MO B. 155, saec. IX¹]"
+          "value": "fOxoniensis Bodl. Auct. F. 2... [MO B. 155, saec. IX¹]"
         },
         {
           "id": "lw1-10",
-          "value": "Valentianensis 407 (389)"
+          "value": "hValentianensis 407 (389)"
         },
         {
           "id": "lw1-11",
-          "value": "Mediceus Laurentianus Latinus Plut... [CLA III 296]"
+          "value": "MMediceus Laurentianus Latinus... [CLA III 296]"
         },
         {
           "id": "lw1-12",
@@ -21961,15 +21952,15 @@
         },
         {
           "id": "lw1-14",
-          "value": "Neapolitanus Vind. lat. 6,... [MO B. 151, saec X¹]"
+          "value": "nNeapolitanus Vind. lat. 6,... [MO B. 151, saec X¹]"
         },
         {
           "id": "lw1-15",
-          "value": "Ausonensis, Archivo Capitular Vic... [MO C. 272, saec. XI¹]"
+          "value": "oAusonensis, Archivo Capitular Vic... [MO C. 272, saec. XI¹]"
         },
         {
           "id": "lw1-16",
-          "value": "Vaticanus Palatinus lat. 1631,... [CLA I 99]"
+          "value": "PVaticanus Palatinus lat... [CLA I 99]"
         },
         {
           "id": "lw1-17",
@@ -21981,7 +21972,7 @@
         },
         {
           "id": "lw1-19",
-          "value": "Parisinus lat. 7926  [MO B. 171, saec. IX 2/4]"
+          "value": "r"
         },
         {
           "id": "lw1-20",
@@ -21989,7 +21980,7 @@
         },
         {
           "id": "lw1-21",
-          "value": "Vaticanus lat. 3867, dictus... [CLA I 19]"
+          "value": "RVaticanus lat. 3867, dictus... [CLA I 19]"
         },
         {
           "id": "lw1-22",
@@ -22001,19 +21992,19 @@
         },
         {
           "id": "lw1-24",
-          "value": "Parisinus lat. 13043, olim... [MO B.192: saec. IX 2/3]"
+          "value": "tParisinus lat. 13043, olim... [MO B.192: saec. IX 2/3]"
         },
         {
           "id": "lw1-25",
-          "value": "Vaticanus lat. 1570, olim... [MO B. 256, saec. IX/X]"
+          "value": "vVaticanus lat. 1570, olim... [MO B. 256, saec. IX/X]"
         },
         {
           "id": "lw1-26",
-          "value": "Veronensis XL 38, saec. V ex... (Codices Latini Antiquiores, ed. E...)"
+          "value": "VVeronensis XL 38, saec. V ex... (Codices Latini Antiquiores, ed. E...)"
         },
         {
           "id": "lw1-27",
-          "value": "Guelferbytanus Gudianus lat... [MO B. 281, saec. IX]"
+          "value": "γGuelferbytanus Gudianus lat... [MO B. 281, saec. IX]"
         },
         {
           "id": "lw1-28",
@@ -22323,7 +22314,7 @@
       "id": "apparatus-authors.vers_pop-frag@en",
       "entries": [
         {
-          "id": "lb1-1",
+          "id": "lb2-1",
           "value": "M. Haupt, Analecta, Hermes 1 (1866)"
         }
       ]
@@ -22337,15 +22328,15 @@
         },
         {
           "id": "lw1-2",
-          "value": "cod. Parisinus lat. 10318 (Salmasianus)"
+          "value": "Acod. Parisinus lat. 10318 (Salmasianus)"
         },
         {
           "id": "lw1-3",
-          "value": "cod. Parisinus lat. 8071 (olim Thuaneus)"
+          "value": "B"
         },
         {
           "id": "lw1-4",
-          "value": "apographon N. Heinsii (1620-1681)"
+          "value": "Heinsius"
         }
       ]
     },

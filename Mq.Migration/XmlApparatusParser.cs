@@ -387,25 +387,15 @@ namespace Mq.Migration
         }
 
         /// <summary>
-        /// Splits the received apparatus layer part into 1 to 3 parts,
+        /// Splits the received apparatus layer part into 1 to 2 parts,
         /// distributing them as follows: 1) all the original entries except
-        /// those under 2 and 3; 2) all the entries marked as ancient notes;
-        /// 3) all the fragments marked as margin notes.
+        /// those under 2; 2) all the entries marked as margin notes.
         /// </summary>
         /// <param name="part">The part.</param>
         /// <returns>The parts: just 1 if no splitting required.</returns>
         private IList<TiledTextLayerPart<ApparatusLayerFragment>> SplitPart(
             TiledTextLayerPart<ApparatusLayerFragment> part)
         {
-            TiledTextLayerPart<ApparatusLayerFragment> ancPart =
-                new TiledTextLayerPart<ApparatusLayerFragment>
-                {
-                    ItemId = part.ItemId,
-                    ThesaurusScope = part.ThesaurusScope,
-                    CreatorId = part.CreatorId,
-                    UserId = part.UserId,
-                };
-            ancPart.RoleId += ":ancient";
             TiledTextLayerPart<ApparatusLayerFragment> margPart =
                 new TiledTextLayerPart<ApparatusLayerFragment>
                 {
@@ -416,11 +406,10 @@ namespace Mq.Migration
                 };
             margPart.RoleId += ":margin";
 
-            int ancEntryCount = 0, margEntryCount = 0;
+            int margEntryCount = 0;
 
             foreach (var fr in part.Fragments
-                .Where(f => f.Tag.Contains(TYPE_MARGIN_NOTE)
-                       || f.Entries.Any(e => e.Tag == TYPE_ANCIENT_NOTE))
+                .Where(f => f.Tag.Contains(TYPE_MARGIN_NOTE))
                 .ToList())
             {
                 // app@type=margin -> tag with margin: move whole fragment
@@ -429,41 +418,6 @@ namespace Mq.Migration
                     margPart.AddFragment(fr);
                     margEntryCount += fr.Entries.Count;
                     part.Fragments.Remove(fr);
-                    continue;
-                }
-
-                // else examine parts: some might belong to ancient
-                var ancEntries = fr.Entries
-                    .Where(e => e.Tag == TYPE_ANCIENT_NOTE)
-                    .ToList();
-
-                // any ancient?
-                if (ancEntries.Count > 0)
-                {
-                    ancEntryCount += ancEntries.Count;
-
-                    // if all the entries are to be moved, move the whole fragment
-                    // from the standard part to the ancient part
-                    if (ancEntries.Count == fr.Entries.Count)
-                    {
-                        ancPart.AddFragment(fr);
-                        part.Fragments.Remove(fr);
-                        continue;
-                    }
-
-                    // else move only the ancient entries to a cloned fragment,
-                    // which gets added to the ancient part
-                    ApparatusLayerFragment targetFr = new ApparatusLayerFragment
-                    {
-                        Location = fr.Location,
-                        Tag = fr.Tag
-                    };
-                    foreach (var entry in ancEntries)
-                    {
-                        targetFr.Entries.Add(entry);
-                        fr.Entries.Remove(entry);
-                    }
-                    ancPart.AddFragment(targetFr);
                 }
             }
 
@@ -478,16 +432,6 @@ namespace Mq.Migration
                     + GetFragmentLocsDump(part.Fragments));
             }
 
-            if (ancPart.Fragments.Count > 0)
-            {
-                AdjustNoteFragments(ancPart.Fragments);
-                parts.Add(ancPart);
-                if (PartHasOverlaps(ancPart))
-                {
-                    Logger?.LogError("Ancient part has overlaps: "
-                        + GetFragmentLocsDump(ancPart.Fragments));
-                }
-            }
             if (margPart.Fragments.Count > 0)
             {
                 AdjustNoteFragments(margPart.Fragments);

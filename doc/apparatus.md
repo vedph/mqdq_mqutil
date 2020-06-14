@@ -78,14 +78,13 @@ Now, in XML documents we have a number of cases where `app` elements, which in t
 Fortunately, most of these cases are the natural effect of the above mentioned confusion of conceptual domains, which cannot be avoided in XML (where all data are laid on the unique, DOM-related structure). In fact, they belong to two cases:
 
 - whole apparatus entries marked as `margin-note`.
-- lemma/variants of an apparatus entry marked as `ancient-note`. Note that there can be cases of `ancient-note` entries inside `margin-note` `app`'s; in this case, the `app` notation prevails, as it resides on a higher node in the structure.
+- lemma/variants of an apparatus entry marked as `ancient-note`. Note that there can be cases of `ancient-note` entries inside `margin-note` `app`'s.
 
 The comment-like nature of such cases often let their `app` element overlap with other `app` elements, representing only apparatus variants in a stricter sense.
 
-The solution here, both for separating their different conceptual domains and avoiding overlaps, is *moving ancient notes and margin notes into separate layers*, with the same model of the apparatus layer. Thus, we will have up to 3 layers for the text (all with the same model):
+The solution here, both for separating their different conceptual domains and avoiding overlaps, is *moving margin notes into separate layers*, with the same model of the apparatus layer. Thus, we will have up to 2 layers for the text (all with the same model):
 
 - apparatus layer with variants.
-- apparatus layer for ancient notes.
 - apparatus layer for margin notes.
 
 This removes most of the overlap cases.

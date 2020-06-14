@@ -55,11 +55,11 @@ Building `app` elements implies a number of details, which are listed in the fol
 
 ### B.2. Multiple Apparatuses
 
-We may have from **1 to 3 apparatus layer parts**, according to their role: default (null role), `ancient`, `margin`.
+We may have from **1 to 2 apparatus layer parts**, according to their role: default (null role) or `margin`.
 
 As for TEI, there is no specific order to follow when producing sequences of `app` elements. We have two options:
 
-1. *just order the elements in a logical way*, i.e. first all the default entries, then all the ancient entries, and finally all the margin entries. This would probably produce an ordering which is different from the original one, making diffing more difficult.
+1. *just order the elements in a logical way*, i.e. first all the default entries, then all the margin entries. This would probably produce an ordering which is different from the original one, making diffing more difficult.
 
 2. alternatively, *if* the original `app` elements do have a systematic ordering, we can try to *reproduce the original sort order* by collecting all the fragments from each layer and sorting them all together; but I'm not sure about the sort order definition. From what I can see, it seems that ordering follows word IDs, so e.g. `#d003w18` appears before `#d003w29`; but there are a number of details to be defined here, e.g.:
 
