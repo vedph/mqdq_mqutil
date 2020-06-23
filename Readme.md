@@ -327,6 +327,7 @@ pause
 echo IMPORT THESAURI
 %mqu% import-thes %dstdir%app\*.xml %dstdir%thesauri.json
 echo Break here if you don't want to import the database
+echo (you should update the MQDQ profile with thesauri)
 pause
 
 echo DRY IMPORT DATABASE
