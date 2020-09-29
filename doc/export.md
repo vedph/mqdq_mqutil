@@ -323,7 +323,7 @@ This gets exported as:
 
 ```xml
 <!--item AEDIT-epig 00001 #d001 (16ea2959-b58e-4b02-ad7a-6aa022338e6a)-->
-<!--apparatus fr.net.fusisoft.apparatus (3 in b67997fe-6388-4ece-ba03-ef18772a655e)-->
+<!--apparatus fr.it.vedph.apparatus (3 in b67997fe-6388-4ece-ba03-ef18772a655e)-->
 <!--fr 2.6-->
 <app from="#d001w13" to="#d001w13">
   <lem source="#lb1-1">uerba<note type="details" target="#lb1-1"> 19, 9, 11 <emph style="font-style:italic">codd</emph>. <emph style="font-style:italic">Vaticanus Reg. Lat.</emph> 597 <emph style="font-style:italic">p.c</emph>. <emph style="font-style:italic">et Leidensis Voss. F</emph> 112</note></lem>

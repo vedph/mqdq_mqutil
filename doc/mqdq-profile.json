@@ -7,7 +7,7 @@
       "colorKey": "EBD586",
       "partDefinitions": [
         {
-          "typeId": "net.fusisoft.tiled-text",
+          "typeId": "it.vedph.tiled-text",
           "roleId": "base-text",
           "name": "text",
           "description": "Tiles-based text.",
@@ -16,8 +16,8 @@
           "sortKey": "text"
         },
         {
-          "typeId": "net.fusisoft.tiled-text-layer",
-          "roleId": "fr.net.fusisoft.apparatus",
+          "typeId": "it.vedph.tiled-text-layer",
+          "roleId": "fr.it.vedph.apparatus",
           "name": "apparatus",
           "description": "Critical apparatus.",
           "colorKey": "00ACE3",
@@ -25,8 +25,8 @@
           "sortKey": "text-apparatus"
         },
         {
-          "typeId": "net.fusisoft.tiled-text-layer",
-          "roleId": "fr.net.fusisoft.apparatus:margin",
+          "typeId": "it.vedph.tiled-text-layer",
+          "roleId": "fr.it.vedph.apparatus:margin",
           "name": "margin apparatus",
           "description": "Critical apparatus: marginal notes.",
           "colorKey": "B377EE",

@@ -47,3 +47,49 @@ The log file is named `mqutil-log...txt` (where `...` is a set of digits represe
 ```ps1
 .\Mqutil.exe import-thes E:\Work\mqdqc\app\*-app.xml E:\Work\mqdqc\thesauri.json
 ```
+
+## Sample Batch
+
+You can place this batch in the same folder of the downloaded MQDQ files (e.g. `E:\Work\mqdq\`):
+
+```bat
+@echo off
+set srcdir=E:\Work\mqdq\
+set dstdir=E:\Work\mqdqc\
+set mqu=D:\Projects\Core20\Vedph\Mqutil\Mqutil\bin\Debug\netcoreapp3.1\Mqutil.exe
+
+echo REPORT OVERLAPS
+%mqu% report-overlaps %srcdir% *-app.xml %dstdir%overlaps.md -s
+echo (please keep the next log for editors reference;
+echo  you can just delete the current log before advancing)
+pause
+
+echo REMOVE OVERLAPS
+%mqu% remove-overlaps %srcdir% *-app.xml %dstdir%app\ -s -d
+pause
+
+echo PARTITION
+%mqu% partition %srcdir% "^[^-]+-[^-]+\.xml" %dstdir%txt -r -s
+pause
+
+echo PARSE TEXT
+%mqu% parse-text %dstdir%txt *.xml %dstdir%jtxt\ -d %dstdir%app\~overlap-err-divs.txt
+pause
+
+echo PARSE APPARATUS
+%mqu% parse-app %dstdir%app *-app.xml %dstdir%jtxt\ %dstdir%japp\
+pause
+
+echo IMPORT THESAURI
+%mqu% import-thes %dstdir%app\*.xml %dstdir%thesauri.json
+echo Break here if you don't want to import the database
+pause
+
+echo DRY IMPORT DATABASE
+%mqu% import-json %dstdir%jtxt\ *.json %dstdir%japp\ %dstdir%mqdq-profile.json mqdq -d
+pause
+
+echo IMPORT DATABASE
+%mqu% import-json %dstdir%jtxt\ *.json %dstdir%japp\ %dstdir%mqdq-profile.json mqdq
+pause
+```

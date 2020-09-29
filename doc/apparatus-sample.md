@@ -32,7 +32,7 @@ Finally, once all the content elements have been processed, providing a number o
 
 If we look at the first part output in the dump JSON file, we find no such fragment. This is because it is a `margin-note` fragment, and as such it belongs to another layer, i.e. another part, which gets output after the first one.
 
-In fact, immediately after the first part we find another one, whose role is `fr.net.fusisoft.apparatus:margin` (in Cadmus, layer parts have as role the type ID of their fragment model, followed by a colon plus a role ID when present).
+In fact, immediately after the first part we find another one, whose role is `fr.it.vedph.apparatus:margin` (in Cadmus, layer parts have as role the type ID of their fragment model, followed by a colon plus a role ID when present).
 
 If we look at the source text document, the base text portion is verse 2:
 
@@ -203,10 +203,10 @@ In the log, this change is signaled by an "Item ID changed" message, followed by
 
 ```txt
 [INF] Item ID changed from 86525717-d507-4d6f-98e6-95806b793202 to 8c69284e-88e4-4441-bba2-6e23a345f2f9
-[INF] Completed PART [fr.net.fusisoft.apparatus] 1-415: 3.1, 15.3, 16.1
-[INF] Completed PART [fr.net.fusisoft.apparatus:margin] 1-415: 3.1-3.5, 16.1-16.8
+[INF] Completed PART [fr.it.vedph.apparatus] 1-415: 3.1, 15.3, 16.1
+[INF] Completed PART [fr.it.vedph.apparatus:margin] 1-415: 3.1-3.5, 16.1-16.8
 ```
 
-Here we switch to the second item, identifed by its ID (you can find it in the text JSON dump files). The previous item has 2 parts: one as the "standard" apparatus (role `fr.net.fusisoft.apparatus`); another as the margin notes apparatus (role `fr.net.fusisoft.apparatus:margin`).
+Here we switch to the second item, identifed by its ID (you can find it in the text JSON dump files). The previous item has 2 parts: one as the "standard" apparatus (role `fr.it.vedph.apparatus`); another as the margin notes apparatus (role `fr.it.vedph.apparatus:margin`).
 
 The first part has 3 fragments, at the specified coordinates. The second part has 3 fragments, too; note that some of the coordinates of the first part overlap with these of the second, but this is not an issue given that these are two different layers.
